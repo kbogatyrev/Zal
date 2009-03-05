@@ -88,7 +88,8 @@ namespace Converter
         public void ThreadProc()
         {
             CT_ConversionLibTest ct = new CT_ConversionLibTest();
-            int gogo = ct.test();
+            int iRet = ct.test();
+            iRet = ct.testStringConversion ("аибгдежзИКЛМН");
 
             try
             {
