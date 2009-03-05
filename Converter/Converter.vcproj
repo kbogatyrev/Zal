@@ -194,7 +194,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						CompileAsManaged="3"
+						CompileAsManaged="1"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
