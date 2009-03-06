@@ -9,7 +9,7 @@
 //
 // Ctors
 //
-ExtString::ExtString()
+CT_ExtString::CT_ExtString()
 {
 	v_Null_();
 
@@ -18,11 +18,11 @@ ExtString::ExtString()
 	str_Punctuation_ = L".,;:?!\'\"";
 }
 
-ExtString::ExtString (const wstring& str_text,
-					  const wstring& str_break,
-					  const wstring& str_tab,
-					  const wstring& str_escape,
-					  const wstring& str_punctuation)
+CT_ExtString::CT_ExtString (const wstring& str_text,
+					        const wstring& str_break,
+					        const wstring& str_tab,
+					        const wstring& str_escape,
+					        const wstring& str_punctuation)
 {
 	v_Null_();
 
@@ -33,11 +33,11 @@ ExtString::ExtString (const wstring& str_text,
 	str_Punctuation_ = str_punctuation;
 }
 
-ExtString::ExtString (const wchar_t * qcz_text,
-					  const wchar_t * qcz_break,
-					  const wchar_t * qcz_tab,
-					  const wchar_t * qcz_escape,
-					  const wchar_t * qcz_punctuation)
+CT_ExtString::CT_ExtString (const wchar_t * qcz_text,
+					        const wchar_t * qcz_break,
+					        const wchar_t * qcz_tab,
+					        const wchar_t * qcz_escape,
+					        const wchar_t * qcz_punctuation)
 {
 	v_Null_();
 
@@ -48,7 +48,7 @@ ExtString::ExtString (const wchar_t * qcz_text,
 	str_Punctuation_ = qcz_punctuation;
 }
 
-ExtString::ExtString (const ExtString& estr_)
+CT_ExtString::CT_ExtString (const CT_ExtString& estr_)
 	: wstring (static_cast <wstring> (estr_)), 
 	str_Break_(estr_.str_Break_), 
 	str_Tab_(estr_.str_Tab_),
@@ -80,12 +80,12 @@ ExtString::ExtString (const ExtString& estr_)
 //
 // Dtor
 //
-ExtString::~ExtString()
+CT_ExtString::~CT_ExtString()
 {
 	v_Null_();
 }
 
-void ExtString::v_Null_()
+void CT_ExtString::v_Null_()
 {
 	this->erase();
 	str_Break_.erase();
@@ -99,7 +99,7 @@ void ExtString::v_Null_()
 	vo_Tokens_.clear();
 }
 
-void ExtString::v_CopyAttributes (const ExtString& estr)
+void CT_ExtString::v_CopyAttributes (const CT_ExtString& estr)
 {
 	str_Break_ = estr.str_Break_;
 	str_Tab_ = estr.str_Tab_;
@@ -110,12 +110,12 @@ void ExtString::v_CopyAttributes (const ExtString& estr)
 //
 // Assignment
 //
-void ExtString::v_DeepCopy_ (const ExtString& estr)
+void CT_ExtString::v_DeepCopy_ (const CT_ExtString& estr)
 {
 	*this = estr;
 }
 
-ExtString& ExtString::operator = (const ExtString& estr)
+CT_ExtString& CT_ExtString::operator = (const CT_ExtString& estr)
 {
 	v_Null_();
 
@@ -131,13 +131,13 @@ ExtString& ExtString::operator = (const ExtString& estr)
 	return *this;
 }
 
-ExtString& ExtString::operator = (const wstring& str)
+CT_ExtString& CT_ExtString::operator = (const wstring& str)
 {
 	assign (str);
 	return *this;
 }
 
-ExtString& ExtString::operator = (const wchar_t * pchr_)
+CT_ExtString& CT_ExtString::operator = (const wchar_t * pchr_)
 {
 	assign (pchr_);
 	return *this;
@@ -146,7 +146,7 @@ ExtString& ExtString::operator = (const wchar_t * pchr_)
 //
 // --- Private method(s) ---
 //
-void ExtString::v_Synchronize_()
+void CT_ExtString::v_Synchronize_()
 {
 	wstring str_separators = str_Break_ + 
 							 str_Tab_ + 
@@ -178,8 +178,8 @@ void ExtString::v_Synchronize_()
 
 }	//  v_Synchronize_
 
-bool ExtString::b_Tokenize_ (const et_TokenType eo_type, 
-							 vector<ST_Token>& vo_tokens)
+bool CT_ExtString::b_Tokenize_ (const et_TokenType eo_type, 
+							    vector<ST_Token>& vo_tokens)
 {
 	if (length() == 0)
 	{	
@@ -247,7 +247,7 @@ bool ExtString::b_Tokenize_ (const et_TokenType eo_type,
 
 }  // b_Tokenize_ (...)
 
-bool ExtString::b_ExtractTextTokens_ (vector<ST_Token>& vo_tokens)
+bool CT_ExtString::b_ExtractTextTokens_ (vector<ST_Token>& vo_tokens)
 {
 	wstring::size_type se_start = 0;
 	wstring::size_type se_length = 0;
@@ -289,9 +289,9 @@ bool ExtString::b_ExtractTextTokens_ (vector<ST_Token>& vo_tokens)
 
 } // b_ExtractTextTokens_ (..)
 
-bool ExtString::b_ExtractSeparators_ (const et_TokenType eo_type,
-									  const wstring& str_matchOn, 
-									  vector<ST_Token>&vo_tokens)
+bool CT_ExtString::b_ExtractSeparators_ (const et_TokenType eo_type,
+                                         const wstring& str_matchOn, 
+                                         vector<ST_Token>&vo_tokens)
 {
 	wstring::size_type se_start = find_first_of (str_matchOn);
 	wstring::size_type se_length = 0;
@@ -326,7 +326,7 @@ bool ExtString::b_ExtractSeparators_ (const et_TokenType eo_type,
 //
 //  --- Public methods ---
 //
-void ExtString::v_ToLower()
+void CT_ExtString::v_ToLower()
 {
 	if (empty())
 	{
@@ -358,7 +358,7 @@ void ExtString::v_ToLower()
 	delete[] qcz_data;
 }
 
-void ExtString::v_ToUpper()
+void CT_ExtString::v_ToUpper()
 {
 	if (empty())
 	{
@@ -393,7 +393,7 @@ void ExtString::v_ToUpper()
 //
 // Capitalize first char of each token
 //
-void ExtString::v_ToTitle()
+void CT_ExtString::v_ToTitle()
 {
 	if (empty())
 	{
@@ -431,7 +431,7 @@ void ExtString::v_ToTitle()
 //
 // By default, we trim whitespace including tabs
 //
-void ExtString::v_TrimLeft()
+void CT_ExtString::v_TrimLeft()
 {
 	if (empty())
 	{
@@ -444,7 +444,7 @@ void ExtString::v_TrimLeft()
 
 }
 
-void ExtString::v_TrimLeft (const wstring& str_charsToTrim)
+void CT_ExtString::v_TrimLeft (const wstring& str_charsToTrim)
 {
 	if (empty())
 	{
@@ -455,7 +455,7 @@ void ExtString::v_TrimLeft (const wstring& str_charsToTrim)
 	erase (0, se_offset);	
 }
 
-void ExtString::v_TrimRight()
+void CT_ExtString::v_TrimRight()
 {
 	if (empty())
 	{
@@ -472,7 +472,7 @@ void ExtString::v_TrimRight()
 
 }
 
-void ExtString::v_TrimRight (const wstring& str_charsToTrim)
+void CT_ExtString::v_TrimRight (const wstring& str_charsToTrim)
 {
 	if (empty())
 	{
@@ -483,7 +483,7 @@ void ExtString::v_TrimRight (const wstring& str_charsToTrim)
 	erase (++se_offset);
 }
 
-void ExtString::v_Trim()
+void CT_ExtString::v_Trim()
 {
 	if (empty())
 	{
@@ -493,7 +493,7 @@ void ExtString::v_Trim()
 	v_TrimRight();
 }
 
-void ExtString::v_Trim (const wstring& str_charsToTrim)
+void CT_ExtString::v_Trim (const wstring& str_charsToTrim)
 {
 	if (empty())
 	{
@@ -504,15 +504,15 @@ void ExtString::v_Trim (const wstring& str_charsToTrim)
 	v_TrimRight (str_charsToTrim);
 }
 
-int ExtString::i_CompareNoCase (const wstring& str) const
+int CT_ExtString::i_CompareNoCase (const wstring& str) const
 {
 	int result = _wcsicmp (c_str(), str.c_str());
 
 	return result;
 }
 
-wstring ExtString::str_GetField (const int i_at, 
-								 const et_TokenType eo_type)
+wstring CT_ExtString::str_GetField (const int i_at, 
+								    const et_TokenType eo_type)
 								   
 {
 	v_Synchronize_();
@@ -549,9 +549,9 @@ wstring ExtString::str_GetField (const int i_at,
 	return str_token;
 }
 
-wstring ExtString::str_GetField (const int i_offset,
-							     const int i_at, 
-							     const et_TokenType eo_type)
+wstring CT_ExtString::str_GetField (const int i_offset,
+                                    const int i_at, 
+                                    const et_TokenType eo_type)
 {
 	v_Synchronize_();
 
@@ -589,8 +589,8 @@ wstring ExtString::str_GetField (const int i_offset,
 
 }
 
-const ExtString::ST_Token& ExtString::st_GetField (int i_at,
-									  			   const et_TokenType eo_type)
+const CT_ExtString::ST_Token& CT_ExtString::st_GetField (int i_at,
+									  			         const et_TokenType eo_type)
 {
 	v_Synchronize_();
 
@@ -622,9 +622,9 @@ const ExtString::ST_Token& ExtString::st_GetField (int i_at,
 	return vo_Tokens_[ui_];
 }
 
-const ExtString::ST_Token& ExtString::st_GetField (const int i_offset,
-										   		   int i_at,
-										   		   const et_TokenType eo_type)
+const CT_ExtString::ST_Token& CT_ExtString::st_GetField (const int i_offset,
+										   		         int i_at,
+										   		         const et_TokenType eo_type)
 {
 	v_Synchronize_();
 
@@ -658,7 +658,7 @@ const ExtString::ST_Token& ExtString::st_GetField (const int i_offset,
 	return vo_Tokens_[ui_];
 }
 
-ExtString::et_TokenType ExtString::eo_GetTokenType (int i_at)
+CT_ExtString::et_TokenType CT_ExtString::eo_GetTokenType (int i_at)
 {
 	v_Synchronize_();
 
@@ -672,7 +672,7 @@ ExtString::et_TokenType ExtString::eo_GetTokenType (int i_at)
 	return st_token.eo_TokenType;
 }
 
-ExtString::et_TokenType ExtString::eo_GetTokenType (int i_offset, int i_at)
+CT_ExtString::et_TokenType CT_ExtString::eo_GetTokenType (int i_offset, int i_at)
 {
 	v_Synchronize_();
 
@@ -700,7 +700,7 @@ ExtString::et_TokenType ExtString::eo_GetTokenType (int i_offset, int i_at)
 	return st_token.eo_TokenType;
 }
 
-int ExtString::i_GetNumOfFields (const et_TokenType eo_type)
+int CT_ExtString::i_GetNumOfFields (const et_TokenType eo_type)
 {
 	v_Synchronize_();
 
@@ -716,9 +716,9 @@ int ExtString::i_GetNumOfFields (const et_TokenType eo_type)
 	return i_tokens;
 }
 
-int ExtString::i_GetNumOfFields (const int i_offset, 
-								 const int i_length,
-								 const et_TokenType eo_type)
+int CT_ExtString::i_GetNumOfFields (const int i_offset, 
+								    const int i_length,
+								    const et_TokenType eo_type)
 {
 	v_Synchronize_();
 
@@ -746,8 +746,8 @@ int ExtString::i_GetNumOfFields (const int i_offset,
 	return i_tokens;
 }
 
-int const ExtString::i_GetFieldLength (const int i_at,
-									   const et_TokenType eo_type)
+int const CT_ExtString::i_GetFieldLength (const int i_at,
+									      const et_TokenType eo_type)
 {
 	v_Synchronize_();
 
@@ -785,9 +785,9 @@ int const ExtString::i_GetFieldLength (const int i_at,
 	return st_token.i_Length;
 }
 
-int const ExtString::i_GetFieldLength (const int i_offset,
-									   const int i_at,
-									   const et_TokenType eo_type)
+int const CT_ExtString::i_GetFieldLength (const int i_offset,
+									      const int i_at,
+									      const et_TokenType eo_type)
 {
 	v_Synchronize_();
 

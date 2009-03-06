@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class  ExtString : public wstring
+class  CT_ExtString : public wstring
 {
 public:
 
@@ -79,7 +79,7 @@ public:
 	/**
 	* @desc Default constructor
 	*/
-	ExtString();
+	CT_ExtString();
 	
 	/**
 	* @desc Construct ext. string object using STL strings
@@ -99,11 +99,11 @@ public:
 	* @param str_punctuation
 	*      Out: punctuation marks
 	*/
-	ExtString (const wstring& str_text,
-			   const wstring& str_break = L"",
-			   const wstring& str_tab = L"",
-			   const wstring& str_escape = L"",
-			   const wstring& str_punctuation = L"");
+	CT_ExtString (const wstring& str_text,
+			      const wstring& str_break = L"",
+			      const wstring& str_tab = L"",
+			      const wstring& str_escape = L"",
+			      const wstring& str_punctuation = L"");
 
 	/**
 	* @desc Construct ext. string object using C strings
@@ -123,26 +123,26 @@ public:
 	* @param qcz_punctuation
 	*      Out: punctuation marks
 	*/
-	ExtString (const wchar_t * qcz_text, 
-			   const wchar_t * qcz_break = L"",
-			   const wchar_t * qcz_tab = L"",
-			   const wchar_t * qcz_escape = L"",
-			   const wchar_t * qcz_punctuation = L"");
+	CT_ExtString (const wchar_t * qcz_text, 
+			      const wchar_t * qcz_break = L"",
+			      const wchar_t * qcz_tab = L"",
+			      const wchar_t * qcz_escape = L"",
+			      const wchar_t * qcz_punctuation = L"");
 
 	/**
 	* @desc Copy constructor
 	*/
-	ExtString (const ExtString& extstr);
+	CT_ExtString (const CT_ExtString& extstr);
 
 	/**
 	* @desc Non-virtual destructor: this is not a base class
 	*/
-	~ExtString();
+	~CT_ExtString();
 
 private:
 	void v_Null_();
-	void v_CopyAttributes (const ExtString&);
-	void v_DeepCopy_ (const ExtString&);
+	void v_CopyAttributes (const CT_ExtString&);
+	void v_DeepCopy_ (const CT_ExtString&);
 	void v_Synchronize_();
 	bool b_Tokenize_ (const et_TokenType,  vector<ST_Token>&);
 	bool b_ExtractTextTokens_ (vector<ST_Token>&);
@@ -153,9 +153,9 @@ public:
 	/**
 	* @desc Assignment operators
 	*/
-	ExtString& operator = (const ExtString& estr_);
-	ExtString& operator = (const wstring& str_);
-	ExtString& operator = (const wchar_t * pcchr_);
+	CT_ExtString& operator = (const CT_ExtString& estr_);
+	CT_ExtString& operator = (const wstring& str_);
+	CT_ExtString& operator = (const wchar_t * pcchr_);
 
 public:
 	/**
@@ -388,13 +388,13 @@ public:
 	*/
 	int i_GetNumOfFields (const int i_offset, 
 						  const int i_length,
-						  const ExtString::et_TokenType eo_type = ExtString::ec_TokenText);
+						  const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
 
 	/**
 	* @desc same as i_GetNumOfFields
 	*
 	*/
-	int i_NFields (const ExtString::et_TokenType eo_type = ExtString::ec_TokenText);
+	int i_NFields (const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
 
 	/**
 	* @desc same as i_GetNumOfFields
@@ -402,7 +402,7 @@ public:
 	*/
 	int i_NFields (const int i_offset, 
 				   const int i_length,
-				   const ExtString::et_TokenType eo_type = ExtString::ec_TokenText);
+				   const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
 
 	/**
 	* @desc Return total number of tokens
@@ -449,8 +449,8 @@ public:
 	*/
 	int const i_GetFieldLength (const int i_offset, 
 								const int i_at,
-								const ExtString::et_TokenType eo_type = 
-													ExtString::ec_TokenText);
+								const CT_ExtString::et_TokenType eo_type = 
+                                        CT_ExtString::ec_TokenText);
 
 	/**
 	* @desc Set whitespace character(s)
@@ -497,22 +497,22 @@ public:
 	void v_SetPunctChars (const wstring& str_punctuation);
 };
 
-inline const ExtString::ST_Token& ExtString::st_GetToken (const int i_at)
+inline const CT_ExtString::ST_Token& CT_ExtString::st_GetToken (const int i_at)
 {	v_Synchronize_(); return vo_Tokens_[i_at]; }
-inline int ExtString::i_GetNumOfTokens() 
+inline int CT_ExtString::i_GetNumOfTokens() 
  { 	v_Synchronize_(); return vo_Tokens_.size(); }
-inline int ExtString::i_NTokens() 
+inline int CT_ExtString::i_NTokens() 
  { 	v_Synchronize_(); return vo_Tokens_.size(); }
-inline int ExtString::i_NFields (const et_TokenType eo_type)
+inline int CT_ExtString::i_NFields (const et_TokenType eo_type)
  { 	v_Synchronize_(); return i_GetNumOfFields (eo_type); }
-inline int ExtString::i_NFields (const int i_offset, const int i_length, 
+inline int CT_ExtString::i_NFields (const int i_offset, const int i_length, 
  const et_TokenType eo_type) { v_Synchronize_(); 
  return i_GetNumOfFields (i_offset, i_length, eo_type); }
-inline void ExtString::v_SetBreakChars (const wstring& str_break) 
+inline void CT_ExtString::v_SetBreakChars (const wstring& str_break) 
 { str_Break_ = str_break; }
-inline void ExtString::v_SetTabChars (const wstring& str_tab) 
+inline void CT_ExtString::v_SetTabChars (const wstring& str_tab) 
 { str_Tab_ = str_tab; }
-inline void ExtString::v_SetEscChars (const wstring& str_escape) 
+inline void CT_ExtString::v_SetEscChars (const wstring& str_escape) 
 { str_Escape_ = str_escape; }
-inline void ExtString::v_SetPunctChars (const wstring& str_punctuation) 
+inline void CT_ExtString::v_SetPunctChars (const wstring& str_punctuation) 
 { str_Punctuation_ = str_punctuation; }
