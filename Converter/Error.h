@@ -52,6 +52,6 @@ private:
                                 const wstring& str_location, 
                                 const wstring& str_detailedDescription, 
                                 int i_errCode);
-
+    bool Error::b_WriteLog (const wstring& str_msg);
 
 };
