@@ -48,6 +48,7 @@ namespace Converter
             buttonOK.Enabled = false;
 
             m_iStopAfter = (int)numericUpDownStopAfter.Value;
+
         }
 
         void AddString (string sEntry)
@@ -226,6 +227,7 @@ namespace Converter
             CT_ConversionLibTest ct = new CT_ConversionLibTest();
 int iRet = ct.test();
 iRet = ct.testStringConversion ("аибгдежзИКЛМН");
+iRet = ct.testError();
 
             try
             {
