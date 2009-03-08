@@ -700,6 +700,16 @@ CT_ExtString::et_TokenType CT_ExtString::eo_GetTokenType (int i_offset, int i_at
 	return st_token.eo_TokenType;
 }
 
+wstring CT_ExtString::str_GetToken (const int i_at)
+{
+    v_Synchronize_(); 
+    
+    ST_Token st_token = vo_Tokens_[i_at]; 
+    wstring str_token = substr (st_token.i_Offset, st_token.i_Length);
+
+	return str_token;
+}
+
 int CT_ExtString::i_GetNumOfFields (const et_TokenType eo_type)
 {
 	v_Synchronize_();

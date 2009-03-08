@@ -76,67 +76,22 @@ private:
 
 public:
 
-	/**
-	* @desc Default constructor
-	*/
 	CT_ExtString();
 	
-	/**
-	* @desc Construct ext. string object using STL strings
-	*
-	* @param str_text
-	*      Out: string contents
-	*
-	* @param str_break
-	*      Out: whitespace char(s)
-	*
-	* @param str_break
-	*      Out: tab char(s)
-	*
-	* @param str_escape
-	*      Out: escape char(s)
-	*
-	* @param str_punctuation
-	*      Out: punctuation marks
-	*/
 	CT_ExtString (const wstring& str_text,
 			      const wstring& str_break = L"",
 			      const wstring& str_tab = L"",
 			      const wstring& str_escape = L"",
 			      const wstring& str_punctuation = L"");
 
-	/**
-	* @desc Construct ext. string object using C strings
-	*
-	* @param qcz_text
-	*      Out: string contents
-	*
-	* @param qcz_break
-	*      Out: whitespace char(s)
-	*
-	* @param qcz_break
-	*      Out: tab char(s)
-	*
-	* @param qcz_escape
-	*      Out: escape char(s)
-	*
-	* @param qcz_punctuation
-	*      Out: punctuation marks
-	*/
 	CT_ExtString (const wchar_t * qcz_text, 
 			      const wchar_t * qcz_break = L"",
 			      const wchar_t * qcz_tab = L"",
 			      const wchar_t * qcz_escape = L"",
 			      const wchar_t * qcz_punctuation = L"");
 
-	/**
-	* @desc Copy constructor
-	*/
 	CT_ExtString (const CT_ExtString& extstr);
 
-	/**
-	* @desc Non-virtual destructor: this is not a base class
-	*/
 	~CT_ExtString();
 
 private:
@@ -158,342 +113,62 @@ public:
 	CT_ExtString& operator = (const wchar_t * pcchr_);
 
 public:
-	/**
-	* @desc Convert text to all-lower case
-	*
-	* @return void
-	*/
 	void v_ToLower();
-
-	/**
-	* @desc Convert text to all-upper case
-	*
-	* @return void
-	*/
 	void v_ToUpper();
-
-	/**
-	* @desc Capitalize each word
-	*
-	* @return void
-	*/
 	void v_ToTitle();
 
-	/**
-	* @desc Trim whitespace on the left
-	*
-	* @return void
-	*/
-	void v_TrimLeft();
-
-	/**
-	* @desc Trim given characters on the left
-	*
-	* @return void
-	*
-	* @param str_charsToTrim
-	*	Out: characters to trim
-	*/
+    void v_TrimLeft();
 	void v_TrimLeft (const wstring& str_charsToTrim);
-
-	/**
-	* @desc Trim whitespace on the right
-	*
-	* @return void
-	*/
 	void v_TrimRight();
-
-	/**
-	* @desc Trim given characters on the right
-	*
-	* @return void
-	*
-	* @param str_charsToTrim
-	*	Out: characters to trim
-	*/
 	void v_TrimRight (const wstring& str_charsToTrim);
-	
-	/**
-	* @desc Trim whitespace on the left and onthe right
-	*
-	* @return void
-	*/
 	void v_Trim();
-	
-	/**
-	* @desc Trim given characters on the left and on the right
-	*
-	* @return void
-	*
-	* @param str_charsToTrim
-	*	Out: characters to trim
-	*/
 	void v_Trim (const wstring& str_charsToTrim);
-	
-	/**
-	* @desc Lexicographic comparisopn without regard to case
-	*
-	* @return int (< 0: this sting precedes; = 0: equal; > 0 this string follows)
-	*
-	* @param str 
-	*	Out: String object to compare with
-	*/
-	int i_CompareNoCase (const wstring& str) const;
 
-	/**
-	* @desc Get token of the given type with the given index
-	*
-	* @return STL string (token text)
-	*
-	* @param i_at
-	*	Out: index
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*/
-	wstring str_GetField (const int i_at, 
+    int i_CompareNoCase (const wstring& str) const;
+
+    wstring str_GetField (const int i_at, 
 						  const et_TokenType eo_type = ec_TokenText);
-
-	/**
-	* @desc Return token of a given type at the position i_at 
-	*       counting from the given string offset
-	*
-	* @return STL string (token text)
-	*
-	* @param i_offset
-	*	Out: index
-	*
-	* @param i_at
-	*	Out: index
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*/
 	wstring str_GetField (const int i_offset,
 						  const int i_at, 
 						  const et_TokenType eo_type = ec_TokenText);
 
-	/**
-	* @desc Return token of a given type at the given index
-	*
-	* @return Toke struct
-	*
-	* @param i_at
-	*	Out: index
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*/
-	const ST_Token& st_GetField (const int i_at,
+    const ST_Token& st_GetField (const int i_at,
 								 const et_TokenType eo_type = ec_TokenText);
-
-	/**
-	* @desc Return token of a given type at the position 
-	*       i_at counting from the given string offset
-	*
-	* @return Token struct
-	*
-	* @param i_offset
-	*	Out: index
-	*
-	* @param i_at
-	*	Out: index
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*/
 	const ST_Token& st_GetField (const int i_offset,
 								 int i_at,
 								 const et_TokenType eo_type = ec_TokenText);
 
-	/**
-	* @desc Determine type of a given token
-	*
-	* @return et_TokenType
-	*
-	* @param i_at
-	*	Out: index
-	*/
-	et_TokenType eo_GetTokenType (const int i_at);
-
-	/**
-	* @desc Determine type of a given token counting from the 
-	*       specified string offset
-	*
-	* @return et_TokenType
-	*
-	* @param i_offset
-	*	Out: index
-	*
-	* @param i_at
-	*	Out: index
-	*/
+    et_TokenType eo_GetTokenType (const int i_at);
 	et_TokenType eo_GetTokenType (const int i_offset, const int i_at);
 
-	/**
-	* @desc Return token at position i_at
-	*
-	* @return Token struct
-	*
-	* @param i_offset
-	*	Out: index
-	*
-	* @param i_at
-	*	Out: index
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*/
-	const ST_Token& st_GetToken (const int i_at);
-
-	/**
-	* @desc Return token at position i_at counting from the given string offset
-	*
-	* @return Token struct
-	*
-	* @param i_offset
-	*	Out: index
-	*
-	* @param i_at
-	*	Out: index
-	*/
+    const ST_Token& st_GetToken (const int i_at);
 	const ST_Token& st_GetToken (const int i_offset, const int i_at);
 
-	/**
-	* @desc Return number of tokens of a given type
-	*
-	* @return integer
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*
-	*/
-	int i_GetNumOfFields (const et_TokenType eo_type = ec_TokenText);
-	
+    wstring str_GetToken (const int i_at);
 
-	/**
-	* @desc Return number of tokens of a given type in a given substring
-	*
-	* @return integer
-	*
-	* @param i_offset
-	*	Out: substring offset
-	*
-	* @param i_length
-	*	Out: substring length
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*
-	*/
+    int i_GetNumOfFields (const et_TokenType eo_type = ec_TokenText);
 	int i_GetNumOfFields (const int i_offset, 
 						  const int i_length,
 						  const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
-
-	/**
-	* @desc same as i_GetNumOfFields
-	*
-	*/
-	int i_NFields (const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
-
-	/**
-	* @desc same as i_GetNumOfFields
-	*
-	*/
+	
+    int i_NFields (const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
 	int i_NFields (const int i_offset, 
 				   const int i_length,
 				   const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
-
-	/**
-	* @desc Return total number of tokens
-	*
-	* @return integer
-	*
-	*/
-	int i_GetNumOfTokens();
-
-	/**
-	* @desc Same as i_GetNumOfTokens();
-	*/
+	
+    int i_GetNumOfTokens();
 	int i_NTokens();
 
-	/**
-	* @desc Return text length of a token of the given type at the given offset
-	*
-	* @return integer
-	*
-	* @param i_at
-	*	Out: index
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*
-	*/
 	int const i_GetFieldLength (const int i_at,
 								const et_TokenType eo_type = ec_TokenText);
-
-	/**
-	* @desc Return text length of a token of the given type at the position i_at 
-	*       counting from the given string offset
-	*
-	* @return integer
-	*
-	* @param i_offset
-	*	Out: index
-	*
-	* @param i_at
-	*	Out: index
-	*
-	* @param eo_Type
-	*	Out: token type, text assumed
-	*/
 	int const i_GetFieldLength (const int i_offset, 
 								const int i_at,
 								const CT_ExtString::et_TokenType eo_type = 
                                         CT_ExtString::ec_TokenText);
-
-	/**
-	* @desc Set whitespace character(s)
-	*
-	* @return void
-	*
-	* @param str_break
-	*	Out: whitespace characters as an STL string
-	*
-	*/
-	void v_SetBreakChars (const wstring& str_break);
-
-	/**
-	* @desc Set tab(s)
-	*
-	* @return void
-	*
-	* @param str_tab
-	*	Out: tab characters as an STL string
-	*
-	*/
+	
+    void v_SetBreakChars (const wstring& str_break);
 	void v_SetTabChars (const wstring& str_tab);
-
-	/**
-	* @desc Set escape character(s)
-	*
-	* @return void
-	*
-	* @param str_escape
-	*	Out: escape characters as an STL string
-	*
-	*/
 	void v_SetEscChars (const wstring& str_escape);
-
-	/**
-	* @desc Set punctuation marks
-	*
-	* @return void
-	*
-	* @param str_punctuation
-	*	Out: punctuation marks as an STL string
-	*
-	*/
 	void v_SetPunctChars (const wstring& str_punctuation);
 };
 
