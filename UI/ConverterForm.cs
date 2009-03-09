@@ -15,24 +15,23 @@ namespace Converter
 {
     public delegate void DelegateAddString (string s);
     public delegate void DelegateUpdateProgressBar (int iPercentDone);
+    public delegate void DelegateSignalCompletion();
 
     public partial class ConverterForm : Form
     {
         public DelegateAddString m_DelegateAddString;
         public DelegateUpdateProgressBar m_DelegateUpdateProgressbar;
+        public DelegateSignalCompletion m_DelegateSignalCompletion;
 
-        public bool TerminateThread
-        {
-            get { return m_bAppTerminating; }
-        }
-
-        public bool m_bAppTerminating;
+        public bool m_bStopListener;
+        public bool m_bStopConversion;
         public int m_iStopAfter;
 
         private string m_sSourcePath;
         private string m_sLogPath;
         private string m_sDbPath;
         Thread m_LogListener;
+        Thread m_WorkerThread;
 
         public ConverterForm()
         {
@@ -42,8 +41,7 @@ namespace Converter
 
             m_DelegateAddString = new DelegateAddString (this.AddString);
             m_DelegateUpdateProgressbar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
-
-            m_bAppTerminating = false;
+            m_DelegateSignalCompletion = new DelegateSignalCompletion (this.OnConversionEnd);
 
             buttonOK.Enabled = false;
 
@@ -51,59 +49,12 @@ namespace Converter
 
         }
 
-        void AddString (string sEntry)
+        void StopThreads()
         {
-            textBox.Text += sEntry + "\r\n";
-            textBox.SelectionStart = textBox.Text.Length;
-        }
+            m_bStopConversion = true;
+            m_WorkerThread.Join();
 
-        void UpdateProgressBar (int iProgress)
-        {
-            progressBar.Value = iProgress;
-        }
-
-        void LogMessage (string sText)
-        {
-            MessageBox.Show (sText);
-        }
-
-        bool bIsAppterminating ()
-        {
-            return m_bAppTerminating;
-        }
-
-        //
-        //  Event handlers
-        //
-        private void buttonOK_Click(object sender, EventArgs e)
-        {
-            progressBar.Minimum = 0;
-            progressBar.Maximum = 100;
-            progressBar.Enabled = true;
-            progressBar.Visible = true;
-
-            ListenerThread listener = new ListenerThread (this, m_sLogPath);
-            m_LogListener = new Thread (new ThreadStart (listener.ThreadProc));
-            m_LogListener.Name = "Zal listener thread";
-            m_LogListener.Start ();
-
-            WorkerThread wt = new WorkerThread (this, m_sSourcePath);
-            Thread t = new Thread (new ThreadStart (wt.ThreadProc));
-            t.Name = "Zal worker thread";
-            t.IsBackground = true;
-            //                t.Priority = ThreadPriority.Lowest;
-            t.SetApartmentState (ApartmentState.STA);
-            t.Start ();
-        }
-
-        private void buttonCancel_Click (object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void ConverterForm_FormClosing (object sender, FormClosingEventArgs e)
-        {
-            m_bAppTerminating = true;
+            m_bStopListener = true;
             if (null == m_LogListener)
             {
                 return;
@@ -113,6 +64,10 @@ namespace Converter
                 return;
             }
 
+            //
+            // Send a dummy message that will force the listener to check for 
+            // termination signal
+            //
             using (NamedPipeClientStream pipeClient =
                     new NamedPipeClientStream (".", "ZalConversionLog", PipeDirection.Out))
             {
@@ -121,8 +76,8 @@ namespace Converter
                     pipeClient.Connect (60000);
                     using (StreamWriter sw = new StreamWriter (pipeClient, Encoding.Unicode))
                     {
-                        sw.Write ("Form closing.");
-                        sw.Flush();
+                        sw.Write ("### Form closing.");
+                        sw.Flush ();
                     }
                 }
                 catch (Exception ex)
@@ -134,6 +89,97 @@ namespace Converter
                 }
             }
             m_LogListener.Join();
+
+        }   //  StopThreads()
+
+        //
+        // Local event handlers
+        //
+        void AddString (string sEntry)
+        {
+            textBox.Text += sEntry + "\r\n";
+            textBox.SelectionStart = textBox.Text.Length;
+        }
+
+        void UpdateProgressBar (int iProgress)
+        {
+            progressBar.Value = iProgress;
+        }
+
+        void OnConversionEnd()
+        {
+            m_bStopListener = true;
+
+            buttonCancel.Enabled = false;
+            buttonOK.Enabled = true;
+
+            buttonOK.Text = "Done";
+            buttonOK.Tag = "Done";
+        }
+
+        //
+        //  .Net event handlers
+        //
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            if ("Done" == (string)buttonOK.Tag)
+            {
+                Close();
+                return;
+            }
+
+            buttonOK.Enabled = false;
+
+            m_bStopListener = false;
+            m_bStopConversion = false;
+
+            textBox.Text = "###  Conversion started. \r\n";
+            progressBar.Minimum = 0;
+            progressBar.Maximum = 100;
+            progressBar.Enabled = true;
+            progressBar.Visible = true;
+
+            ListenerThread listener = new ListenerThread (this, m_sLogPath);
+            m_LogListener = new Thread (new ThreadStart (listener.ThreadProc));
+            m_LogListener.Name = "Zal listener thread";
+            m_LogListener.Start ();
+
+            WorkerThread wt = new WorkerThread (this, m_sSourcePath);
+            m_WorkerThread = new Thread (new ThreadStart (wt.ThreadProc));
+            m_WorkerThread.Name = "Zal worker thread";
+            m_WorkerThread.IsBackground = true;
+            //                m_WorkerThread.Priority = ThreadPriority.Lowest;
+            m_WorkerThread.SetApartmentState (ApartmentState.STA);
+            m_WorkerThread.Start ();
+        }
+
+        private void buttonCancel_Click (object sender, EventArgs e)
+        {
+            if (null == m_WorkerThread)
+            {
+                Close();
+            }
+            if (!m_WorkerThread.IsAlive)
+            {
+                Close();
+            }
+
+            if (m_WorkerThread.IsAlive)
+            {
+                DialogResult dr = MessageBox.Show ("Are you sure you want to stop conversion?",
+                                                   "GDRL Conversion",
+                                                   MessageBoxButtons.YesNo);
+                if (System.Windows.Forms.DialogResult.Yes == dr)
+                {
+                    StopThreads();
+                    OnConversionEnd ();
+                }
+            }
+        }
+
+        private void ConverterForm_FormClosing (object sender, FormClosingEventArgs e)
+        {
+            StopThreads();
         }
 
         private void buttonSourcePath_Click (object sender, EventArgs e)
@@ -225,9 +271,15 @@ namespace Converter
         public void ThreadProc()
         {
             CT_ConversionLibTest ct = new CT_ConversionLibTest();
+
+// TEST ONLY -- will be removed
 int iRet = ct.test();
 iRet = ct.testStringConversion ("аибгдежзИКЛМН");
+
 iRet = ct.testError();
+iRet = ct.testError ();
+iRet = ct.testError ();
+//
 
             try
             {
@@ -243,7 +295,11 @@ iRet = ct.testError();
                         (iRecordsProcessed <= m_Form.m_iStopAfter) && ((sEntry = sr.ReadLine()) != null);
                         ++iRecordsProcessed)
                     {
-                        ct.testInsert(sEntry);
+                        if (m_Form.m_bStopConversion)
+                        {
+                            break;
+                        }
+ct.testInsert(sEntry);
                         lProcessedLength += sEntry.Length;
                         double dPercent = (double)lProcessedLength / (double)lFileLength;
                         dPercent *= 100;
@@ -255,52 +311,15 @@ iRet = ct.testError();
                                 m_Form.BeginInvoke (m_Form.m_DelegateUpdateProgressbar, 
                                                     new Object[] { iPercentDone });
                             }
-                        }
-
-                        if (m_Form.InvokeRequired)
-                        {
-                            m_Form.BeginInvoke (m_Form.m_DelegateAddString, new Object[] { sEntry });
-                        }
-
-                        if (iRecordsProcessed % 10 == 0)
-                        {
-                            using (NamedPipeClientStream pipeClient =
-                                new NamedPipeClientStream (".", "ZalConversionLog", PipeDirection.Out))
-                            {
-                                int iLapsed = 0;
-                                const int ciTimeout = 120000;
-                                while (iLapsed < ciTimeout)
-                                {
-                                    try
-                                    {
-                                        pipeClient.Connect (50);
-                                        break;
-                                    }
-                                    catch
-                                    {
-                                        Thread.Sleep (1000);
-                                    }
-                                }
-                                if (iLapsed >= ciTimeout)
-                                {
-                                    string sMsg = "I/O error in WorkerThread: ";
-                                    sMsg += "Named pipe client unable to connect.";
-                                    MessageBox.Show ("File Does not exist",
-                                                     "Zal Error",
-                                                     MessageBoxButtons.OK,
-                                                     MessageBoxIcon.Exclamation);
-                                    return;
-                                }
-                                using (StreamWriter sw = new StreamWriter (pipeClient, Encoding.Unicode))
-                                {
-                                    sw.Write (sEntry);
-                                    sw.Flush();
-                                }
-                            }
-                        }
- 
+                        } 
                     }
                 }   // using...
+
+                if (m_Form.InvokeRequired)
+                {
+                    m_Form.BeginInvoke (m_Form.m_DelegateSignalCompletion);
+                }
+
             }
             catch (Exception ex)
             {
@@ -336,12 +355,19 @@ iRet = ct.testError();
                     {
                         try
                         {
-                            while (!bTerminate ())
+                            while (!bTerminate())
                             {
-                                pipeServer.WaitForConnection ();
-                                string sLine = srInStream.ReadToEnd ();
+                                pipeServer.WaitForConnection();
+                                string sLine = srInStream.ReadToEnd();
                                 swLogFile.WriteLine (sLine);
                                 swLogFile.Flush();
+
+                                if (m_Form.InvokeRequired)
+                                {
+                                    m_Form.BeginInvoke (m_Form.m_DelegateAddString, 
+                                                        new Object[] { sLine });
+                                }
+
                                 pipeServer.Disconnect();
                             }
                         }
@@ -364,7 +390,7 @@ iRet = ct.testError();
 
         private bool bTerminate()
         {
-            if (m_Form.TerminateThread)
+            if (m_Form.m_bStopListener)
             {
                 return true;
             }
