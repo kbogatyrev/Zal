@@ -52,7 +52,13 @@ namespace Converter
         void StopThreads()
         {
             m_bStopConversion = true;
-            m_WorkerThread.Join();
+            if (null != m_WorkerThread)
+            {
+                if (m_WorkerThread.IsAlive)
+                {
+                    m_WorkerThread.Join();
+                }
+            }
 
             m_bStopListener = true;
             if (null == m_LogListener)
@@ -158,22 +164,22 @@ namespace Converter
             if (null == m_WorkerThread)
             {
                 Close();
+                return;
             }
+
             if (!m_WorkerThread.IsAlive)
             {
                 Close();
+                return;
             }
 
-            if (m_WorkerThread.IsAlive)
+            DialogResult dr = MessageBox.Show ("Are you sure you want to stop conversion?",
+                                               "GDRL Conversion",
+                                               MessageBoxButtons.YesNo);
+            if (System.Windows.Forms.DialogResult.Yes == dr)
             {
-                DialogResult dr = MessageBox.Show ("Are you sure you want to stop conversion?",
-                                                   "GDRL Conversion",
-                                                   MessageBoxButtons.YesNo);
-                if (System.Windows.Forms.DialogResult.Yes == dr)
-                {
-                    StopThreads();
-                    OnConversionEnd ();
-                }
+                StopThreads();
+                OnConversionEnd ();
             }
         }
 
@@ -250,12 +256,44 @@ namespace Converter
             }
         }
 
+
         private void numericUpDownStopAfter_ValueChanged (object sender, EventArgs e)
         {
             m_iStopAfter = (int)((NumericUpDown)sender).Value;
         }
 
     }   // ConverterForm class
+
+    public class EventSink : ZalConversionLib.IZalNotification
+    {
+        private ConverterForm m_Form;
+        public EventSink (ConverterForm Form)
+        {
+            m_Form = Form;
+        }
+
+        public void ProgressNotification (int iPercentDone)
+        {
+            if (m_Form.InvokeRequired)
+            {
+                m_Form.BeginInvoke (m_Form.m_DelegateUpdateProgressbar,
+                                    new Object[] { iPercentDone });
+            }
+        }
+
+        public void StatusCheck (out int iCancel)
+        {
+            if (m_Form.m_bStopConversion)
+            {
+                iCancel = 1;
+            }
+            else
+            {
+                iCancel = 0;
+            }
+        }
+
+    }   // EventSink 
 
     public class WorkerThread
     {
@@ -270,17 +308,28 @@ namespace Converter
 
         public void ThreadProc()
         {
-            CT_ConversionLibTest ct = new CT_ConversionLibTest();
+            try
+            {
+                ZalConversionLib.ZalSourceReader reader = new ZalConversionLib.ZalSourceReader();
+                EventSink sink = new EventSink (m_Form);
+                reader.ProgressNotification += sink.ProgressNotification;
+                reader.StatusCheck += sink.StatusCheck;
+                reader.ProcessSourceFile (m_sPath);
+            }
+            catch (Exception ex)
+            {
+                string sMsg = "Error in WorkerThread: ";
+                sMsg += ex.Message;
+                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
-// TEST ONLY -- will be removed
-int iRet = ct.test();
-iRet = ct.testStringConversion ("аибгдежзИКЛМН");
+            if (m_Form.InvokeRequired)
+            {
+                m_Form.BeginInvoke (m_Form.m_DelegateSignalCompletion);
+            }
 
-iRet = ct.testError();
-iRet = ct.testError ();
-iRet = ct.testError ();
-//
-
+/*
             try
             {
                 FileInfo fi = new FileInfo(m_sPath);
@@ -299,7 +348,7 @@ iRet = ct.testError ();
                         {
                             break;
                         }
-ct.testInsert(sEntry);
+//ct.testInsert(sEntry);
                         lProcessedLength += sEntry.Length;
                         double dPercent = (double)lProcessedLength / (double)lFileLength;
                         dPercent *= 100;
@@ -314,7 +363,7 @@ ct.testInsert(sEntry);
                         } 
                     }
                 }   // using...
-
+ 
                 if (m_Form.InvokeRequired)
                 {
                     m_Form.BeginInvoke (m_Form.m_DelegateSignalCompletion);
@@ -328,7 +377,7 @@ ct.testInsert(sEntry);
                 MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-
+*/
         }   //  ThreadProc()
 
     }   //  public class WorkerThread
