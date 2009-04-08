@@ -36,7 +36,9 @@ protected:
     HRESULT StatusCheck (BOOL& b_cancel);
 
 public:
-    STDMETHOD (ProcessSourceFile) (BSTR bstr_path);
+    STDMETHOD (ProcessSourceFile) (BSTR bstr_sourcePath,
+                                   BSTR bstr_dbPath,
+                                   int i_maxEntries);
 
 };
 
