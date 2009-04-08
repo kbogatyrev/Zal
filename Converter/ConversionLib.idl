@@ -19,7 +19,9 @@ import "ocidl.idl";
 interface IZalSourceReader : IUnknown
 {
     [helpstring("method ProcessSourceFile")]
-    HRESULT ProcessSourceFile ([in] BSTR bstr_path);
+    HRESULT ProcessSourceFile ([in] BSTR bstr_sourcePath,
+                               [in] BSTR bstr_dbPath,
+                               [in] int i_maxEntries);
 };
 
 // ---------------------------------------------------------------------------
