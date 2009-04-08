@@ -1,0 +1,70 @@
+// ConversionLib.idl : IDL source for ConversionLib
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ConversionLib.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+//
+// GDRL Conversion
+//
+[
+	object,
+	uuid(33D63849-08AD-4261-B09D-1A60217ED40A),
+	helpstring("IZalSourceReader Interface"),
+	pointer_default(unique)
+]
+interface IZalSourceReader : IUnknown
+{
+    [helpstring("method ProcessSourceFile")]
+    HRESULT ProcessSourceFile ([in] BSTR bstr_path);
+};
+
+// ---------------------------------------------------------------------------
+
+//
+// Event source
+//
+[
+	object,
+	uuid(DD2CCF34-A642-495d-9DA9-7B9666AC8D90),
+	helpstring("IZalNotification Interface"),
+	pointer_default(unique)
+]
+interface IZalNotification : IUnknown
+{
+    [helpstring("method ProgressNotification")]
+    HRESULT ProgressNotification ([in] int i_progress);
+    [helpstring("method StatusCheck")]
+    HRESULT StatusCheck ([out] BOOL * b_cancel);
+};
+
+// ---------------------------------------------------------------------------
+
+[
+	uuid(2E2F302A-6766-4600-8D95-CF182429EE6E),
+	version(1.0),
+	helpstring("ZalConversionLib 1.0 Type Library")
+]
+library ZalConversionLib
+{
+	importlib("stdole2.tlb");
+
+    //
+    // Reader class
+    //
+    [
+        uuid(7EC2AD6C-8885-46cb-B72A-8F2087F24CE4),
+        helpstring("Zal Source Reader Class")
+    ]
+    coclass ZalSourceReader
+    {
+        [default] interface IZalSourceReader;
+        [default, source] interface IZalNotification;
+    };
+
+// ---------------------------------------------------------------------------
+
+};
