@@ -1,0 +1,26 @@
+HKCR
+{
+	ConversionLib.ZalSourceReader.1 = s 'ZalSourceReader Class'
+	{
+		CLSID = s '{7EC2AD6C-8885-46cb-B72A-8F2087F24CE4}'
+	}
+	ConversionLib.ZalSourceReader = s 'ZalSourceReader Class'
+	{
+		CLSID = s '{7EC2AD6C-8885-46cb-B72A-8F2087F24CE4}'
+		CurVer = s 'ConversionLib.ZalSourceReader.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {7EC2AD6C-8885-46cb-B72A-8F2087F24CE4} = s 'ZalSourceReader Class'
+		{
+			ProgID = s 'ConversionLib.ZalSourceReader.1'
+			VersionIndependentProgID = s 'ConversionLib.ZalSourceReader'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{2E2F302A-6766-4600-8D95-CF182429EE6E}'
+		}
+	}
+}
