@@ -30,6 +30,31 @@ namespace Converter
         private string m_sSourcePath;
         private string m_sLogPath;
         private string m_sDbPath;
+
+        public string sSourcePath
+        {
+            get
+            {
+                return m_sSourcePath;
+            }
+        }
+
+        public string sDbPath
+        {
+            get
+            {
+                return m_sDbPath;
+            }
+        }
+
+        public int iStopAfter
+        {
+            get
+            {
+                return m_iStopAfter;
+            }
+        }
+
         Thread m_LogListener;
         Thread m_WorkerThread;
 
@@ -45,7 +70,14 @@ namespace Converter
 
             buttonOK.Enabled = false;
 
-            m_iStopAfter = (int)numericUpDownStopAfter.Value;
+            if (numericUpDownStopAfter.Enabled)
+            {
+                m_iStopAfter = (int)numericUpDownStopAfter.Value;
+            }
+            else
+            {
+                m_iStopAfter = -1;
+            }
 
         }
 
@@ -150,7 +182,7 @@ namespace Converter
             m_LogListener.Name = "Zal listener thread";
             m_LogListener.Start ();
 
-            WorkerThread wt = new WorkerThread (this, m_sSourcePath);
+            WorkerThread wt = new WorkerThread (this);
             m_WorkerThread = new Thread (new ThreadStart (wt.ThreadProc));
             m_WorkerThread.Name = "Zal worker thread";
             m_WorkerThread.IsBackground = true;
@@ -298,12 +330,10 @@ namespace Converter
     public class WorkerThread
     {
         private ConverterForm m_Form;
-        private string m_sPath;
 
-        public WorkerThread (ConverterForm Form, string sPath)
+        public WorkerThread (ConverterForm Form)
         {
             m_Form = Form;
-            m_sPath = sPath;
         }
 
         public void ThreadProc()
@@ -314,7 +344,7 @@ namespace Converter
                 EventSink sink = new EventSink (m_Form);
                 reader.ProgressNotification += sink.ProgressNotification;
                 reader.StatusCheck += sink.StatusCheck;
-                reader.ProcessSourceFile (m_sPath);
+                reader.ProcessSourceFile (m_Form.sSourcePath, m_Form.sDbPath, m_Form.iStopAfter);
             }
             catch (Exception ex)
             {
@@ -329,55 +359,6 @@ namespace Converter
                 m_Form.BeginInvoke (m_Form.m_DelegateSignalCompletion);
             }
 
-/*
-            try
-            {
-                FileInfo fi = new FileInfo(m_sPath);
-                long lFileLength = fi.Length;
-                long lProcessedLength = 0;
-                int iPercentDone = 0;
-
-                using (StreamReader sr = fi.OpenText())
-                {
-                    string sEntry;
-                    for (int iRecordsProcessed = 0; 
-                        (iRecordsProcessed <= m_Form.m_iStopAfter) && ((sEntry = sr.ReadLine()) != null);
-                        ++iRecordsProcessed)
-                    {
-                        if (m_Form.m_bStopConversion)
-                        {
-                            break;
-                        }
-//ct.testInsert(sEntry);
-                        lProcessedLength += sEntry.Length;
-                        double dPercent = (double)lProcessedLength / (double)lFileLength;
-                        dPercent *= 100;
-                        if ((int)dPercent > iPercentDone)
-                        {
-                            iPercentDone = (int)dPercent;
-                            if (m_Form.InvokeRequired)
-                            {
-                                m_Form.BeginInvoke (m_Form.m_DelegateUpdateProgressbar, 
-                                                    new Object[] { iPercentDone });
-                            }
-                        } 
-                    }
-                }   // using...
- 
-                if (m_Form.InvokeRequired)
-                {
-                    m_Form.BeginInvoke (m_Form.m_DelegateSignalCompletion);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                string sMsg = "I/O error in WorkerThread: ";
-                sMsg += ex.Message;
-                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-*/
         }   //  ThreadProc()
 
     }   //  public class WorkerThread
