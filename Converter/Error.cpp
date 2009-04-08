@@ -5,15 +5,16 @@
 	
 */
 
+#include "StdAfx.h"
 #include "Error.h"
 
 //
 // Ctors and dtors
 //
-Error::Error (const wstring& str_briefDescription,
-              const wstring& str_location,
-			  const wstring& str_detailedDescription,
-              int i_errCode) : 
+CT_Error::CT_Error (const wstring& str_briefDescription,
+                    const wstring& str_location,
+			        const wstring& str_detailedDescription,
+                    int i_errCode) : 
 	str_BriefDescription_ (str_briefDescription),
     str_Location_ (str_location),
 	str_DetailedDescription_ (str_detailedDescription),
@@ -27,7 +28,7 @@ Error::Error (const wstring& str_briefDescription,
 }
 
 
-Error& Error::operator = (const Error& co_rhs)
+CT_Error& CT_Error::operator = (const CT_Error& co_rhs)
 {
 	str_BriefDescription_ = co_rhs.str_BriefDescription_;
     str_Location_ = co_rhs.str_Location_;
@@ -45,10 +46,10 @@ wstring str_ToString_ (T from)
 	return io_.str();
 };
 
-wstring Error::str_Format_ (const wstring& str_briefDescription, 
-                            const wstring& str_location, 
-                            const wstring& str_detailedDescription, 
-                            int i_errCode)
+wstring CT_Error::str_Format_ (const wstring& str_briefDescription, 
+                               const wstring& str_location, 
+                               const wstring& str_detailedDescription, 
+                               int i_errCode)
 {
 	time_t time_current;
 	time (&time_current);
@@ -84,7 +85,7 @@ wstring Error::str_Format_ (const wstring& str_briefDescription,
 	
 }	//  str_Format_ (...)
 
-bool Error::b_WriteLog (const wstring& str_msg)
+bool CT_Error::b_WriteLog (const wstring& str_msg)
 {
     LPTSTR sz_name = _T("\\\\.\\pipe\\ZalConversionLog"); 
   

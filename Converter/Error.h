@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Error
+class CT_Error
 {
 public:
 
@@ -20,26 +20,26 @@ private:
     wstring str_FormattedMsg_;
 
 public:
-    Error() {};
+    CT_Error() {};
 
-    Error  (const wstring& str_briefDescription,
-            const wstring& str_location,
-		    const wstring& str_detailedDescription = L"",
-            int i_errCode = -1);
+    CT_Error  (const wstring& str_briefDescription,
+               const wstring& str_location,
+		       const wstring& str_detailedDescription = L"",
+               int i_errCode = -1);
 
-    Error (const Error&);
+    CT_Error (const CT_Error&);
 
 	//
 	//  Non-virtual destructor: this is not a base class
 	//
-    ~Error() {};
+    ~CT_Error() {};
 
-	Error& operator = (const Error&);
+	CT_Error& operator = (const CT_Error&);
 
     wstring static str_Format (const wstring& str_briefDescription, 
-                    const wstring& str_location, 
-                    const wstring& str_detailedDescription = L"", 
-                    int i_errCode = -1)
+                               const wstring& str_location, 
+                               const wstring& str_detailedDescription = L"", 
+                               int i_errCode = -1)
     {
         return str_Format_ (str_briefDescription,
                             str_location,
@@ -52,6 +52,6 @@ private:
                                 const wstring& str_location, 
                                 const wstring& str_detailedDescription, 
                                 int i_errCode);
-    bool Error::b_WriteLog (const wstring& str_msg);
+    bool CT_Error::b_WriteLog (const wstring& str_msg);
 
 };
