@@ -3,7 +3,7 @@
 */
 
 #include "stdafx.h"
-#include "DbHandler_i.h"
+#include "SqliteWrapper.h"
 #include "ZalSourceReader.h"
 
 HRESULT CT_ZalSourceReader::FinalConstruct()
@@ -23,42 +23,39 @@ HRESULT CT_ZalSourceReader::ProcessSourceFile (BSTR bstr_sourcePath,
                                                BSTR bstr_dbPath,
                                                int i_maxEntries)
 {
+    USES_CONVERSION;
+
     HRESULT h_r = S_OK;
 
     StatusUpdate (0);
 
-    CString cs_sourcePath (bstr_sourcePath);
     FILE * io_stream = NULL;
-    errno_t i_error = _tfopen_s (&io_stream, cs_sourcePath.GetBuffer(), L"r, ccs=UNICODE");
+    errno_t i_error = _tfopen_s (&io_stream, OLE2W (bstr_sourcePath), L"r, ccs=UNICODE");
     if (0 != i_error)
     {
-        ERROR_LOG (L"Unable to open source file");
+        CString cs_msg;
+        cs_msg.Format (L"Unable to open source, error %d", i_error);
+        ERROR_LOG ((LPCTSTR)cs_msg);
         return E_FAIL;
     }
 
-    CComPtr<ISqliteWrapper> co_sqlite;
-    h_r = co_sqlite.CoCreateInstance (__uuidof(SqliteWrapper));
-    if (S_OK != h_r)
-    {
-        return h_r;
-    }
-
-    h_r = co_sqlite->Open (bstr_dbPath);
-    if (S_OK != h_r)
+    CT_Sqlite co_sqlite;
+    int i_r = co_sqlite.i_Open (OLE2W (bstr_dbPath));
+    if (SQLITE_OK != i_r)
     {
         CString cs_msg;
-        cs_msg.Format (L"Unable to open database, error %d");
+        cs_msg.Format (L"Unable to open database, error %d", i_r);
         ERROR_LOG ((LPCTSTR)cs_msg);
-        return h_r;
+        return MAKE_HRESULT (SEVERITY_ERROR, FACILITY_ITF, 0xF000 + i_r);
     }
 
-	h_r = co_sqlite->Exec (L"CREATE TABLE Test (Entry TEXT)");
-    if (S_OK != h_r)
+	i_r = co_sqlite.i_Exec (L"CREATE TABLE Test (Entry TEXT)");
+    if (SQLITE_OK != i_r)
     {
         CString cs_msg;
-        cs_msg.Format (L"Unable to create DB table, error %d");
+        cs_msg.Format (L"Unable to create DB table, error %d", i_r);
         ERROR_LOG ((LPCTSTR)cs_msg);
-        return h_r;
+        return MAKE_HRESULT (SEVERITY_ERROR, FACILITY_ITF, 0xF000 + i_r);
     }
 
     long l_fileLength = _filelength (_fileno (io_stream))/sizeof (TCHAR);
@@ -106,7 +103,7 @@ HRESULT CT_ZalSourceReader::ProcessSourceFile (BSTR bstr_sourcePath,
         cstr_query += CString (sz_lineBuf);
         cstr_query += L"')";
         CComBSTR co_bstrQuery (cstr_query);
-        co_sqlite->Exec (co_bstrQuery);
+        co_sqlite.i_Exec (OLE2W (co_bstrQuery));
 
         StatusCheck (ui_abort);
     }
@@ -122,10 +119,6 @@ HRESULT CT_ZalSourceReader::ProcessSourceFile (BSTR bstr_sourcePath,
 HRESULT CT_ZalSourceReader::StatusUpdate (int i_progress)
 {
     HRESULT h_r = S_OK;
-
-//    IConnectionPointImpl<CT_ZalSourceReader,
-//                         &IID_IZalNotification,
-//                         CComDynamicUnkArray> * p_this = this;
 
     int i_nConnections = m_vec.GetSize();
     for (int i_c = 0; i_c < i_nConnections; ++i_c)
@@ -146,10 +139,6 @@ HRESULT CT_ZalSourceReader::StatusUpdate (int i_progress)
 HRESULT CT_ZalSourceReader::StatusCheck (BOOL& b_cancel)
 {
     HRESULT h_r = S_OK;
-
-//    IConnectionPointImpl<CT_ZalSourceReader,
-//                         &IID_IZalNotification,
-//                         CComDynamicUnkArray> * p_this = this;
 
     int i_nConnections = m_vec.GetSize();
     for (int i_c = 0; i_c < i_nConnections; ++i_c)
