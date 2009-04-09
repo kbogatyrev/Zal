@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="ConversionLib"
 	ProjectGUID="{70614BC7-05AD-4585-A0E2-628DE2A14183}"
+	RootNamespace="ConversionLib"
 	Keyword="AtlProj"
 	TargetFrameworkVersion="196613"
 	>
@@ -227,6 +228,30 @@
 				>
 			</File>
 			<File
+				RelativePath=".\sqlite3.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\SqliteWrapper.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -270,6 +295,18 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\sqlite3.h"
+				>
+			</File>
+			<File
+				RelativePath=".\sqlite3ext.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SqliteWrapper.h"
 				>
 			</File>
 			<File
