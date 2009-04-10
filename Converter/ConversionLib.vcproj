@@ -228,6 +228,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Lexeme.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\sqlite3.c"
 				>
 				<FileConfiguration
@@ -291,6 +303,10 @@
 			</File>
 			<File
 				RelativePath=".\ExtString.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lexeme.h"
 				>
 			</File>
 			<File
