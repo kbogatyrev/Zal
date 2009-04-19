@@ -40,11 +40,6 @@ public:
                                    BSTR bstr_dbPath,
                                    int i_maxEntries);
 
-//
-// Non-ITF methods
-//
-    int i_Parse (const wstring& str_entry);
-
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalSourceReader), CT_ZalSourceReader)
