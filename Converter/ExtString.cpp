@@ -85,6 +85,14 @@ CT_ExtString::~CT_ExtString()
 	v_Null_();
 }
 
+void CT_ExtString::v_RegexMatch (const wstring& str_regex)
+{
+    str_Regex_ = str_regex;
+}
+
+//
+// Private
+//
 void CT_ExtString::v_Null_()
 {
 	this->erase();
@@ -105,6 +113,7 @@ void CT_ExtString::v_CopyAttributes (const CT_ExtString& estr)
 	str_Tab_ = estr.str_Tab_;
 	str_Escape_ = estr.str_Escape_;
 	str_Punctuation_ = estr.str_Punctuation_;
+    str_Regex_ = estr.str_Regex_;
 }
 
 //
@@ -124,6 +133,7 @@ CT_ExtString& CT_ExtString::operator = (const CT_ExtString& estr)
 	str_Tab_ = estr.str_Tab_;
 	str_Escape_ = estr.str_Escape_;
 	str_Punctuation_ = estr.str_Punctuation_;
+    str_Regex_ = estr.str_Regex_;
 
 	vo_LastTokenizedContents_ = estr.vo_LastTokenizedContents_;
 	vo_Tokens_ = estr.vo_Tokens_;
@@ -148,10 +158,7 @@ CT_ExtString& CT_ExtString::operator = (const wchar_t * pchr_)
 //
 void CT_ExtString::v_Synchronize_()
 {
-	wstring str_separators = str_Break_ + 
-							 str_Tab_ + 
-							 str_Escape_ + 
-							 str_Punctuation_;
+	wstring str_separators = str_Break_ + str_Tab_ + str_Escape_ + str_Punctuation_ + str_Regex_;
 
 	if ((vo_LastTokenizedContents_[0] != static_cast <wstring> (*this)) ||
 		(vo_LastTokenizedContents_[1] != str_separators))
@@ -187,61 +194,39 @@ bool CT_ExtString::b_Tokenize_ (const et_TokenType eo_type,
 		return true;
 	}
 
-	if (eo_type == ec_TokenText)
-	{
-		bool b_result =  b_ExtractTextTokens_ (vo_tokens);
-		if (!b_result)
+    bool b_result = true;
+    switch (eo_type)
+    {
+        case ec_TokenText:
+        {
+		    b_result =  b_ExtractTextTokens_ (vo_tokens);
+            break;
+        }
+        case ec_TokenSpace:
+        {
+			b_result = b_ExtractSeparators_ (eo_type, str_Break_, vo_tokens);
+            break;
+        }
+        case ec_TokenTab:
+        {
+			b_result = b_ExtractSeparators_ (eo_type, str_Tab_, vo_tokens);
+            break;
+        }
+        case ec_TokenPunctuation:
+        {
+			b_result = b_ExtractSeparators_ (eo_type, str_Punctuation_, vo_tokens);
+            break;
+        }
+        case ec_TokenRegexMatch:
+        {
+            break;
+        }
+	    default:
 		{
-            ERROR_LOG (L"b_ExtractTextTokens_ returned \'false\'");
-			return false;
-		}
-	}
-	else
-	{
-		wstring str_matchOn;
-		switch (eo_type)
-		{
-			case ec_TokenSpace:
-			{
-
-				str_matchOn = str_Break_;
-				break;
-			}
-			case ec_TokenTab:
-			{
-				str_matchOn = str_Tab_;
-				break;
-			}
-			case ec_TokenPunctuation:
-			{
-				str_matchOn = str_Punctuation_;
-				break;
-			}
-			default:
-			{
-				ERROR_LOG (L"Bad token type");
-				return false;
-			}
-		} // switch
-
-		if (str_matchOn.empty())
-		{
-//			cout << endl
-//				 << "*** ExtString::b_Tokenize_(): Empty separator string." 
-//		 		 << endl;
-		}
-		else
-		{
-			bool b_result = b_ExtractSeparators_ (eo_type, 
-												  str_matchOn, 
-												  vo_tokens);
-			if (!b_result)
-			{
-                ERROR_LOG (L"b_ExtractSeparators_ returned \'false\'");
-				return false;
-			}
-		}
-	}
+		    ERROR_LOG (L"Bad token type");
+			b_result = false;
+	    }
+    }
 
 	return true;
 
@@ -267,6 +252,7 @@ bool CT_ExtString::b_ExtractTextTokens_ (vector<ST_Token>& vo_tokens)
 		if (se_length == 0)
 		{
 			ERROR_LOG (L"Token has a zero length");
+            return false;
 		}
 		ST_Token st_token;
 		st_token.eo_TokenType = ec_TokenText;
@@ -301,6 +287,7 @@ bool CT_ExtString::b_ExtractSeparators_ (const et_TokenType eo_type,
 		if (se_length == 0)
 		{
 			ERROR_LOG (L"Token has a zero length");
+            return false;
 		}
 		ST_Token st_token;
 		st_token.eo_TokenType = eo_type;
@@ -322,6 +309,43 @@ bool CT_ExtString::b_ExtractSeparators_ (const et_TokenType eo_type,
 	return true;
 
 } // b_ExtractSeparators_ (..)
+
+bool CT_ExtString::b_Regex_()
+{
+    if (str_Regex_.empty())
+    {
+        ERROR_LOG (L"Warning: Empty regex");
+        return true;
+    }
+
+    CAtlRegExp<> co_atlRegex;
+    BOOL ui_caseSensitive = TRUE;
+    REParseError eo_status = co_atlRegex.Parse (str_Regex_.c_str(), ui_caseSensitive);
+    if (REPARSE_ERROR_OK != eo_status)
+    {
+        return false;
+    }
+
+    CAtlREMatchContext<> co_atlContext;
+    BOOL ui_ret = co_atlRegex.Match (this->c_str(), &co_atlContext);
+    if (!ui_ret) 
+    {
+        return false;
+    }
+
+    for (UINT ui_groupIndex = 0; ui_groupIndex < co_atlContext.m_uNumGroups; ++ui_groupIndex)
+    {
+        const CAtlREMatchContext<>::RECHAR * sz_start = NULL;
+        const CAtlREMatchContext<>::RECHAR * sz_end = NULL;
+        co_atlContext.GetMatch (ui_groupIndex, &sz_start, &sz_end);
+        vo_Tokens_[ui_groupIndex].eo_TokenType = ec_TokenRegexMatch;
+        vo_Tokens_[ui_groupIndex].i_Length = (ptrdiff_t)(sz_end - sz_start);
+        vo_Tokens_[ui_groupIndex].i_Offset = (ptrdiff_t) (sz_end - sz_start)/sizeof (wchar_t);
+    }
+
+    return true;
+
+}   // b_Regex_()
 
 //
 //  --- Public methods ---
@@ -511,15 +535,26 @@ int CT_ExtString::i_CompareNoCase (const wstring& str) const
 	return result;
 }
 
+bool CT_ExtString::b_GetToken (const int i_at, ST_Token& st_token)
+{
+    v_Synchronize_(); 
+    if (i_at >= (int)vo_Tokens_.size())
+    {
+        ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return false;
+    }
+    return true; 
+}
+
 wstring CT_ExtString::str_GetField (const int i_at, 
-								    const et_TokenType eo_type)
-								   
+								    const et_TokenType eo_type)								   
 {
 	v_Synchronize_();
 
 	if (i_at >= static_cast<int>(vo_Tokens_.size()))
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return wstring (L"");
 	}
 
 	int i_token = 0;
@@ -541,6 +576,7 @@ wstring CT_ExtString::str_GetField (const int i_at,
 	if (ui_ == vo_Tokens_.size())
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return wstring (L"");
 	}
 
 	ST_Token st_token = vo_Tokens_[ui_];
@@ -558,6 +594,7 @@ wstring CT_ExtString::str_GetField (const int i_offset,
 	if (i_at >= static_cast<int>(vo_Tokens_.size()))
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return wstring (L"");
 	}
 
 	int i_token = 0;
@@ -580,6 +617,7 @@ wstring CT_ExtString::str_GetField (const int i_offset,
 	if (ui_ == vo_Tokens_.size())
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return wstring (L"");
 	}
 
 	ST_Token st_token = vo_Tokens_[ui_];
@@ -587,16 +625,18 @@ wstring CT_ExtString::str_GetField (const int i_offset,
 
 	return str_token;
 
-}
+}   //  str_GetField (...)
 
-const CT_ExtString::ST_Token& CT_ExtString::st_GetField (int i_at,
-									  			         const et_TokenType eo_type)
+bool CT_ExtString::b_GetField (int i_at, 
+                               const et_TokenType eo_type, 
+                               CT_ExtString::ST_Token& st_token)
 {
 	v_Synchronize_();
 
 	if (i_at >= static_cast<int>(vo_Tokens_.size()))
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return false;
 	}
 
 	int i_token = 0;
@@ -619,19 +659,23 @@ const CT_ExtString::ST_Token& CT_ExtString::st_GetField (int i_at,
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
 	}
-	return vo_Tokens_[ui_];
-}
 
-const CT_ExtString::ST_Token& CT_ExtString::st_GetField (const int i_offset,
-										   		         int i_at,
-										   		         const et_TokenType eo_type)
+    st_token = vo_Tokens_[ui_];
+	return true;
+
+}   //  b_GetField (...)
+
+bool CT_ExtString::b_GetField (const int i_offset,
+                               int i_at,
+							   const et_TokenType eo_type,
+                               CT_ExtString::ST_Token& st_token)
 {
 	v_Synchronize_();
 
 	if (i_at >= static_cast<int>(vo_Tokens_.size()))
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
-
+        return false;
 	}
 
 	int i_token = 0;
@@ -654,9 +698,14 @@ const CT_ExtString::ST_Token& CT_ExtString::st_GetField (const int i_offset,
 	if (ui_ == vo_Tokens_.size())
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return false;
 	}
-	return vo_Tokens_[ui_];
-}
+
+    st_token = vo_Tokens_[ui_];
+
+	return true;
+
+}   //  b_GetField (...)
 
 CT_ExtString::et_TokenType CT_ExtString::eo_GetTokenType (int i_at)
 {
@@ -709,6 +758,51 @@ wstring CT_ExtString::str_GetToken (const int i_at)
 
 	return str_token;
 }
+
+wstring CT_ExtString::str_GetRegexMatch (const int i_at)
+{
+    if (str_Regex_.empty())
+    {
+        ERROR_LOG (L"Warning: Empty regex string");
+        return wstring (L"");
+    }
+
+	v_Synchronize_();
+
+	if (i_at >= static_cast<int>(vo_Tokens_.size()))
+	{
+		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return wstring (L"");
+	}
+
+	int i_token = 0;
+	unsigned int ui_;
+	for (ui_ = 0; (ui_ < vo_Tokens_.size()); ++ui_)
+	{
+        if (ec_TokenRegexMatch == vo_Tokens_[ui_].eo_TokenType)
+		{
+			if (i_token < i_at)
+			{
+				i_token++;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+	if (ui_ == vo_Tokens_.size())
+	{
+		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return wstring (L"");
+	}
+
+	ST_Token st_token = vo_Tokens_[ui_];
+	wstring str_token = substr (st_token.i_Offset, st_token.i_Length);
+
+	return str_token;
+
+}   // str_GetRegexMatch (...)
 
 int CT_ExtString::i_GetNumOfFields (const et_TokenType eo_type)
 {

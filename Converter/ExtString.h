@@ -5,6 +5,7 @@
 #pragma once
 
 #include "StdAfx.h"
+#include "atlrx.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
 		ec_TokenSpace,				 // sequence of break chars
 		ec_TokenTab,				 // sequence of tabs
 		ec_TokenPunctuation,		 // sequence of punct. marks i.e. ; or ?!...
+        ec_TokenRegexMatch,
 		ec_TokenTypeBack	= ec_TokenPunctuation + 1
 	};
 
@@ -65,6 +67,7 @@ private:
 	wstring str_Tab_;
 	wstring str_Escape_;
 	wstring str_Punctuation_;
+    wstring str_Regex_;
 	
 	vector<ST_Token> vo_Tokens_;
 
@@ -104,15 +107,16 @@ private:
 	bool b_ExtractSeparators_ (const et_TokenType, 
 							   const wstring&, 
 							   vector<ST_Token>&);
+    bool b_Regex_();
+
 public:
-	/**
-	* @desc Assignment operators
-	*/
 	CT_ExtString& operator = (const CT_ExtString& estr_);
 	CT_ExtString& operator = (const wstring& str_);
 	CT_ExtString& operator = (const wchar_t * pcchr_);
 
 public:
+    void v_RegexMatch (const wstring& str_regex);
+
 	void v_ToLower();
 	void v_ToUpper();
 	void v_ToTitle();
@@ -132,32 +136,65 @@ public:
 						  const int i_at, 
 						  const et_TokenType eo_type = ec_TokenText);
 
-    const ST_Token& st_GetField (const int i_at,
-								 const et_TokenType eo_type = ec_TokenText);
-	const ST_Token& st_GetField (const int i_offset,
-								 int i_at,
-								 const et_TokenType eo_type = ec_TokenText);
+    bool b_GetField (const int i_at,
+                     const et_TokenType eo_type,
+                     ST_Token& );
+	bool b_GetField (const int i_offset,
+			         int i_at,
+					 const et_TokenType eo_type,
+                     ST_Token& );
 
     et_TokenType eo_GetTokenType (const int i_at);
 	et_TokenType eo_GetTokenType (const int i_offset, const int i_at);
 
-    const ST_Token& st_GetToken (const int i_at);
-	const ST_Token& st_GetToken (const int i_offset, const int i_at);
+    bool b_GetToken (const int i_at, ST_Token&);
+	bool b_GetToken (const int i_offset, const int i_at, ST_Token&);
 
     wstring str_GetToken (const int i_at);
+
+    wstring str_GetRegexMatch (const int i_at);
 
     int i_GetNumOfFields (const et_TokenType eo_type = ec_TokenText);
 	int i_GetNumOfFields (const int i_offset, 
 						  const int i_length,
 						  const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
 	
-    int i_NFields (const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
+    int i_NFields (const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText)
+    { 	
+        v_Synchronize_(); 
+        return i_GetNumOfFields (eo_type); 
+    }
+
 	int i_NFields (const int i_offset, 
 				   const int i_length,
-				   const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText);
+				   const CT_ExtString::et_TokenType eo_type = CT_ExtString::ec_TokenText)
+    { 
+        v_Synchronize_(); 
+        return i_GetNumOfFields (i_offset, i_length, eo_type); 
+    }
 	
-    int i_GetNumOfTokens();
-	int i_NTokens();
+    int i_GetNumOfTokens()
+    { 	
+        v_Synchronize_(); 
+        return vo_Tokens_.size(); 
+    }
+	
+    int i_NTokens()
+    { 	
+        v_Synchronize_(); 
+        return vo_Tokens_.size(); 
+    }
+
+    int i_GetNumOfRegexMatches()
+    {
+        i_NRegexMatches();
+    }
+
+    int i_NRegexMatches()
+    {
+        v_Synchronize_(); 
+        return i_GetNumOfFields (ec_TokenRegexMatch); 
+    }
 
 	int const i_GetFieldLength (const int i_at,
 								const et_TokenType eo_type = ec_TokenText);
@@ -166,28 +203,23 @@ public:
 								const CT_ExtString::et_TokenType eo_type = 
                                         CT_ExtString::ec_TokenText);
 	
-    void v_SetBreakChars (const wstring& str_break);
-	void v_SetTabChars (const wstring& str_tab);
-	void v_SetEscChars (const wstring& str_escape);
-	void v_SetPunctChars (const wstring& str_punctuation);
-};
+    void v_SetBreakChars (const wstring& str_break)
+    { 
+        str_Break_ = str_break; 
+    }
 
-inline const CT_ExtString::ST_Token& CT_ExtString::st_GetToken (const int i_at)
-{	v_Synchronize_(); return vo_Tokens_[i_at]; }
-inline int CT_ExtString::i_GetNumOfTokens() 
- { 	v_Synchronize_(); return vo_Tokens_.size(); }
-inline int CT_ExtString::i_NTokens() 
- { 	v_Synchronize_(); return vo_Tokens_.size(); }
-inline int CT_ExtString::i_NFields (const et_TokenType eo_type)
- { 	v_Synchronize_(); return i_GetNumOfFields (eo_type); }
-inline int CT_ExtString::i_NFields (const int i_offset, const int i_length, 
- const et_TokenType eo_type) { v_Synchronize_(); 
- return i_GetNumOfFields (i_offset, i_length, eo_type); }
-inline void CT_ExtString::v_SetBreakChars (const wstring& str_break) 
-{ str_Break_ = str_break; }
-inline void CT_ExtString::v_SetTabChars (const wstring& str_tab) 
-{ str_Tab_ = str_tab; }
-inline void CT_ExtString::v_SetEscChars (const wstring& str_escape) 
-{ str_Escape_ = str_escape; }
-inline void CT_ExtString::v_SetPunctChars (const wstring& str_punctuation) 
-{ str_Punctuation_ = str_punctuation; }
+	void v_SetTabChars (const wstring& str_tab)
+    {
+        str_Tab_ = str_tab; 
+    }
+
+	void v_SetEscChars (const wstring& str_escape)
+    {
+        str_Escape_ = str_escape; 
+    }
+
+	void v_SetPunctChars (const wstring& str_punctuation)
+    {
+        str_Punctuation_ = str_punctuation; 
+    }
+};
