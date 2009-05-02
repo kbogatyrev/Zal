@@ -28,6 +28,8 @@ namespace Converter
         public int m_iStopAfter;
 
         private string m_sSourcePath;
+        private string m_sOutPath;
+        private string m_sErrPath;
         private string m_sLogPath;
         private string m_sDbPath;
 
@@ -47,11 +49,35 @@ namespace Converter
             }
         }
 
+        public string sOutputPath
+        {
+            get
+            {
+                return m_sOutPath;
+            }
+        }
+        
+        public string sErrPath
+        {
+            get
+            {
+                return m_sErrPath;
+            }
+        }
+
         public int iStopAfter
         {
             get
             {
                 return m_iStopAfter;
+            }
+        }
+
+        public int iSelectedTabIndex
+        {
+            get
+            {
+                return tabControl.SelectedIndex;
             }
         }
 
@@ -133,6 +159,11 @@ namespace Converter
         //
         // Local event handlers
         //
+        private void ConverterForm_FormClosing (object sender, FormClosingEventArgs e)
+        {
+            StopThreads ();
+        }
+
         void AddString (string sEntry)
         {
             textBox.Text += sEntry + "\r\n";
@@ -215,11 +246,6 @@ namespace Converter
             }
         }
 
-        private void ConverterForm_FormClosing (object sender, FormClosingEventArgs e)
-        {
-            StopThreads();
-        }
-
         private void buttonSourcePath_Click (object sender, EventArgs e)
         {
             FileDialog fd = new OpenFileDialog ();
@@ -229,12 +255,24 @@ namespace Converter
                 m_sSourcePath = fd.FileName;
                 if (File.Exists (fd.FileName))
                 {
-                    textBoxSourcePath.Text = fd.FileName;
-                    if ((textBoxDbLocation.Text.Length > 0) &&
-                        (textBoxLogPath.Text.Length > 0))
+                    if (0 == tabControl.SelectedIndex)
                     {
-                        buttonOK.Enabled = true;
+                        textBoxSourcePath.Text = fd.FileName;
                     }
+                    else
+                    {
+                        if (1 == tabControl.SelectedIndex)
+                        {
+                            textBoxPreprocessSource.Text = fd.FileName;
+                        }
+                        else
+                        {
+                            string sMsg = "Illegal tab index";
+                            MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                    buttonOK.Enabled = bCanEnableOkButton();
                 }
                 else
                 {
@@ -256,7 +294,7 @@ namespace Converter
             {
                 m_sDbPath = fd.FileName;
                 textBoxDbLocation.Text = fd.FileName;
-                buttonOK.Enabled = true;
+                buttonOK.Enabled = bCanEnableOkButton();
             }
         }
 
@@ -269,8 +307,50 @@ namespace Converter
             if (DialogResult.OK == dr)
             {
                 m_sLogPath = fd.FileName;
-                textBoxLogPath.Text = fd.FileName;
-//                buttonOK.Enabled = true;
+                if (0 == tabControl.SelectedIndex)
+                {
+                    textBoxLogPath.Text = fd.FileName;
+                }
+                else
+                {
+                    if (1 == tabControl.SelectedIndex)
+                    {
+                        textBoxPreprocessLog.Text = fd.FileName;
+                    }
+                    else
+                    {
+                        string sMsg = "Illegal tab index";
+                        MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+                buttonOK.Enabled = bCanEnableOkButton();
+            }
+        }
+
+        private void buttonPreprocessOut_Click (object sender, EventArgs e)
+        {
+            FileDialog fd = new OpenFileDialog ();
+            fd.CheckFileExists = false;
+            fd.CheckPathExists = true;
+            DialogResult dr = fd.ShowDialog ();
+            if (DialogResult.OK == dr)
+            {
+                m_sOutPath = fd.FileName;
+                textBoxPreprocessOutput.Text = fd.FileName;
+            }
+        }
+
+        private void buttonPreprocessErrors_Click (object sender, EventArgs e)
+        {
+            FileDialog fd = new OpenFileDialog ();
+            fd.CheckFileExists = false;
+            fd.CheckPathExists = true;
+            DialogResult dr = fd.ShowDialog ();
+            if (DialogResult.OK == dr)
+            {
+                m_sErrPath = fd.FileName;
+                textBoxPreprocessErrors.Text = fd.FileName;
             }
         }
 
@@ -288,10 +368,81 @@ namespace Converter
             }
         }
 
-
         private void numericUpDownStopAfter_ValueChanged (object sender, EventArgs e)
         {
             m_iStopAfter = (int)((NumericUpDown)sender).Value;
+        }
+
+        private bool bCanEnableOkButton()
+        {
+            if (0 == tabControl.SelectedIndex)
+            {
+                if ((textBoxSourcePath.Text.Length > 0) &&
+                    (textBoxDbLocation.Text.Length > 0) &&
+                    (textBoxLogPath.Text.Length > 0))
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            if (1 == tabControl.SelectedIndex)
+            {
+                if ((textBoxPreprocessSource.Text.Length > 0) &&
+                    (textBoxPreprocessOutput.Text.Length > 0) &&
+                    (textBoxPreprocessErrors.Text.Length > 0) &&
+                    (textBoxPreprocessLog.Text.Length > 0))
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            string sMsg = "Illegal tab index";
+            MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+            return false;
+        }
+
+        private void textBoxSourcePath_TextChanged (object sender, EventArgs e)
+        {
+            m_sSourcePath = textBoxSourcePath.Text;
+            buttonOK.Enabled = bCanEnableOkButton();
+        }
+
+        private void textBoxDbLocation_TextChanged (object sender, EventArgs e)
+        {
+            m_sDbPath = textBoxDbLocation.Text;
+            buttonOK.Enabled = bCanEnableOkButton();
+        }
+
+        private void textBoxLogPath_TextChanged (object sender, EventArgs e)
+        {
+            m_sLogPath = textBoxLogPath.Text;
+            buttonOK.Enabled = bCanEnableOkButton();
+        }
+
+        private void textBoxPreprocessSource_TextChanged (object sender, EventArgs e)
+        {
+            m_sSourcePath = textBoxPreprocessSource.Text;
+            buttonOK.Enabled = bCanEnableOkButton();
+        }
+
+        private void textBoxPreprocessOutput_TextChanged (object sender, EventArgs e)
+        {
+            m_sOutPath = textBoxPreprocessOutput.Text;
+            buttonOK.Enabled = bCanEnableOkButton();
+        }
+
+        private void textBoxPreprocessErrors_TextChanged (object sender, EventArgs e)
+        {
+            m_sErrPath = textBoxPreprocessErrors.Text;
+            buttonOK.Enabled = bCanEnableOkButton();
+        }
+
+        private void textBoxPreprocessLog_TextChanged (object sender, EventArgs e)
+        {
+            m_sLogPath = textBoxPreprocessLog.Text;
+            buttonOK.Enabled = bCanEnableOkButton();
         }
 
     }   // ConverterForm class
@@ -344,7 +495,22 @@ namespace Converter
                 EventSink sink = new EventSink (m_Form);
                 reader.ProgressNotification += sink.ProgressNotification;
                 reader.StatusCheck += sink.StatusCheck;
-                reader.ProcessSourceFile (m_Form.sSourcePath, m_Form.sDbPath, m_Form.iStopAfter);
+                if (0 == m_Form.iSelectedTabIndex)
+                {
+                    reader.ConvertSourceFile (m_Form.sSourcePath, m_Form.sDbPath, m_Form.iStopAfter);
+                }
+                else
+                {
+                    if (1 == m_Form.iSelectedTabIndex)
+                    {
+                        reader.PreprocessSourceFile (m_Form.sSourcePath, m_Form.sOutputPath, m_Form.sErrPath);
+                    }
+                    else
+                    {
+                        string sMsg = "Illegal tab index";
+                        MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -397,7 +563,6 @@ namespace Converter
                                     m_Form.BeginInvoke (m_Form.m_DelegateAddString, 
                                                         new Object[] { sLine });
                                 }
-
                                 pipeServer.Disconnect();
                             }
                         }
