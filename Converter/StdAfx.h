@@ -48,11 +48,11 @@ using namespace ATL;
 
 #include "Error.h"
 
-#define ERROR_LOG(str_Msg) wstringstream io_; \
-        io_ << __LINE__; \
+#define ERROR_LOG(str_Msg) wstringstream io__; \
+        io__ << __LINE__; \
         CT_Error (str_Msg, \
            std::wstring (_T(__FILE__)) + \
            std::wstring (_T("\t")) + \
-           io_.str() + \
+           io__.str() + \
            std::wstring (_T("\t")) + \
            std::wstring (_T(__FUNCTION__)));
