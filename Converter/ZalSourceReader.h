@@ -36,10 +36,12 @@ protected:
     HRESULT StatusCheck (BOOL& b_cancel);
 
 public:
-    STDMETHOD (ProcessSourceFile) (BSTR bstr_sourcePath,
+    STDMETHOD (ConvertSourceFile) (BSTR bstr_sourcePath,
                                    BSTR bstr_dbPath,
                                    int i_maxEntries);
-
+    STDMETHOD (PreprocessSourceFile) (BSTR bstr_sourcePath,
+                                      BSTR bstr_outPath,
+                                      BSTR bstr_errPath);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalSourceReader), CT_ZalSourceReader)
