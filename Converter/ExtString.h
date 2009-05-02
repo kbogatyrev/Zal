@@ -5,9 +5,10 @@
 #pragma once
 
 #include "StdAfx.h"
-#include "atlrx.h"
+#include <Regex>
 
 using namespace std;
+
 
 class  CT_ExtString : public wstring
 {
@@ -24,7 +25,7 @@ public:
 		ec_TokenTab,				 // sequence of tabs
 		ec_TokenPunctuation,		 // sequence of punct. marks i.e. ; or ?!...
         ec_TokenRegexMatch,
-		ec_TokenTypeBack	= ec_TokenPunctuation + 1
+		ec_TokenTypeBack	= ec_TokenRegexMatch + 1
 	};
 
 	struct ST_Token
@@ -107,7 +108,9 @@ private:
 	bool b_ExtractSeparators_ (const et_TokenType, 
 							   const wstring&, 
 							   vector<ST_Token>&);
-    bool b_Regex_();
+    bool b_ExtractRegexGroups_();
+
+    wstring str_RegexError_ (tr1::regex_constants::error_type eo_errCode);
 
 public:
 	CT_ExtString& operator = (const CT_ExtString& estr_);
@@ -115,7 +118,7 @@ public:
 	CT_ExtString& operator = (const wchar_t * pcchr_);
 
 public:
-    void v_RegexMatch (const wstring& str_regex);
+    bool b_RegexMatch (const wstring& str_regex);
 
 	void v_ToLower();
 	void v_ToUpper();

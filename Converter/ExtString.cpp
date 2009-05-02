@@ -85,9 +85,26 @@ CT_ExtString::~CT_ExtString()
 	v_Null_();
 }
 
-void CT_ExtString::v_RegexMatch (const wstring& str_regex)
+bool CT_ExtString::b_RegexMatch (const wstring& str_regex)
 {
-    str_Regex_ = str_regex;
+    bool b_ret = true;
+    try
+    {
+        str_Regex_ = str_regex;
+        tr1::wregex regex_ (str_Regex_.c_str());
+        tr1::wsmatch match_;
+        b_ret = tr1::regex_match (wstring (this->c_str()), match_, regex_);
+    }
+    catch (tr1::regex_error rxError_)
+    {
+        ATLASSERT(0);
+        wstring str_msg (L"Regex error: ");
+        str_msg += str_RegexError_ (rxError_.code());
+        ERROR_LOG (str_msg);
+        b_ret = false;
+    }
+
+    return b_ret;
 }
 
 //
@@ -219,6 +236,10 @@ bool CT_ExtString::b_Tokenize_ (const et_TokenType eo_type,
         }
         case ec_TokenRegexMatch:
         {
+            if (!str_Regex_.empty())
+            {
+                b_result = b_ExtractRegexGroups_();
+            }
             break;
         }
 	    default:
@@ -310,42 +331,140 @@ bool CT_ExtString::b_ExtractSeparators_ (const et_TokenType eo_type,
 
 } // b_ExtractSeparators_ (..)
 
-bool CT_ExtString::b_Regex_()
+bool CT_ExtString::b_ExtractRegexGroups_()
 {
     if (str_Regex_.empty())
     {
-        ERROR_LOG (L"Warning: Empty regex");
+        ERROR_LOG (L"Warning: Empty regex string");
         return true;
     }
 
-    CAtlRegExp<> co_atlRegex;
-    BOOL ui_caseSensitive = TRUE;
-    REParseError eo_status = co_atlRegex.Parse (str_Regex_.c_str(), ui_caseSensitive);
-    if (REPARSE_ERROR_OK != eo_status)
+    try
     {
-        return false;
-    }
+        tr1::wregex regex_ (str_Regex_.c_str());
+        tr1::wsmatch match_;
+        tr1::regex_search (*this, match_, regex_);
 
-    CAtlREMatchContext<> co_atlContext;
-    BOOL ui_ret = co_atlRegex.Match (this->c_str(), &co_atlContext);
-    if (!ui_ret) 
-    {
-        return false;
+        for (unsigned int ui_at = 1; ui_at < match_.size(); ++ui_at)
+        {
+            if (match_[ui_at].matched)
+            {
+		        ST_Token st_token;
+                st_token.eo_TokenType = ec_TokenRegexMatch;
+		        st_token.i_Offset = static_cast <int> (match_.position (ui_at));
+		        st_token.i_Length = match_.length (ui_at);
+		        vo_Tokens_.push_back (st_token);
+            }
+        }
     }
-
-    for (UINT ui_groupIndex = 0; ui_groupIndex < co_atlContext.m_uNumGroups; ++ui_groupIndex)
+    catch (tr1::regex_error rxError_)
     {
-        const CAtlREMatchContext<>::RECHAR * sz_start = NULL;
-        const CAtlREMatchContext<>::RECHAR * sz_end = NULL;
-        co_atlContext.GetMatch (ui_groupIndex, &sz_start, &sz_end);
-        vo_Tokens_[ui_groupIndex].eo_TokenType = ec_TokenRegexMatch;
-        vo_Tokens_[ui_groupIndex].i_Length = (ptrdiff_t)(sz_end - sz_start);
-        vo_Tokens_[ui_groupIndex].i_Offset = (ptrdiff_t) (sz_end - sz_start)/sizeof (wchar_t);
+        wstring str_msg (L"Regex error: ");
+        str_msg += str_RegexError_ (rxError_.code());
+        ERROR_LOG (str_msg);
+        return false;
     }
 
     return true;
 
 }   // b_Regex_()
+
+wstring CT_ExtString::str_RegexError_ (tr1::regex_constants::error_type eo_errCode)
+{
+    wstring str_error;
+    switch (eo_errCode)
+    {
+        case tr1::regex_constants::error_badbrace:
+        {
+            str_error = L"error_badbrace -- ";
+            str_error += L"the expression contained an invalid count in a { } expression";
+            break;
+        }
+        case tr1::regex_constants::error_badrepeat:
+        {
+            str_error = L"error_badrepeat -- ";
+            str_error += L"a repeat expression (one of '*', '?', '+', '{' ";
+            str_error += L"in most contexts) was not preceded by an expression";
+            break;
+        }
+        case tr1::regex_constants::error_brace:
+        {
+            str_error = L"error_brace -- the expression contained an unmatched '{' or '}'";
+            break;
+        }
+        case tr1::regex_constants::error_brack:
+        {
+            str_error = L"error_brack -- the expression contained an unmatched '[' or ']'"; 
+            break;
+        }
+        case tr1::regex_constants::error_collate:
+        {
+            str_error = L"error_collate -- ";
+            str_error += L"the expression contained an invalid collating element name";
+            break;
+        }
+        case tr1::regex_constants::error_complexity:
+        {
+            str_error = L"error_complexity -- an attempted match failed because it was too complex";
+            break;
+        }
+        case tr1::regex_constants::error_ctype:
+        {
+            str_error = L"error_ctype -- the expression contained an invalid character class name";
+            break;
+        }
+        case tr1::regex_constants::error_escape:
+        {
+            str_error = L"error_escape -- the expression contained an invalid escape sequence";
+            break;
+        }
+        case tr1::regex_constants::error_paren:
+        {
+            str_error = L"error_paren -- the expression contained an unmatched '(' or ')'";
+            break;
+        }
+        case tr1::regex_constants::error_range:
+        {
+            str_error = L"error_range -- ";
+            str_error += L"the expression contained an invalid character range specifier";
+            break;
+        }
+        case tr1::regex_constants::error_space:
+        {
+            str_error = L"error_space -- ";
+            str_error += L"parsing a regular expression failed because there were not enough ";
+            str_error += L"resources available";
+            break;
+        }
+        case tr1::regex_constants::error_stack:
+        {
+            str_error = L"error_stack -- ";
+            str_error += L"an attempted match failed because there was not enough memory available";
+            break;
+        }
+        case tr1::regex_constants::error_backref:
+        {
+            str_error = L"error_backref -- the expression contained an invalid back reference";
+            break;
+        }
+        case tr1::regex_constants::error_parse:
+        {
+            str_error = L"error_parse";
+            break;
+        }
+        case tr1::regex_constants::error_syntax:
+        {
+            str_error = L"error_syntax";
+            break;
+        }
+    default:
+        {
+            str_error = L"Unknown error";
+        }
+    }
+    return str_error;
+}
+
 
 //
 //  --- Public methods ---
