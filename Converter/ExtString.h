@@ -98,6 +98,9 @@ public:
 
 	~CT_ExtString();
 
+public:
+    void v_Init();
+
 private:
 	void v_Null_();
 	void v_CopyAttributes (const CT_ExtString&);
