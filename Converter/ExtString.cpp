@@ -85,6 +85,14 @@ CT_ExtString::~CT_ExtString()
 	v_Null_();
 }
 
+void CT_ExtString::v_Init()
+{
+    v_SetBreakChars (L" ");
+    v_SetTabChars (L"\t");
+    v_SetEscChars (L"\x01b");
+    v_SetPunctChars (L".,;:/?<>[]{}~!()-_\'\"\\");
+}
+
 bool CT_ExtString::b_RegexMatch (const wstring& str_regex)
 {
     bool b_ret = true;
