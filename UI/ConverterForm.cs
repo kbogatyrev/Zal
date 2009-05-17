@@ -26,6 +26,7 @@ namespace Converter
         public bool m_bStopListener;
         public bool m_bStopConversion;
         public int m_iStopAfter;
+        public int m_iSelectedTab;
 
         private string m_sSourcePath;
         private string m_sOutPath;
@@ -77,7 +78,7 @@ namespace Converter
         {
             get
             {
-                return tabControl.SelectedIndex;
+                return m_iSelectedTab;
             }
         }
 
@@ -104,6 +105,8 @@ namespace Converter
             {
                 m_iStopAfter = -1;
             }
+
+            m_iSelectedTab = tabControl.SelectedIndex;
 
         }
 
@@ -443,6 +446,11 @@ namespace Converter
         {
             m_sLogPath = textBoxPreprocessLog.Text;
             buttonOK.Enabled = bCanEnableOkButton();
+        }
+
+        private void tabControl_SelectedIndexChanged (object sender, EventArgs e)
+        {
+            m_iSelectedTab = tabControl.SelectedIndex;
         }
 
     }   // ConverterForm class
