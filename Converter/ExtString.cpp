@@ -87,7 +87,7 @@ CT_ExtString::~CT_ExtString()
 
 void CT_ExtString::v_Init()
 {
-    v_SetBreakChars (L" ");
+    v_SetBreakChars (L" \n");
     v_SetTabChars (L"\t");
     v_SetEscChars (L"\x01b");
     v_SetPunctChars (L".,;:/?<>[]{}~!()-_\'\"\\");
@@ -118,18 +118,24 @@ bool CT_ExtString::b_RegexMatch (const wstring& str_regex)
 //
 // Private
 //
-void CT_ExtString::v_Null_()
+void CT_ExtString::v_Reset_()
 {
-	this->erase();
 	str_Break_.erase();
 	str_Tab_.erase();
 	str_Escape_.erase();
 	str_Punctuation_.erase();
+    str_Regex_.erase();
 
 	vo_LastTokenizedContents_.clear();
 	vo_LastTokenizedContents_.push_back (wstring(L""));
 	vo_LastTokenizedContents_.push_back (wstring(L""));
 	vo_Tokens_.clear();
+}
+
+void CT_ExtString::v_Null_()
+{
+	this->erase();
+    v_Reset_();
 }
 
 void CT_ExtString::v_CopyAttributes (const CT_ExtString& estr)
@@ -834,6 +840,19 @@ bool CT_ExtString::b_GetField (const int i_offset,
 
 }   //  b_GetField (...)
 
+ int CT_ExtString::i_GetFieldOffset (const int i_at, 
+						             const et_TokenType eo_type)
+ {
+    ST_Token st_token;
+    bool b_ = b_GetField (i_at, eo_type, st_token);
+    if (!b_)
+    {
+        return -1;
+    }
+
+    return st_token.i_Offset;
+}
+
 CT_ExtString::et_TokenType CT_ExtString::eo_GetTokenType (int i_at)
 {
 	v_Synchronize_();
@@ -884,6 +903,18 @@ wstring CT_ExtString::str_GetToken (const int i_at)
     wstring str_token = substr (st_token.i_Offset, st_token.i_Length);
 
 	return str_token;
+}
+
+int CT_ExtString::i_GetTokenOffset (const int i_at)
+{
+    v_Synchronize_();
+	if (i_at >= static_cast<int>(vo_Tokens_.size()))
+	{
+		ERROR_LOG (L"vo_Tokens_ member index out of range");
+        return -1;
+	}
+
+    return vo_Tokens_[i_at].i_Offset;
 }
 
 wstring CT_ExtString::str_GetRegexMatch (const int i_at)
@@ -992,10 +1023,10 @@ int const CT_ExtString::i_GetFieldLength (const int i_at,
 	}
 
 	int i_token = 0;
-	unsigned int ui_;
-	for (ui_ = 0; (ui_ < vo_Tokens_.size()); ++ui_)
+	unsigned int ui_token;
+	for (ui_token = 0; (ui_token < vo_Tokens_.size()); ++ui_token)
 	{
-		if (vo_Tokens_[ui_].eo_TokenType == eo_type)
+		if (vo_Tokens_[ui_token].eo_TokenType == eo_type)
 		{
 			if (i_token < i_at)
 			{
@@ -1007,12 +1038,12 @@ int const CT_ExtString::i_GetFieldLength (const int i_at,
 			}
 		}
 	}
-	if (ui_ == vo_Tokens_.size())
+	if (ui_token == vo_Tokens_.size())
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
 	}
 
-	ST_Token st_token = vo_Tokens_[i_at];
+	ST_Token st_token = vo_Tokens_[ui_token];
 	return st_token.i_Length;
 }
 
@@ -1027,24 +1058,24 @@ int const CT_ExtString::i_GetFieldLength (const int i_offset,
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
 	}
 
-	unsigned int ui_;
-	for (ui_ = 0; ui_ < vo_Tokens_.size(); ++ui_)
+	unsigned int ui_token;
+	for (ui_token = 0; ui_token < vo_Tokens_.size(); ++ui_token)
 	{
-		if (vo_Tokens_[ui_].i_Offset >= i_offset)
+		if (vo_Tokens_[ui_token].i_Offset >= i_offset)
 		{
 			break;
 		}
 	}
-	if (ui_ >= vo_Tokens_.size())
+	if (ui_token >= vo_Tokens_.size())
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
 	}
 
 	int i_token = 0;
-	unsigned int uj_;
-	for (uj_ = ui_; (uj_ < vo_Tokens_.size()); ++uj_)
+	unsigned int uj_token;
+	for (uj_token = ui_token; (uj_token < vo_Tokens_.size()); ++uj_token)
 	{
-		if (vo_Tokens_[uj_].eo_TokenType == eo_type)
+		if (vo_Tokens_[uj_token].eo_TokenType == eo_type)
 		{
 			if (i_token < i_at)
 			{
@@ -1056,12 +1087,12 @@ int const CT_ExtString::i_GetFieldLength (const int i_offset,
 			}
 		}
 	}
-	if (uj_ == vo_Tokens_.size())
+	if (uj_token == vo_Tokens_.size())
 	{
 		ERROR_LOG (L"vo_Tokens_ member index out of range");
 	}
 
-	ST_Token st_token = vo_Tokens_[i_at];
+	ST_Token st_token = vo_Tokens_[uj_token];
 
 	return st_token.i_Length;
 
