@@ -228,18 +228,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Lexeme.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\sqlite3.c"
 				>
 				<FileConfiguration
@@ -284,6 +272,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\ZalEntryParser.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ZalSourceReader.cpp"
 				>
 			</File>
@@ -310,10 +302,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Lexeme.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
@@ -335,6 +323,10 @@
 			</File>
 			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ZalEntryParser.h"
 				>
 			</File>
 			<File
