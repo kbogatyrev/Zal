@@ -100,8 +100,13 @@ public:
 
 public:
     void v_Init();
+    void v_Reset()
+    {
+        v_Reset_();
+    };
 
 private:
+    void v_Reset_();
 	void v_Null_();
 	void v_CopyAttributes (const CT_ExtString&);
 	void v_DeepCopy_ (const CT_ExtString&);
@@ -150,6 +155,9 @@ public:
 					 const et_TokenType eo_type,
                      ST_Token& );
 
+    int i_GetFieldOffset (const int i_at, 
+						  const et_TokenType eo_type = ec_TokenText);
+
     et_TokenType eo_GetTokenType (const int i_at);
 	et_TokenType eo_GetTokenType (const int i_offset, const int i_at);
 
@@ -157,6 +165,8 @@ public:
 	bool b_GetToken (const int i_offset, const int i_at, ST_Token&);
 
     wstring str_GetToken (const int i_at);
+
+    int i_GetTokenOffset (const int i_at);
 
     wstring str_GetRegexMatch (const int i_at);
 
