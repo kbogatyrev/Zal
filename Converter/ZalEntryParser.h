@@ -8,6 +8,7 @@ public:
         POS_NOUN, 
         POS_VERB, 
         POS_ADJ, 
+        POS_PRONOUN,
         POS_ADV, 
         POS_COMPAR, 
         POS_PREDIC, 
