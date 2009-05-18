@@ -843,6 +843,8 @@ bool CT_ExtString::b_GetField (const int i_offset,
  int CT_ExtString::i_GetFieldOffset (const int i_at, 
 						             const et_TokenType eo_type)
  {
+	v_Synchronize_();
+
     ST_Token st_token;
     bool b_ = b_GetField (i_at, eo_type, st_token);
     if (!b_)
