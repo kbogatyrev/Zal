@@ -27,6 +27,23 @@ public:
         GT_UNINFLECTED 
     };
 
+    enum ET_AccentType
+    {
+        AT_A,
+        AT_A1,
+        AT_B,
+        AT_B1,
+        AT_C,
+        AT_C1,
+        AT_C2,
+        AT_D,
+        AT_D1,
+        AT_E,
+        AT_F,
+        AT_F1,
+        AT_F2
+    };
+
     CT_ZalEntryParser (const wstring& str_entry) : str_Source (str_entry) 
     {
         v_Init();
@@ -63,13 +80,13 @@ protected:
     int i_Type;
     bool b_PluralOf;
 
-    wstring str_AccentType1;
-	wstring str_AccentType2;
+    ET_AccentType e_AccentType1;
+	ET_AccentType e_AccentType2;
 
     bool b_Cross;
 	bool b_BoxCross;
 	bool b_Tilde;
-	bool b_Asterisc;
+	bool b_Asterisk;
 	bool b_Circle;
 	bool b_Minus;
 	bool b_Loc;
@@ -84,6 +101,7 @@ protected:
 	wstring str_AspectPair;
         
     map<wstring, ET_PartOfSpeech> map_Pos;
+    map<wstring, ET_AccentType> map_AccentType;
 
 protected:
     void v_Init();
