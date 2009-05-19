@@ -203,7 +203,8 @@ public:
 
     int i_GetNumOfRegexMatches()
     {
-        i_NRegexMatches();
+        v_Synchronize_(); 
+        return i_NRegexMatches();
     }
 
     int i_NRegexMatches()
