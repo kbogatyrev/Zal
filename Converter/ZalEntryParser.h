@@ -4,7 +4,8 @@ class CT_ZalEntryParser
 {
 public:
     enum ET_PartOfSpeech 
-    { 
+    {
+        POS_UNDEFINED,
         POS_NOUN, 
         POS_VERB, 
         POS_ADJ, 
@@ -29,6 +30,7 @@ public:
 
     enum ET_AccentType
     {
+        AT_UNDEFINED,
         AT_A,
         AT_A1,
         AT_B,
@@ -93,6 +95,8 @@ protected:
 	bool b_Part;
 	bool b_Yo;
 	bool b_O;
+
+    vector<int> vec_iNumbersInCircle;
 
     int i_Deviation;
 	int i_Ref;
