@@ -85,8 +85,8 @@ protected:
     ET_AccentType e_AccentType1;
 	ET_AccentType e_AccentType2;
 
-    bool b_Cross;
-	bool b_BoxCross;
+    bool b_X;
+	bool b_BoxedX;
 	bool b_Tilde;
 	bool b_Asterisk;
 	bool b_Circle;
