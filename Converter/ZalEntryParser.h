@@ -108,7 +108,9 @@ public:
         
         vector<int> vec_iNumbersInCircle;
 
-// TODO: Add hatched circle, #, @, :
+		wstring str_Triangle; //@
+
+// TODO: Add hatched circle, #, :
     };
 
     CT_ZalEntryParser (const wstring& str_entry) : str_Source (str_entry) 
@@ -142,4 +144,7 @@ protected:
     bool b_CheckCircledDigit (wstring& str_descriptor, ST_Descriptor&);
     bool b_CheckSquareBrackets (wstring& str_descriptor, ST_Descriptor&);
     bool b_CheckHatchedCircle (wstring& str_descriptor, ST_Descriptor&);
+	bool b_CheckTriangle (wstring& str_descriptor, ST_Descriptor&);
+
+	bool b_DeleteDoubleStress (wstring& str_source);
 };
