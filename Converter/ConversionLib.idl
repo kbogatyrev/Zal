@@ -20,12 +20,20 @@ interface IZalSourceReader : IUnknown
 {
     [helpstring("method PreprocessSourceFile")]
     HRESULT PreprocessSourceFile ([in] BSTR bstr_sourcePath,
-                                  [in] BSTR bstr_output,
-                                  [in] BSTR bstr_errors);
+                                  [in] BSTR bstr_outputDir);
+
     [helpstring("method ConvertSourceFile")]
     HRESULT ConvertSourceFile ([in] BSTR bstr_sourcePath,
                                [in] BSTR bstr_dbPath,
                                [in] int i_maxEntries);
+
+    [helpstring("method SearchSourceFile")]
+    HRESULT SearchSourceFile  ([in] BSTR bstr_sourcePath,
+                               [in] BSTR bstr_searchString,
+                               [in] BOOL b_regexSearch);
+
+    [helpstring("method SaveOutput")]
+    HRESULT SaveOutput  ([in] BSTR bstr_path);
 };
 
 // ---------------------------------------------------------------------------

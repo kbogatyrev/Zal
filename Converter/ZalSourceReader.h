@@ -35,13 +35,21 @@ protected:
     HRESULT StatusUpdate (int i_progress);
     HRESULT StatusCheck (BOOL& b_cancel);
 
+    bool b_CheckSemicolons (wstring& str_source, bool& b_suspiciousEntry);
+    bool b_CheckSquareBrackets (const wstring& str_source, bool& b_suspiciousEntry);
+    bool b_WriteLog (const wstring& str_msg);
+
+private:
+    set<wstring> set_MainSymbols;
+
 public:
     STDMETHOD (ConvertSourceFile) (BSTR bstr_sourcePath,
                                    BSTR bstr_dbPath,
                                    int i_maxEntries);
-    STDMETHOD (PreprocessSourceFile) (BSTR bstr_sourcePath,
-                                      BSTR bstr_outPath,
-                                      BSTR bstr_errPath);
+    STDMETHOD (PreprocessSourceFile) (BSTR bstr_sourcePath, BSTR bstr_outputDir);
+    STDMETHOD (SearchSourceFile) (BSTR bstr_sourcePath, BSTR bstr_searchString, BOOL b_regexSearch);
+    STDMETHOD (SaveOutput) (BSTR bstr_path);
+
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalSourceReader), CT_ZalSourceReader)
