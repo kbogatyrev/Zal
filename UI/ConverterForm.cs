@@ -23,15 +23,16 @@ namespace Converter
         public DelegateUpdateProgressBar m_DelegateUpdateProgressbar;
         public DelegateSignalCompletion m_DelegateSignalCompletion;
 
-        public ZalConversionLib.ZalSourceReader m_Reader;
+        public static AutoResetEvent sm_Event;
 
+        public bool m_bSaveTempData;
         public bool m_bStopListener;
         public bool m_bStopConversion;
         public int m_iStopAfter;
         public int m_iSelectedTab;
 
         private string m_sSourcePath;
-//        private string m_sOutPath;
+        private string m_sOutPath;
 //        private string m_sErrPath;
         private string m_sLogPath;
         private string m_sDbPath;
@@ -43,6 +44,14 @@ namespace Converter
             get
             {
                 return m_sSourcePath;
+            }
+        }
+
+        public string sOutPath
+        {
+            get
+            {
+                return m_sOutPath;
             }
         }
 
@@ -95,6 +104,8 @@ namespace Converter
 
             this.StartPosition = FormStartPosition.CenterScreen;
 
+            sm_Event = new AutoResetEvent (false);
+
             m_DelegateAddString = new DelegateAddString (this.AddString);
             m_DelegateUpdateProgressbar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
             m_DelegateSignalCompletion = new DelegateSignalCompletion (this.OnConversionEnd);
@@ -111,7 +122,7 @@ namespace Converter
             }
 
             m_iSelectedTab = tabControl.SelectedIndex;
-
+            m_bSaveTempData = false;
         }
 
         void StopThreads()
@@ -173,8 +184,25 @@ namespace Converter
 
         void AddString (string sEntry)
         {
-            textBoxConversion.Text += sEntry + "\r\n";
-            textBoxConversion.SelectionStart = textBoxConversion.Text.Length;
+            switch (tabControl.SelectedIndex)
+            {
+                case 0:
+                    textBoxConversion.Text += sEntry + "\r\n";
+                    textBoxConversion.SelectionStart = textBoxConversion.Text.Length;
+                    break;
+                case 1:
+                    textBoxPreprocess.Text += sEntry + "\r\n";
+                    textBoxPreprocess.SelectionStart = textBoxConversion.Text.Length;
+                    break;
+                case 2:
+                    textBoxSearch.Text += sEntry + "\r\n";
+                    textBoxSearch.SelectionStart = textBoxConversion.Text.Length;
+                    break;
+                default:
+                    string sMsg = "Illegal tab index";
+                    MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                    return;
+            }
         }
 
         void UpdateProgressBar (int iProgress)
@@ -206,14 +234,20 @@ namespace Converter
                     DialogResult dr = MessageBox.Show (sMsg, "Zal Search", MessageBoxButtons.YesNo);
                     if (System.Windows.Forms.DialogResult.Yes == dr)
                     {
-                        FileDialog fd = new OpenFileDialog ();
-                        dr = fd.ShowDialog ();
+                        FileDialog fd = new SaveFileDialog();
+                        dr = fd.ShowDialog();
                         if (DialogResult.OK == dr)
                         {
-                            m_Reader.SaveOutput (fd.FileName);
+                            m_bSaveTempData = true;
+                            m_sOutPath = fd.FileName;
+                        }
+                        else
+                        {
+                            m_bSaveTempData = false;
                         }
                     }
                 }
+                ConverterForm.sm_Event.Set ();
                 Close();
                 return;
             }
@@ -249,7 +283,7 @@ namespace Converter
             ListenerThread listener = new ListenerThread (this, m_sLogPath);
             m_LogListener = new Thread (new ThreadStart (listener.ThreadProc));
             m_LogListener.Name = "Zal listener thread";
-            m_LogListener.Start ();
+            m_LogListener.Start();
 
             WorkerThread wt = new WorkerThread (this);
             m_WorkerThread = new Thread (new ThreadStart (wt.ThreadProc));
@@ -257,7 +291,7 @@ namespace Converter
             m_WorkerThread.IsBackground = true;
             //                m_WorkerThread.Priority = ThreadPriority.Lowest;
             m_WorkerThread.SetApartmentState (ApartmentState.STA);
-            m_WorkerThread.Start ();
+            m_WorkerThread.Start();
         }
 
         private void buttonCancel_Click (object sender, EventArgs e)
@@ -559,27 +593,26 @@ namespace Converter
 
         public void ThreadProc()
         {
+            ZalConversionLib.ZalSourceReader reader;
             try
             {
-                m_Form.m_Reader = new ZalConversionLib.ZalSourceReader();
+                reader = new ZalConversionLib.ZalSourceReader();
                 EventSink sink = new EventSink (m_Form);
-                m_Form.m_Reader.ProgressNotification += sink.ProgressNotification;
-                m_Form.m_Reader.StatusCheck += sink.StatusCheck;
+                reader.ProgressNotification += sink.ProgressNotification;
+                reader.StatusCheck += sink.StatusCheck;
                 switch (m_Form.iSelectedTabIndex)
                 {
                     case 0:
-                        m_Form.m_Reader.ConvertSourceFile (m_Form.sSourcePath, 
-                                                           m_Form.sDbPath, 
-                                                           m_Form.iStopAfter);
+                        reader.ConvertSourceFile (m_Form.sSourcePath, m_Form.sDbPath, m_Form.iStopAfter);
                         break;
                     case 1:
-                        m_Form.m_Reader.PreprocessSourceFile (m_Form.sSourcePath,
-                                                              Path.GetDirectoryName (m_Form.sSourcePath));
+                        reader.PreprocessSourceFile (m_Form.sSourcePath, 
+                                                     Path.GetDirectoryName (m_Form.sSourcePath));
                         break;
                     case 2:
-                        m_Form.m_Reader.SearchSourceFile (m_Form.sSourcePath, 
-                                                          m_Form.sSearchString, 
-                                                          (int)m_Form.iRegexSearch);
+                        reader.SearchSourceFile (m_Form.sSourcePath, 
+                                                 m_Form.sSearchString, 
+                                                 (int)m_Form.iRegexSearch);
                         break;
                     default:
                         string sMsg = "Illegal tab index";
@@ -598,6 +631,19 @@ namespace Converter
             if (m_Form.InvokeRequired)
             {
                 m_Form.BeginInvoke (m_Form.m_DelegateSignalCompletion);
+            }
+
+            ConverterForm.sm_Event.WaitOne();
+
+            if (m_Form.m_bSaveTempData)
+            {
+                if (m_Form.m_iSelectedTab != 2)
+                {
+                    string sMsg = "Error in WorkerThread: Unexpected tab value.";
+                    MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                reader.SaveOutput (m_Form.sOutPath);
             }
 
         }   //  ThreadProc()
