@@ -37,9 +37,10 @@ protected:
 
     bool b_CheckSemicolons (wstring& str_source, bool& b_suspiciousEntry);
     bool b_CheckSquareBrackets (const wstring& str_source, bool& b_suspiciousEntry);
-    bool b_WriteLog (const wstring& str_msg);
+    bool b_Show (const wstring& str_msg);
 
 private:
+    wstring str_TempFile;
     set<wstring> set_MainSymbols;
 
 public:
