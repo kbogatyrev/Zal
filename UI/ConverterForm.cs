@@ -257,17 +257,20 @@ namespace Converter
             m_bStopListener = false;
             m_bStopConversion = false;
 
-            textBoxConversion.Text = "###  Conversion started. \r\n";
+//            textBoxConversion.Text = "###  Conversion started. \r\n";
             switch (tabControl.SelectedIndex)
             {
                 case 0:
-                    textBoxConversion.Text = "###  Conversion started. \r\n";
+//                    textBoxConversion.Text = "###  Conversion started. \r\n";
+                    textBoxConversion.Text = "";
                     break;
                 case 1:
-                    textBoxPreprocess.Text = "###  Preprocessing started. \r\n";
+//                    textBoxPreprocess.Text = "###  Preprocessing started. \r\n";
+                    textBoxPreprocess.Text = "";
                     break;
                 case 2:
-                    textBoxSearch.Text = "###  Search started. \r\n";
+//                    textBoxSearch.Text = "###  Search started. \r\n";
+                    textBoxSearch.Text = "";
                     break;
                 default:
                     string sMsg = "Illegal tab index";
@@ -313,6 +316,7 @@ namespace Converter
                                                MessageBoxButtons.YesNo);
             if (System.Windows.Forms.DialogResult.Yes == dr)
             {
+                sm_Event.Set();
                 StopThreads();
                 OnConversionEnd ();
             }
@@ -676,8 +680,16 @@ namespace Converter
                             {
                                 pipeServer.WaitForConnection();
                                 string sLine = srInStream.ReadToEnd();
-                                swLogFile.WriteLine (sLine);
-                                swLogFile.Flush();
+                                string sNoLogPrefix = ("*** NO_LOG *** ");
+                                if (sLine.StartsWith(sNoLogPrefix))
+                                {
+                                    sLine = sLine.Substring (sNoLogPrefix.Length);
+                                }
+                                else
+                                {
+                                    swLogFile.WriteLine (sLine);
+                                    swLogFile.Flush ();
+                                }
 
                                 if (m_Form.InvokeRequired)
                                 {
