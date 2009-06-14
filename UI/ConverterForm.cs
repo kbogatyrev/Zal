@@ -207,7 +207,17 @@ namespace Converter
 
         void UpdateProgressBar (int iProgress)
         {
-            progressBar.Value = iProgress;
+            try
+            {
+                progressBar.Value = iProgress;
+            }
+            catch (Exception ex)
+            {
+                string sMsg = "Error in UpdateProgressBar: ";
+                sMsg += ex.Message;
+                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                return;
+            }
         }
 
         void OnConversionEnd()
