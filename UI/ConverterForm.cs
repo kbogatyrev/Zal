@@ -30,6 +30,7 @@ namespace Converter
         public bool m_bStopConversion;
         public int m_iStopAfter;
         public int m_iSelectedTab;
+        public bool m_bTextBoxOverflow;
 
         private string m_sSourcePath;
         private string m_sOutPath;
@@ -123,6 +124,7 @@ namespace Converter
 
             m_iSelectedTab = tabControl.SelectedIndex;
             m_bSaveTempData = false;
+            m_bTextBoxOverflow = false;
         }
 
         void StopThreads()
@@ -184,24 +186,35 @@ namespace Converter
 
         void AddString (string sEntry)
         {
+            if (m_bTextBoxOverflow)
+            {
+                return;
+            }
+
+            TextBox textBox;
             switch (tabControl.SelectedIndex)
             {
                 case 0:
-                    textBoxConversion.Text += sEntry + "\r\n";
-                    textBoxConversion.SelectionStart = textBoxConversion.Text.Length;
+                    textBox = textBoxConversion;
                     break;
                 case 1:
-                    textBoxPreprocess.Text += sEntry + "\r\n";
-                    textBoxPreprocess.SelectionStart = textBoxConversion.Text.Length;
+                    textBox = textBoxPreprocess;
                     break;
                 case 2:
-                    textBoxSearch.Text += sEntry + "\r\n";
-                    textBoxSearch.SelectionStart = textBoxConversion.Text.Length;
+                    textBox = textBoxSearch;
                     break;
                 default:
                     string sMsg = "Illegal tab index";
                     MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                     return;
+            }
+
+            textBox.Text += sEntry + "\r\n";
+            textBox.SelectionStart = textBox.Text.Length;
+            if (textBox.Text.Length > 10000)
+            {
+                textBox.Text += "\n### Too many entries to display...\n";
+                m_bTextBoxOverflow = true;
             }
         }
 
