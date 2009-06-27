@@ -20,11 +20,12 @@ public:
 	enum et_TokenType
 	{
 		ec_TokenTypeFront	= 10001,
-		ec_TokenText,				 // single word
-		ec_TokenSpace,				 // sequence of break chars
-		ec_TokenTab,				 // sequence of tabs
-		ec_TokenPunctuation,		 // sequence of punct. marks i.e. ; or ?!...
-        ec_TokenRegexMatch,
+		ec_TokenText        = 10002,
+		ec_TokenSpace       = 10003,	// sequence of break chars
+        ec_TokenBreakChars  = 10003,    // alias
+		ec_TokenTab         = 10004,	// sequence of tabs
+		ec_TokenPunctuation = 10005,	// sequence of punct. marks i.e. ; or ?!...
+        ec_TokenRegexMatch  = 10006,
 		ec_TokenTypeBack	= ec_TokenRegexMatch + 1
 	};
 
