@@ -206,7 +206,7 @@
             // 
             // textBoxConversion
             // 
-            this.textBoxConversion.Location = new System.Drawing.Point (139, 127);
+            this.textBoxConversion.Location = new System.Drawing.Point (139, 129);
             this.textBoxConversion.Multiline = true;
             this.textBoxConversion.Name = "textBoxConversion";
             this.textBoxConversion.ReadOnly = true;
@@ -222,7 +222,7 @@
             this.panel2.Controls.Add (this.checkBoxTestRun);
             this.panel2.Controls.Add (this.numericUpDownStopAfter);
             this.panel2.Controls.Add (this.textBoxStopAfter);
-            this.panel2.Location = new System.Drawing.Point (6, 131);
+            this.panel2.Location = new System.Drawing.Point (6, 129);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size (123, 162);
             this.panel2.TabIndex = 18;
@@ -231,7 +231,7 @@
             // 
             this.checkBoxTestRun.AutoSize = true;
             this.checkBoxTestRun.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9F);
-            this.checkBoxTestRun.Location = new System.Drawing.Point (14, 21);
+            this.checkBoxTestRun.Location = new System.Drawing.Point (14, 19);
             this.checkBoxTestRun.Name = "checkBoxTestRun";
             this.checkBoxTestRun.Size = new System.Drawing.Size (75, 19);
             this.checkBoxTestRun.TabIndex = 14;
@@ -247,7 +247,7 @@
             0,
             0,
             0});
-            this.numericUpDownStopAfter.Location = new System.Drawing.Point (12, 91);
+            this.numericUpDownStopAfter.Location = new System.Drawing.Point (12, 89);
             this.numericUpDownStopAfter.Maximum = new decimal (new int[] {
             100000,
             0,
@@ -267,7 +267,7 @@
             // 
             this.textBoxStopAfter.Enabled = false;
             this.textBoxStopAfter.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9F);
-            this.textBoxStopAfter.Location = new System.Drawing.Point (12, 60);
+            this.textBoxStopAfter.Location = new System.Drawing.Point (12, 58);
             this.textBoxStopAfter.Name = "textBoxStopAfter";
             this.textBoxStopAfter.ReadOnly = true;
             this.textBoxStopAfter.Size = new System.Drawing.Size (93, 21);
