@@ -125,6 +125,10 @@ namespace Converter
             m_iSelectedTab = tabControl.SelectedIndex;
             m_bSaveTempData = false;
             m_bTextBoxOverflow = false;
+
+            textBoxSourcePath.Text = Properties.Settings.Default.SourcePath;
+            textBoxDbLocation.Text = Properties.Settings.Default.DbPath;
+            textBoxLogPath.Text = Properties.Settings.Default.LogPath;
         }
 
         void StopThreads()
@@ -318,6 +322,13 @@ namespace Converter
             //                m_WorkerThread.Priority = ThreadPriority.Lowest;
             m_WorkerThread.SetApartmentState (ApartmentState.STA);
             m_WorkerThread.Start();
+
+            Properties.Settings.Default.SourcePath = m_sSourcePath;
+            Properties.Settings.Default.DbPath = m_sDbPath;
+            Properties.Settings.Default.LogPath = m_sLogPath;
+
+            Properties.Settings.Default.Save();
+
         }
 
         private void buttonCancel_Click (object sender, EventArgs e)
