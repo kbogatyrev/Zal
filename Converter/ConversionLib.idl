@@ -25,6 +25,7 @@ interface IZalSourceReader : IUnknown
     [helpstring("method ConvertSourceFile")]
     HRESULT ConvertSourceFile ([in] BSTR bstr_sourcePath,
                                [in] BSTR bstr_dbPath,
+                               [in] BSTR bstr_unprocessedPath,
                                [in] int i_maxEntries);
 
     [helpstring("method SearchSourceFile")]

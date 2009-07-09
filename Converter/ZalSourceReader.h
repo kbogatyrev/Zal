@@ -46,6 +46,7 @@ private:
 public:
     STDMETHOD (ConvertSourceFile) (BSTR bstr_sourcePath,
                                    BSTR bstr_dbPath,
+                                   BSTR bstr_unprocessedPath,
                                    int i_maxEntries);
     STDMETHOD (PreprocessSourceFile) (BSTR bstr_sourcePath, BSTR bstr_outputDir);
     STDMETHOD (SearchSourceFile) (BSTR bstr_sourcePath, BSTR bstr_searchString, BOOL b_regexSearch);
