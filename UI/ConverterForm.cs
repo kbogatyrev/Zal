@@ -34,17 +34,25 @@ namespace Converter
 
         private string m_sSourcePath;
         private string m_sOutPath;
-//        private string m_sErrPath;
+        private string m_sUnprocessedPath;
         private string m_sLogPath;
         private string m_sDbPath;
         private string m_sSearchString; // search tab
-        private bool m_bIsRegex;         //   - " -
+        private bool m_bIsRegex;        //   - " -
 
         public string sSourcePath
         {
             get
             {
                 return m_sSourcePath;
+            }
+        }
+
+        public string sUnprocessedPath
+        {
+            get
+            {
+                return m_sUnprocessedPath;
             }
         }
 
@@ -129,6 +137,10 @@ namespace Converter
             textBoxSourcePath.Text = Properties.Settings.Default.SourcePath;
             textBoxDbLocation.Text = Properties.Settings.Default.DbPath;
             textBoxLogPath.Text = Properties.Settings.Default.LogPath;
+            textBoxUnprocessedPath.Text = Properties.Settings.Default.UnprocessedPath;
+            textBoxSearchSource.Text = Properties.Settings.Default.SearchSourcePath;
+            textBoxSearchLog.Text = Properties.Settings.Default.SearchLogPath;
+            textBoxSearchString.Text = Properties.Settings.Default.SearchString;
         }
 
         void StopThreads()
@@ -202,9 +214,6 @@ namespace Converter
                     textBox = textBoxConversion;
                     break;
                 case 1:
-                    textBox = textBoxPreprocess;
-                    break;
-                case 2:
                     textBox = textBoxSearch;
                     break;
                 default:
@@ -255,7 +264,7 @@ namespace Converter
         {
             if ("Done" == (string)buttonOK.Tag)
             {
-                if (tabControl.SelectedIndex == 2)
+                if (tabControl.SelectedIndex == 1)
                 {
                     string sMsg = "Would you like to save search results?";
                     DialogResult dr = MessageBox.Show (sMsg, "Zal Search", MessageBoxButtons.YesNo);
@@ -292,10 +301,6 @@ namespace Converter
                     textBoxConversion.Text = "";
                     break;
                 case 1:
-//                    textBoxPreprocess.Text = "###  Preprocessing started. \r\n";
-                    textBoxPreprocess.Text = "";
-                    break;
-                case 2:
 //                    textBoxSearch.Text = "###  Search started. \r\n";
                     textBoxSearch.Text = "";
                     break;
@@ -326,6 +331,10 @@ namespace Converter
             Properties.Settings.Default.SourcePath = m_sSourcePath;
             Properties.Settings.Default.DbPath = m_sDbPath;
             Properties.Settings.Default.LogPath = m_sLogPath;
+            Properties.Settings.Default.UnprocessedPath = textBoxUnprocessedPath.Text;
+            Properties.Settings.Default.SearchSourcePath = textBoxSearchSource.Text;
+            Properties.Settings.Default.SearchLogPath = textBoxSearchLog.Text;
+            Properties.Settings.Default.SearchString = textBoxSearchString.Text;
 
             Properties.Settings.Default.Save();
 
@@ -371,9 +380,6 @@ namespace Converter
                             textBoxSourcePath.Text = fd.FileName;
                             break;
                         case 1:
-                            textBoxPreprocessSource.Text = fd.FileName;
-                            break;
-                        case 2:
                             textBoxSearchSource.Text = fd.FileName;
                             break;
                         default:
@@ -422,10 +428,30 @@ namespace Converter
                         textBoxLogPath.Text = fd.FileName;
                         break;
                     case 1:
-                        textBoxPreprocessLog.Text = fd.FileName;
-                        break;
-                    case 2:
                         textBoxSearchLog.Text = fd.FileName;
+                        break;
+                    default:
+                        string sMsg = "Illegal tab index";
+                        MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                        return;
+                }
+                buttonOK.Enabled = bCanEnableOkButton();
+            }
+        }
+
+        private void buttonUnprocessedPath_Click (object sender, EventArgs e)
+        {
+            FileDialog fd = new OpenFileDialog ();
+            fd.CheckFileExists = false;
+            fd.CheckPathExists = true;
+            DialogResult dr = fd.ShowDialog ();
+            if (DialogResult.OK == dr)
+            {
+                m_sUnprocessedPath = fd.FileName;
+                switch (tabControl.SelectedIndex)
+                {
+                    case 0:
+                        textBoxUnprocessedPath.Text = fd.FileName;
                         break;
                     default:
                         string sMsg = "Illegal tab index";
@@ -489,21 +515,13 @@ namespace Converter
                 case 0:
                     if ((textBoxSourcePath.Text.Length > 0) &&
                         (textBoxDbLocation.Text.Length > 0) &&
-                        (textBoxLogPath.Text.Length > 0))
+                        (textBoxLogPath.Text.Length > 0) &&
+                        (textBoxUnprocessedPath.Text.Length > 0))
                     {
                         return true;
                     }
                     return false;
                 case 1:
-                    if ((textBoxPreprocessSource.Text.Length > 0) &&
-//                        (textBoxPreprocessOutput.Text.Length > 0) &&
-//                        (textBoxPreprocessErrors.Text.Length > 0) &&
-                        (textBoxPreprocessLog.Text.Length > 0))
-                    {
-                        return true;
-                    }
-                    return false;
-                case 2:
                     if ((textBoxSearchSource.Text.Length > 0) &&
                         (textBoxSearchString.Text.Length > 0))
                     {
@@ -534,13 +552,13 @@ namespace Converter
             m_sLogPath = textBoxLogPath.Text;
             buttonOK.Enabled = bCanEnableOkButton();
         }
-
+/*
         private void textBoxPreprocessSource_TextChanged (object sender, EventArgs e)
         {
             m_sSourcePath = textBoxPreprocessSource.Text;
             buttonOK.Enabled = bCanEnableOkButton();
         }
-/*
+
         private void textBoxPreprocessOutput_TextChanged (object sender, EventArgs e)
         {
             m_sOutPath = textBoxPreprocessOutput.Text;
@@ -552,12 +570,13 @@ namespace Converter
             m_sErrPath = textBoxPreprocessErrors.Text;
             buttonOK.Enabled = bCanEnableOkButton();
         }
-*/
+
         private void textBoxPreprocessLog_TextChanged (object sender, EventArgs e)
         {
             m_sLogPath = textBoxPreprocessLog.Text;
             buttonOK.Enabled = bCanEnableOkButton();
         }
+*/
 
         private void tabControl_SelectedIndexChanged (object sender, EventArgs e)
         {
@@ -585,6 +604,12 @@ namespace Converter
         {
             m_sLogPath = textBoxSearchLog.Text;
             buttonOK.Enabled = bCanEnableOkButton();
+        }
+
+        private void textBoxUnprocessedPath_TextChanged (object sender, EventArgs e)
+        {
+            m_sUnprocessedPath = textBoxUnprocessedPath.Text;
+            buttonOK.Enabled = bCanEnableOkButton ();
         }
 
     }   // ConverterForm class
@@ -641,13 +666,16 @@ namespace Converter
                 switch (m_Form.iSelectedTabIndex)
                 {
                     case 0:
-                        reader.ConvertSourceFile (m_Form.sSourcePath, m_Form.sDbPath, m_Form.iStopAfter);
+                        reader.ConvertSourceFile (m_Form.sSourcePath, 
+                                                  m_Form.sDbPath, 
+                                                  m_Form.sUnprocessedPath, 
+                                                  m_Form.iStopAfter);
                         break;
+//                    case 1:
+//                        reader.PreprocessSourceFile (m_Form.sSourcePath, 
+//                                                     Path.GetDirectoryName (m_Form.sSourcePath));
+//                        break;
                     case 1:
-                        reader.PreprocessSourceFile (m_Form.sSourcePath, 
-                                                     Path.GetDirectoryName (m_Form.sSourcePath));
-                        break;
-                    case 2:
                         reader.SearchSourceFile (m_Form.sSourcePath, 
                                                  m_Form.sSearchString, 
                                                  (int)m_Form.iRegexSearch);
