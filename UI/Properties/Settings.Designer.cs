@@ -58,5 +58,53 @@ namespace Converter.Properties {
                 this["LogPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UnprocessedPath {
+            get {
+                return ((string)(this["UnprocessedPath"]));
+            }
+            set {
+                this["UnprocessedPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SearchString {
+            get {
+                return ((string)(this["SearchString"]));
+            }
+            set {
+                this["SearchString"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SearchLogPath {
+            get {
+                return ((string)(this["SearchLogPath"]));
+            }
+            set {
+                this["SearchLogPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SearchSourcePath {
+            get {
+                return ((string)(this["SearchSourcePath"]));
+            }
+            set {
+                this["SearchSourcePath"] = value;
+            }
+        }
     }
 }
