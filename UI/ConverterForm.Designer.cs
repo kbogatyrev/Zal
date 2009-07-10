@@ -207,6 +207,8 @@
             // checkBoxSearchRegex
             // 
             this.checkBoxSearchRegex.AutoSize = true;
+            this.checkBoxSearchRegex.Checked = true;
+            this.checkBoxSearchRegex.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxSearchRegex.Location = new System.Drawing.Point (556, 72);
             this.checkBoxSearchRegex.Name = "checkBoxSearchRegex";
             this.checkBoxSearchRegex.Size = new System.Drawing.Size (57, 17);

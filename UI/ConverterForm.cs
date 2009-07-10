@@ -100,6 +100,7 @@ namespace Converter
         {
             get
             {
+                m_bIsRegex = (CheckState.Checked == checkBoxSearchRegex.CheckState);
                 return m_bIsRegex ? 1 : 0;
             }
         }
@@ -703,7 +704,7 @@ namespace Converter
 
             if (m_Form.m_bSaveTempData)
             {
-                if (m_Form.m_iSelectedTab != 2)
+                if (m_Form.m_iSelectedTab != 1)
                 {
                     string sMsg = "Error in WorkerThread: Unexpected tab value.";
                     MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
