@@ -15,15 +15,19 @@ namespace Converter
 {
     public delegate void DelegateAddString (string s);
     public delegate void DelegateUpdateProgressBar (int iPercentDone);
+    public delegate void DelegateShowCurrentWord (string sWord);
     public delegate void DelegateSignalCompletion();
 
     public partial class ConverterForm : Form
     {
         public DelegateAddString m_DelegateAddString;
         public DelegateUpdateProgressBar m_DelegateUpdateProgressbar;
+        public DelegateShowCurrentWord m_DelegateShowCurrentWord;
         public DelegateSignalCompletion m_DelegateSignalCompletion;
 
         public static AutoResetEvent sm_Event;
+
+        private string m_sCurrentWord;
 
         public bool m_bSaveTempData;
         public bool m_bStopListener;
@@ -31,6 +35,7 @@ namespace Converter
         public int m_iStopAfter;
         public int m_iSelectedTab;
         public bool m_bTextBoxOverflow;
+        public bool m_bEndings;
 
         private string m_sSourcePath;
         private string m_sOutPath;
@@ -105,6 +110,15 @@ namespace Converter
             }
         }
 
+        public int iEndings     // bool --> int to please COM
+        {
+            get
+            {
+                m_bEndings = radioButtonEndings.Checked;
+                return m_bEndings ? 1 : 0;
+            }
+        }
+
         Thread m_LogListener;
         Thread m_WorkerThread;
 
@@ -118,6 +132,7 @@ namespace Converter
 
             m_DelegateAddString = new DelegateAddString (this.AddString);
             m_DelegateUpdateProgressbar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
+            m_DelegateShowCurrentWord = new DelegateShowCurrentWord (this.ShowCurrentWord);
             m_DelegateSignalCompletion = new DelegateSignalCompletion (this.OnConversionEnd);
 
             buttonOK.Enabled = false;
@@ -236,7 +251,14 @@ namespace Converter
         {
             try
             {
+                progressBar.Refresh ();
                 progressBar.Value = iProgress;
+                Graphics g = progressBar.CreateGraphics ();
+                StringFormat sf = new StringFormat (StringFormatFlags.NoWrap);
+                Font f = new Font ("Arial", (float)9.25, FontStyle.Regular);
+                sf.Alignment = StringAlignment.Near;
+                sf.LineAlignment = StringAlignment.Center;
+                g.DrawString (m_sCurrentWord, f, Brushes.Black, progressBar.ClientRectangle, sf);
             }
             catch (Exception ex)
             {
@@ -247,7 +269,29 @@ namespace Converter
             }
         }
 
-        void OnConversionEnd()
+        void ShowCurrentWord (string sWord)
+        {
+            try
+            {
+                m_sCurrentWord = sWord;
+                progressBar.Refresh ();
+                Graphics g = progressBar.CreateGraphics ();
+                StringFormat sf = new StringFormat (StringFormatFlags.NoWrap);
+                Font f = new Font ("Arial", (float)9.25, FontStyle.Regular);
+                sf.Alignment = StringAlignment.Near;
+                sf.LineAlignment = StringAlignment.Center;
+                g.DrawString (m_sCurrentWord, f, Brushes.Black, progressBar.ClientRectangle, sf);
+            }
+            catch (Exception ex)
+            {
+                string sMsg = "Error in ShowCurrentWord(): ";
+                sMsg += ex.Message;
+                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                return;
+            }
+        }
+
+        void OnConversionEnd ()
         {
             m_bStopListener = true;
 
@@ -294,15 +338,29 @@ namespace Converter
             m_bStopListener = false;
             m_bStopConversion = false;
 
+            if (numericUpDownStopAfter.Enabled)
+            {
+                m_iStopAfter = (int)numericUpDownStopAfter.Value;
+            }
+            else
+            {
+                m_iStopAfter = -1;
+            }
+
 //            textBoxConversion.Text = "###  Conversion started. \r\n";
             switch (tabControl.SelectedIndex)
             {
                 case 0:
-//                    textBoxConversion.Text = "###  Conversion started. \r\n";
+                    m_bEndings = radioButtonEndings.Checked;
+                    m_sSourcePath = textBoxSourcePath.Text;
+                    m_sDbPath = textBoxDbLocation.Text;
+                    m_sLogPath = textBoxLogPath.Text;
+                    m_sUnprocessedPath = textBoxUnprocessedPath.Text;
                     textBoxConversion.Text = "";
                     break;
                 case 1:
-//                    textBoxSearch.Text = "###  Search started. \r\n";
+                    m_sSearchString = textBoxSearchString.Text;
+                    m_sSourcePath = textBoxSearchSource.Text;
                     textBoxSearch.Text = "";
                     break;
                 default:
@@ -613,6 +671,36 @@ namespace Converter
             buttonOK.Enabled = bCanEnableOkButton ();
         }
 
+        private void radioButtonStems_CheckedChanged (object sender, EventArgs e)
+        {
+            checkBoxTestRun.Enabled = radioButtonStems.Checked;
+            textBoxStopAfter.Enabled = radioButtonStems.Checked;
+            numericUpDownStopAfter.Enabled = radioButtonStems.Checked;
+        }
+
+        private void radioButtonEndings_CheckedChanged (object sender, EventArgs e)
+        {
+
+        }
+
+/*
+        protected override void OnPaint (PaintEventArgs e)
+        {
+            base.OnPaint (e);
+
+            Brush b = new SolidBrush (Color.Black);
+            Graphics g = Graphics.FromHwnd (progressBar.Handle);
+            g.Clear (progressBar.BackColor);
+            StringFormat sf = new StringFormat (StringFormatFlags.NoWrap);
+            sf.Alignment = StringAlignment.Near;
+            g.DrawString (m_sCurrentWord, new Font ("Arial", 12.0f), b,
+            progressBar.ClientRectangle, sf);
+
+            g.Dispose ();
+            b.Dispose ();
+            sf.Dispose ();
+        }
+ */ 
     }   // ConverterForm class
 
     public class EventSink : ZalConversionLib.IZalNotification
@@ -629,6 +717,15 @@ namespace Converter
             {
                 m_Form.BeginInvoke (m_Form.m_DelegateUpdateProgressbar,
                                     new Object[] { iPercentDone });
+            }
+        }
+
+        public void ShowCurrentWord (string sWord)
+        {
+            if (m_Form.InvokeRequired)
+            {
+                m_Form.BeginInvoke (m_Form.m_DelegateShowCurrentWord,
+                                    new Object[] { sWord });
             }
         }
 
@@ -663,14 +760,16 @@ namespace Converter
                 reader = new ZalConversionLib.ZalSourceReader();
                 EventSink sink = new EventSink (m_Form);
                 reader.ProgressNotification += sink.ProgressNotification;
+                reader.ShowCurrentWord += sink.ShowCurrentWord;
                 reader.StatusCheck += sink.StatusCheck;
                 switch (m_Form.iSelectedTabIndex)
                 {
                     case 0:
-                        reader.ConvertSourceFile (m_Form.sSourcePath, 
-                                                  m_Form.sDbPath, 
-                                                  m_Form.sUnprocessedPath, 
-                                                  m_Form.iStopAfter);
+                        reader.ConvertSourceFile (m_Form.sSourcePath,
+                                                  m_Form.sDbPath,
+                                                  m_Form.sUnprocessedPath,
+                                                  m_Form.iStopAfter,
+                                                  m_Form.iEndings);
                         break;
 //                    case 1:
 //                        reader.PreprocessSourceFile (m_Form.sSourcePath, 

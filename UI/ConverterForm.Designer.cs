@@ -43,6 +43,8 @@
             this.checkBoxSearchRegex = new System.Windows.Forms.CheckBox ();
             this.buttonSearchSource = new System.Windows.Forms.Button ();
             this.tabPage1 = new System.Windows.Forms.TabPage ();
+            this.radioButtonEndings = new System.Windows.Forms.RadioButton ();
+            this.radioButtonStems = new System.Windows.Forms.RadioButton ();
             this.textBox3 = new System.Windows.Forms.TextBox ();
             this.textBoxLogPath = new System.Windows.Forms.TextBox ();
             this.buttonLogPath = new System.Windows.Forms.Button ();
@@ -60,6 +62,7 @@
             this.checkBoxTestRun = new System.Windows.Forms.CheckBox ();
             this.numericUpDownStopAfter = new System.Windows.Forms.NumericUpDown ();
             this.textBoxStopAfter = new System.Windows.Forms.TextBox ();
+            this.panel1 = new System.Windows.Forms.Panel ();
             this.tabControl = new System.Windows.Forms.TabControl ();
             this.tabPage3.SuspendLayout ();
             this.tabPage1.SuspendLayout ();
@@ -232,6 +235,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add (this.radioButtonEndings);
+            this.tabPage1.Controls.Add (this.radioButtonStems);
             this.tabPage1.Controls.Add (this.textBox3);
             this.tabPage1.Controls.Add (this.textBoxLogPath);
             this.tabPage1.Controls.Add (this.buttonLogPath);
@@ -246,12 +251,37 @@
             this.tabPage1.Controls.Add (this.buttonDbLocation);
             this.tabPage1.Controls.Add (this.buttonSourcePath);
             this.tabPage1.Controls.Add (this.panel2);
+            this.tabPage1.Controls.Add (this.panel1);
             this.tabPage1.Location = new System.Drawing.Point (4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding (3);
             this.tabPage1.Size = new System.Drawing.Size (627, 344);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Conversion";
+            // 
+            // radioButtonEndings
+            // 
+            this.radioButtonEndings.AutoSize = true;
+            this.radioButtonEndings.Location = new System.Drawing.Point (25, 180);
+            this.radioButtonEndings.Name = "radioButtonEndings";
+            this.radioButtonEndings.Size = new System.Drawing.Size (63, 17);
+            this.radioButtonEndings.TabIndex = 33;
+            this.radioButtonEndings.Text = "Endings";
+            this.radioButtonEndings.UseVisualStyleBackColor = true;
+            this.radioButtonEndings.CheckedChanged += new System.EventHandler (this.radioButtonEndings_CheckedChanged);
+            // 
+            // radioButtonStems
+            // 
+            this.radioButtonStems.AutoSize = true;
+            this.radioButtonStems.Checked = true;
+            this.radioButtonStems.Location = new System.Drawing.Point (25, 156);
+            this.radioButtonStems.Name = "radioButtonStems";
+            this.radioButtonStems.Size = new System.Drawing.Size (54, 17);
+            this.radioButtonStems.TabIndex = 32;
+            this.radioButtonStems.TabStop = true;
+            this.radioButtonStems.Text = "Stems";
+            this.radioButtonStems.UseVisualStyleBackColor = true;
+            this.radioButtonStems.CheckedChanged += new System.EventHandler (this.radioButtonStems_CheckedChanged);
             // 
             // textBox3
             // 
@@ -399,16 +429,16 @@
             this.panel2.Controls.Add (this.checkBoxTestRun);
             this.panel2.Controls.Add (this.numericUpDownStopAfter);
             this.panel2.Controls.Add (this.textBoxStopAfter);
-            this.panel2.Location = new System.Drawing.Point (6, 138);
+            this.panel2.Location = new System.Drawing.Point (9, 217);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size (123, 200);
+            this.panel2.Size = new System.Drawing.Size (123, 121);
             this.panel2.TabIndex = 18;
             // 
             // checkBoxTestRun
             // 
             this.checkBoxTestRun.AutoSize = true;
             this.checkBoxTestRun.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9F);
-            this.checkBoxTestRun.Location = new System.Drawing.Point (14, 22);
+            this.checkBoxTestRun.Location = new System.Drawing.Point (16, 16);
             this.checkBoxTestRun.Name = "checkBoxTestRun";
             this.checkBoxTestRun.Size = new System.Drawing.Size (75, 19);
             this.checkBoxTestRun.TabIndex = 14;
@@ -424,7 +454,7 @@
             0,
             0,
             0});
-            this.numericUpDownStopAfter.Location = new System.Drawing.Point (12, 77);
+            this.numericUpDownStopAfter.Location = new System.Drawing.Point (14, 71);
             this.numericUpDownStopAfter.Maximum = new decimal (new int[] {
             100000,
             0,
@@ -438,18 +468,28 @@
             0,
             0,
             0});
+            this.numericUpDownStopAfter.ValueChanged += new System.EventHandler (this.numericUpDownStopAfter_ValueChanged);
             this.numericUpDownStopAfter.Click += new System.EventHandler (this.numericUpDownStopAfter_ValueChanged);
             // 
             // textBoxStopAfter
             // 
             this.textBoxStopAfter.Enabled = false;
             this.textBoxStopAfter.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9F);
-            this.textBoxStopAfter.Location = new System.Drawing.Point (12, 50);
+            this.textBoxStopAfter.Location = new System.Drawing.Point (14, 44);
             this.textBoxStopAfter.Name = "textBoxStopAfter";
             this.textBoxStopAfter.ReadOnly = true;
             this.textBoxStopAfter.Size = new System.Drawing.Size (93, 21);
             this.textBoxStopAfter.TabIndex = 16;
             this.textBoxStopAfter.Text = "Stop After:";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point (11, 138);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size (122, 73);
+            this.panel1.TabIndex = 34;
             // 
             // tabControl
             // 
@@ -522,6 +562,9 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBoxLogPath;
         private System.Windows.Forms.Button buttonLogPath;
+        private System.Windows.Forms.RadioButton radioButtonEndings;
+        private System.Windows.Forms.RadioButton radioButtonStems;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
