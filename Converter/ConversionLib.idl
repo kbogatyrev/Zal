@@ -26,7 +26,8 @@ interface IZalSourceReader : IUnknown
     HRESULT ConvertSourceFile ([in] BSTR bstr_sourcePath,
                                [in] BSTR bstr_dbPath,
                                [in] BSTR bstr_unprocessedPath,
-                               [in] int i_maxEntries);
+                               [in] int i_maxEntries,
+                               [in] BOOL b_Endings);
 
     [helpstring("method SearchSourceFile")]
     HRESULT SearchSourceFile  ([in] BSTR bstr_sourcePath,
@@ -52,6 +53,8 @@ interface IZalNotification : IUnknown
 {
     [helpstring("method ProgressNotification")]
     HRESULT ProgressNotification ([in] int i_progress);
+    [helpstring("method CurrentWord")]
+    HRESULT ShowCurrentWord ([in] BSTR bstr_word);
     [helpstring("method StatusCheck")]
     HRESULT StatusCheck ([out] BOOL * b_cancel);
 };
