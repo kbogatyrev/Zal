@@ -1,0 +1,26 @@
+HKCR
+{
+	MainLib.ZalDictionary.1 = s 'ZalDictionary Class'
+	{
+		CLSID = s '{E75E1D69-BE78-44c7-B995-D1D7B4BEF6E3}'
+	}
+	MainLib.ZalDictionary = s 'ZalSourceReader Class'
+	{
+		CLSID = s '{E75E1D69-BE78-44c7-B995-D1D7B4BEF6E3}'
+		CurVer = s 'ConversionLib.ZalSourceReader.1'
+	}	
+	NoRemove CLSID
+	{
+		ForceRemove {E75E1D69-BE78-44c7-B995-D1D7B4BEF6E3} = s 'ZalDictionary Class'
+		{
+			ProgID = s 'MainLib.ZalDictionary.1'
+			VersionIndependentProgID = s 'MainLib.ZalDictionary'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{0DB47D63-783E-4807-8455-DAE4AF543BDF}'
+		}
+	}
+}
