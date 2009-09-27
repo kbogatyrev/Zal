@@ -33,6 +33,7 @@ END_CONNECTION_POINT_MAP()
 
 protected:
     HRESULT StatusUpdate (int i_progress);
+    HRESULT ShowCurrentWord (BSTR bstr_word);
     HRESULT StatusCheck (BOOL& b_cancel);
 
     bool b_CheckSemicolons (wstring& str_source, bool& b_suspiciousEntry);
@@ -47,7 +48,8 @@ public:
     STDMETHOD (ConvertSourceFile) (BSTR bstr_sourcePath,
                                    BSTR bstr_dbPath,
                                    BSTR bstr_unprocessedPath,
-                                   int i_maxEntries);
+                                   int i_maxEntries,
+                                   BOOL b_endings);
     STDMETHOD (PreprocessSourceFile) (BSTR bstr_sourcePath, BSTR bstr_outputDir);
     STDMETHOD (SearchSourceFile) (BSTR bstr_sourcePath, BSTR bstr_searchString, BOOL b_regexSearch);
     STDMETHOD (SaveOutput) (BSTR bstr_path);

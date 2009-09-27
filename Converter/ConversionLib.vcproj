@@ -53,6 +53,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\Helpers;..\Sqlite"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -142,6 +143,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
+				AdditionalIncludeDirectories="..\Helpers;..\Sqlite"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -220,11 +222,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Error.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ExtString.cpp"
+				RelativePath=".\EndingsParser.cpp"
 				>
 			</File>
 			<File
@@ -232,7 +230,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\sqlite3.c"
+				RelativePath=".\SaveToDb.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Sqlite\sqlite3.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -250,10 +252,6 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\SqliteWrapper.cpp"
-				>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp"
@@ -294,11 +292,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Error.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ExtString.h"
+				RelativePath=".\EndingsParser.h"
 				>
 			</File>
 			<File
@@ -306,15 +300,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\sqlite3.h"
+				RelativePath="..\Sqlite\sqlite3.h"
 				>
 			</File>
 			<File
-				RelativePath=".\sqlite3ext.h"
-				>
-			</File>
-			<File
-				RelativePath=".\SqliteWrapper.h"
+				RelativePath="..\Sqlite\sqlite3ext.h"
 				>
 			</File>
 			<File

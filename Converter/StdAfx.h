@@ -46,7 +46,12 @@ using namespace ATL;
 // CRT
 #include <io.h>
 
+//
+// Zal
+//
 #include "Error.h"
+#include "Exception.h"
+
 
 #define ERROR_LOG(str_Msg) wstringstream io__; \
         io__ << __LINE__; \
