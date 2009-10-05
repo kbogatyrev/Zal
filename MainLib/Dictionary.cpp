@@ -13,54 +13,54 @@ wstring static str_ToString (T from)
 };
 
 static wstring str_queryBase (L"select headword.source, \
-                                stress.position, \
-                                stress.is_primary, \
-                                descriptor.id, \
-                                descriptor.graphic_stem, \
-                                descriptor.is_variant, \
-                                descriptor.main_symbol, \
-                                descriptor.is_plural_of, \
-                                descriptor.is_intransitive, \
-                                descriptor.main_symbol_plural_of, \
-                                descriptor.alt_main_symbol, \
-                                descriptor.inflection_type, \
-                                descriptor.part_of_speech, \
-                                descriptor.comment, \
-                                descriptor.alt_main_symbol_comment, \
-                                descriptor.alt_inflection_comment, \
-                                descriptor.verb_stem_alternation,  \
-                                descriptor.section, \
-                                descriptor.no_comparative, \
-                                descriptor.assumed_forms, \
-                                descriptor.yo_alternation, \
-                                descriptor.o_alternation, \
-                                descriptor.second_genitive, \
-                                descriptor.questionable_forms, \
-                                descriptor.irregular_forms, \
-                                descriptor.restricted_forms, \
-                                descriptor.contexts, \
-                                descriptor.trailing_comment, \
-                                inflection.is_primary, \
-                                inflection.inflection_type, \
-                                inflection.accent_type1, \
-                                inflection.accent_type2, \
-                                inflection.short_form_restrictions, \
-                                inflection.past_part_restrictions, \
-                                inflection.no_short_form, \
-                                inflection.no_past_part, \
-                                inflection.fleeting_vowel, \
-                                inflection.stem_augment, \
-                                inflection.common_deviation \
-                            from \
-                                headword left outer join stress on stress.headword_id = headword.id \
-                                inner join descriptor on descriptor.word_id = headword.id \
-                                left outer join inflection on descriptor.id = inflection.descriptor_id ");
+stress.stress_position, \
+stress.is_primary, \
+descriptor.id, \
+descriptor.graphic_stem, \
+descriptor.is_variant, \
+descriptor.main_symbol, \
+descriptor.is_plural_of, \
+descriptor.is_intransitive, \
+descriptor.main_symbol_plural_of, \
+descriptor.alt_main_symbol, \
+descriptor.inflection_type, \
+descriptor.part_of_speech, \
+descriptor.comment, \
+descriptor.alt_main_symbol_comment, \
+descriptor.alt_inflection_comment, \
+descriptor.verb_stem_alternation,  \
+descriptor.section, \
+descriptor.no_comparative, \
+descriptor.assumed_forms, \
+descriptor.yo_alternation, \
+descriptor.o_alternation, \
+descriptor.second_genitive, \
+descriptor.questionable_forms, \
+descriptor.irregular_forms, \
+descriptor.restricted_forms, \
+descriptor.contexts, \
+descriptor.trailing_comment, \
+inflection.is_primary, \
+inflection.inflection_type, \
+inflection.accent_type1, \
+inflection.accent_type2, \
+inflection.short_form_restrictions, \
+inflection.past_part_restrictions, \
+inflection.no_short_form, \
+inflection.no_past_part, \
+inflection.fleeting_vowel, \
+inflection.stem_augment, \
+inflection.common_deviation \
+FROM \
+headword LEFT OUTER JOIN stress ON stress.headword_id = headword.id \
+INNER JOIN descriptor ON descriptor.word_id = headword.id \
+LEFT OUTER JOIN inflection ON descriptor.id = inflection.descriptor_id ");
 
-HRESULT CT_Dictionary::get_Lexeme (long lId, ILexeme ** p_lexeme)
+HRESULT CT_Dictionary::get_Lexeme (long lId)
 {
     HRESULT h_r = S_OK;
 
-    *p_lexeme = NULL;
+//    *p_lexeme = NULL;
 
     wstring str_query (str_queryBase);
     str_query += L"where descriptor.id = ";
@@ -70,7 +70,7 @@ HRESULT CT_Dictionary::get_Lexeme (long lId, ILexeme ** p_lexeme)
     return h_r;
 }
 
-HRESULT CT_Dictionary::get_Lexemes (BSTR bstr_stem)//, IZalCollection ** pi_lexemes)
+HRESULT CT_Dictionary::get_Lexemes (BSTR bstr_stem)
 {
     USES_CONVERSION;
 
@@ -93,6 +93,11 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
 {
     HRESULT h_r = S_OK;
 
+    if (NULL == pco_Db)
+    {
+        return E_POINTER;
+    }
+
     try
     {
         pco_Db->v_PrepareForSelect (str_select);
@@ -114,11 +119,11 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
             pco_Db->v_GetData (2, b_isStressPrimary);
             if (b_isStressPrimary)
             {
-                sp_lexeme->i_SourceStressPos = i_stress;
+                sp_lexeme->i_SourceStressPos = i_stressPos;
             }
             else
             {
-                sp_lexeme->i_SecondarySourceStressPos = i_stress;
+                sp_lexeme->i_SecondarySourceStressPos = i_stressPos;
             }
             pco_Db->v_GetData (3, sp_lexeme->i_DbKey);
             pco_Db->v_GetData (4, sp_lexeme->str_GraphicStem);
