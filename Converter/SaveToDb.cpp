@@ -123,8 +123,7 @@ bool ST_Headword::b_SaveStressData (CT_Sqlite * pco_dbHandle,
 
 }   //  b_SaveStressData()
 
-bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, 
-                                __int64 ll_wordId)
+bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
 {
     wsmatch result;
     static CT_Wordform co_gram;
