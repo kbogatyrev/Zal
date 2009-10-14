@@ -12,13 +12,14 @@
 #endif
 
 // We always need to provide the following information
-typedef std::vector<CComVariant> ContainerType;
-typedef VARIANT	ExposedType;
-typedef IEnumVARIANT EnumeratorInterface;
-typedef IZalCollection CollectionInterface;
+//typedef std::vector<CComVariant> ContainerType;
+//typedef VARIANT	ExposedType;
+//typedef IEnumVARIANT EnumeratorInterface;
+//typedef IZalCollection CollectionInterface;
+//typedef IDictionary DCollectionInterface;
 
 // Typically the copy policy can be calculated from the typedefs defined above:
-typedef VCUE::GenericCopy<ExposedType, ContainerType::value_type> CopyType;
+//typedef VCUE::GenericCopy<ExposedType, ContainerType::value_type> CopyType;
 
 // However, we may want to use a different class, as in this case:
 // typedef VCUE::MapCopy<ContainerType, ExposedType>				CopyType;
@@ -26,23 +27,24 @@ typedef VCUE::GenericCopy<ExposedType, ContainerType::value_type> CopyType;
 	//  of GenericCopy for all the different pairs of key and value types)
 
 // Now we have all the information we need to fill in the template arguments on the implementation classes
-typedef CComEnumOnSTL <EnumeratorInterface, 
-                       &__uuidof(EnumeratorInterface), 
-                       ExposedType,
-                       CopyType, 
-                       ContainerType> EnumeratorType;
+typedef CComEnumOnSTL <IEnumVARIANT, 
+                       &__uuidof(IEnumVARIANT), 
+                       VARIANT,
+                       VCUE::GenericCopy<VARIANT, 
+                                         std::vector<CComVariant>::value_type>,
+                       std::vector<CComVariant> > EnumeratorType;
 
-typedef VCUE::ICollectionOnSTLCopyImpl <CollectionInterface, 
-                                        ContainerType, 
-                                        ExposedType,
-                                        CopyType, 
-                                        EnumeratorType> CollectionType;
+typedef VCUE::ICollectionOnSTLCopyImpl <IDictionary, 
+                                        std::vector<CComVariant>, 
+                                        VARIANT,
+                                        VCUE::GenericCopy<VARIANT, 
+                                                          std::vector<CComVariant>::value_type>,
+                                        EnumeratorType> LexemeCollection;
 
 class ATL_NO_VTABLE CT_Dictionary :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_Dictionary, &CLSID_ZalDictionary>,
-	public IDictionary,
-    public IDispatchImpl<CollectionType, &IID_IZalCollection, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
+    public IDispatchImpl<LexemeCollection, &IID_IDictionary, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
 	CT_Dictionary()
@@ -54,7 +56,6 @@ DECLARE_REGISTRY_RESOURCEID(IDR_DICTIONARY)
 
 BEGIN_COM_MAP(CT_Dictionary)
 	COM_INTERFACE_ENTRY(IDictionary)
-    COM_INTERFACE_ENTRY(IZalCollection)
     COM_INTERFACE_ENTRY(IDispatch)
 END_COM_MAP()
 
@@ -74,7 +75,6 @@ END_COM_MAP()
 public:
     STDMETHOD (get_Lexeme) (LONG Id);
     STDMETHOD (get_Lexemes) (BSTR Key);
-
 
 private:
     CT_Sqlite * pco_Db;
