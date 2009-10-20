@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="MainLib"
 	ProjectGUID="{7F1639E5-0207-454D-B9D8-A4912CC81513}"
 	RootNamespace="MainLib"
@@ -206,6 +206,14 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Analyzer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Analyzer_Helpers.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Dictionary.cpp"
 				>
 			</File>
@@ -297,6 +305,14 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\Analyzer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Analyzer_Helpers.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Dictionary.h"
 				>

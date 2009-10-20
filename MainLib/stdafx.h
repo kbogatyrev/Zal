@@ -70,4 +70,6 @@ using namespace std::tr1;
 #include "Exception.h"
 #include "ExtString.h"
 #include "SqliteWrapper.h"
+//#include "Globals.h"
+
 
