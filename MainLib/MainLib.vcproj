@@ -240,6 +240,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Endings.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Lexeme.cpp"
 				>
 			</File>
@@ -319,6 +323,10 @@
 			</File>
 			<File
 				RelativePath=".\dllmain.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Endings.h"
 				>
 			</File>
 			<File
