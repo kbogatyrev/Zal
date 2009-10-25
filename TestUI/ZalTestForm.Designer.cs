@@ -32,13 +32,13 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabLexeme = new System.Windows.Forms.TabPage();
             this.panelLex = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBoxSearchString = new System.Windows.Forms.TextBox();
-            this.radioButtonGStem = new System.Windows.Forms.RadioButton();
-            this.radioButtonInitForm = new System.Windows.Forms.RadioButton();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.buttonLookup = new System.Windows.Forms.Button();
             this.lexPanel = new System.Windows.Forms.Panel();
+            this.buttonLookup = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.radioButtonInitForm = new System.Windows.Forms.RadioButton();
+            this.radioButtonGStem = new System.Windows.Forms.RadioButton();
+            this.textBoxSearchString = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.menuFile.SuspendLayout();
             this.tabLexeme.SuspendLayout();
@@ -52,7 +52,7 @@
             this.fileToolStripMenuItem});
             this.menuFile.Location = new System.Drawing.Point(0, 0);
             this.menuFile.Name = "menuFile";
-            this.menuFile.Size = new System.Drawing.Size(616, 24);
+            this.menuFile.Size = new System.Drawing.Size(679, 24);
             this.menuFile.TabIndex = 1;
             this.menuFile.Text = "File";
             // 
@@ -68,7 +68,7 @@
             this.tabLexeme.Location = new System.Drawing.Point(4, 22);
             this.tabLexeme.Name = "tabLexeme";
             this.tabLexeme.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLexeme.Size = new System.Drawing.Size(608, 678);
+            this.tabLexeme.Size = new System.Drawing.Size(671, 678);
             this.tabLexeme.TabIndex = 0;
             this.tabLexeme.Text = "Lexeme";
             this.tabLexeme.UseVisualStyleBackColor = true;
@@ -85,48 +85,27 @@
             this.panelLex.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLex.Location = new System.Drawing.Point(3, 3);
             this.panelLex.Name = "panelLex";
-            this.panelLex.Size = new System.Drawing.Size(602, 672);
+            this.panelLex.Size = new System.Drawing.Size(665, 672);
             this.panelLex.TabIndex = 0;
             // 
-            // textBox1
+            // lexPanel
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(23, 66);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "Enter Lexeme:";
+            this.lexPanel.AutoScroll = true;
+            this.lexPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lexPanel.Location = new System.Drawing.Point(23, 112);
+            this.lexPanel.Name = "lexPanel";
+            this.lexPanel.Size = new System.Drawing.Size(615, 533);
+            this.lexPanel.TabIndex = 6;
             // 
-            // textBoxSearchString
+            // buttonLookup
             // 
-            this.textBoxSearchString.Location = new System.Drawing.Point(148, 66);
-            this.textBoxSearchString.Name = "textBoxSearchString";
-            this.textBoxSearchString.Size = new System.Drawing.Size(216, 20);
-            this.textBoxSearchString.TabIndex = 1;
-            this.textBoxSearchString.TextChanged += new System.EventHandler(this.textBoxSearchString_TextChanged);
-            // 
-            // radioButtonGStem
-            // 
-            this.radioButtonGStem.AutoSize = true;
-            this.radioButtonGStem.Location = new System.Drawing.Point(148, 33);
-            this.radioButtonGStem.Name = "radioButtonGStem";
-            this.radioButtonGStem.Size = new System.Drawing.Size(89, 17);
-            this.radioButtonGStem.TabIndex = 2;
-            this.radioButtonGStem.TabStop = true;
-            this.radioButtonGStem.Text = "Graphic Stem";
-            this.radioButtonGStem.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonInitForm
-            // 
-            this.radioButtonInitForm.AutoSize = true;
-            this.radioButtonInitForm.Location = new System.Drawing.Point(256, 32);
-            this.radioButtonInitForm.Name = "radioButtonInitForm";
-            this.radioButtonInitForm.Size = new System.Drawing.Size(75, 17);
-            this.radioButtonInitForm.TabIndex = 3;
-            this.radioButtonInitForm.TabStop = true;
-            this.radioButtonInitForm.Text = "Initial Form";
-            this.radioButtonInitForm.UseVisualStyleBackColor = true;
+            this.buttonLookup.Location = new System.Drawing.Point(563, 51);
+            this.buttonLookup.Name = "buttonLookup";
+            this.buttonLookup.Size = new System.Drawing.Size(75, 23);
+            this.buttonLookup.TabIndex = 5;
+            this.buttonLookup.Text = "Lookup";
+            this.buttonLookup.UseVisualStyleBackColor = true;
+            this.buttonLookup.Click += new System.EventHandler(this.buttonLookup_Click);
             // 
             // textBox3
             // 
@@ -138,24 +117,45 @@
             this.textBox3.TabIndex = 4;
             this.textBox3.Text = "Search By:";
             // 
-            // buttonLookup
+            // radioButtonInitForm
             // 
-            this.buttonLookup.Location = new System.Drawing.Point(501, 47);
-            this.buttonLookup.Name = "buttonLookup";
-            this.buttonLookup.Size = new System.Drawing.Size(75, 23);
-            this.buttonLookup.TabIndex = 5;
-            this.buttonLookup.Text = "Lookup";
-            this.buttonLookup.UseVisualStyleBackColor = true;
-            this.buttonLookup.Click += new System.EventHandler(this.buttonLookup_Click);
+            this.radioButtonInitForm.AutoSize = true;
+            this.radioButtonInitForm.Location = new System.Drawing.Point(281, 33);
+            this.radioButtonInitForm.Name = "radioButtonInitForm";
+            this.radioButtonInitForm.Size = new System.Drawing.Size(75, 17);
+            this.radioButtonInitForm.TabIndex = 3;
+            this.radioButtonInitForm.TabStop = true;
+            this.radioButtonInitForm.Text = "Initial Form";
+            this.radioButtonInitForm.UseVisualStyleBackColor = true;
             // 
-            // lexPanel
+            // radioButtonGStem
             // 
-            this.lexPanel.AutoScroll = true;
-            this.lexPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lexPanel.Location = new System.Drawing.Point(23, 112);
-            this.lexPanel.Name = "lexPanel";
-            this.lexPanel.Size = new System.Drawing.Size(553, 533);
-            this.lexPanel.TabIndex = 6;
+            this.radioButtonGStem.AutoSize = true;
+            this.radioButtonGStem.Location = new System.Drawing.Point(173, 34);
+            this.radioButtonGStem.Name = "radioButtonGStem";
+            this.radioButtonGStem.Size = new System.Drawing.Size(89, 17);
+            this.radioButtonGStem.TabIndex = 2;
+            this.radioButtonGStem.TabStop = true;
+            this.radioButtonGStem.Text = "Graphic Stem";
+            this.radioButtonGStem.UseVisualStyleBackColor = true;
+            // 
+            // textBoxSearchString
+            // 
+            this.textBoxSearchString.Location = new System.Drawing.Point(174, 66);
+            this.textBoxSearchString.Name = "textBoxSearchString";
+            this.textBoxSearchString.Size = new System.Drawing.Size(216, 20);
+            this.textBoxSearchString.TabIndex = 1;
+            this.textBoxSearchString.TextChanged += new System.EventHandler(this.textBoxSearchString_TextChanged);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(23, 66);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "Enter Lexeme:";
             // 
             // tabControl
             // 
@@ -164,14 +164,14 @@
             this.tabControl.Location = new System.Drawing.Point(0, 27);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(616, 704);
+            this.tabControl.Size = new System.Drawing.Size(679, 704);
             this.tabControl.TabIndex = 0;
             // 
             // Synthesizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(616, 731);
+            this.ClientSize = new System.Drawing.Size(679, 731);
             this.Controls.Add(this.menuFile);
             this.Controls.Add(this.tabControl);
             this.Name = "Synthesizer";

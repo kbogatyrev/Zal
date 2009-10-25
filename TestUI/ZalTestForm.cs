@@ -100,9 +100,21 @@ namespace TestUI
 
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
-                    string sKey = m_dictGender[wf.Gender];
+                    string sKey = "";
+                    if (MainLib.ET_Number.NUM_SG == wf.Number)
+                    {
+                        sKey = m_dictGender[wf.Gender];
+                    }
                     sKey += m_dictCase[wf.Case];
-                    sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
+                    sKey += (MainLib.ET_Number.NUM_SG == wf.Number) ? "Sg" : "Pl";
+                    if (MainLib.ET_Case.CASE_ACC == wf.Case)
+                    {
+                        if ((MainLib.ET_Gender.GENDER_M == wf.Gender && MainLib.ET_Number.NUM_SG == wf.Number) ||
+                            (MainLib.ET_Number.NUM_PL == wf.Number))
+                        {
+                            sKey += (MainLib.ET_Animacy.ANIM_YES == wf.Animacy) ? "Anim" : "Inanim";
+                        }
+                    }
                     ap.setForm (sKey, wf.Wordform);
 
                 }   // foreach ...
