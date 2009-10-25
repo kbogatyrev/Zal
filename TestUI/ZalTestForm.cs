@@ -13,6 +13,10 @@ namespace TestUI
     {
         private MainLib.IDictionary m_Dictionary;
         private List<MainLib.ILexeme> m_listLexemes;
+        private Dictionary<MainLib.ET_Gender, string> m_dictGender;
+        private Dictionary<MainLib.ET_Number, string> m_dictNumber;
+        private Dictionary<MainLib.ET_Case, string> m_dictCase;
+        private Dictionary<MainLib.ET_AccentType, string> m_dictAccent;
 
         public Synthesizer()
         {
@@ -21,6 +25,42 @@ namespace TestUI
             radioButtonInitForm.Checked = true;
             m_Dictionary = new MainLib.ZalDictionary();
             m_listLexemes = new List<MainLib.ILexeme>();
+
+            m_dictGender = new Dictionary<MainLib.ET_Gender,string>();
+            m_dictGender.Add(MainLib.ET_Gender.GENDER_UNDEFINED, "Undefined");
+            m_dictGender.Add(MainLib.ET_Gender.GENDER_M, "M");
+            m_dictGender.Add(MainLib.ET_Gender.GENDER_F, "F");
+            m_dictGender.Add(MainLib.ET_Gender.GENDER_N, "N");
+
+            m_dictNumber = new Dictionary<MainLib.ET_Number,string>();
+            m_dictNumber.Add(MainLib.ET_Number.NUM_UNDEFINED, "Undefined");
+            m_dictNumber.Add(MainLib.ET_Number.NUM_SG, "Sg");
+            m_dictNumber.Add(MainLib.ET_Number.NUM_PL, "Pl");
+
+            m_dictCase = new Dictionary<MainLib.ET_Case,string>();
+            m_dictCase.Add(MainLib.ET_Case.CASE_UNDEFINED, "Undefined");
+            m_dictCase.Add(MainLib.ET_Case.CASE_NOM, "N");
+            m_dictCase.Add(MainLib.ET_Case.CASE_ACC, "A");
+            m_dictCase.Add(MainLib.ET_Case.CASE_GEN, "G");
+            m_dictCase.Add(MainLib.ET_Case.CASE_LOC, "L");
+            m_dictCase.Add(MainLib.ET_Case.CASE_DAT, "D");
+            m_dictCase.Add(MainLib.ET_Case.CASE_INST, "I");
+
+            m_dictAccent = new Dictionary<MainLib.ET_AccentType,string>();
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_UNDEFINED, "Undefined");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_A, "a");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_A1, "a'");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_B, "b");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_B1, "b'");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_C, "c");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_C1, "c'");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_C2, "c''");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_D, "d");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_D1, "d'");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_E, "e");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_F, "f");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_F1, "f'");
+            m_dictAccent.Add(MainLib.ET_AccentType.AT_F2, "f''");
         }
 
         public void Subscribe (LexemeDataPanel ldp)
@@ -30,14 +70,6 @@ namespace TestUI
 
         public void LexemeDataPanel_ShowLexemeDetails (int iLexemeId)
         {
-//            EnterDataDlg edd = new EnterDataDlg();
-//            DialogResult dr = edd.ShowDialog();
-
-//            if (DialogResult.OK != dr)
-//            {
-//                return;
-//            }
-
             MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
             lexeme.GenerateWordForms();
 
@@ -53,43 +85,9 @@ namespace TestUI
 
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
-                    string sKey = "";
-                    switch (wf.Case)
-                    {
-                        case MainLib.ET_Case.CASE_NOM:
-                        {
-                            sKey = "N";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_ACC:
-                        {
-                            sKey = "A";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_GEN:
-                        {
-                            sKey = "G";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_LOC:
-                        {
-                            sKey = "L";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_DAT:
-                        {
-                            sKey = "D";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_INST:
-                        {
-                            sKey = "I";
-                            break;
-                        }
-                    }
-
+                    string sKey = m_dictCase[wf.Case];
                     sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-                    np.setForm(sKey, wf.Wordform);
+                    np.setForm (sKey, wf.Wordform);
 
                 }   // foreach
             }
@@ -102,62 +100,10 @@ namespace TestUI
 
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
-                    string sKey = "";
-                    switch (wf.Gender)
-                    {
-                        case MainLib.ET_Gender.GENDER_M:
-                        {
-                            sKey = "M";
-                            break;
-                        }
-                        case MainLib.ET_Gender.GENDER_F:
-                        {
-                            sKey = "F";
-                            break;
-                        }
-                        case MainLib.ET_Gender.GENDER_N:
-                        {
-                            sKey = "N";
-                            break;
-                        }
-
-                    }
-                    switch (wf.Case)
-                    {
-                        case MainLib.ET_Case.CASE_NOM:
-                        {
-                            sKey += "N";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_ACC:
-                        {
-                            sKey += "A";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_GEN:
-                        {
-                            sKey += "G";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_LOC:
-                        {
-                            sKey += "L";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_DAT:
-                        {
-                            sKey += "D";
-                            break;
-                        }
-                        case MainLib.ET_Case.CASE_INST:
-                        {
-                            sKey += "I";
-                            break;
-                        }
-                    }
-
+                    string sKey = m_dictGender[wf.Gender];
+                    sKey += m_dictCase[wf.Case];
                     sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-                    ap.setForm(sKey, wf.Wordform);
+                    ap.setForm (sKey, wf.Wordform);
 
                 }   // foreach ...
 
@@ -170,6 +116,7 @@ namespace TestUI
         private void buttonLookup_Click(object sender, EventArgs e)
         {
             lexPanel.Controls.Clear();
+            m_listLexemes.Clear();
 
             if (radioButtonGStem.Checked)
             {
@@ -196,6 +143,11 @@ namespace TestUI
                 ldp.sGraphicStem = lex.GraphicStem;
                 ldp.sMainSymbol = lex.MainSymbol;
                 ldp.sType = lex.Type.ToString();
+                ldp.sStressType = m_dictAccent[lex.AccentType1];
+                if (lex.AccentType2 != MainLib.ET_AccentType.AT_UNDEFINED)
+                {
+                    ldp.sStressType += "/" + m_dictAccent[lex.AccentType2];
+                }
                 lexPanel.Controls.Add (ldp);
                 ++iLexeme;
             }
