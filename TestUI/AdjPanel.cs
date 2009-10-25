@@ -11,7 +11,7 @@ namespace TestUI
 {
     public partial class AdjPanel : UserControl
     {
-        Dictionary<string, TextBox> dictForms;
+        Dictionary<string, TextBox> m_dictForms;
 
         public string sLexName
         {
@@ -26,57 +26,45 @@ namespace TestUI
             }
         }
 
-        public void setForm (string sGenderNumberCase, string sText)
+        public void setForm (string sKey, string sText)
         {
-            dictForms[sGenderNumberCase].Text = sText;
+            m_dictForms[sKey].Text = sText;
         }
 
         public AdjPanel()
         {
             InitializeComponent();
 
-            dictForms = new Dictionary<string, TextBox>();
-            dictForms.Add("MNSg", textBoxMNSg);
-            dictForms.Add("MASg", textBoxMASg);
-            dictForms.Add("MGSg", textBoxMGSg);
-            dictForms.Add("MLSg", textBoxMLSg);
-            dictForms.Add("MDSg", textBoxMDSg);
-            dictForms.Add("MISg", textBoxMISg);
+            m_dictForms = new Dictionary<string, TextBox>();
+            m_dictForms.Add("MNSg", textBoxMNSg);
+            m_dictForms.Add("MASgInanim", textBoxMASgInanim);
+            m_dictForms.Add("MASgAnim", textBoxMASgAnim);
+            m_dictForms.Add("MGSg", textBoxMGSg);
+            m_dictForms.Add("MLSg", textBoxMLSg);
+            m_dictForms.Add("MDSg", textBoxMDSg);
+            m_dictForms.Add("MISg", textBoxMISg);
 
-            dictForms.Add("MNPl", textBoxMNPl);
-            dictForms.Add("MAPl", textBoxMAPl);
-            dictForms.Add("MGPl", textBoxMGPl);
-            dictForms.Add("MLPl", textBoxMLPl);
-            dictForms.Add("MDPl", textBoxMDPl);
-            dictForms.Add("MIPl", textBoxMIPl);
+            m_dictForms.Add("FNSg", textBoxFNSg);
+            m_dictForms.Add("FASg", textBoxFASg);
+            m_dictForms.Add("FGSg", textBoxFGSg);
+            m_dictForms.Add("FLSg", textBoxFLSg);
+            m_dictForms.Add("FDSg", textBoxFDSg);
+            m_dictForms.Add("FISg", textBoxFISg);
 
-            dictForms.Add("FNSg", textBoxFNSg);
-            dictForms.Add("FASg", textBoxFASg);
-            dictForms.Add("FGSg", textBoxFGSg);
-            dictForms.Add("FLSg", textBoxFLSg);
-            dictForms.Add("FDSg", textBoxFDSg);
-            dictForms.Add("FISg", textBoxFISg);
+            m_dictForms.Add("NNSg", textBoxNNSg);
+            m_dictForms.Add("NASg", textBoxNASg);
+            m_dictForms.Add("NGSg", textBoxNGSg);
+            m_dictForms.Add("NLSg", textBoxNLSg);
+            m_dictForms.Add("NDSg", textBoxNDSg);
+            m_dictForms.Add("NISg", textBoxNISg);
 
-            dictForms.Add("FNPl", textBoxFNPl);
-            dictForms.Add("FAPl", textBoxFAPl);
-            dictForms.Add("FGPl", textBoxFGPl);
-            dictForms.Add("FLPl", textBoxFLPl);
-            dictForms.Add("FDPl", textBoxFDPl);
-            dictForms.Add("FIPl", textBoxFIPl);
-
-            dictForms.Add("NNSg", textBoxNNSg);
-            dictForms.Add("NASg", textBoxNASg);
-            dictForms.Add("NGSg", textBoxNGSg);
-            dictForms.Add("NLSg", textBoxNLSg);
-            dictForms.Add("NDSg", textBoxNDSg);
-            dictForms.Add("NISg", textBoxNISg);
-
-            dictForms.Add("NNPl", textBoxNNPl);
-            dictForms.Add("NAPl", textBoxNAPl);
-            dictForms.Add("NGPl", textBoxNGPl);
-            dictForms.Add("NLPl", textBoxNLPl);
-            dictForms.Add("NDPl", textBoxNDPl);
-            dictForms.Add("NIPl", textBoxNIPl);
+            m_dictForms.Add("NPl", textBoxNPl);
+            m_dictForms.Add("APlInanim", textBoxAPlInanim);
+            m_dictForms.Add("APlAnim", textBoxAPlAnim);
+            m_dictForms.Add("GPl", textBoxGPl);
+            m_dictForms.Add("LPl", textBoxLPl);
+            m_dictForms.Add("DPl", textBoxDPl);
+            m_dictForms.Add("IPl", textBoxIPl);
 
         }
     }
