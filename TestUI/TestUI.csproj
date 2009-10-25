@@ -60,6 +60,12 @@
     <Compile Include="EnterDataDlg.Designer.cs">
       <DependentUpon>EnterDataDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="LexemeDataPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LexemeDataPanel.Designer.cs">
+      <DependentUpon>LexemeDataPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="NounPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -79,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EnterDataDlg.resx">
       <DependentUpon>EnterDataDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LexemeDataPanel.resx">
+      <DependentUpon>LexemeDataPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NounPanel.resx">
       <DependentUpon>NounPanel.cs</DependentUpon>

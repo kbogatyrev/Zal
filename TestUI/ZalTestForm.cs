@@ -11,144 +11,205 @@ namespace TestUI
 {
     public partial class Synthesizer : Form
     {
+        private MainLib.IDictionary m_Dictionary;
+        private List<MainLib.ILexeme> m_listLexemes;
+
         public Synthesizer()
         {
             InitializeComponent();
+            buttonLookup.Enabled = false;
+            radioButtonInitForm.Checked = true;
+            m_Dictionary = new MainLib.ZalDictionary();
+            m_listLexemes = new List<MainLib.ILexeme>();
         }
 
-        private void graphicStemToolStripMenuItem_Click(object sender, EventArgs e)
+        public void Subscribe (LexemeDataPanel ldp)
         {
-            EnterDataDlg edd = new EnterDataDlg();
-            DialogResult dr = edd.ShowDialog();
+            ldp.ShowDetailsEvent += new LexemeDataPanel.ShowDetails (LexemeDataPanel_ShowLexemeDetails);
+        }
 
-            if (DialogResult.OK != dr)
+        public void LexemeDataPanel_ShowLexemeDetails (int iLexemeId)
+        {
+//            EnterDataDlg edd = new EnterDataDlg();
+//            DialogResult dr = edd.ShowDialog();
+
+//            if (DialogResult.OK != dr)
+//            {
+//                return;
+//            }
+
+            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
+            lexeme.GenerateWordForms();
+
+            TabPage tabPageDetails = new TabPage (lexeme.InitialForm);
+
+            string grSt = lexeme.GraphicStem;
+
+            if (MainLib.ET_PartOfSpeech.POS_NOUN == lexeme.PartOfSpeech)
             {
-                return;
+                NounPanel np = new NounPanel();
+                tabPageDetails.Controls.Add(np);
+                np.sLexName = grSt;
+
+                foreach (MainLib.IWordForm wf in lexeme)
+                {
+                    string sKey = "";
+                    switch (wf.Case)
+                    {
+                        case MainLib.ET_Case.CASE_NOM:
+                        {
+                            sKey = "N";
+                            break;
+                        }
+                        case MainLib.ET_Case.CASE_ACC:
+                        {
+                            sKey = "A";
+                            break;
+                        }
+                        case MainLib.ET_Case.CASE_GEN:
+                        {
+                            sKey = "G";
+                            break;
+                        }
+                        case MainLib.ET_Case.CASE_LOC:
+                        {
+                            sKey = "L";
+                            break;
+                        }
+                        case MainLib.ET_Case.CASE_DAT:
+                        {
+                            sKey = "D";
+                            break;
+                        }
+                        case MainLib.ET_Case.CASE_INST:
+                        {
+                            sKey = "I";
+                            break;
+                        }
+                    }
+
+                    sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
+                    np.setForm(sKey, wf.Wordform);
+
+                }   // foreach
             }
 
-            MainLib.IDictionary dict = new MainLib.ZalDictionary();
-            dict.Lexemes (edd.sLexeme);
-            foreach (MainLib.ILexeme lex in dict)
+            if (MainLib.ET_PartOfSpeech.POS_ADJ == lexeme.PartOfSpeech)
             {
-                string grSt = lex.GraphicStem;
-                lex.WordForms();
+                AdjPanel ap = new AdjPanel();
+                tabPageDetails.Controls.Add(ap);
+                ap.sLexName = grSt;
 
-                if (MainLib.ET_PartOfSpeech.POS_NOUN == lex.PartOfSpeech)
+                foreach (MainLib.IWordForm wf in lexeme)
                 {
-                    NounPanel np = new NounPanel();
-                    panelWF.Controls.Add(np);
-                    np.sLexName = grSt;
-
-                    foreach (MainLib.IWordForm wf in lex)
+                    string sKey = "";
+                    switch (wf.Gender)
                     {
-                        string sKey = "";
-                        switch (wf.Case)
+                        case MainLib.ET_Gender.GENDER_M:
                         {
-                            case MainLib.ET_Case.CASE_NOM:
-                            {
-                                sKey = "N";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_ACC:
-                            {
-                                sKey = "A";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_GEN:
-                            {
-                                sKey = "G";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_LOC:
-                            {
-                                sKey = "L";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_DAT:
-                            {
-                                sKey = "D";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_INST:
-                            {
-                                sKey = "I";
-                                break;
-                            }
+                            sKey = "M";
+                            break;
+                        }
+                        case MainLib.ET_Gender.GENDER_F:
+                        {
+                            sKey = "F";
+                            break;
+                        }
+                        case MainLib.ET_Gender.GENDER_N:
+                        {
+                            sKey = "N";
+                            break;
                         }
 
-                        sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-                        np.setForm(sKey, wf.Wordform);
                     }
-                }
-
-                if (MainLib.ET_PartOfSpeech.POS_ADJ == lex.PartOfSpeech)
-                {
-                    AdjPanel ap = new AdjPanel();
-                    panelWF.Controls.Add(ap);
-                    ap.sLexName = grSt;
-
-                    foreach (MainLib.IWordForm wf in lex)
+                    switch (wf.Case)
                     {
-                        string sKey = "";
-                        switch (wf.Gender)
+                        case MainLib.ET_Case.CASE_NOM:
                         {
-                            case MainLib.ET_Gender.GENDER_M:
-                            {
-                                sKey = "M";
-                                break;
-                            }
-                            case MainLib.ET_Gender.GENDER_F:
-                            {
-                                sKey = "F";
-                                break;
-                            }
-                            case MainLib.ET_Gender.GENDER_N:
-                            {
-                                sKey = "N";
-                                break;
-                            }
-
+                            sKey += "N";
+                            break;
                         }
-                        switch (wf.Case)
+                        case MainLib.ET_Case.CASE_ACC:
                         {
-                            case MainLib.ET_Case.CASE_NOM:
-                            {
-                                sKey += "N";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_ACC:
-                            {
-                                sKey += "A";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_GEN:
-                            {
-                                sKey += "G";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_LOC:
-                            {
-                                sKey += "L";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_DAT:
-                            {
-                                sKey += "D";
-                                break;
-                            }
-                            case MainLib.ET_Case.CASE_INST:
-                            {
-                                sKey += "I";
-                                break;
-                            }
+                            sKey += "A";
+                            break;
                         }
+                        case MainLib.ET_Case.CASE_GEN:
+                        {
+                            sKey += "G";
+                            break;
+                        }
+                        case MainLib.ET_Case.CASE_LOC:
+                        {
+                            sKey += "L";
+                            break;
+                        }
+                        case MainLib.ET_Case.CASE_DAT:
+                        {
+                            sKey += "D";
+                            break;
+                        }
+                        case MainLib.ET_Case.CASE_INST:
+                        {
+                            sKey += "I";
+                            break;
+                        }
+                    }
 
-                        sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-                        ap.setForm(sKey, wf.Wordform);
+                    sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
+                    ap.setForm(sKey, wf.Wordform);
 
-                    }   // foreach ...
+                }   // foreach ...
 
-                }
+            }   //  if (MainLib.ET_PartOfSpeech.POS_ADJ == lexeme.PartOfSpeech)
+
+            tabControl.Controls.Add(tabPageDetails);
+
+        }   //  LexemeDataPanel_ShowLexemeDetails (int iLexemeId)
+
+        private void buttonLookup_Click(object sender, EventArgs e)
+        {
+            lexPanel.Controls.Clear();
+
+            if (radioButtonGStem.Checked)
+            {
+                m_Dictionary.GetLexemesByGraphicStem (textBoxSearchString.Text);
+            }
+            else
+            {
+                m_Dictionary.GetLexemesByInitialForm (textBoxSearchString.Text);
+            }
+
+            if (m_Dictionary.Count < 1)
+            {
+                MessageBox.Show (this, "Not in the dictionary.", "Zal Synthesizer");
+            }
+
+            int iLexeme = 0;
+            foreach (MainLib.ILexeme lex in m_Dictionary)
+            {
+                m_listLexemes.Add (lex);
+                LexemeDataPanel ldp = new LexemeDataPanel (iLexeme);
+                Subscribe(ldp);
+                ldp.Location = new System.Drawing.Point (0, iLexeme*ldp.Size.Height+4);
+                ldp.sInitialForm = lex.InitialForm;
+                ldp.sGraphicStem = lex.GraphicStem;
+                ldp.sMainSymbol = lex.MainSymbol;
+                ldp.sType = lex.Type.ToString();
+                lexPanel.Controls.Add (ldp);
+                ++iLexeme;
+            }
+        }
+
+        private void textBoxSearchString_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxSearchString.Text.Length > 0)
+            {
+                buttonLookup.Enabled = true;
+            }
+            else
+            {
+                buttonLookup.Enabled = false;
             }
         }
     }
