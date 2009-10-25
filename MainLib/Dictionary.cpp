@@ -113,6 +113,8 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
         return E_POINTER;
     }
 
+    m_coll.clear();
+
     try
     {
         pco_Db->v_PrepareForSelect (str_select);
