@@ -56,7 +56,7 @@ headword LEFT OUTER JOIN stress ON stress.headword_id = headword.id \
 INNER JOIN descriptor ON descriptor.word_id = headword.id \
 LEFT OUTER JOIN inflection ON descriptor.id = inflection.descriptor_id ");
 
-HRESULT CT_Dictionary::get_Lexeme (long lId)
+HRESULT CT_Dictionary::GetLexeme (long lId)
 {
     HRESULT h_r = S_OK;
 
@@ -70,7 +70,7 @@ HRESULT CT_Dictionary::get_Lexeme (long lId)
     return h_r;
 }
 
-HRESULT CT_Dictionary::get_Lexemes (BSTR bstr_stem)
+HRESULT CT_Dictionary::GetLexemesByGraphicStem (BSTR bstr_headword)
 {
     USES_CONVERSION;
 
@@ -78,6 +78,21 @@ HRESULT CT_Dictionary::get_Lexemes (BSTR bstr_stem)
 
     wstring str_query (str_queryBase);
     str_query += L"where descriptor.graphic_stem = \"";
+    str_query += OLE2W (bstr_headword);
+    str_query += '\"';
+    h_r = h_GetData (str_query);
+
+    return h_r;
+}
+
+HRESULT CT_Dictionary::GetLexemesByInitialForm (BSTR bstr_stem)
+{
+    USES_CONVERSION;
+
+    HRESULT h_r = S_OK;
+
+    wstring str_query (str_queryBase);
+    str_query += L"where headword.source = \"";
     str_query += OLE2W (bstr_stem);
     str_query += '\"';
     h_r = h_GetData (str_query);
