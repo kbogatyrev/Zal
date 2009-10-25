@@ -73,8 +73,9 @@ END_COM_MAP()
 	}
 
 public:
-    STDMETHOD (get_Lexeme) (LONG Id);
-    STDMETHOD (get_Lexemes) (BSTR Key);
+    STDMETHOD (GetLexeme) (LONG Id);
+    STDMETHOD (GetLexemesByGraphicStem) (BSTR Key);
+    STDMETHOD (GetLexemesByInitialForm) (BSTR Key);
 
 private:
     CT_Sqlite * pco_Db;
