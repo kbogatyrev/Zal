@@ -85,6 +85,17 @@
             this.textBoxMASgAnim = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.textBoxAPlAnim = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.textBoxShortM = new System.Windows.Forms.TextBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.textBoxShortF = new System.Windows.Forms.TextBox();
+            this.textBox21 = new System.Windows.Forms.TextBox();
+            this.textBoxShortN = new System.Windows.Forms.TextBox();
+            this.textBox23 = new System.Windows.Forms.TextBox();
+            this.textBoxShortPl = new System.Windows.Forms.TextBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textBoxComp = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBoxLabelSg
@@ -230,7 +241,7 @@
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Control;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(532, 48);
+            this.textBox1.Location = new System.Drawing.Point(515, 48);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(29, 20);
             this.textBox1.TabIndex = 79;
@@ -649,10 +660,132 @@
             this.textBoxAPlAnim.Size = new System.Drawing.Size(215, 20);
             this.textBoxAPlAnim.TabIndex = 111;
             // 
+            // textBox11
+            // 
+            this.textBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox11.Location = new System.Drawing.Point(495, 287);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.ReadOnly = true;
+            this.textBox11.Size = new System.Drawing.Size(80, 20);
+            this.textBox11.TabIndex = 113;
+            this.textBox11.Text = "Short Forms";
+            this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox12
+            // 
+            this.textBox12.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox12.Location = new System.Drawing.Point(358, 313);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(62, 20);
+            this.textBox12.TabIndex = 115;
+            this.textBox12.Text = "M Sg";
+            this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxShortM
+            // 
+            this.textBoxShortM.Location = new System.Drawing.Point(431, 313);
+            this.textBoxShortM.Multiline = true;
+            this.textBoxShortM.Name = "textBoxShortM";
+            this.textBoxShortM.ReadOnly = true;
+            this.textBoxShortM.Size = new System.Drawing.Size(216, 20);
+            this.textBoxShortM.TabIndex = 114;
+            // 
+            // textBox13
+            // 
+            this.textBox13.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox13.Location = new System.Drawing.Point(358, 339);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(62, 20);
+            this.textBox13.TabIndex = 117;
+            this.textBox13.Text = "F Sg";
+            this.textBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxShortF
+            // 
+            this.textBoxShortF.Location = new System.Drawing.Point(431, 339);
+            this.textBoxShortF.Multiline = true;
+            this.textBoxShortF.Name = "textBoxShortF";
+            this.textBoxShortF.ReadOnly = true;
+            this.textBoxShortF.Size = new System.Drawing.Size(216, 20);
+            this.textBoxShortF.TabIndex = 116;
+            // 
+            // textBox21
+            // 
+            this.textBox21.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox21.Location = new System.Drawing.Point(358, 365);
+            this.textBox21.Name = "textBox21";
+            this.textBox21.Size = new System.Drawing.Size(62, 20);
+            this.textBox21.TabIndex = 119;
+            this.textBox21.Text = "N Sg";
+            this.textBox21.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxShortN
+            // 
+            this.textBoxShortN.Location = new System.Drawing.Point(431, 365);
+            this.textBoxShortN.Multiline = true;
+            this.textBoxShortN.Name = "textBoxShortN";
+            this.textBoxShortN.ReadOnly = true;
+            this.textBoxShortN.Size = new System.Drawing.Size(216, 20);
+            this.textBoxShortN.TabIndex = 118;
+            // 
+            // textBox23
+            // 
+            this.textBox23.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox23.Location = new System.Drawing.Point(358, 392);
+            this.textBox23.Name = "textBox23";
+            this.textBox23.Size = new System.Drawing.Size(62, 20);
+            this.textBox23.TabIndex = 121;
+            this.textBox23.Text = "Pl";
+            this.textBox23.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxShortPl
+            // 
+            this.textBoxShortPl.Location = new System.Drawing.Point(431, 392);
+            this.textBoxShortPl.Multiline = true;
+            this.textBoxShortPl.Name = "textBoxShortPl";
+            this.textBoxShortPl.ReadOnly = true;
+            this.textBoxShortPl.Size = new System.Drawing.Size(216, 20);
+            this.textBoxShortPl.TabIndex = 120;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox14.Location = new System.Drawing.Point(495, 486);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.ReadOnly = true;
+            this.textBox14.Size = new System.Drawing.Size(80, 20);
+            this.textBox14.TabIndex = 122;
+            this.textBox14.Text = "Comparative";
+            this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxComp
+            // 
+            this.textBoxComp.Location = new System.Drawing.Point(431, 512);
+            this.textBoxComp.Multiline = true;
+            this.textBoxComp.Name = "textBoxComp";
+            this.textBoxComp.ReadOnly = true;
+            this.textBoxComp.Size = new System.Drawing.Size(216, 20);
+            this.textBoxComp.TabIndex = 123;
+            // 
             // AdjPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.textBoxComp);
+            this.Controls.Add(this.textBox14);
+            this.Controls.Add(this.textBox23);
+            this.Controls.Add(this.textBoxShortPl);
+            this.Controls.Add(this.textBox21);
+            this.Controls.Add(this.textBoxShortN);
+            this.Controls.Add(this.textBox13);
+            this.Controls.Add(this.textBoxShortF);
+            this.Controls.Add(this.textBox12);
+            this.Controls.Add(this.textBoxShortM);
+            this.Controls.Add(this.textBox11);
             this.Controls.Add(this.textBox10);
             this.Controls.Add(this.textBoxAPlAnim);
             this.Controls.Add(this.textBox9);
@@ -776,5 +909,16 @@
         private System.Windows.Forms.TextBox textBoxMASgAnim;
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.TextBox textBoxAPlAnim;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox textBoxShortM;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox textBoxShortF;
+        private System.Windows.Forms.TextBox textBox21;
+        private System.Windows.Forms.TextBox textBoxShortN;
+        private System.Windows.Forms.TextBox textBox23;
+        private System.Windows.Forms.TextBox textBoxShortPl;
+        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.TextBox textBoxComp;
     }
 }

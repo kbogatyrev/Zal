@@ -66,6 +66,10 @@ namespace TestUI
             m_dictForms.Add("DPl", textBoxDPl);
             m_dictForms.Add("IPl", textBoxIPl);
 
+            m_dictForms.Add("ShortMSg", textBoxShortM);
+            m_dictForms.Add("ShortFSg", textBoxShortF);
+            m_dictForms.Add("ShortNSg", textBoxShortN);
+            m_dictForms.Add("ShortPl", textBoxShortPl);
         }
     }
 }
