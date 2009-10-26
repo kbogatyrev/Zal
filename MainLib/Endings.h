@@ -57,16 +57,24 @@ public:
         mmap_Endings.clear();
     }
 
+    // Overload for nouns:
     HRESULT h_AddEnding (const wstring& str_ending,
                          ET_Number eo_number, 
                          ET_Case eo_case, 
                          ET_EndingStressType eo_stress);
 
+    // Overload for adjectives:
     HRESULT h_AddEnding (const wstring& str_ending,
                          ET_Gender eo_gender, 
                          ET_Number eo_number, 
                          ET_Case eo_case, 
                          ET_Animacy eo_animacy, 
+                         ET_EndingStressType eo_stress);
+
+    // Overload for short forms:
+    HRESULT h_AddEnding (const wstring& str_ending, 
+                         ET_Gender eo_gender, 
+                         ET_Number eo_number, 
                          ET_EndingStressType eo_stress);
 
     int i_GetNumOfEndings (ET_Gender eo_gender,
@@ -84,13 +92,18 @@ public:
                        int i_seqNum = 0);
 
 private:
-    HRESULT h_HandleAddEnding (ET_EndingClass eo_class,
-                               const wstring& str_ending,
-                               ET_Gender eo_gender, 
-                               ET_Number eo_number, 
-                               ET_Case eo_case, 
-                               ET_Animacy eo_animacy, 
-                               ET_EndingStressType eo_stress);
+    HRESULT h_HandleAddDeclEnding (ET_EndingClass eo_class,
+                                   const wstring& str_ending,
+                                   ET_Gender eo_gender, 
+                                   ET_Number eo_number, 
+                                   ET_Case eo_case, 
+                                   ET_Animacy eo_animacy, 
+                                   ET_EndingStressType eo_stress);
+
+    HRESULT h_HandleAddShortFormEnding (const wstring& str_ending,
+                                        ET_Gender eo_gender, 
+                                        ET_Number eo_number, 
+                                        ET_EndingStressType eo_stress);
 
     int arrHashKeys[GENDER_COUNT][NUM_COUNT][CASE_COUNT][ANIM_COUNT][ENDING_STRESS_COUNT];
     std::multimap<int, wstring> mmap_Endings;

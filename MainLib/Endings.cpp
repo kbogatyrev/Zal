@@ -7,13 +7,13 @@ HRESULT CT_Endings::h_AddEnding (const wstring& str_ending,
                                  ET_EndingStressType eo_stress)
 {
 
-    HRESULT h_r = h_HandleAddEnding (ENDING_CLASS_NOUN, 
-                                     str_ending, 
-                                     GENDER_UNDEFINED, 
-                                     eo_number, 
-                                     eo_case, 
-                                     ANIM_UNDEFINED, 
-                                     eo_stress);
+    HRESULT h_r = h_HandleAddDeclEnding (ENDING_CLASS_NOUN, 
+                                         str_ending, 
+                                         GENDER_UNDEFINED, 
+                                         eo_number, 
+                                         eo_case, 
+                                         ANIM_UNDEFINED, 
+                                         eo_stress);
 
     return h_r;
 
@@ -26,23 +26,33 @@ HRESULT CT_Endings::h_AddEnding (const wstring& str_ending,
                                  ET_Animacy eo_animacy, 
                                  ET_EndingStressType eo_stress)
 {
-    HRESULT h_r = h_HandleAddEnding (ENDING_CLASS_ADJECTIVE, 
-                                     str_ending, 
-                                     eo_gender, 
-                                     eo_number, 
-                                     eo_case, 
-                                     eo_animacy, 
-                                     eo_stress);
+    HRESULT h_r = h_HandleAddDeclEnding (ENDING_CLASS_ADJECTIVE, 
+                                         str_ending, 
+                                         eo_gender, 
+                                         eo_number, 
+                                         eo_case, 
+                                         eo_animacy, 
+                                         eo_stress);
     return h_r;
 }
 
-HRESULT CT_Endings::h_HandleAddEnding (ET_EndingClass eo_class,
-                                       const wstring& str_ending,
-                                       ET_Gender eo_gender, 
-                                       ET_Number eo_number, 
-                                       ET_Case eo_case, 
-                                       ET_Animacy eo_animacy, 
-                                       ET_EndingStressType eo_stress)
+HRESULT CT_Endings::h_AddEnding (const wstring& str_ending, 
+                                 ET_Gender eo_gender, 
+                                 ET_Number eo_number, 
+                                 ET_EndingStressType eo_stress)
+{
+    HRESULT h_r = h_HandleAddShortFormEnding (str_ending, eo_gender, eo_number, eo_stress);
+    return h_r;
+}
+
+
+HRESULT CT_Endings::h_HandleAddDeclEnding (ET_EndingClass eo_class,
+                                           const wstring& str_ending,
+                                           ET_Gender eo_gender, 
+                                           ET_Number eo_number, 
+                                           ET_Case eo_case, 
+                                           ET_Animacy eo_animacy, 
+                                           ET_EndingStressType eo_stress)
 {
     //
     // Gender
@@ -92,7 +102,7 @@ HRESULT CT_Endings::h_HandleAddEnding (ET_EndingClass eo_class,
     if (CASE_UNDEFINED == eo_case)
     {
         ERROR_LOG (_T("Undefined case in noun ending."));
-        return E_FAIL;
+        return E_INVALIDARG;
     }
 
     //
@@ -147,7 +157,70 @@ HRESULT CT_Endings::h_HandleAddEnding (ET_EndingClass eo_class,
 
     return S_OK;
 
-}   //  h_HandleAddEnding (...)
+}   //  h_HandleAddDeclEnding (...)
+
+HRESULT CT_Endings::h_HandleAddShortFormEnding (const wstring& str_ending,
+                                                ET_Gender eo_gender, 
+                                                ET_Number eo_number, 
+                                                ET_EndingStressType eo_stress)
+{
+    //
+    // Gender
+    //
+    std::vector<ET_Gender> vec_gender;
+    if (GENDER_UNDEFINED == eo_gender)
+    {
+        for (int i_gen = (int)GENDER_UNDEFINED; i_gen < GENDER_COUNT; ++i_gen)
+        {
+            vec_gender.push_back ((ET_Gender)i_gen);
+        }
+    }
+    else
+    {
+        vec_gender.push_back (eo_gender);
+    }
+
+    //
+    // Number
+    //
+    if (NUM_UNDEFINED == eo_number)
+    {
+        ERROR_LOG (_T("Undefined number in short form ending."));
+        return E_INVALIDARG;
+    }
+
+    //
+    // Ending stressed/unstressed
+    //
+    std::vector<ET_EndingStressType> vec_stress;
+    if (ENDING_STRESS_UNDEFINED == eo_stress)
+    {
+        for (int i_stress = ENDING_STRESS_UNDEFINED; 
+             i_stress < (int)ENDING_STRESS_COUNT; 
+             ++i_stress)
+        {
+            vec_stress.push_back ((ET_EndingStressType)i_stress);
+        }
+    }
+    else
+    {
+        vec_stress.push_back (eo_stress);
+    }
+
+    for (int i_g = 0; i_g < (int)vec_gender.size(); ++i_g)
+        for (int i_s = 0; i_s < (int)vec_stress.size(); ++i_s)
+        {
+            int i_key = arrHashKeys[vec_gender[i_g]]
+                                   [eo_number]
+                                   [CASE_UNDEFINED]
+                                   [ANIM_UNDEFINED]
+                                   [vec_stress[i_s]];
+            mmap_Endings.insert (std::pair<int, wstring> (i_key, str_ending));
+        }
+
+    return S_OK;
+
+}   //  h_HandleAddShortFormEnding (...)
 
 int CT_Endings::i_GetNumOfEndings (ET_Gender eo_gender,
                                    ET_Number eo_number, 
