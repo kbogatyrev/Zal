@@ -6,10 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace TestUI
 {
-    public partial class Synthesizer : Form
+    public partial class TestApplet : Form
     {
         private MainLib.IDictionary m_Dictionary;
         private List<MainLib.ILexeme> m_listLexemes;
@@ -18,7 +19,7 @@ namespace TestUI
         private Dictionary<MainLib.ET_Case, string> m_dictCase;
         private Dictionary<MainLib.ET_AccentType, string> m_dictAccent;
 
-        public Synthesizer()
+        public TestApplet()
         {
             InitializeComponent();
             buttonLookup.Enabled = false;
@@ -144,40 +145,66 @@ namespace TestUI
             lexPanel.Controls.Clear();
             m_listLexemes.Clear();
 
+            bool bSynthesis = true;
+
             if (radioButtonGStem.Checked)
             {
+                bSynthesis = true;
                 m_Dictionary.GetLexemesByGraphicStem (textBoxSearchString.Text);
             }
             else
             {
-                m_Dictionary.GetLexemesByInitialForm (textBoxSearchString.Text);
+                if (radioButtonInitForm.Checked)
+                {
+                    bSynthesis = true;
+                    try
+                    {
+                        m_Dictionary.GetLexemesByInitialForm(textBoxSearchString.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        string sMsg = "Error in buttonLookup_Click: ";
+                        sMsg += ex.Message;
+                        MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+                else
+                {
+                    bSynthesis = false;
+                    // Call Tim's analysis code here
+                }
             }
 
             if (m_Dictionary.Count < 1)
             {
-                MessageBox.Show (this, "Not in the dictionary.", "Zal Synthesizer");
+                MessageBox.Show(this, "Not in the dictionary.", "Zal Synthesizer");
             }
 
-            int iLexeme = 0;
-            foreach (MainLib.ILexeme lex in m_Dictionary)
+            if (bSynthesis)
             {
-                m_listLexemes.Add (lex);
-                LexemeDataPanel ldp = new LexemeDataPanel (iLexeme);
-                Subscribe(ldp);
-                ldp.Location = new System.Drawing.Point (0, iLexeme*ldp.Size.Height+4);
-                ldp.sInitialForm = lex.InitialForm;
-                ldp.sGraphicStem = lex.GraphicStem;
-                ldp.sMainSymbol = lex.MainSymbol;
-                ldp.sType = lex.Type.ToString();
-                ldp.sStressType = m_dictAccent[lex.AccentType1];
-                if (lex.AccentType2 != MainLib.ET_AccentType.AT_UNDEFINED)
+                int iLexeme = 0;
+                foreach (MainLib.ILexeme lex in m_Dictionary)
                 {
-                    ldp.sStressType += "/" + m_dictAccent[lex.AccentType2];
+                    m_listLexemes.Add(lex);
+                    LexemeDataPanel ldp = new LexemeDataPanel(iLexeme);
+                    Subscribe(ldp);
+                    ldp.Location = new System.Drawing.Point(0, iLexeme * ldp.Size.Height + 4);
+                    ldp.sInitialForm = lex.InitialForm;
+                    ldp.sGraphicStem = lex.GraphicStem;
+                    ldp.sMainSymbol = lex.MainSymbol;
+                    ldp.sType = lex.Type.ToString();
+                    ldp.sStressType = m_dictAccent[lex.AccentType1];
+                    if (lex.AccentType2 != MainLib.ET_AccentType.AT_UNDEFINED)
+                    {
+                        ldp.sStressType += "/" + m_dictAccent[lex.AccentType2];
+                    }
+                    lexPanel.Controls.Add(ldp);
+                    ++iLexeme;
                 }
-                lexPanel.Controls.Add (ldp);
-                ++iLexeme;
-            }
-        }
+            }     // if (bSynthesis)
+
+        }   //  buttonLookup_Click (...)
 
         private void textBoxSearchString_TextChanged(object sender, EventArgs e)
         {
@@ -188,6 +215,27 @@ namespace TestUI
             else
             {
                 buttonLookup.Enabled = false;
+            }
+        }
+
+        private void pathToDBToolStripMenuItem_Click (object sender, EventArgs e)
+        {
+            FileDialog fd = new OpenFileDialog ();
+            DialogResult dr = fd.ShowDialog ();
+            if (DialogResult.OK == dr)
+            {
+                string sDbPath = fd.FileName;
+                if (File.Exists (fd.FileName))
+                {
+                    m_Dictionary.DbPath = fd.FileName;
+                }
+                else
+                {
+                    MessageBox.Show ("File Does not exist", 
+                                     "Zal Test Error", 
+                                     MessageBoxButtons.OK, 
+                                     MessageBoxIcon.Exclamation);
+                }
             }
         }
     }
