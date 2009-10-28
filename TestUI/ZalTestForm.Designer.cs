@@ -30,7 +30,7 @@
         {
             this.menuFile = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabLexeme = new System.Windows.Forms.TabPage();
+            this.tabSynthesis = new System.Windows.Forms.TabPage();
             this.panelLex = new System.Windows.Forms.Panel();
             this.lexPanel = new System.Windows.Forms.Panel();
             this.buttonLookup = new System.Windows.Forms.Button();
@@ -40,8 +40,9 @@
             this.textBoxSearchString = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabPageAnalysis = new System.Windows.Forms.TabPage();
             this.menuFile.SuspendLayout();
-            this.tabLexeme.SuspendLayout();
+            this.tabSynthesis.SuspendLayout();
             this.panelLex.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.SuspendLayout();
@@ -62,16 +63,16 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // tabLexeme
+            // tabSynthesis
             // 
-            this.tabLexeme.Controls.Add(this.panelLex);
-            this.tabLexeme.Location = new System.Drawing.Point(4, 22);
-            this.tabLexeme.Name = "tabLexeme";
-            this.tabLexeme.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLexeme.Size = new System.Drawing.Size(671, 678);
-            this.tabLexeme.TabIndex = 0;
-            this.tabLexeme.Text = "Lexeme";
-            this.tabLexeme.UseVisualStyleBackColor = true;
+            this.tabSynthesis.Controls.Add(this.panelLex);
+            this.tabSynthesis.Location = new System.Drawing.Point(4, 22);
+            this.tabSynthesis.Name = "tabSynthesis";
+            this.tabSynthesis.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSynthesis.Size = new System.Drawing.Size(671, 678);
+            this.tabSynthesis.TabIndex = 0;
+            this.tabSynthesis.Text = "Synthesis";
+            this.tabSynthesis.UseVisualStyleBackColor = true;
             // 
             // panelLex
             // 
@@ -159,13 +160,23 @@
             // 
             // tabControl
             // 
-            this.tabControl.Controls.Add(this.tabLexeme);
+            this.tabControl.Controls.Add(this.tabSynthesis);
+            this.tabControl.Controls.Add(this.tabPageAnalysis);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tabControl.Location = new System.Drawing.Point(0, 27);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(679, 704);
             this.tabControl.TabIndex = 0;
+            // 
+            // tabPageAnalysis
+            // 
+            this.tabPageAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAnalysis.Name = "tabPageAnalysis";
+            this.tabPageAnalysis.Size = new System.Drawing.Size(671, 678);
+            this.tabPageAnalysis.TabIndex = 1;
+            this.tabPageAnalysis.Text = "Analysis";
+            this.tabPageAnalysis.UseVisualStyleBackColor = true;
             // 
             // Synthesizer
             // 
@@ -175,10 +186,10 @@
             this.Controls.Add(this.menuFile);
             this.Controls.Add(this.tabControl);
             this.Name = "Synthesizer";
-            this.Text = "Zal Synthesizer";
+            this.Text = "Zal Test Applet";
             this.menuFile.ResumeLayout(false);
             this.menuFile.PerformLayout();
-            this.tabLexeme.ResumeLayout(false);
+            this.tabSynthesis.ResumeLayout(false);
             this.panelLex.ResumeLayout(false);
             this.panelLex.PerformLayout();
             this.tabControl.ResumeLayout(false);
@@ -191,7 +202,7 @@
 
         private System.Windows.Forms.MenuStrip menuFile;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.TabPage tabLexeme;
+        private System.Windows.Forms.TabPage tabSynthesis;
         private System.Windows.Forms.Panel panelLex;
         private System.Windows.Forms.Panel lexPanel;
         private System.Windows.Forms.Button buttonLookup;
@@ -201,6 +212,7 @@
         private System.Windows.Forms.TextBox textBoxSearchString;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage tabPageAnalysis;
     }
 }
 
