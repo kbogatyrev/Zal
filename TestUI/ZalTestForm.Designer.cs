@@ -1,6 +1,6 @@
 ﻿namespace TestUI
 {
-    partial class Synthesizer
+    partial class TestApplet
     {
         /// <summary>
         /// Required designer variable.
@@ -30,8 +30,9 @@
         {
             this.menuFile = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabSynthesis = new System.Windows.Forms.TabPage();
+            this.tabSearch = new System.Windows.Forms.TabPage();
             this.panelLex = new System.Windows.Forms.Panel();
+            this.radioButtonWordForm = new System.Windows.Forms.RadioButton();
             this.lexPanel = new System.Windows.Forms.Panel();
             this.buttonLookup = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -40,9 +41,9 @@
             this.textBoxSearchString = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPageAnalysis = new System.Windows.Forms.TabPage();
+            this.pathToDBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFile.SuspendLayout();
-            this.tabSynthesis.SuspendLayout();
+            this.tabSearch.SuspendLayout();
             this.panelLex.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.SuspendLayout();
@@ -53,29 +54,32 @@
             this.fileToolStripMenuItem});
             this.menuFile.Location = new System.Drawing.Point(0, 0);
             this.menuFile.Name = "menuFile";
-            this.menuFile.Size = new System.Drawing.Size(679, 24);
+            this.menuFile.Size = new System.Drawing.Size(648, 24);
             this.menuFile.TabIndex = 1;
             this.menuFile.Text = "File";
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pathToDBToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // tabSynthesis
+            // tabSearch
             // 
-            this.tabSynthesis.Controls.Add(this.panelLex);
-            this.tabSynthesis.Location = new System.Drawing.Point(4, 22);
-            this.tabSynthesis.Name = "tabSynthesis";
-            this.tabSynthesis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSynthesis.Size = new System.Drawing.Size(671, 678);
-            this.tabSynthesis.TabIndex = 0;
-            this.tabSynthesis.Text = "Synthesis";
-            this.tabSynthesis.UseVisualStyleBackColor = true;
+            this.tabSearch.Controls.Add(this.panelLex);
+            this.tabSearch.Location = new System.Drawing.Point(4, 22);
+            this.tabSearch.Name = "tabSearch";
+            this.tabSearch.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSearch.Size = new System.Drawing.Size(640, 678);
+            this.tabSearch.TabIndex = 0;
+            this.tabSearch.Text = "Search";
+            this.tabSearch.UseVisualStyleBackColor = true;
             // 
             // panelLex
             // 
+            this.panelLex.Controls.Add(this.radioButtonWordForm);
             this.panelLex.Controls.Add(this.lexPanel);
             this.panelLex.Controls.Add(this.buttonLookup);
             this.panelLex.Controls.Add(this.textBox3);
@@ -86,8 +90,19 @@
             this.panelLex.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLex.Location = new System.Drawing.Point(3, 3);
             this.panelLex.Name = "panelLex";
-            this.panelLex.Size = new System.Drawing.Size(665, 672);
+            this.panelLex.Size = new System.Drawing.Size(634, 672);
             this.panelLex.TabIndex = 0;
+            // 
+            // radioButtonWordForm
+            // 
+            this.radioButtonWordForm.AutoSize = true;
+            this.radioButtonWordForm.Location = new System.Drawing.Point(386, 33);
+            this.radioButtonWordForm.Name = "radioButtonWordForm";
+            this.radioButtonWordForm.Size = new System.Drawing.Size(91, 17);
+            this.radioButtonWordForm.TabIndex = 7;
+            this.radioButtonWordForm.TabStop = true;
+            this.radioButtonWordForm.Text = "Random Form";
+            this.radioButtonWordForm.UseVisualStyleBackColor = true;
             // 
             // lexPanel
             // 
@@ -95,12 +110,12 @@
             this.lexPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lexPanel.Location = new System.Drawing.Point(23, 112);
             this.lexPanel.Name = "lexPanel";
-            this.lexPanel.Size = new System.Drawing.Size(615, 533);
+            this.lexPanel.Size = new System.Drawing.Size(587, 533);
             this.lexPanel.TabIndex = 6;
             // 
             // buttonLookup
             // 
-            this.buttonLookup.Location = new System.Drawing.Point(563, 51);
+            this.buttonLookup.Location = new System.Drawing.Point(535, 50);
             this.buttonLookup.Name = "buttonLookup";
             this.buttonLookup.Size = new System.Drawing.Size(75, 23);
             this.buttonLookup.TabIndex = 5;
@@ -111,28 +126,28 @@
             // textBox3
             // 
             this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(23, 32);
+            this.textBox3.Location = new System.Drawing.Point(73, 32);
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(79, 20);
+            this.textBox3.Size = new System.Drawing.Size(74, 20);
             this.textBox3.TabIndex = 4;
             this.textBox3.Text = "Search By:";
             // 
             // radioButtonInitForm
             // 
             this.radioButtonInitForm.AutoSize = true;
-            this.radioButtonInitForm.Location = new System.Drawing.Point(281, 33);
+            this.radioButtonInitForm.Location = new System.Drawing.Point(287, 32);
             this.radioButtonInitForm.Name = "radioButtonInitForm";
-            this.radioButtonInitForm.Size = new System.Drawing.Size(75, 17);
+            this.radioButtonInitForm.Size = new System.Drawing.Size(86, 17);
             this.radioButtonInitForm.TabIndex = 3;
             this.radioButtonInitForm.TabStop = true;
-            this.radioButtonInitForm.Text = "Initial Form";
+            this.radioButtonInitForm.Text = "Entry Source";
             this.radioButtonInitForm.UseVisualStyleBackColor = true;
             // 
             // radioButtonGStem
             // 
             this.radioButtonGStem.AutoSize = true;
-            this.radioButtonGStem.Location = new System.Drawing.Point(173, 34);
+            this.radioButtonGStem.Location = new System.Drawing.Point(174, 32);
             this.radioButtonGStem.Name = "radioButtonGStem";
             this.radioButtonGStem.Size = new System.Drawing.Size(89, 17);
             this.radioButtonGStem.TabIndex = 2;
@@ -144,7 +159,7 @@
             // 
             this.textBoxSearchString.Location = new System.Drawing.Point(174, 66);
             this.textBoxSearchString.Name = "textBoxSearchString";
-            this.textBoxSearchString.Size = new System.Drawing.Size(216, 20);
+            this.textBoxSearchString.Size = new System.Drawing.Size(298, 20);
             this.textBoxSearchString.TabIndex = 1;
             this.textBoxSearchString.TextChanged += new System.EventHandler(this.textBoxSearchString_TextChanged);
             // 
@@ -154,42 +169,39 @@
             this.textBox1.Location = new System.Drawing.Point(23, 66);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.Size = new System.Drawing.Size(124, 20);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "Enter Lexeme:";
+            this.textBox1.Text = "Enter Search String:";
             // 
             // tabControl
             // 
-            this.tabControl.Controls.Add(this.tabSynthesis);
-            this.tabControl.Controls.Add(this.tabPageAnalysis);
+            this.tabControl.Controls.Add(this.tabSearch);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tabControl.Location = new System.Drawing.Point(0, 27);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(679, 704);
+            this.tabControl.Size = new System.Drawing.Size(648, 704);
             this.tabControl.TabIndex = 0;
             // 
-            // tabPageAnalysis
+            // pathToDBToolStripMenuItem
             // 
-            this.tabPageAnalysis.Location = new System.Drawing.Point(4, 22);
-            this.tabPageAnalysis.Name = "tabPageAnalysis";
-            this.tabPageAnalysis.Size = new System.Drawing.Size(671, 678);
-            this.tabPageAnalysis.TabIndex = 1;
-            this.tabPageAnalysis.Text = "Analysis";
-            this.tabPageAnalysis.UseVisualStyleBackColor = true;
+            this.pathToDBToolStripMenuItem.Name = "pathToDBToolStripMenuItem";
+            this.pathToDBToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pathToDBToolStripMenuItem.Text = "Path to DB";
+            this.pathToDBToolStripMenuItem.Click += new System.EventHandler(this.pathToDBToolStripMenuItem_Click);
             // 
-            // Synthesizer
+            // TestApplet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 731);
+            this.ClientSize = new System.Drawing.Size(648, 731);
             this.Controls.Add(this.menuFile);
             this.Controls.Add(this.tabControl);
-            this.Name = "Synthesizer";
+            this.Name = "TestApplet";
             this.Text = "Zal Test Applet";
             this.menuFile.ResumeLayout(false);
             this.menuFile.PerformLayout();
-            this.tabSynthesis.ResumeLayout(false);
+            this.tabSearch.ResumeLayout(false);
             this.panelLex.ResumeLayout(false);
             this.panelLex.PerformLayout();
             this.tabControl.ResumeLayout(false);
@@ -202,7 +214,7 @@
 
         private System.Windows.Forms.MenuStrip menuFile;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.TabPage tabSynthesis;
+        private System.Windows.Forms.TabPage tabSearch;
         private System.Windows.Forms.Panel panelLex;
         private System.Windows.Forms.Panel lexPanel;
         private System.Windows.Forms.Button buttonLookup;
@@ -212,7 +224,8 @@
         private System.Windows.Forms.TextBox textBoxSearchString;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabPageAnalysis;
+        private System.Windows.Forms.RadioButton radioButtonWordForm;
+        private System.Windows.Forms.ToolStripMenuItem pathToDBToolStripMenuItem;
     }
 }
 
