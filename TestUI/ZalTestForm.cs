@@ -173,16 +173,18 @@ namespace TestUI
                 {
                     bSynthesis = false;
                     // Call Tim's analysis code here
+                    MessageBox.Show ("Analysis not yet implemented.", "Zal Test", MessageBoxButtons.OK);
                 }
-            }
-
-            if (m_Dictionary.Count < 1)
-            {
-                MessageBox.Show(this, "Not in the dictionary.", "Zal Synthesizer");
             }
 
             if (bSynthesis)
             {
+                if (m_Dictionary.Count < 1)
+                {
+                    MessageBox.Show(this, "Not in the dictionary.", "Zal Synthesizer");
+                    return;
+                }
+
                 int iLexeme = 0;
                 foreach (MainLib.ILexeme lex in m_Dictionary)
                 {
