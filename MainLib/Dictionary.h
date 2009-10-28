@@ -63,7 +63,8 @@ END_COM_MAP()
 
 	HRESULT FinalConstruct()
 	{
-        pco_Db = new CT_Sqlite (L"D:\\Dev\\Zal\\ZalData\\zaltest.db"); // TODO -- need non-hardcoded path to DB
+//        pco_Db = new CT_Sqlite (L"D:\\Dev\\Zal\\ZalData\\zaltest.db"); // TODO -- need non-hardcoded path to DB
+        pco_Db = NULL;
 		return S_OK;
 	}
 
@@ -73,6 +74,7 @@ END_COM_MAP()
 	}
 
 public:
+    STDMETHOD (put_DbPath) (BSTR DbPath);
     STDMETHOD (GetLexeme) (LONG Id);
     STDMETHOD (GetLexemesByGraphicStem) (BSTR Key);
     STDMETHOD (GetLexemesByInitialForm) (BSTR Key);

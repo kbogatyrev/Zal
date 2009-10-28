@@ -56,11 +56,23 @@ headword LEFT OUTER JOIN stress ON stress.headword_id = headword.id \
 INNER JOIN descriptor ON descriptor.word_id = headword.id \
 LEFT OUTER JOIN inflection ON descriptor.id = inflection.descriptor_id ");
 
+HRESULT CT_Dictionary::put_DbPath (BSTR bstr_dbPath)
+{
+    USES_CONVERSION;
+
+    if (pco_Db)
+    {
+        delete pco_Db;
+    }
+
+    pco_Db = new CT_Sqlite (OLE2W (bstr_dbPath));
+
+    return S_OK;
+}
+
 HRESULT CT_Dictionary::GetLexeme (long lId)
 {
     HRESULT h_r = S_OK;
-
-//    *p_lexeme = NULL;
 
     wstring str_query (str_queryBase);
     str_query += L"where descriptor.id = ";
