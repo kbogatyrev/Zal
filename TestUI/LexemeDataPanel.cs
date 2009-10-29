@@ -109,5 +109,10 @@ namespace TestUI
                 ShowDetailsEvent(iLexemeId);
             }
         }
+
+        private void LexemeDataPanel_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

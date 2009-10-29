@@ -13,6 +13,8 @@ namespace TestUI
     public partial class TestApplet : Form
     {
         private MainLib.IDictionary m_Dictionary;
+        private MainLib.IAnalyzer m_Analyzer;
+        private List<MainLib.IWordForm> m_listWordForms;
         private List<MainLib.ILexeme> m_listLexemes;
         private Dictionary<MainLib.ET_Gender, string> m_dictGender;
         private Dictionary<MainLib.ET_Number, string> m_dictNumber;
@@ -25,7 +27,9 @@ namespace TestUI
             buttonLookup.Enabled = false;
             radioButtonInitForm.Checked = true;
             m_Dictionary = new MainLib.ZalDictionary();
+            //m_Analyzer = new MainLib.ZalAnalyzer();
             m_listLexemes = new List<MainLib.ILexeme>();
+            m_listWordForms = new List<MainLib.IWordForm>();
 
             m_dictGender = new Dictionary<MainLib.ET_Gender,string>();
             m_dictGender.Add(MainLib.ET_Gender.GENDER_UNDEFINED, "Undefined");
@@ -173,6 +177,17 @@ namespace TestUI
                 {
                     bSynthesis = false;
                     // Call Tim's analysis code here
+                    int iWordform = 0;
+                    m_Analyzer.Analyze(textBoxSearchString.Text);
+                    foreach (MainLib.IWordForm wf in m_Analyzer)
+                    {
+                        m_listWordForms.Add(wf);
+                        AnalysisPanel ap = new AnalysisPanel(iWordform);
+                        //Subscribe(ldp);
+                        ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
+                        lexPanel.Controls.Add(ap);
+                        iWordform++;
+                    }
                     MessageBox.Show ("Analysis not yet implemented.", "Zal Test", MessageBoxButtons.OK);
                 }
             }
