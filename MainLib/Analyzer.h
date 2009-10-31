@@ -52,16 +52,18 @@ public:
 
 	HRESULT FinalConstruct()
 	{
+        pco_db = NULL;
 		return S_OK;
 	}
 
 	void FinalRelease()
 	{
+        delete pco_db;
 	}
 
 public:
     STDMETHOD (put_DbPath) (BSTR bstr_Path);
-    STDMETHOD (PrepareLexeme) (LONG long_Lexeme_id);
+    STDMETHOD (PrepareLexeme) (__int64 long_Lexeme_id);
     STDMETHOD (Analyze) (BSTR bstr_Wordform);
 
     int i_Analyze(wstring str_wordform, vector<CT_GramHelper>* pvec_possible_wordforms);

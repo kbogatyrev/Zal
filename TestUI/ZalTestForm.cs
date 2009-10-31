@@ -106,7 +106,7 @@ namespace TestUI
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
                     string sKey = "";
-                    if (wf.IsShortForm != 0)
+                    if (MainLib.ET_AdjForm.ADJ_FORM_SHORT == wf.AdjForm)
                     {
                         sKey = "Short";
                         if (MainLib.ET_Number.NUM_SG == wf.Number)
