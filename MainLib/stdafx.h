@@ -73,4 +73,14 @@ using namespace std::tr1;
 #include "SqliteWrapper.h"
 //#include "Globals.h"
 
+using namespace std;
+
+template <typename T>
+wstring static str_ToString (T from)
+{
+    wstringstream io_;
+	io_ << from;
+	return io_.str();
+};
+
 

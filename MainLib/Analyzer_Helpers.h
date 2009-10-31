@@ -5,14 +5,8 @@ using namespace std;
 using namespace std::tr1;
 
 void v_GetTableField_int(sqlite3_stmt *po_statement, void *v_FieldData);
+void v_GetTableField_int64(sqlite3_stmt *po_statement, void *v_FieldData);
 void v_GetTableField_str(sqlite3_stmt *po_statement, void *v_FieldData);
-
-static wstring str_int2wstring (int i_input)
-{
-    wstringstream ss_tmp;
-    ss_tmp << i_input;
-    return ss_tmp.str();
-}
 
 template <typename Type>
 struct S_Field

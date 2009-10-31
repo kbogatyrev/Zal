@@ -60,15 +60,17 @@ public:
 	}
 
 public:
-    CT_Sqlite* pco_db;
-    STDMETHOD (Analyze) (BSTR Wordform);
+    STDMETHOD (put_DbPath) (BSTR bstr_Path);
+    STDMETHOD (PrepareLexeme) (LONG long_Lexeme_id);
+    STDMETHOD (Analyze) (BSTR bstr_Wordform);
 
-    int i_Analyze(CT_Sqlite* pco_dbHandle, wstring str_wordform, vector<CT_GramHelper>* pvec_possible_wordforms);
-    int i_LookUpStems(CT_Sqlite* pco_dbHandle, vector<int>* pvec_stems_id, wstring str_left);
-    int i_CheckEndings(CT_Sqlite* pco_dbHandle, vector<CT_GramHelper>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right);
-    int i_WriteStemsAndEndings(CT_Sqlite* pco_dbHandle, __int64 ll_lexeme_id, int last_subtable_id);
+    int i_Analyze(wstring str_wordform, vector<CT_GramHelper>* pvec_possible_wordforms);
+    int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left);
+    int i_CheckEndings(vector<CT_GramHelper>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right);
+    int i_WriteStemsAndEndings(__int64 ll_lexeme_id);
 
 private:
+    CT_Sqlite* pco_db;
     int i_LCP(wstring* str_words, wstring* str_pfx, int i_words, int i_pfx);
 };
 

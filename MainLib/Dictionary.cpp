@@ -4,6 +4,7 @@
 #include "Lexeme.h"
 #include "Dictionary.h"
 
+/*
 template <typename T>
 wstring static str_ToString (T from)
 {
@@ -11,6 +12,7 @@ wstring static str_ToString (T from)
 	io_ << from;
 	return io_.str();
 };
+*/
 
 static wstring str_queryBase (L"select headword.source, \
 stress.stress_position, \
