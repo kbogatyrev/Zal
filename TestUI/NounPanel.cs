@@ -26,7 +26,7 @@ namespace TestUI
             }
         }
 
-        public void setForm (string sNumberCase, string sText)
+        public void SetForm (string sNumberCase, string sText)
         {
             dictForms[sNumberCase].Text = sText;
         }
