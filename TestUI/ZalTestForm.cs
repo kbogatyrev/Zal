@@ -92,7 +92,7 @@ namespace TestUI
                 {
                     string sKey = m_dictCase[wf.Case];
                     sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-                    np.setForm (sKey, wf.Wordform);
+                    np.SetForm (sKey, wf.Wordform);
 
                 }   // foreach
             }
@@ -106,16 +106,8 @@ namespace TestUI
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
                     string sKey = "";
-                    if (MainLib.ET_AdjForm.ADJ_FORM_SHORT == wf.AdjForm)
-                    {
-                        sKey = "Short";
-                        if (MainLib.ET_Number.NUM_SG == wf.Number)
-                        {
-                            sKey += m_dictGender[wf.Gender];
-                        }
-                        sKey += m_dictNumber[wf.Number];
-                    }
-                    else
+
+                    if (MainLib.ET_AdjForm.ADJ_FORM_LONG == wf.AdjForm)
                     {
                         if (MainLib.ET_Number.NUM_SG == wf.Number)
                         {
@@ -132,9 +124,41 @@ namespace TestUI
                                 sKey += (MainLib.ET_Animacy.ANIM_YES == wf.Animacy) ? "Anim" : "Inanim";
                             }
                         }
+
+                        ap.SetForm(sKey, wf.Wordform);
+
+                        continue;
                     }
 
-                    ap.setForm(sKey, wf.Wordform);
+                    if (MainLib.ET_AdjForm.ADJ_FORM_SHORT == wf.AdjForm)
+                    {
+                        sKey = "Short";
+                        if (MainLib.ET_Number.NUM_SG == wf.Number)
+                        {
+                            sKey += m_dictGender[wf.Gender];
+                        }
+                        sKey += m_dictNumber[wf.Number];
+
+                        ap.SetForm(sKey, wf.Wordform);
+
+                        continue;
+                    }
+
+                    if (MainLib.ET_AdjForm.ADJ_FORM_COMPARATIVE == wf.AdjForm)
+                    {
+                        sKey = "Comparative";
+
+                        string strWordForm = wf.Wordform;
+                        if (wf.StressPos >= 0)
+                        {
+                            string strStressMark = new string ('\x301', 1);
+                            strWordForm = strWordForm.Insert (wf.StressPos+1, strStressMark);
+                        }
+
+                        ap.SetForm(sKey, strWordForm);
+
+                        continue;
+                    }
 
                 }   // foreach ...
 
