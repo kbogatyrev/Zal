@@ -27,7 +27,7 @@ namespace TestUI
             buttonLookup.Enabled = false;
             radioButtonInitForm.Checked = true;
             m_Dictionary = new MainLib.ZalDictionary();
-            //m_Analyzer = new MainLib.ZalAnalyzer();
+            m_Analyzer = new MainLib.ZalAnalyzer();
             m_listLexemes = new List<MainLib.ILexeme>();
             m_listWordForms = new List<MainLib.IWordForm>();
 

@@ -6,6 +6,7 @@
 #define IDR_MAINLIB                     101
 #define IDR_DICTIONARY                  102
 #define IDR_LEXEME                      103
+#define IDR_ANALYZER                    104
 
 
 // Next default values for new objects

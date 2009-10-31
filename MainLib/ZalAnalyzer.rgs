@@ -1,0 +1,26 @@
+HKCR
+{
+	MainLib.ZalAnalyzer.1 = s 'ZalAnalyzer Class'
+	{
+		CLSID = s '{1231B86D-6F99-4329-9C54-EBDEAE28FBBE}'
+	}
+	MainLib.ZalAnalyzer = s 'ZalAnalyzer Class'
+	{
+		CLSID = s '{1231B86D-6F99-4329-9C54-EBDEAE28FBBE}'
+		CurVer = s 'MainLib.ZalAnalyzer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {1231B86D-6F99-4329-9C54-EBDEAE28FBBE} = s 'ZalAnalyzer Class'
+		{
+			ProgID = s 'MainLib.ZalAnalyzer.1'
+			VersionIndependentProgID = s 'MainLib.ZalAnalyzer'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{0DB47D63-783E-4807-8455-DAE4AF543BDF}'
+		}
+	}
+}
