@@ -58,6 +58,12 @@
     <Compile Include="AdjPanel.Designer.cs">
       <DependentUpon>AdjPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="AnalysisPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AnalysisPanel.Designer.cs">
+      <DependentUpon>AnalysisPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="EnterDataDlg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,22 +82,13 @@
     <Compile Include="NounPanel.Designer.cs">
       <DependentUpon>NounPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="AnalysisPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="AnalysisPanel.Designer.cs">
-      <DependentUpon>AnalysisPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ZalTestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ZalTestForm.Designer.cs">
-      <DependentUpon>ZalTestForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AdjPanel.resx">
       <DependentUpon>AdjPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnalysisPanel.resx">
+      <DependentUpon>AnalysisPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EnterDataDlg.resx">
       <DependentUpon>EnterDataDlg.cs</DependentUpon>
@@ -102,16 +99,13 @@
     <EmbeddedResource Include="NounPanel.resx">
       <DependentUpon>NounPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AnalysisPanel.resx">
-      <DependentUpon>AnalysisPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ZalTestForm.resx">
-      <DependentUpon>ZalTestForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZalTestForm.resx">
+      <DependentUpon>ZalTestForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -125,6 +119,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ZalTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZalTestForm.Designer.cs">
+      <DependentUpon>ZalTestForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
