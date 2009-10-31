@@ -4,10 +4,10 @@ HKCR
 	{
 		CLSID = s '{E75E1D69-BE78-44c7-B995-D1D7B4BEF6E3}'
 	}
-	MainLib.ZalDictionary = s 'ZalSourceReader Class'
+	MainLib.ZalDictionary = s 'ZalDictionary Class'
 	{
 		CLSID = s '{E75E1D69-BE78-44c7-B995-D1D7B4BEF6E3}'
-		CurVer = s 'ConversionLib.ZalSourceReader.1'
+		CurVer = s 'MainLib.ZalDictionary.1'
 	}	
 	NoRemove CLSID
 	{
