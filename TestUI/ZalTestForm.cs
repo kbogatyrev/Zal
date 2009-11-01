@@ -92,7 +92,23 @@ namespace TestUI
                 {
                     string sKey = m_dictCase[wf.Case];
                     sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-                    np.SetForm (sKey, wf.Wordform);
+
+                    string strWordForm = wf.Wordform;
+                    if (wf.StressPos >= 0)
+                    {
+                        if (wf.StressPos >= wf.Wordform.Length)
+                        {
+                            MessageBox.Show ("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                            return;
+                        }
+                        if (strWordForm[wf.StressPos] != 'ё')
+                        {
+                            string strStressMark = new string('\x301', 1);
+                            strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                        }
+                    }
+
+                    np.SetForm (sKey, strWordForm);
 
                 }   // foreach
             }
@@ -125,7 +141,14 @@ namespace TestUI
                             }
                         }
 
-                        ap.SetForm(sKey, wf.Wordform);
+                        string strWordForm = wf.Wordform;
+                        if (wf.StressPos >= 0)
+                        {
+                            string strStressMark = new string('\x301', 1);
+                            strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                        }
+
+                        ap.SetForm(sKey, strWordForm);
 
                         continue;
                     }
@@ -139,7 +162,14 @@ namespace TestUI
                         }
                         sKey += m_dictNumber[wf.Number];
 
-                        ap.SetForm(sKey, wf.Wordform);
+                        string strWordForm = wf.Wordform;
+                        if (wf.StressPos >= 0)
+                        {
+                            string strStressMark = new string('\x301', 1);
+                            strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                        }
+
+                        ap.SetForm(sKey, strWordForm);
 
                         continue;
                     }
