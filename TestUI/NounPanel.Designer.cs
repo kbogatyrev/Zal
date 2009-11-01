@@ -120,7 +120,7 @@
             // textBoxILabelPl
             // 
             this.textBoxILabelPl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxILabelPl.Location = new System.Drawing.Point(327, 220);
+            this.textBoxILabelPl.Location = new System.Drawing.Point(327, 232);
             this.textBoxILabelPl.Multiline = true;
             this.textBoxILabelPl.Name = "textBoxILabelPl";
             this.textBoxILabelPl.ReadOnly = true;
@@ -132,7 +132,7 @@
             // textBoxLabelDPl
             // 
             this.textBoxLabelDPl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelDPl.Location = new System.Drawing.Point(327, 193);
+            this.textBoxLabelDPl.Location = new System.Drawing.Point(327, 200);
             this.textBoxLabelDPl.Multiline = true;
             this.textBoxLabelDPl.Name = "textBoxLabelDPl";
             this.textBoxLabelDPl.ReadOnly = true;
@@ -144,7 +144,7 @@
             // textBoxLabelLPl
             // 
             this.textBoxLabelLPl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelLPl.Location = new System.Drawing.Point(327, 166);
+            this.textBoxLabelLPl.Location = new System.Drawing.Point(327, 174);
             this.textBoxLabelLPl.Multiline = true;
             this.textBoxLabelLPl.Name = "textBoxLabelLPl";
             this.textBoxLabelLPl.ReadOnly = true;
@@ -156,7 +156,7 @@
             // textBoxLabelGPl
             // 
             this.textBoxLabelGPl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelGPl.Location = new System.Drawing.Point(327, 139);
+            this.textBoxLabelGPl.Location = new System.Drawing.Point(327, 145);
             this.textBoxLabelGPl.Multiline = true;
             this.textBoxLabelGPl.Name = "textBoxLabelGPl";
             this.textBoxLabelGPl.ReadOnly = true;
@@ -168,7 +168,7 @@
             // textBoxLabelAPl
             // 
             this.textBoxLabelAPl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelAPl.Location = new System.Drawing.Point(327, 113);
+            this.textBoxLabelAPl.Location = new System.Drawing.Point(327, 117);
             this.textBoxLabelAPl.Multiline = true;
             this.textBoxLabelAPl.Name = "textBoxLabelAPl";
             this.textBoxLabelAPl.ReadOnly = true;
@@ -180,7 +180,7 @@
             // textBoxLabelNPl
             // 
             this.textBoxLabelNPl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelNPl.Location = new System.Drawing.Point(327, 87);
+            this.textBoxLabelNPl.Location = new System.Drawing.Point(327, 89);
             this.textBoxLabelNPl.Multiline = true;
             this.textBoxLabelNPl.Name = "textBoxLabelNPl";
             this.textBoxLabelNPl.ReadOnly = true;
@@ -191,7 +191,7 @@
             // 
             // textBoxIPl
             // 
-            this.textBoxIPl.Location = new System.Drawing.Point(369, 220);
+            this.textBoxIPl.Location = new System.Drawing.Point(369, 232);
             this.textBoxIPl.Multiline = true;
             this.textBoxIPl.Name = "textBoxIPl";
             this.textBoxIPl.ReadOnly = true;
@@ -200,7 +200,7 @@
             // 
             // textBoxDPl
             // 
-            this.textBoxDPl.Location = new System.Drawing.Point(369, 193);
+            this.textBoxDPl.Location = new System.Drawing.Point(369, 202);
             this.textBoxDPl.Multiline = true;
             this.textBoxDPl.Name = "textBoxDPl";
             this.textBoxDPl.ReadOnly = true;
@@ -209,7 +209,7 @@
             // 
             // textBoxLPl
             // 
-            this.textBoxLPl.Location = new System.Drawing.Point(369, 166);
+            this.textBoxLPl.Location = new System.Drawing.Point(369, 174);
             this.textBoxLPl.Multiline = true;
             this.textBoxLPl.Name = "textBoxLPl";
             this.textBoxLPl.ReadOnly = true;
@@ -218,7 +218,7 @@
             // 
             // textBoxGPl
             // 
-            this.textBoxGPl.Location = new System.Drawing.Point(369, 139);
+            this.textBoxGPl.Location = new System.Drawing.Point(369, 147);
             this.textBoxGPl.Multiline = true;
             this.textBoxGPl.Name = "textBoxGPl";
             this.textBoxGPl.ReadOnly = true;
@@ -227,7 +227,7 @@
             // 
             // textBoxAPl
             // 
-            this.textBoxAPl.Location = new System.Drawing.Point(369, 113);
+            this.textBoxAPl.Location = new System.Drawing.Point(369, 117);
             this.textBoxAPl.Multiline = true;
             this.textBoxAPl.Name = "textBoxAPl";
             this.textBoxAPl.ReadOnly = true;
@@ -236,7 +236,7 @@
             // 
             // textBoxNPl
             // 
-            this.textBoxNPl.Location = new System.Drawing.Point(369, 87);
+            this.textBoxNPl.Location = new System.Drawing.Point(369, 89);
             this.textBoxNPl.Multiline = true;
             this.textBoxNPl.Name = "textBoxNPl";
             this.textBoxNPl.ReadOnly = true;
@@ -372,7 +372,7 @@
             // textBoxLexName
             // 
             this.textBoxLexName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLexName.Location = new System.Drawing.Point(221, 19);
+            this.textBoxLexName.Location = new System.Drawing.Point(211, 17);
             this.textBoxLexName.Multiline = true;
             this.textBoxLexName.Name = "textBoxLexName";
             this.textBoxLexName.ReadOnly = true;
