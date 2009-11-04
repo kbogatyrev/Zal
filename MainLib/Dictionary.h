@@ -63,7 +63,6 @@ END_COM_MAP()
 
 	HRESULT FinalConstruct()
 	{
-//        pco_Db = new CT_Sqlite (L"D:\\Dev\\Zal\\ZalData\\zaltest.db"); // TODO -- need non-hardcoded path to DB
         pco_Db = NULL;
 		return S_OK;
 	}
@@ -80,6 +79,7 @@ public:
     STDMETHOD (GetLexemesByInitialForm) (BSTR Key);
 
 private:
+    wstring str_DbPath;
     CT_Sqlite * pco_Db;
 
     HRESULT h_GetData (const wstring& str_select);

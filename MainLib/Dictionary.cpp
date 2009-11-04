@@ -62,12 +62,14 @@ HRESULT CT_Dictionary::put_DbPath (BSTR bstr_dbPath)
 {
     USES_CONVERSION;
 
+    str_DbPath = OLE2W (bstr_dbPath);
+
     if (pco_Db)
     {
         delete pco_Db;
     }
 
-    pco_Db = new CT_Sqlite (OLE2W (bstr_dbPath));
+    pco_Db = new CT_Sqlite (str_DbPath);
 
     return S_OK;
 }
@@ -141,6 +143,8 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
             {
                 return h_r;
             }
+
+            sp_lexeme->v_SetDb (str_DbPath);
     
             int i_stressPos = -1;
             bool b_isStressPrimary = false;
