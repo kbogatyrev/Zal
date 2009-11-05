@@ -26,6 +26,9 @@ namespace TestUI
             InitializeComponent();
             buttonLookup.Enabled = false;
             radioButtonInitForm.Checked = true;
+
+            textBoxDBPath.Text = Properties.Settings.Default.DbPath;
+
             m_Dictionary = new MainLib.ZalDictionary();
             m_Analyzer = new MainLib.ZalAnalyzer();
             m_listLexemes = new List<MainLib.ILexeme>();
@@ -200,6 +203,8 @@ namespace TestUI
 
         private void buttonLookup_Click(object sender, EventArgs e)
         {
+            m_Dictionary.DbPath = textBoxDBPath.Text;
+
             lexPanel.Controls.Clear();
             m_listLexemes.Clear();
 
@@ -281,7 +286,10 @@ namespace TestUI
         {
             if (textBoxSearchString.Text.Length > 0)
             {
-                buttonLookup.Enabled = true;
+                if (textBoxDBPath.Text.Length > 0)
+                {
+                    buttonLookup.Enabled = true;
+                }
             }
             else
             {
@@ -289,25 +297,48 @@ namespace TestUI
             }
         }
 
-        private void pathToDBToolStripMenuItem_Click (object sender, EventArgs e)
+        private void textBoxDBPath_TextChanged(object sender, EventArgs e)
         {
-            FileDialog fd = new OpenFileDialog ();
-            DialogResult dr = fd.ShowDialog ();
+            if (textBoxDBPath.Text.Length > 0)
+            {
+                if (textBoxSearchString.Text.Length > 0)
+                {
+                    buttonLookup.Enabled = true;
+                }
+            }
+            else
+            {
+                buttonLookup.Enabled = false;
+            }
+        }
+
+        private void buttonSelect_Click(object sender, EventArgs e)
+        {
+            FileDialog fd = new OpenFileDialog();
+            fd.CheckFileExists = false;
+            fd.CheckPathExists = true;
+            DialogResult dr = fd.ShowDialog();
             if (DialogResult.OK == dr)
             {
                 string sDbPath = fd.FileName;
-                if (File.Exists (fd.FileName))
+                if (File.Exists(fd.FileName))
                 {
-                    m_Dictionary.DbPath = fd.FileName;
+                    textBoxDBPath.Text = fd.FileName;
                 }
                 else
                 {
-                    MessageBox.Show ("File Does not exist", 
-                                     "Zal Test Error", 
-                                     MessageBoxButtons.OK, 
+                    MessageBox.Show("File Does not exist",
+                                     "Zal Test Error",
+                                     MessageBoxButtons.OK,
                                      MessageBoxIcon.Exclamation);
                 }
             }
+        }
+
+        private void TestApplet_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.DbPath = textBoxDBPath.Text;
+            Properties.Settings.Default.Save();
         }
     }
 }
