@@ -71,6 +71,7 @@ private:
     wstring str_Escape_;
     wstring str_Punctuation_;
     wstring str_Regex_;
+    wstring str_Vowels_;
     
     vector<ST_Token> vo_Tokens_;
 
@@ -95,7 +96,8 @@ public:
                   const wstring& str_break = L"",
                   const wstring& str_tab = L"",
                   const wstring& str_escape = L"",
-                  const wstring& str_punctuation = L"")
+                  const wstring& str_punctuation = L"",
+                  const wstring& str_vowels = L"")
     {
         v_Null_();
 
@@ -104,13 +106,15 @@ public:
         str_Tab_ = str_tab;
         str_Escape_ = str_escape;
         str_Punctuation_ = str_punctuation;
+        str_Vowels_ = str_vowels;
     }
 
     CT_ExtString (const wchar_t * qcz_text, 
                   const wchar_t * qcz_break = L"",
                   const wchar_t * qcz_tab = L"",
                   const wchar_t * qcz_escape = L"",
-                  const wchar_t * qcz_punctuation = L"")
+                  const wchar_t * qcz_punctuation = L"",
+                  const wchar_t * qcz_vowels = L"")
     {
         v_Null_();
 
@@ -119,16 +123,18 @@ public:
         str_Tab_ = qcz_tab;
         str_Escape_ = qcz_escape;
         str_Punctuation_ = qcz_punctuation;
+        str_Vowels_ = qcz_vowels;
     }
 
     CT_ExtString (const CT_ExtString& estr_) 
         : wstring (static_cast <wstring> (estr_)), 
-          str_Break_(estr_.str_Break_), 
-          str_Tab_(estr_.str_Tab_),
-          str_Escape_(estr_.str_Escape_), 
-          str_Punctuation_(estr_.str_Punctuation_), 
-          vo_Tokens_(estr_.vo_Tokens_),
-          vo_LastTokenizedContents_(estr_.vo_LastTokenizedContents_)
+          str_Break_ (estr_.str_Break_), 
+          str_Tab_ (estr_.str_Tab_),
+          str_Escape_ (estr_.str_Escape_), 
+          str_Punctuation_ (estr_.str_Punctuation_),
+          str_Vowels_ (estr_.str_Vowels_),
+          vo_Tokens_ (estr_.vo_Tokens_),
+          vo_LastTokenizedContents_ (estr_.vo_LastTokenizedContents_)
     {}
 
     ~CT_ExtString()
@@ -158,6 +164,7 @@ private:
         str_Escape_.erase();
         str_Punctuation_.erase();
         str_Regex_.erase();
+        str_Vowels_.erase();
 
         vo_LastTokenizedContents_.clear();
         vo_LastTokenizedContents_.push_back (wstring(L""));
@@ -178,6 +185,7 @@ private:
         str_Escape_ = estr.str_Escape_;
         str_Punctuation_ = estr.str_Punctuation_;
         str_Regex_ = estr.str_Regex_;
+        str_Vowels_ = estr.str_Vowels_;
     }
 
     //void v_DeepCopy_ (const CT_ExtString&)
@@ -187,7 +195,12 @@ private:
 
     void v_Synchronize_()
     {
-        wstring str_separators = str_Break_ + str_Tab_ + str_Escape_ + str_Punctuation_ + str_Regex_;
+        wstring str_separators = str_Break_ + 
+                                 str_Tab_ + 
+                                 str_Escape_ + 
+                                 str_Punctuation_ + 
+                                 str_Regex_ + 
+                                 str_Vowels_;
 
         if ((vo_LastTokenizedContents_[0] != static_cast <wstring> (*this)) ||
             (vo_LastTokenizedContents_[1] != str_separators))
@@ -484,6 +497,7 @@ public:
         str_Escape_ = estr.str_Escape_;
         str_Punctuation_ = estr.str_Punctuation_;
         str_Regex_ = estr.str_Regex_;
+        str_Vowels_ = estr.str_Vowels_;
 
         vo_LastTokenizedContents_ = estr.vo_LastTokenizedContents_;
         vo_Tokens_ = estr.vo_Tokens_;
@@ -1287,6 +1301,60 @@ public:
         return st_token.i_Length;
 
     }   //      int const i_GetFieldLength (const int, const int, const CT_ExtString::et_TokenType)
+
+    int i_GetNumOfSyllables()
+    {
+        if (str_Vowels_.length() == 0)
+        {
+            ATLASSERT (0);
+            ERROR_LOG (L"Warning: vowels not defined.");
+            return -1;
+        }
+
+        int i_syllables = 0;
+        unsigned int ui_at = 0;
+        do
+        {
+            ui_at = find_first_of (str_Vowels_, ui_at);
+            if (wstring::npos != ui_at)
+            {
+                ++i_syllables;
+                if (++ui_at >= length())
+                {
+                    ui_at = wstring::npos;
+                }
+            }
+
+        } while (wstring::npos != ui_at);
+
+        return i_syllables;
+
+    }   //  i_GetNumOfSyllables()
+
+    int i_NSyllables()
+    {
+        return i_GetNumOfSyllables();
+    }
+
+    int i_GetVowelPos (int i_vowel = 0)
+    {
+        int i_pos = -1;
+        unsigned int ui_at = 0;
+        for (int i_ = 0; i_ <= i_vowel; ++i_)
+        {
+            ui_at = find_first_of (str_Vowels_, ui_at);
+            if (wstring::npos != ui_at)
+            {
+                i_pos = ui_at;
+                if (++ui_at >= length())
+                {
+                    break;
+                }
+            }
+        }
+
+        return i_pos;
+    }
     
     void v_SetBreakChars (const wstring& str_break)
     { 
@@ -1306,5 +1374,10 @@ public:
     void v_SetPunctChars (const wstring& str_punctuation)
     {
         str_Punctuation_ = str_punctuation; 
+    }
+
+    void v_SetVowels (const wstring& str_vowels)
+    {
+        str_Vowels_ = str_vowels; 
     }
 };
