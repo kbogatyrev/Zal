@@ -15,6 +15,7 @@ wstring static str_ToString (T from)
 */
 
 static wstring str_queryBase (L"select headword.source, \
+stress.id, \
 stress.stress_position, \
 stress.is_primary, \
 descriptor.id, \
@@ -146,56 +147,66 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
 
             sp_lexeme->v_SetDb (str_DbPath);
     
+            int i_stressId = -1;
             int i_stressPos = -1;
             bool b_isStressPrimary = false;
 
             pco_Db->v_GetData (0, sp_lexeme->str_SourceForm);
-            pco_Db->v_GetData (1, i_stressPos);
-            pco_Db->v_GetData (2, b_isStressPrimary);
-            if (b_isStressPrimary)
+            pco_Db->v_GetData (1, i_stressId);
+            if (i_stressId > 0)
             {
-                sp_lexeme->i_SourceStressPos = i_stressPos;
+                pco_Db->v_GetData (2, i_stressPos);
+                pco_Db->v_GetData (3, b_isStressPrimary);
+                if (b_isStressPrimary)
+                {
+                    sp_lexeme->i_SourceStressPos = i_stressPos;
+                }
+                else
+                {
+                    sp_lexeme->i_SecondarySourceStressPos = i_stressPos;
+                }
             }
             else
             {
-                sp_lexeme->i_SecondarySourceStressPos = i_stressPos;
+                sp_lexeme->i_SourceStressPos = -1;
+                sp_lexeme->i_SecondarySourceStressPos = -1;
             }
-            pco_Db->v_GetData (3, sp_lexeme->i_DbKey);
-            pco_Db->v_GetData (4, sp_lexeme->str_GraphicStem);
-            pco_Db->v_GetData (5, sp_lexeme->b_IsVariant);
-            pco_Db->v_GetData (6, sp_lexeme->str_MainSymbol);
-            pco_Db->v_GetData (7, sp_lexeme->b_IsPluralOf);
-            pco_Db->v_GetData (8, sp_lexeme->b_Transitive);
-            pco_Db->v_GetData (9, sp_lexeme->str_MainSymbolPluralOf);
-            pco_Db->v_GetData (10, sp_lexeme->str_AltMainSymbol);
-            pco_Db->v_GetData (11, sp_lexeme->str_InflectionType);
-            pco_Db->v_GetData (12, (int&)sp_lexeme->eo_PartOfSpeech);
-            pco_Db->v_GetData (13, sp_lexeme->str_Comment);
-            pco_Db->v_GetData (14, sp_lexeme->str_AltMainSymbolComment);
-            pco_Db->v_GetData (15, sp_lexeme->str_AltInflectionComment);
-            pco_Db->v_GetData (16, sp_lexeme->str_VerbStemAlternation);
-            pco_Db->v_GetData (17, sp_lexeme->i_Section);
-            pco_Db->v_GetData (18, sp_lexeme->b_NoComparative);
-            pco_Db->v_GetData (19, sp_lexeme->b_AssumedForms);
-            pco_Db->v_GetData (20, sp_lexeme->b_YoAlternation);
-            pco_Db->v_GetData (21, sp_lexeme->b_OAlternation);
-            pco_Db->v_GetData (22, sp_lexeme->b_SecondGenitive);
-            pco_Db->v_GetData (23, sp_lexeme->str_QuestionableForms);
-            pco_Db->v_GetData (24, sp_lexeme->str_IrregularForms);
-            pco_Db->v_GetData (25, sp_lexeme->str_RestrictedFroms);
-            pco_Db->v_GetData (26, sp_lexeme->str_Contexts);
-            pco_Db->v_GetData (27, sp_lexeme->str_TrailingComment);
-            pco_Db->v_GetData (28, sp_lexeme->b_PrimaryInflectionGroup);
-            pco_Db->v_GetData (29, sp_lexeme->i_Type);
-            pco_Db->v_GetData (30, (int&)sp_lexeme->eo_AccentType1);
-            pco_Db->v_GetData (31, (int&)sp_lexeme->eo_AccentType2);
-            pco_Db->v_GetData (32, sp_lexeme->b_ShortFormsRestricted);
-            pco_Db->v_GetData (33, sp_lexeme->b_PastParticipleRestricted);
-            pco_Db->v_GetData (34, sp_lexeme->b_NoShortForms);
-            pco_Db->v_GetData (35, sp_lexeme->b_NoPastParticiple);
-            pco_Db->v_GetData (36, sp_lexeme->b_FleetingVowel);
-            pco_Db->v_GetData (37, sp_lexeme->b_StemAugment);
-            pco_Db->v_GetData (38, sp_lexeme->i_CommonDeviation);
+            pco_Db->v_GetData (4, sp_lexeme->i_DbKey);
+            pco_Db->v_GetData (5, sp_lexeme->str_GraphicStem);
+            pco_Db->v_GetData (6, sp_lexeme->b_IsVariant);
+            pco_Db->v_GetData (7, sp_lexeme->str_MainSymbol);
+            pco_Db->v_GetData (8, sp_lexeme->b_IsPluralOf);
+            pco_Db->v_GetData (9, sp_lexeme->b_Transitive);
+            pco_Db->v_GetData (10, sp_lexeme->str_MainSymbolPluralOf);
+            pco_Db->v_GetData (11, sp_lexeme->str_AltMainSymbol);
+            pco_Db->v_GetData (12, sp_lexeme->str_InflectionType);
+            pco_Db->v_GetData (13, (int&)sp_lexeme->eo_PartOfSpeech);
+            pco_Db->v_GetData (14, sp_lexeme->str_Comment);
+            pco_Db->v_GetData (15, sp_lexeme->str_AltMainSymbolComment);
+            pco_Db->v_GetData (16, sp_lexeme->str_AltInflectionComment);
+            pco_Db->v_GetData (17, sp_lexeme->str_VerbStemAlternation);
+            pco_Db->v_GetData (18, sp_lexeme->i_Section);
+            pco_Db->v_GetData (19, sp_lexeme->b_NoComparative);
+            pco_Db->v_GetData (20, sp_lexeme->b_AssumedForms);
+            pco_Db->v_GetData (21, sp_lexeme->b_YoAlternation);
+            pco_Db->v_GetData (22, sp_lexeme->b_OAlternation);
+            pco_Db->v_GetData (23, sp_lexeme->b_SecondGenitive);
+            pco_Db->v_GetData (24, sp_lexeme->str_QuestionableForms);
+            pco_Db->v_GetData (25, sp_lexeme->str_IrregularForms);
+            pco_Db->v_GetData (26, sp_lexeme->str_RestrictedFroms);
+            pco_Db->v_GetData (27, sp_lexeme->str_Contexts);
+            pco_Db->v_GetData (28, sp_lexeme->str_TrailingComment);
+            pco_Db->v_GetData (29, sp_lexeme->b_PrimaryInflectionGroup);
+            pco_Db->v_GetData (30, sp_lexeme->i_Type);
+            pco_Db->v_GetData (31, (int&)sp_lexeme->eo_AccentType1);
+            pco_Db->v_GetData (32, (int&)sp_lexeme->eo_AccentType2);
+            pco_Db->v_GetData (33, sp_lexeme->b_ShortFormsRestricted);
+            pco_Db->v_GetData (34, sp_lexeme->b_PastParticipleRestricted);
+            pco_Db->v_GetData (35, sp_lexeme->b_NoShortForms);
+            pco_Db->v_GetData (36, sp_lexeme->b_NoPastParticiple);
+            pco_Db->v_GetData (37, sp_lexeme->b_FleetingVowel);
+            pco_Db->v_GetData (38, sp_lexeme->b_StemAugment);
+            pco_Db->v_GetData (39, sp_lexeme->i_CommonDeviation);
 
             m_coll.push_back (sp_lexeme);
         }
