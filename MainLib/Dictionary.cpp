@@ -82,6 +82,7 @@ HRESULT CT_Dictionary::GetLexeme (long lId)
     wstring str_query (str_queryBase);
     str_query += L"where descriptor.id = ";
     str_query += str_ToString (lId);
+    str_query += L";";
     h_r = h_GetData (str_query);
 
     return h_r;
@@ -96,7 +97,7 @@ HRESULT CT_Dictionary::GetLexemesByGraphicStem (BSTR bstr_headword)
     wstring str_query (str_queryBase);
     str_query += L"where descriptor.graphic_stem = \"";
     str_query += OLE2W (bstr_headword);
-    str_query += '\"';
+    str_query += L"\";";
     h_r = h_GetData (str_query);
 
     return h_r;
@@ -111,7 +112,7 @@ HRESULT CT_Dictionary::GetLexemesByInitialForm (BSTR bstr_stem)
     wstring str_query (str_queryBase);
     str_query += L"where headword.source = \"";
     str_query += OLE2W (bstr_stem);
-    str_query += '\"';
+    str_query += L"\";";
     h_r = h_GetData (str_query);
 
     return h_r;
