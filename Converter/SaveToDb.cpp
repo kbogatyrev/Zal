@@ -126,7 +126,7 @@ bool ST_Headword::b_SaveStressData (CT_Sqlite * pco_dbHandle,
 bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
 {
     wsmatch result;
-    static CT_Wordform co_gram;
+    static CT_GrammHasher co_gram;
     try
     {
         pco_dbHandle->v_PrepareForInsert (L"descriptor", 25);
