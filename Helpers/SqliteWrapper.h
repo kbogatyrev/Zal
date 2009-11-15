@@ -35,6 +35,60 @@ public:
         }
     }
 
+    void v_BeginTransaction()
+    {
+        if (NULL == po_Db_)
+        {
+            throw CT_Exception (-1, L"No DB handle");
+        }
+
+        int i_ret = SQLITE_OK;
+        i_ret = sqlite3_prepare16_v2 (po_Db_, L"BEGIN;", -1, &po_Stmt_, NULL);
+	    if (SQLITE_OK != i_ret) 
+        {
+            throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
+        }
+
+	    i_ret = sqlite3_step (po_Stmt_);
+	    if (SQLITE_DONE != i_ret) 
+        {
+            throw CT_Exception (i_ret, L"sqlite3_step failed");
+        }
+
+        i_ret = sqlite3_finalize (po_Stmt_);
+        if (SQLITE_OK != i_ret)
+        {
+            throw CT_Exception (i_ret, L"sqlite3_finalize failed");
+        }
+    }
+
+    void v_CommitTransaction()
+    {
+        if (NULL == po_Db_)
+        {
+            throw CT_Exception (-1, L"No DB handle");
+        }
+
+        int i_ret = SQLITE_OK;
+        i_ret = sqlite3_prepare16_v2 (po_Db_, L"COMMIT;", -1, &po_Stmt_, NULL);
+	    if (SQLITE_OK != i_ret) 
+        {
+            throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
+        }
+
+	    i_ret = sqlite3_step (po_Stmt_);
+	    if (SQLITE_DONE != i_ret) 
+        {
+            throw CT_Exception (i_ret, L"sqlite3_step failed");
+        }
+
+	    i_ret = sqlite3_finalize (po_Stmt_);
+        if (SQLITE_OK != i_ret)
+        {
+            throw CT_Exception (i_ret, L"sqlite3_finalize failed");
+        }
+    }
+
     void v_Exec (const wstring& str_stmt, void (*v_Callback_)(sqlite3_stmt*, void*), void* po_Arguments)
     {
         if (NULL == po_Db_)
