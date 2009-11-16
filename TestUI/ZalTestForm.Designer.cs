@@ -73,7 +73,7 @@
             this.panelLex.Controls.Add(this.textBox1);
             this.panelLex.Location = new System.Drawing.Point(3, -44);
             this.panelLex.Name = "panelLex";
-            this.panelLex.Size = new System.Drawing.Size(688, 827);
+            this.panelLex.Size = new System.Drawing.Size(688, 859);
             this.panelLex.TabIndex = 0;
             // 
             // buttonSelect
@@ -121,7 +121,7 @@
             this.lexPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lexPanel.Location = new System.Drawing.Point(23, 167);
             this.lexPanel.Name = "lexPanel";
-            this.lexPanel.Size = new System.Drawing.Size(639, 644);
+            this.lexPanel.Size = new System.Drawing.Size(639, 676);
             this.lexPanel.TabIndex = 6;
             // 
             // buttonLookup
