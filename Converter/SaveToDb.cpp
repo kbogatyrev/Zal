@@ -138,7 +138,7 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
         pco_dbHandle->v_Bind (6, b_Intransitive);
         pco_dbHandle->v_Bind (7, str_MainSymbolPluralOf);
         pco_dbHandle->v_Bind (8, str_AltMainSymbol);
-        pco_dbHandle->v_Bind (9, str_InflectionType);
+        pco_dbHandle->v_Bind (9, str_InflectionSymbol);
         pco_dbHandle->v_Bind (10, e_PartOfSpeech);
         pco_dbHandle->v_Bind (11, str_Comment);
         pco_dbHandle->v_Bind (12, str_AltMainSymbolComment);
