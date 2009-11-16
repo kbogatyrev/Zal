@@ -147,8 +147,11 @@ namespace TestUI
                         string strWordForm = wf.Wordform;
                         if (wf.StressPos >= 0)
                         {
-                            string strStressMark = new string('\x301', 1);
-                            strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            if (strWordForm[wf.StressPos] != 'ё')
+                            {
+                                string strStressMark = new string('\x301', 1);
+                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            }
                         }
 
                         ap.SetForm(sKey, strWordForm);
@@ -168,8 +171,11 @@ namespace TestUI
                         string strWordForm = wf.Wordform;
                         if (wf.StressPos >= 0)
                         {
-                            string strStressMark = new string('\x301', 1);
-                            strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            if (strWordForm[wf.StressPos] != 'ё')
+                            {
+                                string strStressMark = new string('\x301', 1);
+                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            }
                         }
 
                         ap.SetForm(sKey, strWordForm);
@@ -184,8 +190,11 @@ namespace TestUI
                         string strWordForm = wf.Wordform;
                         if (wf.StressPos >= 0)
                         {
-                            string strStressMark = new string ('\x301', 1);
-                            strWordForm = strWordForm.Insert (wf.StressPos+1, strStressMark);
+                            if (strWordForm[wf.StressPos] != 'ё')
+                            {
+                                string strStressMark = new string('\x301', 1);
+                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            }
                         }
 
                         ap.SetForm(sKey, strWordForm);
