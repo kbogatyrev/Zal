@@ -59,3 +59,19 @@ public:
     vector<int> vec_db_id(CT_Sqlite* pco_dbHandle); // Tries to find the table in the db, returns -1 if there's no such table
     int i_db_Write(CT_Sqlite* pco_dbHandle); // Write the whole table to db, return subtable_id
 };
+
+template <typename WF>
+class CT_Wordform_Iterator
+{
+public:
+    ET_PartOfSpeech eo_POS;
+    WF co_wf;
+    bool b_end;
+
+    CT_Wordform_Iterator();
+    ~CT_Wordform_Iterator();
+    int i_Initialize(ET_PartOfSpeech eo_in_POS);
+    WF get_Wordform();
+
+    CT_Wordform_Iterator operator++();
+};

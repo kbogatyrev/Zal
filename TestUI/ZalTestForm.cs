@@ -213,6 +213,7 @@ namespace TestUI
         private void buttonLookup_Click(object sender, EventArgs e)
         {
             m_Dictionary.DbPath = textBoxDBPath.Text;
+            m_Analyzer.DbPath = textBoxDBPath.Text;
 
             lexPanel.Controls.Clear();
             m_listLexemes.Clear();
@@ -333,6 +334,7 @@ namespace TestUI
                 if (File.Exists(fd.FileName))
                 {
                     textBoxDBPath.Text = fd.FileName;
+                    m_Analyzer.DbPath = fd.FileName;
                 }
                 else
                 {
