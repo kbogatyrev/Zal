@@ -4,108 +4,131 @@
 
 using namespace std;
 
-struct ST_Ending
+struct ST_EndingDescriptor
 {
-    ST_Ending()
-    {
-        eo_Gender = GENDER_UNDEFINED;
-        eo_Number = NUM_UNDEFINED;
-        eo_Case = CASE_UNDEFINED;
-        eo_Animacy = ANIM_UNDEFINED;
-        eo_Stress = ENDING_STRESS_UNDEFINED;
-    }
-
-    ST_Ending (const ST_Ending& st_rhs) : 
-        str_Ending (st_rhs.str_Ending), 
-        eo_Gender (st_rhs.eo_Gender), 
-        eo_Number (st_rhs.eo_Number), 
-        eo_Case (st_rhs.eo_Case),
-        eo_Animacy (st_rhs.eo_Animacy),
-        eo_Stress (st_rhs.eo_Stress)
-    {}
-
-    wstring str_Ending;    
-    ET_Gender eo_Gender;  // adj only
+    ET_Gender eo_Gender;
     ET_Number eo_Number;
     ET_Case eo_Case;
     ET_Animacy eo_Animacy;
     ET_EndingStressType eo_Stress;
+
+    ST_EndingDescriptor() : eo_Gender (GENDER_UNDEFINED), 
+                            eo_Number (NUM_UNDEFINED), 
+                            eo_Case (CASE_UNDEFINED), 
+                            eo_Animacy (ANIM_UNDEFINED), 
+                            eo_Stress (ENDING_STRESS_UNDEFINED)
+    {}
+
+    // Overload for nouns
+    ST_EndingDescriptor (ET_Number eo_n, 
+                         ET_Case eo_c, 
+                         ET_EndingStressType eo_s) : 
+                            eo_Gender (GENDER_UNDEFINED), 
+                            eo_Number (eo_n),
+                            eo_Case (eo_c), 
+                            eo_Animacy (ANIM_UNDEFINED), 
+                            eo_Stress (eo_s)
+    {}
+
+    // Overload for long adjectves
+    ST_EndingDescriptor (ET_Gender eo_g,
+                         ET_Number eo_n, 
+                         ET_Case eo_c,
+                         ET_Animacy eo_a,
+                         ET_EndingStressType eo_s) :
+                            eo_Gender (eo_g), 
+                            eo_Number (eo_n),
+                            eo_Case (eo_c),
+                            eo_Animacy (eo_a),
+                            eo_Stress (eo_s)
+    {}
+
+    // Overload for short adjectives
+    ST_EndingDescriptor (ET_Gender eo_g,
+                         ET_Number eo_n,
+                         ET_EndingStressType eo_s) : 
+                            eo_Gender (eo_g), 
+                            eo_Number (eo_n),
+                            eo_Case (CASE_UNDEFINED), 
+                            eo_Animacy (ANIM_UNDEFINED), 
+                            eo_Stress (eo_s)
+    {}
+
 };
 
 class CT_Endings
 {
-typedef std::multimap<int, wstring> EndingsMultiMap;
-typedef pair<EndingsMultiMap::const_iterator, EndingsMultiMap::const_iterator> ItPair;
+protected:
+    typedef std::multimap<int, wstring> EndingsMultiMap;
+    typedef pair<EndingsMultiMap::const_iterator, EndingsMultiMap::const_iterator> ItPair;
 
 public:
     CT_Endings()
-    {
-        int i_key = 0;
+    {}
 
-        for (int i_gender = 0; i_gender < GENDER_COUNT; ++i_gender)
-            for (int i_num = 0; i_num < NUM_COUNT; ++i_num)
-                for (int i_case = 0; i_case < CASE_COUNT; ++i_case)
-                    for (int i_animacy = 0; i_animacy < ANIM_COUNT; ++i_animacy)
-                        for (int i_eStress = 0; i_eStress < ENDING_STRESS_COUNT; ++i_eStress)
-        {
-            arrHashKeys[i_gender][i_num][i_case][i_animacy][i_eStress] = i_key++;
-        }
-    }
-
-    void v_Reset()
+    virtual void v_Reset()
     {
         mmap_Endings.clear();
     }
 
-    // Overload for nouns:
-    HRESULT h_AddEnding (const wstring& str_ending,
-                         ET_Number eo_number, 
-                         ET_Case eo_case, 
-                         ET_EndingStressType eo_stress);
+    virtual int i_Hash (const ST_EndingDescriptor&) = 0;
 
-    // Overload for adjectives:
-    HRESULT h_AddEnding (const wstring& str_ending,
-                         ET_Gender eo_gender, 
-                         ET_Number eo_number, 
-                         ET_Case eo_case, 
-                         ET_Animacy eo_animacy, 
-                         ET_EndingStressType eo_stress);
+    int i_Count (const ST_EndingDescriptor& st_d)
+    {
+        int i_h = i_Hash (st_d);
+        return mmap_Endings.count (i_h);
+    }
 
-    // Overload for short forms:
-    HRESULT h_AddEnding (const wstring& str_ending, 
-                         ET_Gender eo_gender, 
-                         ET_Number eo_number, 
-                         ET_EndingStressType eo_stress);
+    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&) = 0;
 
-    int i_GetNumOfEndings (ET_Gender eo_gender,
-                           ET_Number eo_number, 
-                           ET_Case eo_case, 
-                           ET_Animacy eo_animacy,
-                           ET_EndingStressType eo_stress);
+    HRESULT h_GetEnding (const ST_EndingDescriptor& st_descriptor, int i_seqNum, wstring& str_ending)
+    {
+        int i_key = i_Hash (st_descriptor);
 
-    bool b_GetEnding  (wstring& str_ending,
-                       ET_Gender eo_gender, 
-                       ET_Number eo_number, 
-                       ET_Case eo_case, 
-                       ET_Animacy eo_animacy,
-                       ET_EndingStressType eo_stress,
-                       int i_seqNum = 0);
+        ItPair pair_Range = mmap_Endings.equal_range (i_key);
+        for (int i_item = 0; i_item < i_seqNum; ++i_item)
+        {
+            if (++pair_Range.first == pair_Range.second)
+            {
+                return false;
+            }
+        }
 
-private:
-    HRESULT h_HandleAddDeclEnding (ET_EndingClass eo_class,
-                                   const wstring& str_ending,
-                                   ET_Gender eo_gender, 
-                                   ET_Number eo_number, 
-                                   ET_Case eo_case, 
-                                   ET_Animacy eo_animacy, 
-                                   ET_EndingStressType eo_stress);
+        str_ending = (*pair_Range.first).second;
 
-    HRESULT h_HandleAddShortFormEnding (const wstring& str_ending,
-                                        ET_Gender eo_gender, 
-                                        ET_Number eo_number, 
-                                        ET_EndingStressType eo_stress);
+        return S_OK;
+    }
 
-    int arrHashKeys[GENDER_COUNT][NUM_COUNT][CASE_COUNT][ANIM_COUNT][ENDING_STRESS_COUNT];
+    HRESULT h_GetEnding (const ST_EndingDescriptor& st_d, wstring& str_)
+    {
+        return h_GetEnding (st_d, 0, str_);
+    }
+
+protected:
     std::multimap<int, wstring> mmap_Endings;
 
-};  //  class CT_Endings
+};
+
+class CT_NounEndings : public CT_Endings
+{
+    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
+
+private:
+    virtual int i_Hash (const ST_EndingDescriptor&);
+};
+
+class CT_AdjLongEndings : public CT_Endings
+{
+    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
+
+private:
+    virtual int i_Hash (const ST_EndingDescriptor&);
+};
+
+class CT_AdjShortEndings : public CT_Endings
+{
+    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
+
+private:
+    virtual int i_Hash (const ST_EndingDescriptor&);
+};
