@@ -1,9 +1,6 @@
 #include "StdAfx.h"
 #include "ExtString.h"
 #include "ZalEntryParser.h"
-//#include "EndingsParser.h"
-//#include "Analysis.h"
-//#include "Synthesis.h"
 
 using namespace std::tr1;
 
