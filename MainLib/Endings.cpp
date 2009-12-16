@@ -231,3 +231,69 @@ HRESULT CT_AdjShortEndings::h_AddEnding (const wstring& str_ending,
     return S_OK;
 
 }   //  CT_AdjShortEndings::h_AddEnding (...)
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
+int CT_PersonalEndings::i_Hash (const ST_EndingDescriptor& st_d)
+{
+    int i_key = st_d.eo_Person * NUM_COUNT * ENDING_STRESS_COUNT +
+                st_d.eo_Number * ENDING_STRESS_COUNT +
+                st_d.eo_Stress;
+    return i_key;
+}
+
+HRESULT CT_PersonalEndings::h_AddEnding (const wstring& str_ending, 
+                                         const ST_EndingDescriptor& st_descriptor)
+{
+    //
+    // Person
+    //
+    std::vector<ET_Person> vec_person;
+    if (PERSON_UNDEFINED == st_descriptor.eo_Person)
+    {
+        ERROR_LOG (_T("Undefined person."));
+        return E_INVALIDARG;
+    }
+    else
+    {
+        vec_person.push_back (st_descriptor.eo_Person);
+    }
+
+    //
+    // Number
+    //
+    if (NUM_UNDEFINED == st_descriptor.eo_Number)
+    {
+        ERROR_LOG (_T("Undefined number in personal ending."));
+        return E_INVALIDARG;
+    }
+
+    //
+    // Ending stressed/unstressed
+    //
+    std::vector<ET_EndingStressType> vec_stress;
+    if (ENDING_STRESS_UNDEFINED == st_descriptor.eo_Stress)
+    {
+        for (int i_stress = ENDING_STRESS_UNDEFINED; 
+             i_stress < (int)ENDING_STRESS_COUNT; 
+             ++i_stress)
+        {
+            vec_stress.push_back ((ET_EndingStressType)i_stress);
+        }
+    }
+    else
+    {
+        vec_stress.push_back (st_descriptor.eo_Stress);
+    }
+
+    for (int i_s = 0; i_s < (int)vec_stress.size(); ++i_s)
+    {
+        ST_EndingDescriptor st_d (st_descriptor.eo_Person, st_descriptor.eo_Number, vec_stress[i_s]);
+        int i_key = i_Hash (st_d);
+        mmap_Endings.insert (std::pair<int, wstring> (i_key, str_ending));
+    }
+
+    return S_OK;
+
+}   //  CT_PersonalEndings::h_AddEnding (...)
