@@ -10,12 +10,14 @@ struct ST_EndingDescriptor
     ET_Number eo_Number;
     ET_Case eo_Case;
     ET_Animacy eo_Animacy;
+    ET_Person eo_Person;
     ET_EndingStressType eo_Stress;
 
     ST_EndingDescriptor() : eo_Gender (GENDER_UNDEFINED), 
                             eo_Number (NUM_UNDEFINED), 
                             eo_Case (CASE_UNDEFINED), 
                             eo_Animacy (ANIM_UNDEFINED), 
+                            eo_Person (PERSON_UNDEFINED),
                             eo_Stress (ENDING_STRESS_UNDEFINED)
     {}
 
@@ -27,6 +29,7 @@ struct ST_EndingDescriptor
                             eo_Number (eo_n),
                             eo_Case (eo_c), 
                             eo_Animacy (ANIM_UNDEFINED), 
+                            eo_Person (PERSON_UNDEFINED),
                             eo_Stress (eo_s)
     {}
 
@@ -40,6 +43,7 @@ struct ST_EndingDescriptor
                             eo_Number (eo_n),
                             eo_Case (eo_c),
                             eo_Animacy (eo_a),
+                            eo_Person (PERSON_UNDEFINED),
                             eo_Stress (eo_s)
     {}
 
@@ -51,6 +55,19 @@ struct ST_EndingDescriptor
                             eo_Number (eo_n),
                             eo_Case (CASE_UNDEFINED), 
                             eo_Animacy (ANIM_UNDEFINED), 
+                            eo_Person (PERSON_UNDEFINED),
+                            eo_Stress (eo_s)
+    {}
+
+    // Overload for personal forms
+    ST_EndingDescriptor (ET_Person eo_p,
+                         ET_Number eo_n,
+                         ET_EndingStressType eo_s) : 
+                            eo_Gender (GENDER_UNDEFINED),
+                            eo_Number (eo_n),
+                            eo_Case (CASE_UNDEFINED),
+                            eo_Animacy (ANIM_UNDEFINED),
+                            eo_Person (eo_p), 
                             eo_Stress (eo_s)
     {}
 
@@ -126,6 +143,14 @@ private:
 };
 
 class CT_AdjShortEndings : public CT_Endings
+{
+    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
+
+private:
+    virtual int i_Hash (const ST_EndingDescriptor&);
+};
+
+class CT_PersonalEndings : public CT_Endings
 {
     virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
 
