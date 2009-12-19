@@ -14,7 +14,8 @@ wstring static str_ToString (T from)
 };
 */
 
-static wstring str_queryBase (L"select headword.source, \
+static wstring str_queryBase (L"select \
+headword.source, \
 stress.id, \
 stress.stress_position, \
 stress.is_primary, \
