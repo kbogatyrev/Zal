@@ -337,6 +337,7 @@ bool ST_Descriptor::b_SaveInflectionGroup (CT_Sqlite * pco_dbHandle,
     }
 
     return true;
-}
+
+}   //  b_SaveInflectionGroup (...)
 
 
