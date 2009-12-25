@@ -223,7 +223,17 @@ namespace TestUI
             if (radioButtonGStem.Checked)
             {
                 bSynthesis = true;
-                m_Dictionary.GetLexemesByGraphicStem (textBoxSearchString.Text);
+                try
+                {
+                    m_Dictionary.GetLexemesByGraphicStem(textBoxSearchString.Text);
+                }
+                catch (Exception ex)
+                {
+                    string sMsg = "Error in buttonLookup_Click: ";
+                    sMsg += ex.Message;
+                    MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                    return;
+                }
             }
             else
             {
