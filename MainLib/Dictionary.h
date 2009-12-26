@@ -74,7 +74,7 @@ END_COM_MAP()
 
 public:
     STDMETHOD (put_DbPath) (BSTR DbPath);
-    STDMETHOD (GetLexeme) (LONG Id);
+    STDMETHOD (GetLexeme) (LONG Id, ILexeme ** Lexeme);
     STDMETHOD (GetLexemesByGraphicStem) (BSTR Key);
     STDMETHOD (GetLexemesByInitialForm) (BSTR Key);
 
