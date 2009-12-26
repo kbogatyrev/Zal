@@ -220,6 +220,7 @@ namespace TestUI
 
             bool bSynthesis = true;
 
+            // <radioButtons>
             if (radioButtonGStem.Checked)
             {
                 bSynthesis = true;
@@ -235,41 +236,65 @@ namespace TestUI
                     return;
                 }
             }
-            else
+            else if (radioButtonInitForm.Checked)
             {
-                if (radioButtonInitForm.Checked)
+                bSynthesis = true;
+                try
                 {
-                    bSynthesis = true;
-                    try
-                    {
-                        m_Dictionary.GetLexemesByInitialForm(textBoxSearchString.Text);
-                    }
-                    catch (Exception ex)
-                    {
-                        string sMsg = "Error in buttonLookup_Click: ";
-                        sMsg += ex.Message;
-                        MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
-                        return;
-                    }
+                    m_Dictionary.GetLexemesByInitialForm(textBoxSearchString.Text);
                 }
-                else
+                catch (Exception ex)
                 {
-                    bSynthesis = false;
-                    // Call Tim's analysis code here
-                    int iWordform = 0;
-                    m_Analyzer.Analyze(textBoxSearchString.Text);
-                    foreach (MainLib.IWordForm wf in m_Analyzer)
-                    {
-                        m_listWordForms.Add(wf);
-                        AnalysisPanel ap = new AnalysisPanel(iWordform);
-                        //Subscribe(ldp);
-                        ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
-                        lexPanel.Controls.Add(ap);
-                        iWordform++;
-                    }
-                    MessageBox.Show ("Analysis not yet implemented.", "Zal Test", MessageBoxButtons.OK);
+                    string sMsg = "Error in buttonLookup_Click: ";
+                    sMsg += ex.Message;
+                    MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                    return;
                 }
             }
+            else if (radioButtonWordForm.Checked)
+            {
+                bSynthesis = false;
+                // Call Tim's analysis code here
+                int iWordform = 0;
+                try
+                {
+                    m_Analyzer.Analyze(textBoxSearchString.Text);
+                }
+                catch (Exception ex)
+                {
+                    string sMsg = "Error in buttonLookup_Click: ";
+                    sMsg += ex.Message;
+                    MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                    return;
+                }
+                foreach (MainLib.IWordForm wf in m_Analyzer)
+                {
+                    m_listWordForms.Add(wf);
+                    AnalysisPanel ap = new AnalysisPanel(iWordform);
+                    //Subscribe(ldp);
+                    ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
+                    lexPanel.Controls.Add(ap);
+                    iWordform++;
+                }
+                //MessageBox.Show ("Analysis not yet implemented.", "Zal Test", MessageBoxButtons.OK);
+            }
+            else if (radioButtonPreprocess.Checked)
+            {
+                bSynthesis = false;
+                try
+                {
+                    long l_lexeme_id = long.Parse(textBoxSearchString.Text);
+                    m_Analyzer.PrepareLexeme(l_lexeme_id);
+                }
+                catch (Exception ex)
+                {
+                    string sMsg = "Error in buttonLookup_Click: ";
+                    sMsg += ex.Message;
+                    MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                    return;
+                }
+            }
+            // </radioButtons>
 
             if (bSynthesis)
             {

@@ -42,6 +42,7 @@
             this.textBoxSearchString = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.radioButtonPreprocess = new System.Windows.Forms.RadioButton();
             this.tabSearch.SuspendLayout();
             this.panelLex.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -60,6 +61,7 @@
             // 
             // panelLex
             // 
+            this.panelLex.Controls.Add(this.radioButtonPreprocess);
             this.panelLex.Controls.Add(this.buttonSelect);
             this.panelLex.Controls.Add(this.textBoxDBPath);
             this.panelLex.Controls.Add(this.textBox2);
@@ -107,7 +109,7 @@
             // radioButtonWordForm
             // 
             this.radioButtonWordForm.AutoSize = true;
-            this.radioButtonWordForm.Location = new System.Drawing.Point(445, 94);
+            this.radioButtonWordForm.Location = new System.Drawing.Point(360, 94);
             this.radioButtonWordForm.Name = "radioButtonWordForm";
             this.radioButtonWordForm.Size = new System.Drawing.Size(91, 17);
             this.radioButtonWordForm.TabIndex = 7;
@@ -147,7 +149,7 @@
             // radioButtonInitForm
             // 
             this.radioButtonInitForm.AutoSize = true;
-            this.radioButtonInitForm.Location = new System.Drawing.Point(329, 94);
+            this.radioButtonInitForm.Location = new System.Drawing.Point(268, 94);
             this.radioButtonInitForm.Name = "radioButtonInitForm";
             this.radioButtonInitForm.Size = new System.Drawing.Size(86, 17);
             this.radioButtonInitForm.TabIndex = 3;
@@ -158,7 +160,7 @@
             // radioButtonGStem
             // 
             this.radioButtonGStem.AutoSize = true;
-            this.radioButtonGStem.Location = new System.Drawing.Point(198, 94);
+            this.radioButtonGStem.Location = new System.Drawing.Point(173, 94);
             this.radioButtonGStem.Name = "radioButtonGStem";
             this.radioButtonGStem.Size = new System.Drawing.Size(89, 17);
             this.radioButtonGStem.TabIndex = 2;
@@ -194,6 +196,17 @@
             this.tabControl.Size = new System.Drawing.Size(702, 844);
             this.tabControl.TabIndex = 0;
             // 
+            // radioButtonPreprocess
+            // 
+            this.radioButtonPreprocess.AutoSize = true;
+            this.radioButtonPreprocess.Location = new System.Drawing.Point(457, 94);
+            this.radioButtonPreprocess.Name = "radioButtonPreprocess";
+            this.radioButtonPreprocess.Size = new System.Drawing.Size(78, 17);
+            this.radioButtonPreprocess.TabIndex = 11;
+            this.radioButtonPreprocess.TabStop = true;
+            this.radioButtonPreprocess.Text = "Preprocess";
+            this.radioButtonPreprocess.UseVisualStyleBackColor = true;
+            // 
             // TestApplet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -228,6 +241,7 @@
         private System.Windows.Forms.Button buttonSelect;
         private System.Windows.Forms.TextBox textBoxDBPath;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.RadioButton radioButtonPreprocess;
     }
 }
 

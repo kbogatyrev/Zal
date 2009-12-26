@@ -63,7 +63,7 @@ public:
 
 public:
     STDMETHOD (put_DbPath) (BSTR bstr_Path);
-    STDMETHOD (PrepareLexeme) (__int64 long_Lexeme_id);
+    STDMETHOD (PrepareLexeme) (__int64 ll_Lexeme_id);
     STDMETHOD (Analyze) (BSTR bstr_Wordform);
 
     BSTR bstr_DbPath;
@@ -71,7 +71,6 @@ public:
     int i_Analyze(wstring str_wordform, vector<CT_GramHelper>* pvec_possible_wordforms);
     int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left);
     int i_CheckEndings(vector<CT_GramHelper>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right);
-    int i_WriteStemsAndEndings(__int64 ll_lexeme_id);
 
 private:
     CT_Sqlite* pco_db;
