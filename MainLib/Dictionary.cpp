@@ -76,15 +76,31 @@ HRESULT CT_Dictionary::put_DbPath (BSTR bstr_dbPath)
     return S_OK;
 }
 
-HRESULT CT_Dictionary::GetLexeme (long lId)
+HRESULT CT_Dictionary::GetLexeme (long l_Id, ILexeme ** pp_lexeme)
 {
     HRESULT h_r = S_OK;
 
     wstring str_query (str_queryBase);
     str_query += L"where descriptor.id = ";
-    str_query += str_ToString (lId);
+    str_query += str_ToString (l_Id);
     str_query += L";";
     h_r = h_GetData (str_query);
+
+    if (S_OK == h_r)
+    {
+        if (m_coll.size() < 1)
+        {
+            pp_lexeme = NULL;
+            return E_FAIL;
+        }
+
+        CComVariant sp_var = m_coll[0];
+        if (VT_DISPATCH == sp_var.vt)
+        {
+            CComQIPtr<ILexeme> sp_qiLex = sp_var.pdispVal;
+            *pp_lexeme = sp_qiLex.Detach();
+        }
+    }
 
     return h_r;
 }
@@ -234,7 +250,7 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
     
         return E_FAIL;
     }
-    
+
     return S_OK;
         
 }   //  b_Getdata (...)
