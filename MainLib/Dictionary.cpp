@@ -85,7 +85,6 @@ HRESULT CT_Dictionary::GetLexeme (long l_Id, ILexeme ** pp_lexeme)
     str_query += str_ToString (l_Id);
     str_query += L";";
     h_r = h_GetData (str_query);
-
     if (S_OK == h_r)
     {
         if (m_coll.size() < 1)
