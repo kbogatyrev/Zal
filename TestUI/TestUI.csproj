@@ -104,6 +104,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="VerbPanel.resx">
+      <DependentUpon>VerbPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ZalTestForm.resx">
       <DependentUpon>ZalTestForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,6 +123,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="VerbPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VerbPanel.Designer.cs">
+      <DependentUpon>VerbPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="WordFormsPanel.cs">
       <SubType>UserControl</SubType>
