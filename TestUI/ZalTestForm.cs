@@ -19,6 +19,7 @@ namespace TestUI
         private Dictionary<MainLib.ET_Gender, string> m_dictGender;
         private Dictionary<MainLib.ET_Number, string> m_dictNumber;
         private Dictionary<MainLib.ET_Case, string> m_dictCase;
+        private Dictionary<MainLib.ET_Person, string> m_dictPerson;
         private Dictionary<MainLib.ET_AccentType, string> m_dictAccent;
 
         public TestApplet()
@@ -53,6 +54,12 @@ namespace TestUI
             m_dictCase.Add(MainLib.ET_Case.CASE_LOC, "L");
             m_dictCase.Add(MainLib.ET_Case.CASE_DAT, "D");
             m_dictCase.Add(MainLib.ET_Case.CASE_INST, "I");
+
+            m_dictPerson = new Dictionary<MainLib.ET_Person, string>();
+            m_dictPerson.Add(MainLib.ET_Person.PERSON_UNDEFINED, "Undefined");
+            m_dictPerson.Add(MainLib.ET_Person.PERSON_1, "1");
+            m_dictPerson.Add(MainLib.ET_Person.PERSON_2, "2");
+            m_dictPerson.Add(MainLib.ET_Person.PERSON_3, "3");
 
             m_dictAccent = new Dictionary<MainLib.ET_AccentType,string>();
             m_dictAccent.Add(MainLib.ET_AccentType.AT_UNDEFINED, "Undefined");
@@ -205,6 +212,37 @@ namespace TestUI
                 }   // foreach ...
 
             }   //  if (MainLib.ET_PartOfSpeech.POS_ADJ == lexeme.PartOfSpeech)
+
+            if (MainLib.ET_PartOfSpeech.POS_VERB == lexeme.PartOfSpeech)
+            {
+                VerbPanel vp = new VerbPanel();
+                tabPageDetails.Controls.Add (vp);
+                vp.sLexName = grSt;
+
+                foreach (MainLib.IWordForm wf in lexeme)
+                {
+                    string sKey = m_dictPerson[wf.Person];
+                    sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
+
+                    string strWordForm = wf.Wordform;
+                    if (wf.StressPos >= 0)
+                    {
+                        if (wf.StressPos >= wf.Wordform.Length)
+                        {
+                            MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                            return;
+                        }
+                        if (strWordForm[wf.StressPos] != 'ё')
+                        {
+                            string strStressMark = new string('\x301', 1);
+                            strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                        }
+                    }
+
+                    vp.SetForm (sKey, strWordForm);
+
+                }   // foreach
+            }
 
             tabControl.Controls.Add(tabPageDetails);
 
