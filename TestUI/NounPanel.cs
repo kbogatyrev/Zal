@@ -11,7 +11,6 @@ namespace TestUI
 {
     public partial class NounPanel : WordFormsPanel
     {
-
         public string sLexName
         {
             get
