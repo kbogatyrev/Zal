@@ -66,7 +66,7 @@ public:
     STDMETHOD (PrepareLexeme) (__int64 ll_Lexeme_id);
     STDMETHOD (Analyze) (BSTR bstr_Wordform);
 
-    BSTR bstr_DbPath;
+    wstring str_DbPath;
 
     int i_Analyze(wstring str_wordform, vector<CT_GramHelper>* pvec_possible_wordforms);
     int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left);
