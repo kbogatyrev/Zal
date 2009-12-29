@@ -4,17 +4,6 @@
 using namespace std;
 using namespace std::tr1;
 
-void v_GetTableField_int(sqlite3_stmt *po_statement, void *v_FieldData);
-void v_GetTableField_int64(sqlite3_stmt *po_statement, void *v_FieldData);
-void v_GetTableField_str(sqlite3_stmt *po_statement, void *v_FieldData);
-
-template <typename Type>
-struct S_Field
-{
-    int i_ColNumber;
-    vector<Type> *pvec_FieldData;
-};
-
 class CT_GramHelper
 {
     public:

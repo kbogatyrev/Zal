@@ -66,6 +66,43 @@ namespace TestUI
             }
         }
 
+        public MainLib.ET_Case eoCase
+        {
+            set
+            {
+                switch (value)
+                {
+                    case MainLib.ET_Case.CASE_NOM:
+                            TextBox_Case.Text = "Nom";
+                            break;
+                    case MainLib.ET_Case.CASE_ACC:
+                            TextBox_Case.Text = "Acc";
+                            break;
+                    case MainLib.ET_Case.CASE_GEN:
+                            TextBox_Case.Text = "Gen";
+                            break;
+                    case MainLib.ET_Case.CASE_DAT:
+                            TextBox_Case.Text = "Dat";
+                            break;
+                    case MainLib.ET_Case.CASE_PART:
+                            TextBox_Case.Text = "Part";
+                            break;
+                    case MainLib.ET_Case.CASE_INST:
+                            TextBox_Case.Text = "Inst";
+                            break;
+                    case MainLib.ET_Case.CASE_PREP:
+                            TextBox_Case.Text = "Prep";
+                            break;
+                    case MainLib.ET_Case.CASE_LOC:
+                            TextBox_Case.Text = "Loc";
+                            break;
+                    case MainLib.ET_Case.CASE_NUM:
+                            TextBox_Case.Text = "Сч. форма";
+                            break;
+                }
+            }
+        }
+
         public AnalysisPanel(int iId)
         {
             InitializeComponent();

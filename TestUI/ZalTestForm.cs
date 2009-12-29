@@ -307,10 +307,14 @@ namespace TestUI
                 }
                 foreach (MainLib.IWordForm wf in m_Analyzer)
                 {
+                    //MessageBox.Show("!", "Zal Test", MessageBoxButtons.OK);
                     m_listWordForms.Add(wf);
                     AnalysisPanel ap = new AnalysisPanel(iWordform);
                     //Subscribe(ldp);
                     ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
+                    ap.sLemma = wf.Lemma;
+                    ap.sWordform = wf.Wordform;
+                    ap.eoCase = wf.Case;
                     lexPanel.Controls.Add(ap);
                     iWordform++;
                 }
