@@ -314,7 +314,11 @@ namespace TestUI
                     ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
                     ap.sLemma = wf.Lemma;
                     ap.sWordform = wf.Wordform;
+                    ap.eoPOS = wf.PartOfSpeech;
+                    ap.eoGender = wf.Gender;
                     ap.eoCase = wf.Case;
+                    ap.eoNumber = wf.Number;
+                    //ap.i_lexeme_id = wf.LexemeId;
                     lexPanel.Controls.Add(ap);
                     iWordform++;
                 }

@@ -99,7 +99,86 @@ namespace TestUI
                     case MainLib.ET_Case.CASE_NUM:
                             TextBox_Case.Text = "Сч. форма";
                             break;
+                    default:
+                        TextBox_Case.Text = "";
+                        break;
                 }
+            }
+        }
+
+        public MainLib.ET_Number eoNumber
+        {
+            set
+            {
+                switch (value)
+                {
+                    case MainLib.ET_Number.NUM_SG:
+                        TextBox_Number.Text = "Sg";
+                        break;
+                    case MainLib.ET_Number.NUM_PL:
+                        TextBox_Number.Text = "Pl";
+                        break;
+                    default:
+                        TextBox_Number.Text = "";
+                        break;
+                }
+            }
+        }
+
+        public MainLib.ET_PartOfSpeech eoPOS
+        {
+            set
+            {
+                switch (value)
+                {
+                    case MainLib.ET_PartOfSpeech.POS_NOUN:
+                        TextBox_POS.Text = "N";
+                        break;
+                    case MainLib.ET_PartOfSpeech.POS_ADJ:
+                        TextBox_POS.Text = "Adj";
+                        break;
+                    case MainLib.ET_PartOfSpeech.POS_VERB:
+                        TextBox_POS.Text = "V";
+                        break;
+                    default:
+                        TextBox_POS.Text = "";
+                        break;
+                }
+            }
+        }
+
+        public MainLib.ET_Gender eoGender
+        {
+            set
+            {
+                switch (value)
+                {
+                    case MainLib.ET_Gender.GENDER_F:
+                        TextBox_Gender.Text = "F";
+                        break;
+                    case MainLib.ET_Gender.GENDER_M:
+                        TextBox_Gender.Text = "M";
+                        break;
+                    case MainLib.ET_Gender.GENDER_N:
+                        TextBox_Gender.Text = "N";
+                        break;
+                    default:
+                        TextBox_Gender.Text = "";
+                        break;
+                }
+            }
+        }
+
+        public int i_lexeme_id
+        {
+            set
+            {
+                i_lexeme_id = value;
+                TextBox_ID.Text = i_lexeme_id.ToString();
+            }
+            get
+            {
+                return i_lexeme_id;
             }
         }
 
