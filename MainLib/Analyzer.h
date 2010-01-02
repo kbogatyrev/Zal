@@ -64,6 +64,7 @@ public:
 public:
     STDMETHOD (put_DbPath) (BSTR bstr_Path);
     STDMETHOD (PrepareLexeme) (__int64 ll_Lexeme_id);
+    STDMETHOD (PrepareLexemes) (__int64 ll_First_Lexeme_id, __int64 ll_Last_Lexeme_id);
     STDMETHOD (Analyze) (BSTR bstr_Wordform);
 
     wstring str_DbPath;
@@ -74,7 +75,7 @@ public:
 
 private:
     CT_Sqlite* pco_db;
-    int i_LCP(wstring* str_words, wstring* str_pfx, int i_words, int i_pfx);
+    int i_LCP(wstring* str_words, wstring** str_pfx, int i_words, int i_pfx);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CT_Analyzer)

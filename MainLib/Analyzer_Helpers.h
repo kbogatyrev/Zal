@@ -6,7 +6,15 @@ using namespace std::tr1;
 
 class CT_GramHelper
 {
-    public:
+private:
+    static const int MIN_NOUN = 0;
+    static const int MIN_ADJ = 1000;
+    static const int MIN_NUM = 2000;
+    static const int MIN_PRONOUN = 3000;
+    static const int MIN_VERB = 4000;
+    static const int MIN_UNCHANGEABLE = 20000;
+
+public:
     wstring str_wordform;
     wstring str_lemma;
     __int64 ll_lexeme_id;

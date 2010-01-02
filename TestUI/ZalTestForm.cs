@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.IO;
 
@@ -22,11 +23,14 @@ namespace TestUI
         private Dictionary<MainLib.ET_Person, string> m_dictPerson;
         private Dictionary<MainLib.ET_AccentType, string> m_dictAccent;
 
+        private bool b_DBOpen;
+
         public TestApplet()
         {
             InitializeComponent();
             buttonLookup.Enabled = false;
             radioButtonInitForm.Checked = true;
+            b_DBOpen = false;
 
             textBoxDBPath.Text = Properties.Settings.Default.DbPath;
 
@@ -250,8 +254,12 @@ namespace TestUI
 
         private void buttonLookup_Click(object sender, EventArgs e)
         {
-            m_Dictionary.DbPath = textBoxDBPath.Text;
-            m_Analyzer.DbPath = textBoxDBPath.Text;
+            if (b_DBOpen == false)
+            {
+                m_Dictionary.DbPath = textBoxDBPath.Text;
+                m_Analyzer.DbPath = textBoxDBPath.Text;
+                b_DBOpen = true;
+            }
 
             lexPanel.Controls.Clear();
             m_listLexemes.Clear();
@@ -307,7 +315,6 @@ namespace TestUI
                 }
                 foreach (MainLib.IWordForm wf in m_Analyzer)
                 {
-                    //MessageBox.Show("!", "Zal Test", MessageBoxButtons.OK);
                     m_listWordForms.Add(wf);
                     AnalysisPanel ap = new AnalysisPanel(iWordform);
                     //Subscribe(ldp);
@@ -318,6 +325,9 @@ namespace TestUI
                     ap.eoGender = wf.Gender;
                     ap.eoCase = wf.Case;
                     ap.eoNumber = wf.Number;
+                    ap.eoAdjForm = wf.AdjForm;
+                    ap.eoAnimacy = wf.Animacy;
+                    ap.eoTense = wf.Tense;
                     //ap.i_lexeme_id = wf.LexemeId;
                     lexPanel.Controls.Add(ap);
                     iWordform++;
@@ -329,8 +339,18 @@ namespace TestUI
                 bSynthesis = false;
                 try
                 {
-                    long l_lexeme_id = long.Parse(textBoxSearchString.Text);
-                    m_Analyzer.PrepareLexeme(l_lexeme_id);
+                    if (Regex.IsMatch(textBoxSearchString.Text, (string)"\\-"))
+                    {
+                        string[] arr_Range = Regex.Split(textBoxSearchString.Text, (string)"([0-9]*)\\-([0-9]*)");
+                        long l_start_id = long.Parse(arr_Range[1]);
+                        long l_end_id = long.Parse(arr_Range[2]);
+                        m_Analyzer.PrepareLexemes(l_start_id, l_end_id);
+                    }
+                    else
+                    {
+                        long l_lexeme_id = long.Parse(textBoxSearchString.Text);
+                        m_Analyzer.PrepareLexeme(l_lexeme_id);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -390,6 +410,7 @@ namespace TestUI
 
         private void textBoxDBPath_TextChanged(object sender, EventArgs e)
         {
+            b_DBOpen = false;
             if (textBoxDBPath.Text.Length > 0)
             {
                 if (textBoxSearchString.Text.Length > 0)
@@ -408,6 +429,7 @@ namespace TestUI
             FileDialog fd = new OpenFileDialog();
             fd.CheckFileExists = false;
             fd.CheckPathExists = true;
+            b_DBOpen = false;
             DialogResult dr = fd.ShowDialog();
             if (DialogResult.OK == dr)
             {

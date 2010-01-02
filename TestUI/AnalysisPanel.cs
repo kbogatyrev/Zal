@@ -66,6 +66,28 @@ namespace TestUI
             }
         }
 
+        public MainLib.ET_PartOfSpeech eoPOS
+        {
+            set
+            {
+                switch (value)
+                {
+                    case MainLib.ET_PartOfSpeech.POS_NOUN:
+                        TextBox_POS.Text = "N";
+                        break;
+                    case MainLib.ET_PartOfSpeech.POS_ADJ:
+                        TextBox_POS.Text = "Adj";
+                        break;
+                    case MainLib.ET_PartOfSpeech.POS_VERB:
+                        TextBox_POS.Text = "V";
+                        break;
+                    default:
+                        TextBox_POS.Text = "";
+                        break;
+                }
+            }
+        }
+
         public MainLib.ET_Case eoCase
         {
             set
@@ -125,28 +147,6 @@ namespace TestUI
             }
         }
 
-        public MainLib.ET_PartOfSpeech eoPOS
-        {
-            set
-            {
-                switch (value)
-                {
-                    case MainLib.ET_PartOfSpeech.POS_NOUN:
-                        TextBox_POS.Text = "N";
-                        break;
-                    case MainLib.ET_PartOfSpeech.POS_ADJ:
-                        TextBox_POS.Text = "Adj";
-                        break;
-                    case MainLib.ET_PartOfSpeech.POS_VERB:
-                        TextBox_POS.Text = "V";
-                        break;
-                    default:
-                        TextBox_POS.Text = "";
-                        break;
-                }
-            }
-        }
-
         public MainLib.ET_Gender eoGender
         {
             set
@@ -164,6 +164,69 @@ namespace TestUI
                         break;
                     default:
                         TextBox_Gender.Text = "";
+                        break;
+                }
+            }
+        }
+
+        public MainLib.ET_Animacy eoAnimacy
+        {
+            set
+            {
+                switch (value)
+                {
+                    case MainLib.ET_Animacy.ANIM_NO:
+                        TextBox_Animacy.Text = "неодуш.";
+                        break;
+                    case MainLib.ET_Animacy.ANIM_YES:
+                        TextBox_Animacy.Text = "одуш.";
+                        break;
+                    default:
+                        TextBox_Animacy.Text = "";
+                        break;
+                }
+            }
+        }
+
+        public MainLib.ET_AdjForm eoAdjForm
+        {
+            set
+            {
+                switch (value)
+                {
+                    case MainLib.ET_AdjForm.ADJ_FORM_SHORT:
+                        TextBox_AdjForm.Text = "краткая";
+                        break;
+                    case MainLib.ET_AdjForm.ADJ_FORM_LONG:
+                        TextBox_AdjForm.Text = "полная";
+                        break;
+                    case MainLib.ET_AdjForm.ADJ_FORM_COMPARATIVE:
+                        TextBox_AdjForm.Text = "сравн.";
+                        break;
+                    default:
+                        TextBox_Animacy.Text = "";
+                        break;
+                }
+            }
+        }
+
+        public MainLib.ET_Tense eoTense
+        {
+            set
+            {
+                switch (value)
+                {
+                    case MainLib.ET_Tense.TENSE_PAST:
+                        TextBox_Tense.Text = "прош.";
+                        break;
+                    case MainLib.ET_Tense.TENSE_PRESENT:
+                        TextBox_Tense.Text = "наст.";
+                        break;
+                    case MainLib.ET_Tense.TENSE_FUTURE:
+                        TextBox_Tense.Text = "буд.";
+                        break;
+                    default:
+                        TextBox_Animacy.Text = "";
                         break;
                 }
             }
