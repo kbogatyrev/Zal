@@ -6,31 +6,37 @@ using namespace std;
 
 struct ST_EndingDescriptor
 {
+    int i_InflectionType;
     ET_Gender eo_Gender;
     ET_Number eo_Number;
     ET_Case eo_Case;
     ET_Animacy eo_Animacy;
     ET_Person eo_Person;
     ET_EndingStressType eo_Stress;
+    ET_StemAuslaut eo_StemAuslaut;
 
-    ST_EndingDescriptor() : eo_Gender (GENDER_UNDEFINED), 
+    ST_EndingDescriptor() : i_InflectionType (INFLECTION_TYPE_UNDEFINED),
+                            eo_Gender (GENDER_UNDEFINED), 
                             eo_Number (NUM_UNDEFINED), 
                             eo_Case (CASE_UNDEFINED), 
                             eo_Animacy (ANIM_UNDEFINED), 
                             eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (ENDING_STRESS_UNDEFINED)
+                            eo_Stress (ENDING_STRESS_UNDEFINED),
+                            eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for nouns
     ST_EndingDescriptor (ET_Number eo_n, 
                          ET_Case eo_c, 
-                         ET_EndingStressType eo_s) : 
+                         ET_EndingStressType eo_s) :
+                            i_InflectionType (INFLECTION_TYPE_UNDEFINED),
                             eo_Gender (GENDER_UNDEFINED), 
                             eo_Number (eo_n),
                             eo_Case (eo_c), 
                             eo_Animacy (ANIM_UNDEFINED), 
                             eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (eo_s)
+                            eo_Stress (eo_s),
+                            eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for long adjectves
@@ -39,36 +45,44 @@ struct ST_EndingDescriptor
                          ET_Case eo_c,
                          ET_Animacy eo_a,
                          ET_EndingStressType eo_s) :
+                            i_InflectionType (INFLECTION_TYPE_UNDEFINED),
                             eo_Gender (eo_g), 
                             eo_Number (eo_n),
                             eo_Case (eo_c),
                             eo_Animacy (eo_a),
                             eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (eo_s)
+                            eo_Stress (eo_s),
+                            eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for short adjectives
     ST_EndingDescriptor (ET_Gender eo_g,
                          ET_Number eo_n,
-                         ET_EndingStressType eo_s) : 
+                         ET_EndingStressType eo_s) :
+                            i_InflectionType (INFLECTION_TYPE_UNDEFINED),
                             eo_Gender (eo_g), 
                             eo_Number (eo_n),
                             eo_Case (CASE_UNDEFINED), 
                             eo_Animacy (ANIM_UNDEFINED), 
                             eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (eo_s)
+                            eo_Stress (eo_s),
+                            eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for personal forms
-    ST_EndingDescriptor (ET_Person eo_p,
+    ST_EndingDescriptor (int i_inflectionType,
+                         ET_Person eo_p,
                          ET_Number eo_n,
-                         ET_EndingStressType eo_s) : 
+                         ET_EndingStressType eo_s,
+                         ET_StemAuslaut eo_sa) :
+                            i_InflectionType (i_inflectionType),
                             eo_Gender (GENDER_UNDEFINED),
                             eo_Number (eo_n),
                             eo_Case (CASE_UNDEFINED),
                             eo_Animacy (ANIM_UNDEFINED),
                             eo_Person (eo_p), 
-                            eo_Stress (eo_s)
+                            eo_Stress (eo_s),
+                            eo_StemAuslaut (eo_sa)
     {}
 
 };

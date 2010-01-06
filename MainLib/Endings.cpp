@@ -237,9 +237,10 @@ HRESULT CT_AdjShortEndings::h_AddEnding (const wstring& str_ending,
 
 int CT_PersonalEndings::i_Hash (const ST_EndingDescriptor& st_d)
 {
-    int i_key = st_d.eo_Person * NUM_COUNT * ENDING_STRESS_COUNT +
-                st_d.eo_Number * ENDING_STRESS_COUNT +
-                st_d.eo_Stress;
+    int i_key = st_d.i_InflectionType * PERSON_COUNT * NUM_COUNT * ENDING_STRESS_COUNT * STEM_AUSLAUT_COUNT +
+                st_d.eo_Person * NUM_COUNT * ENDING_STRESS_COUNT * STEM_AUSLAUT_COUNT +
+                st_d.eo_Number * ENDING_STRESS_COUNT * STEM_AUSLAUT_COUNT +
+                st_d.eo_Stress * STEM_AUSLAUT_COUNT + st_d.eo_StemAuslaut;
     return i_key;
 }
 
@@ -287,12 +288,35 @@ HRESULT CT_PersonalEndings::h_AddEnding (const wstring& str_ending,
         vec_stress.push_back (st_descriptor.eo_Stress);
     }
 
-    for (int i_s = 0; i_s < (int)vec_stress.size(); ++i_s)
+    //
+    // Ending after sh/not after sh
+    //
+    std::vector<ET_StemAuslaut> vec_stemAuslaut;
+    if (STEM_AUSLAUT_UNDEFINED == st_descriptor.eo_StemAuslaut)
     {
-        ST_EndingDescriptor st_d (st_descriptor.eo_Person, st_descriptor.eo_Number, vec_stress[i_s]);
-        int i_key = i_Hash (st_d);
-        mmap_Endings.insert (std::pair<int, wstring> (i_key, str_ending));
+        for (int i_stemAuslaut = STEM_AUSLAUT_UNDEFINED; 
+             i_stemAuslaut < (int)STEM_AUSLAUT_COUNT; 
+             ++i_stemAuslaut)
+        {
+            vec_stemAuslaut.push_back ((ET_StemAuslaut)i_stemAuslaut);
+        }
     }
+    else
+    {
+        vec_stemAuslaut.push_back (st_descriptor.eo_StemAuslaut);
+    }
+
+    for (int i_s = 0; i_s < (int)vec_stress.size(); ++i_s)
+        for (int i_sa = 0; i_sa < (int)vec_stemAuslaut.size(); ++i_sa)
+        {
+            ST_EndingDescriptor st_d (st_descriptor.i_InflectionType,
+                                      st_descriptor.eo_Person, 
+                                      st_descriptor.eo_Number, 
+                                      vec_stress[i_s], 
+                                      vec_stemAuslaut[i_sa]);
+            int i_key = i_Hash (st_d);
+            mmap_Endings.insert (std::pair<int, wstring> (i_key, str_ending));
+        }
 
     return S_OK;
 
