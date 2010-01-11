@@ -29,12 +29,18 @@ namespace TestUI
             InitializeComponent();
 
             m_dictForms = new Dictionary<string, StCell>();
-            m_dictForms.Add ("1Sg", new StCell (textBox1Sg));
-            m_dictForms.Add ("2Sg", new StCell (textBox2Sg));
-            m_dictForms.Add ("3Sg", new StCell (textBox3Sg));
-            m_dictForms.Add ("1Pl", new StCell (textBox1Pl));
-            m_dictForms.Add ("2Pl", new StCell (textBox2Pl));
-            m_dictForms.Add ("3Pl", new StCell (textBox3Pl));
+            m_dictForms.Add ("Pres1Sg", new StCell (textBoxPres1Sg));
+            m_dictForms.Add ("Pres2Sg", new StCell (textBoxPres2Sg));
+            m_dictForms.Add ("Pres3Sg", new StCell (textBoxPres3Sg));
+            m_dictForms.Add ("Pres1Pl", new StCell (textBoxPres1Pl));
+            m_dictForms.Add ("Pres2Pl", new StCell (textBoxPres2Pl));
+            m_dictForms.Add ("Pres3Pl", new StCell (textBoxPres3Pl));
+
+            m_dictForms.Add("PastMSg", new StCell(textBoxPastMSg));
+            m_dictForms.Add("PastFSg", new StCell(textBoxPastFSg));
+            m_dictForms.Add("PastNSg", new StCell(textBoxPastNSg));
+            m_dictForms.Add("PastPl", new StCell(textBoxPastPl));
+
         }
     }
 }

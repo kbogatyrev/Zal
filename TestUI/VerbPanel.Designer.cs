@@ -30,17 +30,17 @@
         {
             this.textBoxLabel2Pl = new System.Windows.Forms.TextBox();
             this.textBoxLabel1Pl = new System.Windows.Forms.TextBox();
-            this.textBox2Pl = new System.Windows.Forms.TextBox();
-            this.textBox1Pl = new System.Windows.Forms.TextBox();
+            this.textBoxPres2Pl = new System.Windows.Forms.TextBox();
+            this.textBoxPres1Pl = new System.Windows.Forms.TextBox();
             this.textBoxLabel2Sg = new System.Windows.Forms.TextBox();
             this.textBoxLabel1Sg = new System.Windows.Forms.TextBox();
-            this.textBox2Sg = new System.Windows.Forms.TextBox();
-            this.textBox1Sg = new System.Windows.Forms.TextBox();
+            this.textBoxPres2Sg = new System.Windows.Forms.TextBox();
+            this.textBoxPres1Sg = new System.Windows.Forms.TextBox();
             this.textBoxLexName = new System.Windows.Forms.TextBox();
             this.textBoxLabel3Pl = new System.Windows.Forms.TextBox();
-            this.textBox3Pl = new System.Windows.Forms.TextBox();
+            this.textBoxPres3Pl = new System.Windows.Forms.TextBox();
             this.textBoxLabel3Sg = new System.Windows.Forms.TextBox();
-            this.textBox3Sg = new System.Windows.Forms.TextBox();
+            this.textBoxPres3Sg = new System.Windows.Forms.TextBox();
             this.textBoxImperativePl = new System.Windows.Forms.TextBox();
             this.textBoxImperativeSg = new System.Windows.Forms.TextBox();
             this.textBoxLabelPartActPr = new System.Windows.Forms.TextBox();
@@ -61,12 +61,12 @@
             this.textBoxLabelParticiples = new System.Windows.Forms.TextBox();
             this.textBoxPabelPastTense = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBoxPastNSg = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBoxPastFSg = new System.Windows.Forms.TextBox();
+            this.textBoxPastMSg = new System.Windows.Forms.TextBox();
+            this.textBoxPastPl = new System.Windows.Forms.TextBox();
             this.textBoxLabelImpvPl = new System.Windows.Forms.TextBox();
             this.btnShowPresActive = new System.Windows.Forms.Button();
             this.btnShowPastActive = new System.Windows.Forms.Button();
@@ -99,23 +99,23 @@
             this.textBoxLabel1Pl.Text = "1 Pl";
             this.textBoxLabel1Pl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox2Pl
+            // textBoxPres2Pl
             // 
-            this.textBox2Pl.Location = new System.Drawing.Point(333, 132);
-            this.textBox2Pl.Multiline = true;
-            this.textBox2Pl.Name = "textBox2Pl";
-            this.textBox2Pl.ReadOnly = true;
-            this.textBox2Pl.Size = new System.Drawing.Size(192, 24);
-            this.textBox2Pl.TabIndex = 33;
+            this.textBoxPres2Pl.Location = new System.Drawing.Point(333, 132);
+            this.textBoxPres2Pl.Multiline = true;
+            this.textBoxPres2Pl.Name = "textBoxPres2Pl";
+            this.textBoxPres2Pl.ReadOnly = true;
+            this.textBoxPres2Pl.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPres2Pl.TabIndex = 33;
             // 
-            // textBox1Pl
+            // textBoxPres1Pl
             // 
-            this.textBox1Pl.Location = new System.Drawing.Point(333, 104);
-            this.textBox1Pl.Multiline = true;
-            this.textBox1Pl.Name = "textBox1Pl";
-            this.textBox1Pl.ReadOnly = true;
-            this.textBox1Pl.Size = new System.Drawing.Size(192, 24);
-            this.textBox1Pl.TabIndex = 30;
+            this.textBoxPres1Pl.Location = new System.Drawing.Point(333, 104);
+            this.textBoxPres1Pl.Multiline = true;
+            this.textBoxPres1Pl.Name = "textBoxPres1Pl";
+            this.textBoxPres1Pl.ReadOnly = true;
+            this.textBoxPres1Pl.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPres1Pl.TabIndex = 30;
             // 
             // textBoxLabel2Sg
             // 
@@ -141,23 +141,23 @@
             this.textBoxLabel1Sg.Text = "1 Sg";
             this.textBoxLabel1Sg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox2Sg
+            // textBoxPres2Sg
             // 
-            this.textBox2Sg.Location = new System.Drawing.Point(72, 131);
-            this.textBox2Sg.Multiline = true;
-            this.textBox2Sg.Name = "textBox2Sg";
-            this.textBox2Sg.ReadOnly = true;
-            this.textBox2Sg.Size = new System.Drawing.Size(192, 24);
-            this.textBox2Sg.TabIndex = 29;
+            this.textBoxPres2Sg.Location = new System.Drawing.Point(72, 131);
+            this.textBoxPres2Sg.Multiline = true;
+            this.textBoxPres2Sg.Name = "textBoxPres2Sg";
+            this.textBoxPres2Sg.ReadOnly = true;
+            this.textBoxPres2Sg.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPres2Sg.TabIndex = 29;
             // 
-            // textBox1Sg
+            // textBoxPres1Sg
             // 
-            this.textBox1Sg.Location = new System.Drawing.Point(72, 102);
-            this.textBox1Sg.Multiline = true;
-            this.textBox1Sg.Name = "textBox1Sg";
-            this.textBox1Sg.ReadOnly = true;
-            this.textBox1Sg.Size = new System.Drawing.Size(192, 24);
-            this.textBox1Sg.TabIndex = 28;
+            this.textBoxPres1Sg.Location = new System.Drawing.Point(72, 102);
+            this.textBoxPres1Sg.Multiline = true;
+            this.textBoxPres1Sg.Name = "textBoxPres1Sg";
+            this.textBoxPres1Sg.ReadOnly = true;
+            this.textBoxPres1Sg.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPres1Sg.TabIndex = 28;
             // 
             // textBoxLexName
             // 
@@ -181,14 +181,14 @@
             this.textBoxLabel3Pl.Text = "3 Pl";
             this.textBoxLabel3Pl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox3Pl
+            // textBoxPres3Pl
             // 
-            this.textBox3Pl.Location = new System.Drawing.Point(333, 160);
-            this.textBox3Pl.Multiline = true;
-            this.textBox3Pl.Name = "textBox3Pl";
-            this.textBox3Pl.ReadOnly = true;
-            this.textBox3Pl.Size = new System.Drawing.Size(192, 24);
-            this.textBox3Pl.TabIndex = 40;
+            this.textBoxPres3Pl.Location = new System.Drawing.Point(333, 160);
+            this.textBoxPres3Pl.Multiline = true;
+            this.textBoxPres3Pl.Name = "textBoxPres3Pl";
+            this.textBoxPres3Pl.ReadOnly = true;
+            this.textBoxPres3Pl.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPres3Pl.TabIndex = 40;
             // 
             // textBoxLabel3Sg
             // 
@@ -202,14 +202,14 @@
             this.textBoxLabel3Sg.Text = "3 Sg";
             this.textBoxLabel3Sg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox3Sg
+            // textBoxPres3Sg
             // 
-            this.textBox3Sg.Location = new System.Drawing.Point(72, 160);
-            this.textBox3Sg.Multiline = true;
-            this.textBox3Sg.Name = "textBox3Sg";
-            this.textBox3Sg.ReadOnly = true;
-            this.textBox3Sg.Size = new System.Drawing.Size(192, 24);
-            this.textBox3Sg.TabIndex = 38;
+            this.textBoxPres3Sg.Location = new System.Drawing.Point(72, 160);
+            this.textBoxPres3Sg.Multiline = true;
+            this.textBoxPres3Sg.Name = "textBoxPres3Sg";
+            this.textBoxPres3Sg.ReadOnly = true;
+            this.textBoxPres3Sg.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPres3Sg.TabIndex = 38;
             // 
             // textBoxImperativePl
             // 
@@ -430,14 +430,14 @@
             this.textBox2.Text = "N Sg";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox3
+            // textBoxPastNSg
             // 
-            this.textBox3.Location = new System.Drawing.Point(72, 303);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(192, 24);
-            this.textBox3.TabIndex = 67;
+            this.textBoxPastNSg.Location = new System.Drawing.Point(72, 303);
+            this.textBoxPastNSg.Multiline = true;
+            this.textBoxPastNSg.Name = "textBoxPastNSg";
+            this.textBoxPastNSg.ReadOnly = true;
+            this.textBoxPastNSg.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPastNSg.TabIndex = 67;
             // 
             // textBox4
             // 
@@ -463,32 +463,32 @@
             this.textBox5.Text = "M Sg";
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox6
+            // textBoxPastFSg
             // 
-            this.textBox6.Location = new System.Drawing.Point(72, 274);
-            this.textBox6.Multiline = true;
-            this.textBox6.Name = "textBox6";
-            this.textBox6.ReadOnly = true;
-            this.textBox6.Size = new System.Drawing.Size(192, 24);
-            this.textBox6.TabIndex = 64;
+            this.textBoxPastFSg.Location = new System.Drawing.Point(72, 274);
+            this.textBoxPastFSg.Multiline = true;
+            this.textBoxPastFSg.Name = "textBoxPastFSg";
+            this.textBoxPastFSg.ReadOnly = true;
+            this.textBoxPastFSg.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPastFSg.TabIndex = 64;
             // 
-            // textBox7
+            // textBoxPastMSg
             // 
-            this.textBox7.Location = new System.Drawing.Point(72, 245);
-            this.textBox7.Multiline = true;
-            this.textBox7.Name = "textBox7";
-            this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(192, 24);
-            this.textBox7.TabIndex = 63;
+            this.textBoxPastMSg.Location = new System.Drawing.Point(72, 245);
+            this.textBoxPastMSg.Multiline = true;
+            this.textBoxPastMSg.Name = "textBoxPastMSg";
+            this.textBoxPastMSg.ReadOnly = true;
+            this.textBoxPastMSg.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPastMSg.TabIndex = 63;
             // 
-            // textBox9
+            // textBoxPastPl
             // 
-            this.textBox9.Location = new System.Drawing.Point(333, 247);
-            this.textBox9.Multiline = true;
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(192, 24);
-            this.textBox9.TabIndex = 69;
+            this.textBoxPastPl.Location = new System.Drawing.Point(333, 247);
+            this.textBoxPastPl.Multiline = true;
+            this.textBoxPastPl.Name = "textBoxPastPl";
+            this.textBoxPastPl.ReadOnly = true;
+            this.textBoxPastPl.Size = new System.Drawing.Size(192, 24);
+            this.textBoxPastPl.TabIndex = 69;
             // 
             // textBoxLabelImpvPl
             // 
@@ -565,13 +565,13 @@
             this.Controls.Add(this.btnShowPastActive);
             this.Controls.Add(this.btnShowPresActive);
             this.Controls.Add(this.textBoxLabelImpvPl);
-            this.Controls.Add(this.textBox9);
+            this.Controls.Add(this.textBoxPastPl);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.textBoxPastNSg);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox7);
+            this.Controls.Add(this.textBoxPastFSg);
+            this.Controls.Add(this.textBoxPastMSg);
             this.Controls.Add(this.textBoxPabelPastTense);
             this.Controls.Add(this.textBoxLabelParticiples);
             this.Controls.Add(this.textBoxLabelImperative);
@@ -592,17 +592,17 @@
             this.Controls.Add(this.textBoxLabelImpvSg);
             this.Controls.Add(this.textBoxImperativeSg);
             this.Controls.Add(this.textBoxLabel3Pl);
-            this.Controls.Add(this.textBox3Pl);
+            this.Controls.Add(this.textBoxPres3Pl);
             this.Controls.Add(this.textBoxLabel3Sg);
-            this.Controls.Add(this.textBox3Sg);
+            this.Controls.Add(this.textBoxPres3Sg);
             this.Controls.Add(this.textBoxLabel2Pl);
             this.Controls.Add(this.textBoxLabel1Pl);
-            this.Controls.Add(this.textBox2Pl);
-            this.Controls.Add(this.textBox1Pl);
+            this.Controls.Add(this.textBoxPres2Pl);
+            this.Controls.Add(this.textBoxPres1Pl);
             this.Controls.Add(this.textBoxLabel2Sg);
             this.Controls.Add(this.textBoxLabel1Sg);
-            this.Controls.Add(this.textBox2Sg);
-            this.Controls.Add(this.textBox1Sg);
+            this.Controls.Add(this.textBoxPres2Sg);
+            this.Controls.Add(this.textBoxPres1Sg);
             this.Controls.Add(this.textBoxLexName);
             this.Name = "VerbPanel";
             this.Size = new System.Drawing.Size(544, 657);
@@ -615,17 +615,17 @@
 
         private System.Windows.Forms.TextBox textBoxLabel2Pl;
         private System.Windows.Forms.TextBox textBoxLabel1Pl;
-        private System.Windows.Forms.TextBox textBox2Pl;
-        private System.Windows.Forms.TextBox textBox1Pl;
+        private System.Windows.Forms.TextBox textBoxPres2Pl;
+        private System.Windows.Forms.TextBox textBoxPres1Pl;
         private System.Windows.Forms.TextBox textBoxLabel2Sg;
         private System.Windows.Forms.TextBox textBoxLabel1Sg;
-        private System.Windows.Forms.TextBox textBox2Sg;
-        private System.Windows.Forms.TextBox textBox1Sg;
+        private System.Windows.Forms.TextBox textBoxPres2Sg;
+        private System.Windows.Forms.TextBox textBoxPres1Sg;
         private System.Windows.Forms.TextBox textBoxLexName;
         private System.Windows.Forms.TextBox textBoxLabel3Pl;
-        private System.Windows.Forms.TextBox textBox3Pl;
+        private System.Windows.Forms.TextBox textBoxPres3Pl;
         private System.Windows.Forms.TextBox textBoxLabel3Sg;
-        private System.Windows.Forms.TextBox textBox3Sg;
+        private System.Windows.Forms.TextBox textBoxPres3Sg;
         private System.Windows.Forms.TextBox textBoxImperativePl;
         private System.Windows.Forms.TextBox textBoxImperativeSg;
         private System.Windows.Forms.TextBox textBoxLabelPartActPr;
@@ -646,12 +646,12 @@
         private System.Windows.Forms.TextBox textBoxLabelParticiples;
         private System.Windows.Forms.TextBox textBoxPabelPastTense;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBoxPastNSg;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox textBoxPastFSg;
+        private System.Windows.Forms.TextBox textBoxPastMSg;
+        private System.Windows.Forms.TextBox textBoxPastPl;
         private System.Windows.Forms.TextBox textBoxLabelImpvPl;
         private System.Windows.Forms.Button btnShowPresActive;
         private System.Windows.Forms.Button btnShowPastActive;

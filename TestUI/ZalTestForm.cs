@@ -225,26 +225,53 @@ namespace TestUI
 
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
-                    string sKey = m_dictPerson[wf.Person];
-                    sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-
-                    string strWordForm = wf.Wordform;
-                    if (wf.StressPos >= 0)
+                    if (MainLib.ET_VerbForm.VERB_FORM_PRESENT_TENSE == wf.VerbForm)
                     {
-                        if (wf.StressPos >= wf.Wordform.Length)
+                        string sKey = "Pres" + m_dictPerson[wf.Person];
+                        sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
+
+                        string strWordForm = wf.Wordform;
+                        if (wf.StressPos >= 0)
                         {
-                            MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                            return;
+                            if (wf.StressPos >= wf.Wordform.Length)
+                            {
+                                MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                return;
+                            }
+                            if (strWordForm[wf.StressPos] != 'ё')
+                            {
+                                string strStressMark = new string('\x301', 1);
+                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            }
                         }
-                        if (strWordForm[wf.StressPos] != 'ё')
-                        {
-                            string strStressMark = new string('\x301', 1);
-                            strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
-                        }
+                        vp.SetForm(sKey, strWordForm);
                     }
 
-                    vp.SetForm (sKey, strWordForm);
+                    if (MainLib.ET_VerbForm.VERB_FORM_PAST_TENSE == wf.VerbForm)
+                    {
+                        string sKey = "Past";
+                        if (MainLib.ET_Number.NUM_SG == wf.Number)
+                        {
+                            sKey += m_dictGender[wf.Gender];
+                        }
+                        sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
+                        string strWordForm = wf.Wordform;
+                        if (wf.StressPos >= 0)
+                        {
+                            if (wf.StressPos >= wf.Wordform.Length)
+                            {
+                                MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                return;
+                            }
+                            if (strWordForm[wf.StressPos] != 'ё')
+                            {
+                                string strStressMark = new string('\x301', 1);
+                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            }
+                        }
+                        vp.SetForm(sKey, strWordForm);
+                    }
                 }   // foreach
             }
 
