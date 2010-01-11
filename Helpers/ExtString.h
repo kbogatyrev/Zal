@@ -20,7 +20,7 @@ public:
     //
     enum et_TokenType
     {
-        ec_TokenTypeFront    = 10001,
+        ec_TokenTypeFront   = 10001,
         ec_TokenText        = 10002,
         ec_TokenSpace       = 10003,    // sequence of break chars
         ec_TokenBreakChars  = 10003,    // alias
