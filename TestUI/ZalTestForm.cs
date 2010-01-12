@@ -272,6 +272,29 @@ namespace TestUI
                         }
                         vp.SetForm(sKey, strWordForm);
                     }
+                    if (MainLib.ET_VerbForm.VERB_FORM_IMPERATIVE == wf.VerbForm)
+                    {
+                        string sKey = "Imperative";
+                        sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
+
+                        string strWordForm = wf.Wordform;
+                        if (wf.StressPos >= 0)
+                        {
+                            if (wf.StressPos >= wf.Wordform.Length)
+                            {
+                                MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                return;
+                            }
+                            if (strWordForm[wf.StressPos] != 'ё')
+                            {
+                                string strStressMark = new string('\x301', 1);
+                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            }
+                        }
+                        vp.SetForm(sKey, strWordForm);
+                    }
+
+
                 }   // foreach
             }
 

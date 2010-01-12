@@ -41,6 +41,8 @@ namespace TestUI
             m_dictForms.Add("PastNSg", new StCell(textBoxPastNSg));
             m_dictForms.Add("PastPl", new StCell(textBoxPastPl));
 
+            m_dictForms.Add("ImperativeSg", new StCell(textBoxImperativeSg));
+            m_dictForms.Add("ImperativePl", new StCell(textBoxImperativePl));
         }
     }
 }
