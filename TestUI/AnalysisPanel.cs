@@ -188,20 +188,20 @@ namespace TestUI
             }
         }
 
-        public MainLib.ET_AdjForm eoAdjForm
+        public MainLib.ET_Subparadigm eoSubparadigm
         {
             set
             {
                 switch (value)
                 {
-                    case MainLib.ET_AdjForm.ADJ_FORM_SHORT:
-                        TextBox_AdjForm.Text = "краткая";
+                    case MainLib.ET_Subparadigm.SUBPARADIGM_SHORT_ADJ:
+                        TextBox_Subparadigm.Text = "краткая";
                         break;
-                    case MainLib.ET_AdjForm.ADJ_FORM_LONG:
-                        TextBox_AdjForm.Text = "полная";
+                    case MainLib.ET_Subparadigm.SUBPARADIGM_LONG_ADJ:
+                        TextBox_Subparadigm.Text = "полная";
                         break;
-                    case MainLib.ET_AdjForm.ADJ_FORM_COMPARATIVE:
-                        TextBox_AdjForm.Text = "сравн.";
+                    case MainLib.ET_Subparadigm.SUBPARADIGM_COMPARATIVE:
+                        TextBox_Subparadigm.Text = "сравн.";
                         break;
                     default:
                         TextBox_Animacy.Text = "";

@@ -40,7 +40,17 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.NominalBox = new System.Windows.Forms.GroupBox();
+            this.TextBox_Animacy = new System.Windows.Forms.TextBox();
+            this.TextBox_Subparadigm = new System.Windows.Forms.TextBox();
+            this.TextBox_Number = new System.Windows.Forms.TextBox();
+            this.TextBox_Case = new System.Windows.Forms.TextBox();
+            this.TextBox_Gender = new System.Windows.Forms.TextBox();
             this.VerbFeatures = new System.Windows.Forms.GroupBox();
+            this.TextBox_Special = new System.Windows.Forms.TextBox();
+            this.TextBox_Reflective = new System.Windows.Forms.TextBox();
+            this.TextBox_Voice = new System.Windows.Forms.TextBox();
+            this.TextBox_Person = new System.Windows.Forms.TextBox();
+            this.TextBox_Tense = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -49,16 +59,6 @@
             this.TextBox_Lemma = new System.Windows.Forms.TextBox();
             this.TextBox_ID = new System.Windows.Forms.TextBox();
             this.TextBox_POS = new System.Windows.Forms.TextBox();
-            this.TextBox_Gender = new System.Windows.Forms.TextBox();
-            this.TextBox_Case = new System.Windows.Forms.TextBox();
-            this.TextBox_Number = new System.Windows.Forms.TextBox();
-            this.TextBox_AdjForm = new System.Windows.Forms.TextBox();
-            this.TextBox_Animacy = new System.Windows.Forms.TextBox();
-            this.TextBox_Tense = new System.Windows.Forms.TextBox();
-            this.TextBox_Person = new System.Windows.Forms.TextBox();
-            this.TextBox_Voice = new System.Windows.Forms.TextBox();
-            this.TextBox_Reflective = new System.Windows.Forms.TextBox();
-            this.TextBox_Special = new System.Windows.Forms.TextBox();
             this.TextBox_PanelNum = new System.Windows.Forms.TextBox();
             this.NominalBox.SuspendLayout();
             this.VerbFeatures.SuspendLayout();
@@ -107,7 +107,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(31, 25);
+            this.label5.Location = new System.Drawing.Point(39, 25);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 13);
             this.label5.TabIndex = 4;
@@ -116,7 +116,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(42, 47);
+            this.label6.Location = new System.Drawing.Point(52, 47);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(39, 13);
             this.label6.TabIndex = 5;
@@ -125,7 +125,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(29, 70);
+            this.label7.Location = new System.Drawing.Point(37, 70);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(54, 13);
             this.label7.TabIndex = 6;
@@ -134,11 +134,11 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 92);
+            this.label8.Location = new System.Drawing.Point(3, 92);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(56, 13);
+            this.label8.Size = new System.Drawing.Size(88, 13);
             this.label8.TabIndex = 7;
-            this.label8.Text = "AdjForm:";
+            this.label8.Text = "Sub-paradigm:";
             // 
             // label9
             // 
@@ -152,7 +152,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(26, 114);
+            this.label10.Location = new System.Drawing.Point(33, 114);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(58, 13);
             this.label10.TabIndex = 9;
@@ -171,7 +171,7 @@
             // NominalBox
             // 
             this.NominalBox.Controls.Add(this.TextBox_Animacy);
-            this.NominalBox.Controls.Add(this.TextBox_AdjForm);
+            this.NominalBox.Controls.Add(this.TextBox_Subparadigm);
             this.NominalBox.Controls.Add(this.TextBox_Number);
             this.NominalBox.Controls.Add(this.TextBox_Case);
             this.NominalBox.Controls.Add(this.TextBox_Gender);
@@ -181,12 +181,52 @@
             this.NominalBox.Controls.Add(this.label8);
             this.NominalBox.Controls.Add(this.label10);
             this.NominalBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NominalBox.Location = new System.Drawing.Point(17, 125);
+            this.NominalBox.Location = new System.Drawing.Point(3, 125);
             this.NominalBox.Name = "NominalBox";
-            this.NominalBox.Size = new System.Drawing.Size(239, 142);
+            this.NominalBox.Size = new System.Drawing.Size(253, 142);
             this.NominalBox.TabIndex = 13;
             this.NominalBox.TabStop = false;
             this.NominalBox.Text = "Features of nouns/adjectives";
+            // 
+            // TextBox_Animacy
+            // 
+            this.TextBox_Animacy.Location = new System.Drawing.Point(98, 111);
+            this.TextBox_Animacy.Name = "TextBox_Animacy";
+            this.TextBox_Animacy.ReadOnly = true;
+            this.TextBox_Animacy.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Animacy.TabIndex = 23;
+            // 
+            // TextBox_Subparadigm
+            // 
+            this.TextBox_Subparadigm.Location = new System.Drawing.Point(98, 89);
+            this.TextBox_Subparadigm.Name = "TextBox_Subparadigm";
+            this.TextBox_Subparadigm.ReadOnly = true;
+            this.TextBox_Subparadigm.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Subparadigm.TabIndex = 22;
+            // 
+            // TextBox_Number
+            // 
+            this.TextBox_Number.Location = new System.Drawing.Point(98, 66);
+            this.TextBox_Number.Name = "TextBox_Number";
+            this.TextBox_Number.ReadOnly = true;
+            this.TextBox_Number.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Number.TabIndex = 21;
+            // 
+            // TextBox_Case
+            // 
+            this.TextBox_Case.Location = new System.Drawing.Point(98, 44);
+            this.TextBox_Case.Name = "TextBox_Case";
+            this.TextBox_Case.ReadOnly = true;
+            this.TextBox_Case.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Case.TabIndex = 20;
+            // 
+            // TextBox_Gender
+            // 
+            this.TextBox_Gender.Location = new System.Drawing.Point(98, 22);
+            this.TextBox_Gender.Name = "TextBox_Gender";
+            this.TextBox_Gender.ReadOnly = true;
+            this.TextBox_Gender.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Gender.TabIndex = 19;
             // 
             // VerbFeatures
             // 
@@ -207,6 +247,46 @@
             this.VerbFeatures.TabIndex = 14;
             this.VerbFeatures.TabStop = false;
             this.VerbFeatures.Text = "Features of verbs";
+            // 
+            // TextBox_Special
+            // 
+            this.TextBox_Special.Location = new System.Drawing.Point(110, 111);
+            this.TextBox_Special.Name = "TextBox_Special";
+            this.TextBox_Special.ReadOnly = true;
+            this.TextBox_Special.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Special.TabIndex = 20;
+            // 
+            // TextBox_Reflective
+            // 
+            this.TextBox_Reflective.Location = new System.Drawing.Point(110, 89);
+            this.TextBox_Reflective.Name = "TextBox_Reflective";
+            this.TextBox_Reflective.ReadOnly = true;
+            this.TextBox_Reflective.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Reflective.TabIndex = 19;
+            // 
+            // TextBox_Voice
+            // 
+            this.TextBox_Voice.Location = new System.Drawing.Point(110, 67);
+            this.TextBox_Voice.Name = "TextBox_Voice";
+            this.TextBox_Voice.ReadOnly = true;
+            this.TextBox_Voice.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Voice.TabIndex = 18;
+            // 
+            // TextBox_Person
+            // 
+            this.TextBox_Person.Location = new System.Drawing.Point(110, 44);
+            this.TextBox_Person.Name = "TextBox_Person";
+            this.TextBox_Person.ReadOnly = true;
+            this.TextBox_Person.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Person.TabIndex = 17;
+            // 
+            // TextBox_Tense
+            // 
+            this.TextBox_Tense.Location = new System.Drawing.Point(110, 22);
+            this.TextBox_Tense.Name = "TextBox_Tense";
+            this.TextBox_Tense.ReadOnly = true;
+            this.TextBox_Tense.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Tense.TabIndex = 16;
             // 
             // label15
             // 
@@ -276,86 +356,6 @@
             this.TextBox_POS.Size = new System.Drawing.Size(147, 20);
             this.TextBox_POS.TabIndex = 18;
             // 
-            // TextBox_Gender
-            // 
-            this.TextBox_Gender.Location = new System.Drawing.Point(86, 22);
-            this.TextBox_Gender.Name = "TextBox_Gender";
-            this.TextBox_Gender.ReadOnly = true;
-            this.TextBox_Gender.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Gender.TabIndex = 19;
-            // 
-            // TextBox_Case
-            // 
-            this.TextBox_Case.Location = new System.Drawing.Point(86, 44);
-            this.TextBox_Case.Name = "TextBox_Case";
-            this.TextBox_Case.ReadOnly = true;
-            this.TextBox_Case.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Case.TabIndex = 20;
-            // 
-            // TextBox_Number
-            // 
-            this.TextBox_Number.Location = new System.Drawing.Point(86, 66);
-            this.TextBox_Number.Name = "TextBox_Number";
-            this.TextBox_Number.ReadOnly = true;
-            this.TextBox_Number.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Number.TabIndex = 21;
-            // 
-            // TextBox_AdjForm
-            // 
-            this.TextBox_AdjForm.Location = new System.Drawing.Point(86, 89);
-            this.TextBox_AdjForm.Name = "TextBox_AdjForm";
-            this.TextBox_AdjForm.ReadOnly = true;
-            this.TextBox_AdjForm.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_AdjForm.TabIndex = 22;
-            // 
-            // TextBox_Animacy
-            // 
-            this.TextBox_Animacy.Location = new System.Drawing.Point(86, 111);
-            this.TextBox_Animacy.Name = "TextBox_Animacy";
-            this.TextBox_Animacy.ReadOnly = true;
-            this.TextBox_Animacy.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Animacy.TabIndex = 23;
-            // 
-            // TextBox_Tense
-            // 
-            this.TextBox_Tense.Location = new System.Drawing.Point(110, 22);
-            this.TextBox_Tense.Name = "TextBox_Tense";
-            this.TextBox_Tense.ReadOnly = true;
-            this.TextBox_Tense.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Tense.TabIndex = 16;
-            // 
-            // TextBox_Person
-            // 
-            this.TextBox_Person.Location = new System.Drawing.Point(110, 44);
-            this.TextBox_Person.Name = "TextBox_Person";
-            this.TextBox_Person.ReadOnly = true;
-            this.TextBox_Person.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Person.TabIndex = 17;
-            // 
-            // TextBox_Voice
-            // 
-            this.TextBox_Voice.Location = new System.Drawing.Point(110, 67);
-            this.TextBox_Voice.Name = "TextBox_Voice";
-            this.TextBox_Voice.ReadOnly = true;
-            this.TextBox_Voice.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Voice.TabIndex = 18;
-            // 
-            // TextBox_Reflective
-            // 
-            this.TextBox_Reflective.Location = new System.Drawing.Point(110, 89);
-            this.TextBox_Reflective.Name = "TextBox_Reflective";
-            this.TextBox_Reflective.ReadOnly = true;
-            this.TextBox_Reflective.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Reflective.TabIndex = 19;
-            // 
-            // TextBox_Special
-            // 
-            this.TextBox_Special.Location = new System.Drawing.Point(110, 111);
-            this.TextBox_Special.Name = "TextBox_Special";
-            this.TextBox_Special.ReadOnly = true;
-            this.TextBox_Special.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Special.TabIndex = 20;
-            // 
             // TextBox_PanelNum
             // 
             this.TextBox_PanelNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -414,7 +414,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox TextBox_Animacy;
-        private System.Windows.Forms.TextBox TextBox_AdjForm;
+        private System.Windows.Forms.TextBox TextBox_Subparadigm;
         private System.Windows.Forms.TextBox TextBox_Number;
         private System.Windows.Forms.TextBox TextBox_Case;
         private System.Windows.Forms.TextBox TextBox_Gender;

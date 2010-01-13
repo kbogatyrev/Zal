@@ -137,7 +137,7 @@ namespace TestUI
                 {
                     string sKey = "";
 
-                    if (MainLib.ET_AdjForm.ADJ_FORM_LONG == wf.AdjForm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_LONG_ADJ == wf.Subparadigm)
                     {
                         if (MainLib.ET_Number.NUM_SG == wf.Number)
                         {
@@ -170,7 +170,7 @@ namespace TestUI
                         continue;
                     }
 
-                    if (MainLib.ET_AdjForm.ADJ_FORM_SHORT == wf.AdjForm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_SHORT_ADJ == wf.Subparadigm)
                     {
                         sKey = "Short";
                         if (MainLib.ET_Number.NUM_SG == wf.Number)
@@ -194,7 +194,7 @@ namespace TestUI
                         continue;
                     }
 
-                    if (MainLib.ET_AdjForm.ADJ_FORM_COMPARATIVE == wf.AdjForm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_COMPARATIVE == wf.Subparadigm)
                     {
                         sKey = "Comparative";
 
@@ -225,7 +225,7 @@ namespace TestUI
 
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
-                    if (MainLib.ET_VerbForm.VERB_FORM_PRESENT_TENSE == wf.VerbForm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE == wf.Subparadigm)
                     {
                         string sKey = "Pres" + m_dictPerson[wf.Person];
                         sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
@@ -247,7 +247,7 @@ namespace TestUI
                         vp.SetForm(sKey, strWordForm);
                     }
 
-                    if (MainLib.ET_VerbForm.VERB_FORM_PAST_TENSE == wf.VerbForm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE == wf.Subparadigm)
                     {
                         string sKey = "Past";
                         if (MainLib.ET_Number.NUM_SG == wf.Number)
@@ -272,7 +272,7 @@ namespace TestUI
                         }
                         vp.SetForm(sKey, strWordForm);
                     }
-                    if (MainLib.ET_VerbForm.VERB_FORM_IMPERATIVE == wf.VerbForm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_IMPERATIVE == wf.Subparadigm)
                     {
                         string sKey = "Imperative";
                         sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
@@ -375,7 +375,7 @@ namespace TestUI
                     ap.eoGender = wf.Gender;
                     ap.eoCase = wf.Case;
                     ap.eoNumber = wf.Number;
-                    ap.eoAdjForm = wf.AdjForm;
+                    ap.eoSubparadigm = wf.Subparadigm;
                     ap.eoAnimacy = wf.Animacy;
                     ap.eoTense = wf.Tense;
                     //ap.i_lexeme_id = wf.LexemeId;
