@@ -21,7 +21,7 @@ public:
     ET_PartOfSpeech eo_POS;
     ET_Case eo_Case;
     ET_Number eo_Number;
-    ET_AdjForm eo_AdjForm;
+    ET_Subparadigm eo_Subparadigm;
     ET_Gender eo_Gender;
     ET_Tense eo_Tense;
     ET_Person eo_Person;
