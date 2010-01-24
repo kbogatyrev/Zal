@@ -274,7 +274,7 @@ bool ST_Descriptor::b_SaveInflectionGroup (CT_Sqlite * pco_dbHandle,
     {
         bool b_dummy = false;
 
-        pco_dbHandle->v_PrepareForInsert (L"inflection", 12);
+        pco_dbHandle->v_PrepareForInsert (L"inflection", 11);
         pco_dbHandle->v_Bind (1, ll_descriptorId);
         pco_dbHandle->v_Bind (2, b_isPrimary);
         pco_dbHandle->v_Bind (3, st_data.i_Type);
@@ -298,21 +298,19 @@ bool ST_Descriptor::b_SaveInflectionGroup (CT_Sqlite * pco_dbHandle,
 
         pco_dbHandle->v_Bind (10, st_data.b_FleetingVowel);
         pco_dbHandle->v_Bind (11, st_data.b_StemAugment);
-        pco_dbHandle->v_Bind (12, st_data.e_CommonDeviation);
         pco_dbHandle->v_InsertRow();
         pco_dbHandle->v_Finalize();
 
-/*
         __int64 ll_igId = pco_dbHandle->ll_GetLastKey();
-        for (unsigned int ui_cd = 0; ui_cd < st_data.vec_iCommonDeviations.size(); ++ui_cd)
+        for (unsigned int ui_cd = 0; ui_cd < st_data.vec_stCommonDeviations.size(); ++ui_cd)
         {
-            pco_dbHandle->v_PrepareForInsert (L"common_deviation", 2);
+            pco_dbHandle->v_PrepareForInsert (L"common_deviation", 3);
             pco_dbHandle->v_Bind (1, ll_igId);
-            pco_dbHandle->v_Bind (2, st_data.vec_iCommonDeviations[ui_cd]);
+            pco_dbHandle->v_Bind (2, st_data.vec_stCommonDeviations[ui_cd].i_Type);
+            pco_dbHandle->v_Bind (3, st_data.vec_stCommonDeviations[ui_cd].b_Optional);
             pco_dbHandle->v_InsertRow();
             pco_dbHandle->v_Finalize();
         }
-*/
     }
     catch (CT_Exception& co_exc)
     {
@@ -339,5 +337,3 @@ bool ST_Descriptor::b_SaveInflectionGroup (CT_Sqlite * pco_dbHandle,
     return true;
 
 }   //  b_SaveInflectionGroup (...)
-
-
