@@ -144,17 +144,23 @@ public:
 
     void v_PrepareForSelect (const wstring& str_stmt)
     {
-        ui_PrepareForSelect (str_stmt, po_Stmt_);
+        v_PrepareForSelect (str_stmt, po_Stmt_);
     }
 
-    unsigned int ui_PrepareForSelect (const wstring& str_stmt, sqlite3_stmt *& po_stmt)
+    unsigned int ui_PrepareForSelect (const wstring& str_stmt)
+    {
+        sqlite3_stmt * po_stmt = NULL;
+        v_PrepareForSelect (str_stmt, po_stmt);
+        return (unsigned int)po_stmt;
+    }
+
+    void v_PrepareForSelect (const wstring& str_stmt, sqlite3_stmt *& po_stmt)
     {
         int i_ret = sqlite3_prepare16_v2 (po_Db_, str_stmt.c_str(), -1, &po_stmt, NULL);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
         }
-        return (unsigned int)po_stmt;
     }
 
     void v_PrepareForInsert (const wstring& str_table, int i_columns)
@@ -300,12 +306,12 @@ public:
 
     bool b_GetRow()
     {
-        b_GetRow (po_Stmt_);
+        return b_GetRow (po_Stmt_);
     }
 
     bool b_GetRow (unsigned int ui_handle)
     {
-        b_GetRow ((sqlite3_stmt *)ui_handle);
+        return b_GetRow ((sqlite3_stmt *)ui_handle);
     }
 
     bool b_GetRow (sqlite3_stmt * po_stmt)
