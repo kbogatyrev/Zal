@@ -4,21 +4,9 @@
 #include "Lexeme.h"
 #include "Dictionary.h"
 
-/*
-template <typename T>
-wstring static str_ToString (T from)
-{
-    wstringstream io_;
-	io_ << from;
-	return io_.str();
-};
-*/
-
-static wstring str_queryBase (L"select \
+static wstring str_queryBase (L"SELECT \
 headword.source, \
-stress.id, \
-stress.stress_position, \
-stress.is_primary, \
+headword.id, \
 descriptor.id, \
 descriptor.graphic_stem, \
 descriptor.is_variant, \
@@ -53,11 +41,9 @@ inflection.past_part_restrictions, \
 inflection.no_short_form, \
 inflection.no_past_part, \
 inflection.fleeting_vowel, \
-inflection.stem_augment, \
-inflection.common_deviation \
+inflection.stem_augment \
 FROM \
-headword LEFT OUTER JOIN stress ON stress.headword_id = headword.id \
-INNER JOIN descriptor ON descriptor.word_id = headword.id \
+headword INNER JOIN descriptor ON descriptor.word_id = headword.id \
 LEFT OUTER JOIN inflection ON descriptor.id = inflection.descriptor_id ");
 
 HRESULT CT_Dictionary::put_DbPath (BSTR bstr_dbPath)
@@ -81,7 +67,7 @@ HRESULT CT_Dictionary::GetLexeme (long l_Id, ILexeme ** pp_lexeme)
     HRESULT h_r = S_OK;
 
     wstring str_query (str_queryBase);
-    str_query += L"where descriptor.id = ";
+    str_query += L"WHERE descriptor.id = ";
     str_query += str_ToString (l_Id);
     str_query += L";";
     h_r = h_GetData (str_query);
@@ -111,7 +97,7 @@ HRESULT CT_Dictionary::GetLexemesByGraphicStem (BSTR bstr_headword)
     HRESULT h_r = S_OK;
 
     wstring str_query (str_queryBase);
-    str_query += L"where descriptor.graphic_stem = \"";
+    str_query += L"WHERE descriptor.graphic_stem = \"";
     str_query += OLE2W (bstr_headword);
     str_query += L"\";";
     h_r = h_GetData (str_query);
@@ -126,17 +112,13 @@ HRESULT CT_Dictionary::GetLexemesByInitialForm (BSTR bstr_stem)
     HRESULT h_r = S_OK;
 
     wstring str_query (str_queryBase);
-    str_query += L"where headword.source = \"";
+    str_query += L"WHERE headword.source = \"";
     str_query += OLE2W (bstr_stem);
     str_query += L"\";";
     h_r = h_GetData (str_query);
 
     return h_r;
 }
-
-//
-//
-//
 
 HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
 {
@@ -163,67 +145,74 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
             }
 
             sp_lexeme->v_SetDb (str_DbPath);
-    
-            int i_stressId = -1;
-            int i_stressPos = -1;
-            bool b_isStressPrimary = false;
 
+            int i_headwordId = -1;
             pco_Db->v_GetData (0, sp_lexeme->str_SourceForm);
-            pco_Db->v_GetData (1, i_stressId);
-            if (i_stressId > 0)
+            pco_Db->v_GetData (1, i_headwordId);
+            pco_Db->v_GetData (2, sp_lexeme->i_DbKey);
+            pco_Db->v_GetData (3, sp_lexeme->str_GraphicStem);
+            pco_Db->v_GetData (4, sp_lexeme->b_IsVariant);
+            pco_Db->v_GetData (5, sp_lexeme->str_MainSymbol);
+            pco_Db->v_GetData (6, sp_lexeme->b_IsPluralOf);
+            pco_Db->v_GetData (7, sp_lexeme->b_Transitive);
+            pco_Db->v_GetData (8, sp_lexeme->str_MainSymbolPluralOf);
+            pco_Db->v_GetData (9, sp_lexeme->str_AltMainSymbol);
+            pco_Db->v_GetData (10, sp_lexeme->str_InflectionType);
+            pco_Db->v_GetData (11, (int&)sp_lexeme->eo_PartOfSpeech);
+            pco_Db->v_GetData (12, sp_lexeme->str_Comment);
+            pco_Db->v_GetData (13, sp_lexeme->str_AltMainSymbolComment);
+            pco_Db->v_GetData (14, sp_lexeme->str_AltInflectionComment);
+            pco_Db->v_GetData (15, sp_lexeme->str_VerbStemAlternation);
+            pco_Db->v_GetData (16, sp_lexeme->i_Section);
+            pco_Db->v_GetData (17, sp_lexeme->b_NoComparative);
+            pco_Db->v_GetData (18, sp_lexeme->b_AssumedForms);
+            pco_Db->v_GetData (19, sp_lexeme->b_YoAlternation);
+            pco_Db->v_GetData (20, sp_lexeme->b_OAlternation);
+            pco_Db->v_GetData (21, sp_lexeme->b_SecondGenitive);
+            pco_Db->v_GetData (22, sp_lexeme->str_QuestionableForms);
+            pco_Db->v_GetData (23, sp_lexeme->str_IrregularForms);
+            pco_Db->v_GetData (24, sp_lexeme->str_RestrictedFroms);
+            pco_Db->v_GetData (25, sp_lexeme->str_Contexts);
+            pco_Db->v_GetData (26, sp_lexeme->str_TrailingComment);
+            pco_Db->v_GetData (27, sp_lexeme->b_PrimaryInflectionGroup);
+            pco_Db->v_GetData (28, sp_lexeme->i_Type);
+            pco_Db->v_GetData (29, (int&)sp_lexeme->eo_AccentType1);
+            pco_Db->v_GetData (30, (int&)sp_lexeme->eo_AccentType2);
+            pco_Db->v_GetData (31, sp_lexeme->b_ShortFormsRestricted);
+            pco_Db->v_GetData (32, sp_lexeme->b_PastParticipleRestricted);
+            pco_Db->v_GetData (33, sp_lexeme->b_NoShortForms);
+            pco_Db->v_GetData (34, sp_lexeme->b_NoPastParticiple);
+            pco_Db->v_GetData (35, sp_lexeme->b_FleetingVowel);
+            pco_Db->v_GetData (36, sp_lexeme->b_StemAugment);
+            
+            wstring str_stressQuery (L"SELECT stress_position, is_primary FROM stress WHERE headword_id = ");
+            str_stressQuery += str_ToString (i_headwordId);
+            unsigned int ui_stressHandle = pco_Db->ui_PrepareForSelect (str_stressQuery);
+            while (pco_Db->b_GetRow (ui_stressHandle))
             {
-                pco_Db->v_GetData (2, i_stressPos);
-                pco_Db->v_GetData (3, b_isStressPrimary);
-                if (b_isStressPrimary)
+                int i_pos = -1;
+                bool b_primary = false;
+                pco_Db->v_GetData (2, i_pos, ui_stressHandle);
+                pco_Db->v_GetData (3, b_primary, ui_stressHandle);
+                if (b_primary)
                 {
-                    sp_lexeme->i_SourceStressPos = i_stressPos;
+                    sp_lexeme->vec_SourceStressPos.push_back (i_pos);
                 }
                 else
                 {
-                    sp_lexeme->i_SecondarySourceStressPos = i_stressPos;
+                    sp_lexeme->vec_SecondaryStressPos.push_back (i_pos);
                 }
             }
-            else
+
+            wstring str_homonymsQuery (L"SELECT homonym_number FROM homonyms WHERE headword_id = ");
+            str_stressQuery += str_ToString (i_headwordId);
+            unsigned int ui_homonymsHandle = pco_Db->ui_PrepareForSelect (str_stressQuery);
+            while (pco_Db->b_GetRow (ui_homonymsHandle))
             {
-                sp_lexeme->i_SourceStressPos = -1;
-                sp_lexeme->i_SecondarySourceStressPos = -1;
+                int i_homonym = -1;
+                pco_Db->v_GetData (2, i_homonym, ui_homonymsHandle);
+                sp_lexeme->vec_Homonyms.push_back (i_homonym);
             }
-            pco_Db->v_GetData (4, sp_lexeme->i_DbKey);
-            pco_Db->v_GetData (5, sp_lexeme->str_GraphicStem);
-            pco_Db->v_GetData (6, sp_lexeme->b_IsVariant);
-            pco_Db->v_GetData (7, sp_lexeme->str_MainSymbol);
-            pco_Db->v_GetData (8, sp_lexeme->b_IsPluralOf);
-            pco_Db->v_GetData (9, sp_lexeme->b_Transitive);
-            pco_Db->v_GetData (10, sp_lexeme->str_MainSymbolPluralOf);
-            pco_Db->v_GetData (11, sp_lexeme->str_AltMainSymbol);
-            pco_Db->v_GetData (12, sp_lexeme->str_InflectionType);
-            pco_Db->v_GetData (13, (int&)sp_lexeme->eo_PartOfSpeech);
-            pco_Db->v_GetData (14, sp_lexeme->str_Comment);
-            pco_Db->v_GetData (15, sp_lexeme->str_AltMainSymbolComment);
-            pco_Db->v_GetData (16, sp_lexeme->str_AltInflectionComment);
-            pco_Db->v_GetData (17, sp_lexeme->str_VerbStemAlternation);
-            pco_Db->v_GetData (18, sp_lexeme->i_Section);
-            pco_Db->v_GetData (19, sp_lexeme->b_NoComparative);
-            pco_Db->v_GetData (20, sp_lexeme->b_AssumedForms);
-            pco_Db->v_GetData (21, sp_lexeme->b_YoAlternation);
-            pco_Db->v_GetData (22, sp_lexeme->b_OAlternation);
-            pco_Db->v_GetData (23, sp_lexeme->b_SecondGenitive);
-            pco_Db->v_GetData (24, sp_lexeme->str_QuestionableForms);
-            pco_Db->v_GetData (25, sp_lexeme->str_IrregularForms);
-            pco_Db->v_GetData (26, sp_lexeme->str_RestrictedFroms);
-            pco_Db->v_GetData (27, sp_lexeme->str_Contexts);
-            pco_Db->v_GetData (28, sp_lexeme->str_TrailingComment);
-            pco_Db->v_GetData (29, sp_lexeme->b_PrimaryInflectionGroup);
-            pco_Db->v_GetData (30, sp_lexeme->i_Type);
-            pco_Db->v_GetData (31, (int&)sp_lexeme->eo_AccentType1);
-            pco_Db->v_GetData (32, (int&)sp_lexeme->eo_AccentType2);
-            pco_Db->v_GetData (33, sp_lexeme->b_ShortFormsRestricted);
-            pco_Db->v_GetData (34, sp_lexeme->b_PastParticipleRestricted);
-            pco_Db->v_GetData (35, sp_lexeme->b_NoShortForms);
-            pco_Db->v_GetData (36, sp_lexeme->b_NoPastParticiple);
-            pco_Db->v_GetData (37, sp_lexeme->b_FleetingVowel);
-            pco_Db->v_GetData (38, sp_lexeme->b_StemAugment);
-            pco_Db->v_GetData (39, sp_lexeme->i_CommonDeviation);
 
             m_coll.push_back (sp_lexeme);
         }
