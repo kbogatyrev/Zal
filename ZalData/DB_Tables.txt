@@ -1,48 +1,25 @@
 CREATE TABLE headword (id INTEGER PRIMARY KEY ASC, source TEXT, plural_of TEXT, comment TEXT, usage TEXT, variant TEXT, see_also TEXT, is_subentry_of TEXT);
 
-
-
 CREATE TABLE homonyms (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, homonym_number INTEGER, FOREIGN KEY (headword_id) REFERENCES headword (id));
-
-
 
 CREATE TABLE stress (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, stress_position INTEGER, is_primary BOOLEAN, FOREIGN KEY (headword_id) REFERENCES headword (id));
 
-
-
 CREATE TABLE descriptor (id INTEGER PRIMARY KEY ASC, word_id INTEGER, graphic_stem TEXT, is_variant BOOLEAN DEFAULT (0), main_symbol TEXT, is_plural_of BOOLEAN DEFAULT (0), is_intransitive BOOLEAN DEFAULT (0), main_symbol_plural_of TEXT, alt_main_symbol TEXT, inflection_type TEXT, part_of_speech INTEGER, comment TEXT, alt_main_symbol_comment TEXT, alt_inflection_comment TEXT, verb_stem_alternation TEXT, section INTEGER, no_comparative BOOLEAN DEFAULT (0), assumed_forms BOOLEAN DEFAULT (0), yo_alternation BOOLEAN DEFAULT (0), o_alternation BOOLEAN DEFAULT (0), second_genitive BOOLEAN DEFAULT (0), questionable_forms TEXT, irregular_forms TEXT, restricted_forms TEXT, contexts TEXT, trailing_comment TEXT, FOREIGN KEY (word_id) REFERENCES headword (id));
-
-
 
 CREATE TABLE second_locative (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, is_optional BOOLEAN DEFAULT (0), preposition TEXT, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
-
-
 CREATE TABLE inflection (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, is_primary BOOLEAN DEFAULT (0), inflection_type INTEGER, accent_type1 INTEGER, accent_type2 INTEGER, short_form_restrictions BOOLEAN DEAFULT (0), past_part_restrictions BOOLEAN DEAFULT (0), no_short_form BOOLEAN DEAFULT (0), no_past_part BOOLEAN DEAFULT (0), fleeting_vowel BOOLEAN DEFAULT (0), stem_augment BOOLEAN DEFAULT (0));
-
-
 
 CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, parameter INTEGER, value TEXT, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
-
 CREATE TABLE difficulties (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, parameter INTEGER, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
-
-
 
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending TEXT, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, stem_auslaut INTEGER);
 
-
-
 CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash INTEGER);
-
-
 
 CREATE TABLE endings_meta (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, entries_count INTEGER);
 
-
-
 CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, stem TEXT, endings_link INTEGER);
-
-
 
 CREATE TABLE common_deviation (id INTEGER PRIMARY KEY ASC, inflection_id INTEGER, deviation_type INTEGER, is_optional BOOLEAN);
