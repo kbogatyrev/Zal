@@ -192,8 +192,8 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
             {
                 int i_pos = -1;
                 bool b_primary = false;
-                pco_Db->v_GetData (2, i_pos, ui_stressHandle);
-                pco_Db->v_GetData (3, b_primary, ui_stressHandle);
+                pco_Db->v_GetData (0, i_pos, ui_stressHandle);
+                pco_Db->v_GetData (1, b_primary, ui_stressHandle);
                 if (b_primary)
                 {
                     sp_lexeme->vec_SourceStressPos.push_back (i_pos);
@@ -210,7 +210,7 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
             while (pco_Db->b_GetRow (ui_homonymsHandle))
             {
                 int i_homonym = -1;
-                pco_Db->v_GetData (2, i_homonym, ui_homonymsHandle);
+                pco_Db->v_GetData (0, i_homonym, ui_homonymsHandle);
                 sp_lexeme->vec_Homonyms.push_back (i_homonym);
             }
 
