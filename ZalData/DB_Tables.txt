@@ -10,9 +10,7 @@ CREATE TABLE second_locative (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER,
 
 CREATE TABLE inflection (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, is_primary BOOLEAN DEFAULT (0), inflection_type INTEGER, accent_type1 INTEGER, accent_type2 INTEGER, short_form_restrictions BOOLEAN DEAFULT (0), past_part_restrictions BOOLEAN DEAFULT (0), no_short_form BOOLEAN DEAFULT (0), no_past_part BOOLEAN DEAFULT (0), fleeting_vowel BOOLEAN DEFAULT (0), stem_augment BOOLEAN DEFAULT (0));
 
-CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, parameter INTEGER, value TEXT, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
-
-CREATE TABLE difficulties (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, parameter INTEGER, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
+CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, parameter INTEGER, value TEXT, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));CREATE TABLE difficulties (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, parameter INTEGER, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending TEXT, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, stem_auslaut INTEGER);
 
