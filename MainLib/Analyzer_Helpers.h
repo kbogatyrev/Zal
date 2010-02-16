@@ -26,6 +26,7 @@ public:
     ET_Tense eo_Tense;
     ET_Person eo_Person;
     ET_Animacy eo_Animacy;
+    ET_Aspect eo_Aspect;
     ET_Reflexive eo_Reflexive;
     ET_Voice eo_Voice;
     ET_SpecialForm eo_Special;
