@@ -199,13 +199,24 @@ namespace TestUI
                         sKey = "Comparative";
 
                         string strWordForm = wf.Wordform;
-                        if (wf.StressPos >= 0)
+
+                        try
                         {
-                            if (strWordForm[wf.StressPos] != 'ё')
+                            if (wf.StressPos >= 0)
                             {
-                                string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                if (strWordForm[wf.StressPos] != 'ё')
+                                {
+                                    string strStressMark = new string('\x301', 1);
+                                    strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                }
                             }
+                        }
+                        catch (Exception ex)
+                        {
+                            string sMsg = "Error in buttonLookup_Click: ";
+                            sMsg += ex.Message;
+//                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+//                            return;
                         }
 
                         ap.SetForm(sKey, strWordForm);
@@ -257,19 +268,30 @@ namespace TestUI
                         sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
                         string strWordForm = wf.Wordform;
-                        if (wf.StressPos >= 0)
+                        try
                         {
-                            if (wf.StressPos >= wf.Wordform.Length)
+                            if (wf.StressPos >= 0)
                             {
-                                MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                return;
-                            }
-                            if (strWordForm[wf.StressPos] != 'ё')
-                            {
-                                string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                if (wf.StressPos >= wf.Wordform.Length)
+                                {
+                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                    return;
+                                }
+                                if (strWordForm[wf.StressPos] != 'ё')
+                                {
+                                    string strStressMark = new string('\x301', 1);
+                                    strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            string sMsg = "Error in buttonLookup_Click: ";
+                            sMsg += ex.Message;
+                            //                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                            //                            return;
+                        }
+
                         vp.SetForm(sKey, strWordForm);
                     }
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_IMPERATIVE == wf.Subparadigm)
@@ -278,19 +300,30 @@ namespace TestUI
                         sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
                         string strWordForm = wf.Wordform;
-                        if (wf.StressPos >= 0)
+                        try
                         {
-                            if (wf.StressPos >= wf.Wordform.Length)
+                            if (wf.StressPos >= 0)
                             {
-                                MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                return;
-                            }
-                            if (strWordForm[wf.StressPos] != 'ё')
-                            {
-                                string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                if (wf.StressPos >= wf.Wordform.Length)
+                                {
+                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                    return;
+                                }
+                                if (strWordForm[wf.StressPos] != 'ё')
+                                {
+                                    string strStressMark = new string('\x301', 1);
+                                    strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            string sMsg = "Error in buttonLookup_Click: ";
+                            sMsg += ex.Message;
+                            //                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                            //                            return;
+                        }
+
                         vp.SetForm(sKey, strWordForm);
                     }
 
