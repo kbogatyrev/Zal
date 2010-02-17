@@ -32,6 +32,7 @@ descriptor.irregular_forms, \
 descriptor.restricted_forms, \
 descriptor.contexts, \
 descriptor.trailing_comment, \
+inflection.id, \
 inflection.is_primary, \
 inflection.inflection_type, \
 inflection.accent_type1, \
@@ -146,8 +147,8 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
 
             sp_lexeme->v_SetDb (str_DbPath);
 
-            int i_headwordId = -1;
             pco_Db->v_GetData (0, sp_lexeme->str_SourceForm);
+            int i_headwordId = -1;
             pco_Db->v_GetData (1, i_headwordId);
             pco_Db->v_GetData (2, sp_lexeme->i_DbKey);
             pco_Db->v_GetData (3, sp_lexeme->str_GraphicStem);
@@ -174,16 +175,18 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
             pco_Db->v_GetData (24, sp_lexeme->str_RestrictedFroms);
             pco_Db->v_GetData (25, sp_lexeme->str_Contexts);
             pco_Db->v_GetData (26, sp_lexeme->str_TrailingComment);
-            pco_Db->v_GetData (27, sp_lexeme->b_PrimaryInflectionGroup);
-            pco_Db->v_GetData (28, sp_lexeme->i_Type);
-            pco_Db->v_GetData (29, (int&)sp_lexeme->eo_AccentType1);
-            pco_Db->v_GetData (30, (int&)sp_lexeme->eo_AccentType2);
-            pco_Db->v_GetData (31, sp_lexeme->b_ShortFormsRestricted);
-            pco_Db->v_GetData (32, sp_lexeme->b_PastParticipleRestricted);
-            pco_Db->v_GetData (33, sp_lexeme->b_NoShortForms);
-            pco_Db->v_GetData (34, sp_lexeme->b_NoPastParticiple);
-            pco_Db->v_GetData (35, sp_lexeme->b_FleetingVowel);
-            pco_Db->v_GetData (36, sp_lexeme->b_StemAugment);
+            int i_inflectionId = -1;
+            pco_Db->v_GetData (27, i_inflectionId);
+            pco_Db->v_GetData (28, sp_lexeme->b_PrimaryInflectionGroup);
+            pco_Db->v_GetData (29, sp_lexeme->i_Type);
+            pco_Db->v_GetData (30, (int&)sp_lexeme->eo_AccentType1);
+            pco_Db->v_GetData (31, (int&)sp_lexeme->eo_AccentType2);
+            pco_Db->v_GetData (32, sp_lexeme->b_ShortFormsRestricted);
+            pco_Db->v_GetData (33, sp_lexeme->b_PastParticipleRestricted);
+            pco_Db->v_GetData (34, sp_lexeme->b_NoShortForms);
+            pco_Db->v_GetData (35, sp_lexeme->b_NoPastParticiple);
+            pco_Db->v_GetData (36, sp_lexeme->b_FleetingVowel);
+            pco_Db->v_GetData (37, sp_lexeme->b_StemAugment);
             
             wstring str_stressQuery (L"SELECT stress_position, is_primary FROM stress WHERE headword_id = ");
             str_stressQuery += str_ToString (i_headwordId);
@@ -205,13 +208,25 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
             }
 
             wstring str_homonymsQuery (L"SELECT homonym_number FROM homonyms WHERE headword_id = ");
-            str_stressQuery += str_ToString (i_headwordId);
-            unsigned int ui_homonymsHandle = pco_Db->ui_PrepareForSelect (str_stressQuery);
+            str_homonymsQuery += str_ToString (i_headwordId);
+            unsigned int ui_homonymsHandle = pco_Db->ui_PrepareForSelect (str_homonymsQuery);
             while (pco_Db->b_GetRow (ui_homonymsHandle))
             {
                 int i_homonym = -1;
                 pco_Db->v_GetData (0, i_homonym, ui_homonymsHandle);
                 sp_lexeme->vec_Homonyms.push_back (i_homonym);
+            }
+
+            wstring str_deviationQuery 
+                (L"SELECT deviation_type, is_optional FROM common_deviation WHERE inflection_id = ");
+            str_deviationQuery += str_ToString (i_inflectionId);
+            unsigned int ui_deviationHandle = pco_Db->ui_PrepareForSelect (str_deviationQuery);
+            while (pco_Db->b_GetRow (ui_deviationHandle))
+            {
+                St_CommonDeviation st_cd;
+                pco_Db->v_GetData (0, st_cd.i_Type, ui_deviationHandle);
+                pco_Db->v_GetData (1, st_cd.b_Optional, ui_deviationHandle);
+                sp_lexeme->vec_CommonDeviations.push_back (st_cd);
             }
 
             m_coll.push_back (sp_lexeme);
