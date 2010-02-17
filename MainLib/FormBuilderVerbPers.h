@@ -12,8 +12,10 @@ using namespace std::tr1;
 class CT_FormBuilderPersonal : public CT_FormBuilderBase
 {
 public:
-    CT_FormBuilderPersonal (CT_Lexeme * pco_Lexeme) : CT_FormBuilderBase (pco_Lexeme)
-    {}
+    CT_FormBuilderPersonal (CT_Lexeme * pco_lexeme) : CT_FormBuilderBase (pco_lexeme)
+    {
+        pco_Endings = new CT_PersonalEndings();
+    }
 
 public:
     HRESULT h_GetEndings();

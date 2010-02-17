@@ -12,7 +12,7 @@ using namespace std::tr1;
 class CT_FormBuilderShortAdj : public CT_FormBuilderBase
 {
 public:
-    CT_FormBuilderShortAdj (CT_Lexeme * pco_lexeme) : CT_FormBuilderBase (pco_Lexeme)
+    CT_FormBuilderShortAdj (CT_Lexeme * pco_lexeme) : CT_FormBuilderBase (pco_lexeme)
     {
         pco_Endings = new CT_AdjShortEndings();
     }

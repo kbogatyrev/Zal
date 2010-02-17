@@ -12,7 +12,7 @@ using namespace std::tr1;
 class CT_FormBuilderPast : public CT_FormBuilderBase
 {
 public:
-    CT_FormBuilderPast (CT_Lexeme * pco_lexeme) : CT_FormBuilderBase (pco_Lexeme)
+    CT_FormBuilderPast (CT_Lexeme * pco_lexeme) : CT_FormBuilderBase (pco_lexeme)
     {}
 
 public:
