@@ -97,6 +97,9 @@ public:
     CT_Endings()
     {}
 
+    virtual ~CT_Endings()
+    {}
+
     virtual void v_Reset()
     {
         mmap_Endings.clear();
