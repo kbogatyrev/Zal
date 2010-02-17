@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="MainLib"
 	ProjectGUID="{7F1639E5-0207-454D-B9D8-A4912CC81513}"
 	RootNamespace="MainLib"
@@ -110,6 +110,62 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Debug|x64"
+			ConfigurationType="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
@@ -176,62 +232,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug|x64"
-			ConfigurationType="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -361,6 +361,42 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FormBuilderAdjComparative.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderAdjLong.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderAdjShort.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderNouns.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderVerbImpv.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderVerbNonFinite.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderVerbPast.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderVerbPers.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Lexeme.cpp"
 				>
 			</File>
@@ -444,6 +480,42 @@
 			</File>
 			<File
 				RelativePath=".\Endings.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderAdjComparative.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderAdjLong.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderAdjShort.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderBase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderNouns.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderVerbImpv.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderVerbNonFinite.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderVerbPast.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormBuilderVerbPers.h"
 				>
 			</File>
 			<File
