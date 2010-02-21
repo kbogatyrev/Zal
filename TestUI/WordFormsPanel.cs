@@ -7,8 +7,6 @@ namespace TestUI
 {
     public class WordFormsPanel : UserControl
     {
-
-
         public struct StCell
         {
             public TextBox textboxTarget;
