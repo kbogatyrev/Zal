@@ -82,10 +82,76 @@ namespace TestUI
             m_dictAccent.Add(MainLib.ET_AccentType.AT_F2, "f''");
         }
 
-        public void Subscribe (LexemeDataPanel ldp)
+        public void SubscribeToLexemeEvents (LexemeDataPanel ldp)
         {
             ldp.ShowDetailsEvent += new LexemeDataPanel.ShowDetails (LexemeDataPanel_ShowLexemeDetails);
         }
+
+        public void SubscribeToVerbEvents (VerbPanel vp)
+        {
+            vp.ShowParticipialFormsEvent += new VerbPanel.ShowParticipialForms (VerbPanel_ShowParticipialForms);
+        }
+
+        public void VerbPanel_ShowParticipialForms (int iLexemeId, MainLib.ET_Subparadigm eoType)
+        {
+            // Expect word forms to be ready by now
+            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
+            AdjPanel ap = new AdjPanel();
+            string strInitialForm = null;
+
+            foreach (MainLib.IWordForm wf in lexeme)
+            {
+                string sKey = "";
+
+                if (eoType != wf.Subparadigm)
+                {
+                    continue;
+                }
+
+                if (MainLib.ET_Number.NUM_SG == wf.Number)
+                {
+                    sKey = m_dictGender[wf.Gender];
+                }
+
+                if (MainLib.ET_Number.NUM_SG == wf.Number &&
+                    MainLib.ET_Gender.GENDER_M == wf.Gender &&
+                    MainLib.ET_Case.CASE_NOM == wf.Case)
+                {
+                    strInitialForm = wf.Wordform;
+                    ap.sLexName = strInitialForm;
+                }
+
+                sKey += m_dictCase[wf.Case];
+                sKey += (MainLib.ET_Number.NUM_SG == wf.Number) ? "Sg" : "Pl";
+                if (MainLib.ET_Case.CASE_ACC == wf.Case)
+                {
+                    if ((MainLib.ET_Gender.GENDER_M == wf.Gender &&
+                         MainLib.ET_Number.NUM_SG == wf.Number) ||
+                         (MainLib.ET_Number.NUM_PL == wf.Number))
+                    {
+                        sKey += (MainLib.ET_Animacy.ANIM_YES == wf.Animacy) ? "Anim" : "Inanim";
+                    }
+                }
+
+                string strWordForm = wf.Wordform;
+                if (wf.StressPos >= 0)
+                {
+                    if (strWordForm[wf.StressPos] != 'ё')
+                    {
+                        string strStressMark = new string('\x301', 1);
+                        strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                    }
+                }
+
+                ap.SetForm(sKey, strWordForm);
+
+            }   //  foreach (...)
+
+            TabPage tabPageDetails = new TabPage(strInitialForm);
+            tabPageDetails.Controls.Add(ap);
+            tabControl.Controls.Add(tabPageDetails);
+
+        }   //  VerbPanel_ShowParticipialForms (...)
 
         public void LexemeDataPanel_ShowLexemeDetails (int iLexemeId)
         {
@@ -99,7 +165,7 @@ namespace TestUI
             if (MainLib.ET_PartOfSpeech.POS_NOUN == lexeme.PartOfSpeech)
             {
                 NounPanel np = new NounPanel();
-                tabPageDetails.Controls.Add(np);
+                tabPageDetails.Controls.Add (np);
                 np.sLexName = grSt;
 
                 foreach (MainLib.IWordForm wf in lexeme)
@@ -230,7 +296,8 @@ namespace TestUI
 
             if (MainLib.ET_PartOfSpeech.POS_VERB == lexeme.PartOfSpeech)
             {
-                VerbPanel vp = new VerbPanel();
+                VerbPanel vp = new VerbPanel (iLexemeId);
+                SubscribeToVerbEvents(vp);
                 tabPageDetails.Controls.Add (vp);
                 vp.sLexName = grSt;
 
@@ -294,6 +361,7 @@ namespace TestUI
 
                         vp.SetForm(sKey, strWordForm);
                     }
+
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_IMPERATIVE == wf.Subparadigm)
                     {
                         string sKey = "Imperative";
@@ -327,6 +395,41 @@ namespace TestUI
                         vp.SetForm(sKey, strWordForm);
                     }
 
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE == wf.Subparadigm)
+                    {
+                        string sKey = "PartPresActive";
+                        if (wf.Number == MainLib.ET_Number.NUM_SG && 
+                            wf.Gender == MainLib.ET_Gender.GENDER_M &&
+                            wf.Case == MainLib.ET_Case.CASE_NOM)
+                        {
+                            string strWordForm = wf.Wordform;
+                            try
+                            {
+                                if (wf.StressPos >= 0)
+                                {
+                                    if (wf.StressPos >= wf.Wordform.Length)
+                                    {
+                                        MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                        return;
+                                    }
+                                    if (strWordForm[wf.StressPos] != 'ё')
+                                    {
+                                        string strStressMark = new string('\x301', 1);
+                                        strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                string sMsg = "Error in buttonLookup_Click: ";
+                                sMsg += ex.Message;
+                                //                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                                //                            return;
+                            }
+
+                            vp.SetForm(sKey, strWordForm);
+                        }
+                    }
 
                 }   // foreach
             }
@@ -400,7 +503,6 @@ namespace TestUI
                 {
                     m_listWordForms.Add(wf);
                     AnalysisPanel ap = new AnalysisPanel(iWordform);
-                    //Subscribe(ldp);
                     ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
                     ap.sLemma = wf.Lemma;
                     ap.sWordform = wf.Wordform;
@@ -458,7 +560,7 @@ namespace TestUI
                 {
                     m_listLexemes.Add(lex);
                     LexemeDataPanel ldp = new LexemeDataPanel(iLexeme);
-                    Subscribe(ldp);
+                    SubscribeToLexemeEvents (ldp);
                     ldp.Location = new System.Drawing.Point(0, iLexeme * ldp.Size.Height + 4);
                     ldp.sInitialForm = lex.InitialForm;
                     ldp.sGraphicStem = lex.GraphicStem;
