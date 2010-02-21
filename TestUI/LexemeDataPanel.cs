@@ -9,8 +9,6 @@ using System.Windows.Forms;
 
 namespace TestUI
 {
-//    enum etInputDataType { eGraphicStem, eInitialForm };
-
     public partial class LexemeDataPanel : UserControl
     {
         public delegate void ShowDetails (int iLexemeId);
@@ -108,11 +106,6 @@ namespace TestUI
             {
                 ShowDetailsEvent(iLexemeId);
             }
-        }
-
-        private void LexemeDataPanel_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

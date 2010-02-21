@@ -176,7 +176,6 @@
             this.Controls.Add(this.textBoxInitForm);
             this.Name = "LexemeDataPanel";
             this.Size = new System.Drawing.Size(419, 199);
-            this.Load += new System.EventHandler(this.LexemeDataPanel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
