@@ -11,6 +11,11 @@ namespace TestUI
 {
     public partial class VerbPanel : WordFormsPanel
     {
+        public delegate void ShowParticipialForms (int iLexemeId, MainLib.ET_Subparadigm eoSubparadigm);
+        public event ShowParticipialForms ShowParticipialFormsEvent;
+
+        int iLexemeId;
+
         public string sLexName
         {
             get
@@ -24,9 +29,11 @@ namespace TestUI
             }
         }
 
-        public VerbPanel()
+        public VerbPanel (int iId)
         {
             InitializeComponent();
+
+            iLexemeId = iId;
 
             m_dictForms = new Dictionary<string, StCell>();
             m_dictForms.Add ("Pres1Sg", new StCell (textBoxPres1Sg));
@@ -43,6 +50,15 @@ namespace TestUI
 
             m_dictForms.Add("ImperativeSg", new StCell(textBoxImperativeSg));
             m_dictForms.Add("ImperativePl", new StCell(textBoxImperativePl));
+            m_dictForms.Add("PartPresActive", new StCell(textBoxPartPresActive));            
+        }
+
+        private void btnShowPresActive_Click (object sender, EventArgs e)
+        {
+            if (ShowParticipialFormsEvent != null)
+            {
+                ShowParticipialFormsEvent (iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE);
+            }
         }
     }
 }
