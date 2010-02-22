@@ -69,9 +69,9 @@ public:
 
     wstring str_DbPath;
 
-    int i_Analyze(wstring str_wordform, vector<CT_GramHelper>* pvec_possible_wordforms);
+    int i_Analyze(wstring str_wordform, vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms);
     int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left);
-    int i_CheckEndings(vector<CT_GramHelper>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right);
+    int i_CheckEndings(vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right);
 
 private:
     CT_Sqlite* pco_db;
@@ -79,17 +79,3 @@ private:
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CT_Analyzer)
-
-/*
-class CT_Analyzer
-{
-public:
-    int i_Analyze(CT_Sqlite* pco_dbHandle, wstring str_wordform);
-    int i_LookUpStems(CT_Sqlite* pco_dbHandle, vector<int>* pvec_stems_id, wstring str_left);
-    int i_CheckEndings(CT_Sqlite* pco_dbHandle, vector<CT_GramHelper>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right);
-    int i_WriteStemsAndEndings(CT_Sqlite* pco_dbHandle, __int64 ll_lexeme_id, int last_subtable_id);
-
-private:
-    int i_LCP(wstring* str_words, wstring* str_pfx, int i_words, int i_pfx);
-};
-*/

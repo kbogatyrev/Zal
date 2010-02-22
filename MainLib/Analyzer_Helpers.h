@@ -53,7 +53,8 @@ public:
     CT_EndingsTable();
     ~CT_EndingsTable();
     void Clear();
-    int i_AddEnding(int i_Gram, wstring str_Ending);
+    int i_AddEnding(int i_Hash, wstring str_Ending);
+    int i_AddEnding(long l_Hash, wstring str_Ending);
     vector<int> vec_db_id(CT_Sqlite* pco_dbHandle); // Tries to find the table in the db, returns -1 if there's no such table
     int i_db_Write(CT_Sqlite* pco_dbHandle); // Write the whole table to db, return subtable_id
 };
