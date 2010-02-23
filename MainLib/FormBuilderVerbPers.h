@@ -1,18 +1,13 @@
 #pragma once
-#include "resource.h"       // main symbols
-#include "MainLib_i.h"
-#include "WordForm.h"
-#include "SqliteWrapper.h"
-#include "Endings.h"
-#include "FormBuilderBase.h"
+#include "FormBuilderBaseConj.h"
 
 using namespace std;
 using namespace std::tr1;
 
-class CT_FormBuilderPersonal : public CT_FormBuilderBase
+class CT_FormBuilderPersonal : public CT_FormBuilderBaseConj
 {
 public:
-    CT_FormBuilderPersonal (CT_Lexeme * pco_lexeme) : CT_FormBuilderBase (pco_lexeme)
+    CT_FormBuilderPersonal (CT_Lexeme * pco_lexeme) : CT_FormBuilderBaseConj (pco_lexeme)
     {
         pco_Endings = new CT_PersonalEndings();
     }
