@@ -522,6 +522,7 @@
             this.btnShowPastActive.TabIndex = 72;
             this.btnShowPastActive.Text = "Show Forms";
             this.btnShowPastActive.UseVisualStyleBackColor = true;
+            this.btnShowPastActive.Click += new System.EventHandler(this.btnShowPastActive_Click);
             // 
             // btnShowPresPassive
             // 
