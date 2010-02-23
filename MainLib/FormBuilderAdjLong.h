@@ -1,22 +1,18 @@
 #pragma once
-#include "resource.h"       // main symbols
-#include "MainLib_i.h"
 #include "WordForm.h"
-#include "SqliteWrapper.h"
-#include "Endings.h"
-#include "FormBuilderBase.h"
+#include "FormBuilderBaseDecl.h"
 
 using namespace std;
 using namespace std::tr1;
 
-class CT_FormBuilderLongAdj : public CT_FormBuilderBase
+class CT_FormBuilderLongAdj : public CT_FormBuilderBaseDecl
 {
 public:
     CT_FormBuilderLongAdj (CT_Lexeme * pco_lexeme, 
                            const wstring& str_lemma,
                            ET_AccentType eo_accentType, 
                            ET_Subparadigm eo_subparadigm) 
-        : CT_FormBuilderBase (pco_lexeme),
+        : CT_FormBuilderBaseDecl (pco_lexeme),
           str_Lemma (str_lemma),
           eo_AccentType (eo_accentType),
           eo_Subparadigm (eo_subparadigm)
