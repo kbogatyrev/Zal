@@ -50,7 +50,8 @@ namespace TestUI
 
             m_dictForms.Add("ImperativeSg", new StCell(textBoxImperativeSg));
             m_dictForms.Add("ImperativePl", new StCell(textBoxImperativePl));
-            m_dictForms.Add("PartPresActive", new StCell(textBoxPartPresActive));            
+            m_dictForms.Add("PartPresActive", new StCell(textBoxPartPresActive));
+            m_dictForms.Add("PartPastActive", new StCell(textBoxPartPastPassive));
         }
 
         private void btnShowPresActive_Click (object sender, EventArgs e)
@@ -58,6 +59,14 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE);
+            }
+        }
+
+        private void btnShowPastActive_Click (object sender, EventArgs e)
+        {
+            if (ShowParticipialFormsEvent != null)
+            {
+                ShowParticipialFormsEvent(iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE);
             }
         }
     }
