@@ -1,18 +1,13 @@
 #pragma once
-#include "resource.h"       // main symbols
-#include "MainLib_i.h"
-#include "WordForm.h"
-#include "SqliteWrapper.h"
-#include "Endings.h"
-#include "FormBuilderBase.h"
+#include "FormBuilderBaseDecl.h"
 
 using namespace std;
 using namespace std::tr1;
 
-class CT_FormBuilderShortAdj : public CT_FormBuilderBase
+class CT_FormBuilderShortAdj : public CT_FormBuilderBaseDecl
 {
 public:
-    CT_FormBuilderShortAdj (CT_Lexeme * pco_lexeme) : CT_FormBuilderBase (pco_lexeme)
+    CT_FormBuilderShortAdj (CT_Lexeme * pco_lexeme) : CT_FormBuilderBaseDecl (pco_lexeme)
     {
         pco_Endings = new CT_AdjShortEndings();
     }
