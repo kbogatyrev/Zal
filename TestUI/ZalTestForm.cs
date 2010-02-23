@@ -431,6 +431,42 @@ namespace TestUI
                         }
                     }
 
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE == wf.Subparadigm)
+                    {
+                        string sKey = "PartPastActive";
+                        if (wf.Number == MainLib.ET_Number.NUM_SG &&
+                            wf.Gender == MainLib.ET_Gender.GENDER_M &&
+                            wf.Case == MainLib.ET_Case.CASE_NOM)
+                        {
+                            string strWordForm = wf.Wordform;
+                            try
+                            {
+                                if (wf.StressPos >= 0)
+                                {
+                                    if (wf.StressPos >= wf.Wordform.Length)
+                                    {
+                                        MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                        return;
+                                    }
+                                    if (strWordForm[wf.StressPos] != 'ё')
+                                    {
+                                        string strStressMark = new string('\x301', 1);
+                                        strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                string sMsg = "Error in buttonLookup_Click: ";
+                                sMsg += ex.Message;
+                                //                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                                //                            return;
+                            }
+
+                            vp.SetForm(sKey, strWordForm);
+                        }
+                    }
+
                 }   // foreach
             }
 
