@@ -51,7 +51,8 @@ namespace TestUI
             m_dictForms.Add("ImperativeSg", new StCell(textBoxImperativeSg));
             m_dictForms.Add("ImperativePl", new StCell(textBoxImperativePl));
             m_dictForms.Add("PartPresActive", new StCell(textBoxPartPresActive));
-            m_dictForms.Add("PartPastActive", new StCell(textBoxPartPastPassive));
+            m_dictForms.Add("PresAdverbial", new StCell(textBoxPresAdverbial));
+            m_dictForms.Add("PartPastActive", new StCell(textBoxPartPastPassive));            
         }
 
         private void btnShowPresActive_Click (object sender, EventArgs e)

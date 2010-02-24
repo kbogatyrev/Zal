@@ -467,6 +467,10 @@ namespace TestUI
                         }
                     }
 
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_ADVERBIAL_PRESENT == wf.Subparadigm)
+                    {
+                        vp.SetForm ("PresAdverbial", wf.Wordform);
+                    }
                 }   // foreach
             }
 

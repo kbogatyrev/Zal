@@ -46,11 +46,11 @@
             this.textBoxLabelPartActPr = new System.Windows.Forms.TextBox();
             this.textBoxPartPresActive = new System.Windows.Forms.TextBox();
             this.textBoxLabelPartPrAdv = new System.Windows.Forms.TextBox();
-            this.textBoxPartPresAdv = new System.Windows.Forms.TextBox();
+            this.textBoxPresAdverbial = new System.Windows.Forms.TextBox();
             this.textBoxLabelPartPasrAct = new System.Windows.Forms.TextBox();
             this.textBoxPartPastActive = new System.Windows.Forms.TextBox();
             this.textBoxLabelPartPastAdv = new System.Windows.Forms.TextBox();
-            this.textBoxPartPastAdv = new System.Windows.Forms.TextBox();
+            this.textBoxPastAdverbial = new System.Windows.Forms.TextBox();
             this.textBoxPartPresPassive = new System.Windows.Forms.TextBox();
             this.textBoxLabelPartPresPassive = new System.Windows.Forms.TextBox();
             this.textBoxPartPastPassive = new System.Windows.Forms.TextBox();
@@ -262,14 +262,14 @@
             this.textBoxLabelPartPrAdv.Text = "Present Adverbial: ";
             this.textBoxLabelPartPrAdv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBoxPartPresAdv
+            // textBoxPresAdverbial
             // 
-            this.textBoxPartPresAdv.Location = new System.Drawing.Point(148, 493);
-            this.textBoxPartPresAdv.Multiline = true;
-            this.textBoxPartPresAdv.Name = "textBoxPartPresAdv";
-            this.textBoxPartPresAdv.ReadOnly = true;
-            this.textBoxPartPresAdv.Size = new System.Drawing.Size(274, 24);
-            this.textBoxPartPresAdv.TabIndex = 51;
+            this.textBoxPresAdverbial.Location = new System.Drawing.Point(148, 493);
+            this.textBoxPresAdverbial.Multiline = true;
+            this.textBoxPresAdverbial.Name = "textBoxPresAdverbial";
+            this.textBoxPresAdverbial.ReadOnly = true;
+            this.textBoxPresAdverbial.Size = new System.Drawing.Size(274, 24);
+            this.textBoxPresAdverbial.TabIndex = 51;
             // 
             // textBoxLabelPartPasrAct
             // 
@@ -304,14 +304,14 @@
             this.textBoxLabelPartPastAdv.Text = "Past Adverbial: ";
             this.textBoxLabelPartPastAdv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBoxPartPastAdv
+            // textBoxPastAdverbial
             // 
-            this.textBoxPartPastAdv.Location = new System.Drawing.Point(148, 553);
-            this.textBoxPartPastAdv.Multiline = true;
-            this.textBoxPartPastAdv.Name = "textBoxPartPastAdv";
-            this.textBoxPartPastAdv.ReadOnly = true;
-            this.textBoxPartPastAdv.Size = new System.Drawing.Size(274, 24);
-            this.textBoxPartPastAdv.TabIndex = 55;
+            this.textBoxPastAdverbial.Location = new System.Drawing.Point(148, 553);
+            this.textBoxPastAdverbial.Multiline = true;
+            this.textBoxPastAdverbial.Name = "textBoxPastAdverbial";
+            this.textBoxPastAdverbial.ReadOnly = true;
+            this.textBoxPastAdverbial.Size = new System.Drawing.Size(274, 24);
+            this.textBoxPastAdverbial.TabIndex = 55;
             // 
             // textBoxPartPresPassive
             // 
@@ -396,13 +396,13 @@
             // 
             this.textBoxLabelParticiples.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxLabelParticiples.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelParticiples.Location = new System.Drawing.Point(209, 433);
+            this.textBoxLabelParticiples.Location = new System.Drawing.Point(195, 433);
             this.textBoxLabelParticiples.Multiline = true;
             this.textBoxLabelParticiples.Name = "textBoxLabelParticiples";
             this.textBoxLabelParticiples.ReadOnly = true;
-            this.textBoxLabelParticiples.Size = new System.Drawing.Size(127, 24);
+            this.textBoxLabelParticiples.Size = new System.Drawing.Size(171, 24);
             this.textBoxLabelParticiples.TabIndex = 61;
-            this.textBoxLabelParticiples.Text = "Participles";
+            this.textBoxLabelParticiples.Text = "Participles & Adverbials";
             this.textBoxLabelParticiples.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxPabelPastTense
@@ -581,11 +581,11 @@
             this.Controls.Add(this.textBoxLabelPartPastPassive);
             this.Controls.Add(this.textBoxPartPresPassive);
             this.Controls.Add(this.textBoxLabelPartPresPassive);
-            this.Controls.Add(this.textBoxPartPastAdv);
+            this.Controls.Add(this.textBoxPastAdverbial);
             this.Controls.Add(this.textBoxLabelPartPastAdv);
             this.Controls.Add(this.textBoxPartPastActive);
             this.Controls.Add(this.textBoxLabelPartPasrAct);
-            this.Controls.Add(this.textBoxPartPresAdv);
+            this.Controls.Add(this.textBoxPresAdverbial);
             this.Controls.Add(this.textBoxLabelPartPrAdv);
             this.Controls.Add(this.textBoxPartPresActive);
             this.Controls.Add(this.textBoxLabelPartActPr);
@@ -633,11 +633,11 @@
         private System.Windows.Forms.TextBox textBoxLabelPartActPr;
         private System.Windows.Forms.TextBox textBoxPartPresActive;
         private System.Windows.Forms.TextBox textBoxLabelPartPrAdv;
-        private System.Windows.Forms.TextBox textBoxPartPresAdv;
+        private System.Windows.Forms.TextBox textBoxPresAdverbial;
         private System.Windows.Forms.TextBox textBoxLabelPartPasrAct;
         private System.Windows.Forms.TextBox textBoxPartPastActive;
         private System.Windows.Forms.TextBox textBoxLabelPartPastAdv;
-        private System.Windows.Forms.TextBox textBoxPartPastAdv;
+        private System.Windows.Forms.TextBox textBoxPastAdverbial;
         private System.Windows.Forms.TextBox textBoxPartPresPassive;
         private System.Windows.Forms.TextBox textBoxLabelPartPresPassive;
         private System.Windows.Forms.TextBox textBoxPartPastPassive;
