@@ -11,6 +11,8 @@
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
 #endif
 
+namespace LexemeVector
+{
 // We always need to provide the following information
 //typedef std::vector<CComVariant> ContainerType;
 //typedef VARIANT	ExposedType;
@@ -40,6 +42,9 @@ typedef VCUE::ICollectionOnSTLCopyImpl <IDictionary,
                                         VCUE::GenericCopy<VARIANT, 
                                                           std::vector<CComVariant>::value_type>,
                                         EnumeratorType> LexemeCollection;
+}
+
+using namespace LexemeVector;
 
 class ATL_NO_VTABLE CT_Dictionary :
 	public CComObjectRootEx<CComSingleThreadModel>,
