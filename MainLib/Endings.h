@@ -85,6 +85,28 @@ struct ST_EndingDescriptor
                             eo_StemAuslaut (eo_sa)
     {}
 
+    wstring str_ToString() const
+    {
+        wstring str_ (L"Inflection type = ");
+        str_ += CT_ExtString::str_ToString (i_InflectionType);
+        str_ += L"; Gender = ";
+        str_ += CT_ExtString::str_ToString (eo_Gender);
+        str_ += L"; Number = ";
+        str_ += CT_ExtString::str_ToString (eo_Number);
+        str_ += L"; Case = ";
+        str_ += CT_ExtString::str_ToString (eo_Case);
+        str_ += L"; Animacy = ";
+        str_ += CT_ExtString::str_ToString (eo_Animacy);
+        str_ += L"; Person = ";
+        str_ += CT_ExtString::str_ToString (eo_Person);
+        str_ += L"; Stress = ";
+        str_ += CT_ExtString::str_ToString (eo_Stress);
+        str_ += L"; StemAuslaut = ";
+        str_ += CT_ExtString::str_ToString (eo_StemAuslaut);
+
+        return str_;
+    }
+
 };
 
 class CT_Endings
@@ -124,7 +146,10 @@ public:
         {
             if (++pair_Range.first == pair_Range.second)
             {
-                return false;
+                wstring str_msg (L"Error getting ending from hash for: ");
+                str_msg += st_descriptor.str_ToString();
+                ERROR_LOG (str_msg);
+                return E_FAIL;
             }
         }
 
