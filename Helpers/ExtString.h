@@ -4,12 +4,10 @@
 
 #pragma once
 
-//#include "StdAfx.h"
 #include "tchar.h"
 #include <Regex>
 
 using namespace std;
-
 
 class  CT_ExtString : public wstring
 {
@@ -1380,4 +1378,13 @@ public:
     {
         str_Vowels_ = str_vowels; 
     }
+
+    template <typename T>
+    wstring static str_ToString (T from)
+    {
+	    wstringstream io_;
+	    io_ << from;
+	    return io_.str();
+    };
+
 };
