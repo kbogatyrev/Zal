@@ -13,5 +13,10 @@ public:
     {}
 
 public:
+    HRESULT h_GetLemma (CT_ExtString& xstr_lemma);
+    HRESULT h_GetEnding (CT_ExtString& xstr_lemma, wstring& str_ending);
+    HRESULT h_GetStressPositions (CT_ExtString& xstr_lemma, 
+                                  wstring& str_ending,
+                                  vector<int>& vec_stressPositions);
     HRESULT h_Build();
 };
