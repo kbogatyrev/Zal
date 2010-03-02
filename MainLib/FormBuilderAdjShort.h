@@ -15,6 +15,9 @@ public:
 public:
     HRESULT h_GetEndings();
     HRESULT h_StressOnEnding (ET_Number eo_number, ET_Gender eo_gender);
+    HRESULT h_GetStressTypes (ET_Number eo_number, 
+                              ET_Gender eo_gender, 
+                              vector<ET_EndingStressType>& vec_eoStressTypes);
     HRESULT h_CreateWordForm (ET_Number eo_number, 
                               ET_Gender eo_gender, 
                               ET_EndingStressType eo_stressType,
