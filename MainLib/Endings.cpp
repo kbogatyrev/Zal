@@ -5,8 +5,8 @@ int CT_NounEndings::i_Hash (const ST_EndingDescriptor& st_d)
 {
     ATLASSERT (st_d.eo_Animacy == ANIM_UNDEFINED && st_d.eo_Gender == GENDER_UNDEFINED);
 
-    int i_key = st_d.eo_Number * CASE_COUNT * ENDING_STRESS_COUNT +
-                st_d.eo_Case * ENDING_STRESS_COUNT +
+    int i_key = st_d.eo_Number * CASE_COUNT * STRESS_LOCATION_COUNT +
+                st_d.eo_Case * STRESS_LOCATION_COUNT +
                 st_d.eo_Stress;
 
     return i_key;
@@ -37,14 +37,14 @@ HRESULT CT_NounEndings::h_AddEnding (const wstring& str_ending,
         return E_INVALIDARG;
     }
 
-    std::vector<ET_EndingStressType> vec_stress;
-    if (ENDING_STRESS_UNDEFINED == st_descriptor.eo_Stress)
+    std::vector<ET_StressLocation> vec_stress;
+    if (STRESS_LOCATION_UNDEFINED == st_descriptor.eo_Stress)
     {
-        for (int i_stress = ENDING_STRESS_UNDEFINED; 
-             i_stress < (int)ENDING_STRESS_COUNT; 
+        for (int i_stress = STRESS_LOCATION_UNDEFINED; 
+             i_stress < (int)STRESS_LOCATION_COUNT; 
              ++i_stress)
         {
-            vec_stress.push_back ((ET_EndingStressType)i_stress);
+            vec_stress.push_back ((ET_StressLocation)i_stress);
         }
     }
     else
@@ -68,10 +68,10 @@ HRESULT CT_NounEndings::h_AddEnding (const wstring& str_ending,
 
 int CT_AdjLongEndings::i_Hash (const ST_EndingDescriptor& st_d)
 {
-    int i_key = st_d.eo_Gender * NUM_COUNT * CASE_COUNT * ANIM_COUNT * ENDING_STRESS_COUNT +
-                st_d.eo_Number * CASE_COUNT * ANIM_COUNT * ENDING_STRESS_COUNT +
-                st_d.eo_Case * ANIM_COUNT * ENDING_STRESS_COUNT +
-                st_d.eo_Animacy * ENDING_STRESS_COUNT +
+    int i_key = st_d.eo_Gender * NUM_COUNT * CASE_COUNT * ANIM_COUNT * STRESS_LOCATION_COUNT +
+                st_d.eo_Number * CASE_COUNT * ANIM_COUNT * STRESS_LOCATION_COUNT +
+                st_d.eo_Case * ANIM_COUNT * STRESS_LOCATION_COUNT +
+                st_d.eo_Animacy * STRESS_LOCATION_COUNT +
                 st_d.eo_Stress;
 
     return i_key;
@@ -131,14 +131,14 @@ HRESULT CT_AdjLongEndings::h_AddEnding (const wstring& str_ending,
     //
     // Ending stressed/unstressed
     //
-    std::vector<ET_EndingStressType> vec_stress;
-    if (ENDING_STRESS_UNDEFINED == st_descriptor.eo_Stress)
+    std::vector<ET_StressLocation> vec_stress;
+    if (STRESS_LOCATION_UNDEFINED == st_descriptor.eo_Stress)
     {
-        for (int i_stress = ENDING_STRESS_UNDEFINED; 
-             i_stress < (int)ENDING_STRESS_COUNT; 
+        for (int i_stress = STRESS_LOCATION_UNDEFINED; 
+             i_stress < (int)STRESS_LOCATION_COUNT; 
              ++i_stress)
         {
-            vec_stress.push_back ((ET_EndingStressType)i_stress);
+            vec_stress.push_back ((ET_StressLocation)i_stress);
         }
     }
     else
@@ -168,8 +168,8 @@ HRESULT CT_AdjLongEndings::h_AddEnding (const wstring& str_ending,
 
 int CT_AdjShortEndings::i_Hash (const ST_EndingDescriptor& st_d)
 {
-    int i_key = st_d.eo_Gender * NUM_COUNT * ENDING_STRESS_COUNT +
-                st_d.eo_Number * ENDING_STRESS_COUNT +
+    int i_key = st_d.eo_Gender * NUM_COUNT * STRESS_LOCATION_COUNT +
+                st_d.eo_Number * STRESS_LOCATION_COUNT +
                 st_d.eo_Stress;
     return i_key;
 }
@@ -205,14 +205,14 @@ HRESULT CT_AdjShortEndings::h_AddEnding (const wstring& str_ending,
     //
     // Ending stressed/unstressed
     //
-    std::vector<ET_EndingStressType> vec_stress;
-    if (ENDING_STRESS_UNDEFINED == st_descriptor.eo_Stress)
+    std::vector<ET_StressLocation> vec_stress;
+    if (STRESS_LOCATION_UNDEFINED == st_descriptor.eo_Stress)
     {
-        for (int i_stress = ENDING_STRESS_UNDEFINED; 
-             i_stress < (int)ENDING_STRESS_COUNT; 
+        for (int i_stress = STRESS_LOCATION_UNDEFINED; 
+             i_stress < (int)STRESS_LOCATION_COUNT; 
              ++i_stress)
         {
-            vec_stress.push_back ((ET_EndingStressType)i_stress);
+            vec_stress.push_back ((ET_StressLocation)i_stress);
         }
     }
     else
@@ -237,9 +237,9 @@ HRESULT CT_AdjShortEndings::h_AddEnding (const wstring& str_ending,
 
 int CT_PersonalEndings::i_Hash (const ST_EndingDescriptor& st_d)
 {
-    int i_key = st_d.i_InflectionType * PERSON_COUNT * NUM_COUNT * ENDING_STRESS_COUNT * STEM_AUSLAUT_COUNT +
-                st_d.eo_Person * NUM_COUNT * ENDING_STRESS_COUNT * STEM_AUSLAUT_COUNT +
-                st_d.eo_Number * ENDING_STRESS_COUNT * STEM_AUSLAUT_COUNT +
+    int i_key = st_d.i_InflectionType * PERSON_COUNT * NUM_COUNT * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
+                st_d.eo_Person * NUM_COUNT * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
+                st_d.eo_Number * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
                 st_d.eo_Stress * STEM_AUSLAUT_COUNT + st_d.eo_StemAuslaut;
     return i_key;
 }
@@ -273,14 +273,14 @@ HRESULT CT_PersonalEndings::h_AddEnding (const wstring& str_ending,
     //
     // Ending stressed/unstressed
     //
-    std::vector<ET_EndingStressType> vec_stress;
-    if (ENDING_STRESS_UNDEFINED == st_descriptor.eo_Stress)
+    std::vector<ET_StressLocation> vec_stress;
+    if (STRESS_LOCATION_UNDEFINED == st_descriptor.eo_Stress)
     {
-        for (int i_stress = ENDING_STRESS_UNDEFINED; 
-             i_stress < (int)ENDING_STRESS_COUNT; 
+        for (int i_stress = STRESS_LOCATION_UNDEFINED; 
+             i_stress < (int)STRESS_LOCATION_COUNT; 
              ++i_stress)
         {
-            vec_stress.push_back ((ET_EndingStressType)i_stress);
+            vec_stress.push_back ((ET_StressLocation)i_stress);
         }
     }
     else
