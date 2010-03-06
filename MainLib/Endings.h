@@ -12,7 +12,7 @@ struct ST_EndingDescriptor
     ET_Case eo_Case;
     ET_Animacy eo_Animacy;
     ET_Person eo_Person;
-    ET_EndingStressType eo_Stress;
+    ET_StressLocation eo_Stress;
     ET_StemAuslaut eo_StemAuslaut;
 
     ST_EndingDescriptor() : i_InflectionType (INFLECTION_TYPE_UNDEFINED),
@@ -21,14 +21,14 @@ struct ST_EndingDescriptor
                             eo_Case (CASE_UNDEFINED), 
                             eo_Animacy (ANIM_UNDEFINED), 
                             eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (ENDING_STRESS_UNDEFINED),
+                            eo_Stress (STRESS_LOCATION_UNDEFINED),
                             eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for nouns
     ST_EndingDescriptor (ET_Number eo_n, 
                          ET_Case eo_c, 
-                         ET_EndingStressType eo_s) :
+                         ET_StressLocation eo_s) :
                             i_InflectionType (INFLECTION_TYPE_UNDEFINED),
                             eo_Gender (GENDER_UNDEFINED), 
                             eo_Number (eo_n),
@@ -44,7 +44,7 @@ struct ST_EndingDescriptor
                          ET_Number eo_n, 
                          ET_Case eo_c,
                          ET_Animacy eo_a,
-                         ET_EndingStressType eo_s) :
+                         ET_StressLocation eo_s) :
                             i_InflectionType (INFLECTION_TYPE_UNDEFINED),
                             eo_Gender (eo_g), 
                             eo_Number (eo_n),
@@ -58,7 +58,7 @@ struct ST_EndingDescriptor
     // Overload for short adjectives
     ST_EndingDescriptor (ET_Gender eo_g,
                          ET_Number eo_n,
-                         ET_EndingStressType eo_s) :
+                         ET_StressLocation eo_s) :
                             i_InflectionType (INFLECTION_TYPE_UNDEFINED),
                             eo_Gender (eo_g), 
                             eo_Number (eo_n),
@@ -73,7 +73,7 @@ struct ST_EndingDescriptor
     ST_EndingDescriptor (int i_inflectionType,
                          ET_Person eo_p,
                          ET_Number eo_n,
-                         ET_EndingStressType eo_s,
+                         ET_StressLocation eo_s,
                          ET_StemAuslaut eo_sa) :
                             i_InflectionType (i_inflectionType),
                             eo_Gender (GENDER_UNDEFINED),
