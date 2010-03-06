@@ -20,11 +20,11 @@ public:
     HRESULT h_HandleStemAugment (wstring& str_lemma);
     HRESULT h_GetStressType (ET_Number eo_number,                 // in
                              ET_Case eo_case,                     // in
-                             ET_EndingStressType& eo_stressType); // out
+                             ET_StressLocation& eo_stressType); // out
     HRESULT h_HandleAccEnding (ET_Number, ET_Case&);
     HRESULT h_GetStressPositions (const wstring& str_lemma, 
                                   const wstring& str_ending,
-                                  ET_EndingStressType eo_stressType,
+                                  ET_StressLocation eo_stressType,
                                   vector<int>& vec_iStressPos);
     HRESULT h_CreateFormTemplate (ET_Number, ET_Case, CComObject<CT_WordForm> *&);
     HRESULT h_Build();
