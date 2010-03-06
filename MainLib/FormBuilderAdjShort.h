@@ -14,13 +14,16 @@ public:
 
 public:
     HRESULT h_GetEndings();
+
     HRESULT h_StressOnEnding (ET_Number eo_number, ET_Gender eo_gender);
+
     HRESULT h_GetStressTypes (ET_Number eo_number, 
                               ET_Gender eo_gender, 
-                              vector<ET_EndingStressType>& vec_eoStressTypes);
+                              vector<ET_StressLocation>& vec_eoStressType);
+
     HRESULT h_CreateWordForm (ET_Number eo_number, 
                               ET_Gender eo_gender, 
-                              ET_EndingStressType eo_stressType,
+                              ET_StressLocation eo_stressType,
                               const wstring& str_ending,
                               wstring& str_lemma);
     HRESULT h_Build();
