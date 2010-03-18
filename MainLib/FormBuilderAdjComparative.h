@@ -11,6 +11,8 @@ public:
     {}
 
 public:
+    HRESULT h_CreateFormTemplate (const wstring& str_lemma, CComObject<CT_WordForm> *& pco_wordForm);
+    HRESULT h_HandleStressAndAdd (CComObject<CT_WordForm> * pco_wordForm, vector<int>& vec_iStress);
     HRESULT h_Build();
 
 };
