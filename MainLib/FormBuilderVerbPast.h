@@ -21,24 +21,24 @@ public:
     {}
 
 public:
-    HRESULT h_GetEnding (CT_ExtString& xstr_lemma,  
+    HRESULT h_GetEnding (wstring& str_lemma,  
                          ET_Number eo_number, 
                          ET_Gender eo_gender, 
-                         CT_ExtString& xstr_ending);
+                         wstring& str_ending);
 
-    HRESULT h_GetStressPositions (const CT_ExtString& xstr_lemma,
+    HRESULT h_GetStressPositions (const wstring& str_lemma,
                                   const wstring& str_ending,
                                   ET_Number eo_number, 
                                   ET_Gender eo_gender, 
                                   vector<int>& vec_iStressPositions);
 
-    HRESULT h_CreateFormTemplate (const CT_ExtString& xstr_lemma,
-                                  const CT_ExtString& xstr_ending,
+    HRESULT h_CreateFormTemplate (const wstring& str_lemma,
+                                  const wstring& str_ending,
                                   ET_Number eo_number, 
                                   ET_Gender eo_gender, 
                                   CComObject<CT_WordForm> *& pco_wordForm);
 
-    HRESULT h_HandleFleetingVowel (CT_ExtString& xstr_verbForm);
+    HRESULT h_FleetingVowelCheck (wstring& str_verbForm);
 
     HRESULT h_Build();
 };
