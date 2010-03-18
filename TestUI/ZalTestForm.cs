@@ -23,14 +23,14 @@ namespace TestUI
         private Dictionary<MainLib.ET_Person, string> m_dictPerson;
         private Dictionary<MainLib.ET_AccentType, string> m_dictAccent;
 
-        private bool b_DBOpen;
+        private bool bDBOpen;
 
         public TestApplet()
         {
             InitializeComponent();
             buttonLookup.Enabled = false;
             radioButtonInitForm.Checked = true;
-            b_DBOpen = false;
+            bDBOpen = false;
 
             textBoxDBPath.Text = Properties.Settings.Default.DbPath;
 
@@ -134,12 +134,21 @@ namespace TestUI
                 }
 
                 string strWordForm = wf.Wordform;
-                if (wf.StressPos >= 0)
+                for (int iStressPos = 0; iStressPos < wf.StressCount; ++iStressPos)
                 {
-                    if (strWordForm[wf.StressPos] != 'ё')
+                    if (strWordForm[wf.Stress] != 'ё')
                     {
-                        string strStressMark = new string('\x301', 1);
-                        strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                        string sStressMark;
+                        if (0 != wf.get_IsPrimaryStress (wf.Stress))
+                        {
+                            sStressMark = new string('\x301', 1);
+                        }
+                        else
+                        {
+                            sStressMark = new string('\x300', 1);
+
+                        }
+                        strWordForm = strWordForm.Insert(wf.Stress + 1, sStressMark);
                     }
                 }
 
@@ -174,17 +183,17 @@ namespace TestUI
                     sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
                     string strWordForm = wf.Wordform;
-                    if (wf.StressPos >= 0)
+                    if (wf.Stress >= 0)
                     {
-                        if (wf.StressPos >= wf.Wordform.Length)
+                        if (wf.Stress >= wf.Wordform.Length)
                         {
                             MessageBox.Show ("Bad stress position", "Zal Error", MessageBoxButtons.OK);
                             return;
                         }
-                        if (strWordForm[wf.StressPos] != 'ё')
+                        if (strWordForm[wf.Stress] != 'ё')
                         {
                             string strStressMark = new string('\x301', 1);
-                            strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                            strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                         }
                     }
 
@@ -222,12 +231,12 @@ namespace TestUI
                         }
 
                         string strWordForm = wf.Wordform;
-                        if (wf.StressPos >= 0)
+                        if (wf.Stress >= 0)
                         {
-                            if (strWordForm[wf.StressPos] != 'ё')
+                            if (strWordForm[wf.Stress] != 'ё')
                             {
                                 string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                             }
                         }
 
@@ -246,12 +255,12 @@ namespace TestUI
                         sKey += m_dictNumber[wf.Number];
 
                         string strWordForm = wf.Wordform;
-                        if (wf.StressPos >= 0)
+                        if (wf.Stress >= 0)
                         {
-                            if (strWordForm[wf.StressPos] != 'ё')
+                            if (strWordForm[wf.Stress] != 'ё')
                             {
                                 string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                             }
                         }
 
@@ -268,12 +277,12 @@ namespace TestUI
 
                         try
                         {
-                            if (wf.StressPos >= 0)
+                            if (wf.Stress >= 0)
                             {
-                                if (strWordForm[wf.StressPos] != 'ё')
+                                if (strWordForm[wf.Stress] != 'ё')
                                 {
                                     string strStressMark = new string('\x301', 1);
-                                    strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                                 }
                             }
                         }
@@ -309,17 +318,17 @@ namespace TestUI
                         sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
                         string strWordForm = wf.Wordform;
-                        if (wf.StressPos >= 0)
+                        if (wf.Stress >= 0)
                         {
-                            if (wf.StressPos >= wf.Wordform.Length)
+                            if (wf.Stress >= wf.Wordform.Length)
                             {
                                 MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
                                 return;
                             }
-                            if (strWordForm[wf.StressPos] != 'ё')
+                            if (strWordForm[wf.Stress] != 'ё')
                             {
                                 string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                             }
                         }
                         vp.SetForm(sKey, strWordForm);
@@ -337,17 +346,17 @@ namespace TestUI
                         string strWordForm = wf.Wordform;
                         try
                         {
-                            if (wf.StressPos >= 0)
+                            if (wf.Stress >= 0)
                             {
-                                if (wf.StressPos >= wf.Wordform.Length)
+                                if (wf.Stress >= wf.Wordform.Length)
                                 {
                                     MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
                                     return;
                                 }
-                                if (strWordForm[wf.StressPos] != 'ё')
+                                if (strWordForm[wf.Stress] != 'ё')
                                 {
                                     string strStressMark = new string('\x301', 1);
-                                    strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                                 }
                             }
                         }
@@ -370,17 +379,17 @@ namespace TestUI
                         string strWordForm = wf.Wordform;
                         try
                         {
-                            if (wf.StressPos >= 0)
+                            if (wf.Stress >= 0)
                             {
-                                if (wf.StressPos >= wf.Wordform.Length)
+                                if (wf.Stress >= wf.Wordform.Length)
                                 {
                                     MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
                                     return;
                                 }
-                                if (strWordForm[wf.StressPos] != 'ё')
+                                if (strWordForm[wf.Stress] != 'ё')
                                 {
                                     string strStressMark = new string('\x301', 1);
-                                    strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                                 }
                             }
                         }
@@ -405,17 +414,17 @@ namespace TestUI
                             string strWordForm = wf.Wordform;
                             try
                             {
-                                if (wf.StressPos >= 0)
+                                if (wf.Stress >= 0)
                                 {
-                                    if (wf.StressPos >= wf.Wordform.Length)
+                                    if (wf.Stress >= wf.Wordform.Length)
                                     {
                                         MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
                                         return;
                                     }
-                                    if (strWordForm[wf.StressPos] != 'ё')
+                                    if (strWordForm[wf.Stress] != 'ё')
                                     {
                                         string strStressMark = new string('\x301', 1);
-                                        strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                                     }
                                 }
                             }
@@ -441,17 +450,17 @@ namespace TestUI
                             string strWordForm = wf.Wordform;
                             try
                             {
-                                if (wf.StressPos >= 0)
+                                if (wf.Stress >= 0)
                                 {
-                                    if (wf.StressPos >= wf.Wordform.Length)
+                                    if (wf.Stress >= wf.Wordform.Length)
                                     {
                                         MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
                                         return;
                                     }
-                                    if (strWordForm[wf.StressPos] != 'ё')
+                                    if (strWordForm[wf.Stress] != 'ё')
                                     {
                                         string strStressMark = new string('\x301', 1);
-                                        strWordForm = strWordForm.Insert(wf.StressPos + 1, strStressMark);
+                                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                                     }
                                 }
                             }
@@ -480,11 +489,11 @@ namespace TestUI
 
         private void buttonLookup_Click(object sender, EventArgs e)
         {
-            if (b_DBOpen == false)
+            if (bDBOpen == false)
             {
                 m_Dictionary.DbPath = textBoxDBPath.Text;
                 m_Analyzer.DbPath = textBoxDBPath.Text;
-                b_DBOpen = true;
+                bDBOpen = true;
             }
 
             lexPanel.Controls.Clear();
@@ -635,7 +644,7 @@ namespace TestUI
 
         private void textBoxDBPath_TextChanged(object sender, EventArgs e)
         {
-            b_DBOpen = false;
+            bDBOpen = false;
             if (textBoxDBPath.Text.Length > 0)
             {
                 if (textBoxSearchString.Text.Length > 0)
@@ -654,7 +663,7 @@ namespace TestUI
             FileDialog fd = new OpenFileDialog();
             fd.CheckFileExists = false;
             fd.CheckPathExists = true;
-            b_DBOpen = false;
+            bDBOpen = false;
             DialogResult dr = fd.ShowDialog();
             if (DialogResult.OK == dr)
             {
