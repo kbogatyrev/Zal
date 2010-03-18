@@ -149,7 +149,7 @@ public:
                 wstring str_msg (L"Error getting ending from hash for: ");
                 str_msg += st_descriptor.str_ToString();
                 ERROR_LOG (str_msg);
-                return E_FAIL;
+                throw CT_Exception (E_FAIL, str_msg);
             }
         }
 
