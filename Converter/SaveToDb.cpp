@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "ExtString.h"
 #include "ZalEntryParser.h"
+#include "GramHasher.h"
 
 using namespace std::tr1;
 
@@ -123,7 +124,7 @@ bool ST_Headword::b_SaveStressData (CT_Sqlite * pco_dbHandle,
 bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
 {
     wsmatch result;
-    static CT_GrammHasher co_gram;
+    static CT_GramHasher co_gram;
     try
     {
         pco_dbHandle->v_PrepareForInsert (L"descriptor", 25);
@@ -173,12 +174,12 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
                                         (const wregex)L"\\s*_([^_]+)_\\s*([^\\s,]+),?(.*)");
             if (b_match == true)
             {
-                co_gram.GramClear();
+                co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
                 co_gram.i_DecodeString((wstring)result[1]);
                 pco_dbHandle->v_PrepareForInsert (L"irregular_forms", 3);
                 pco_dbHandle->v_Bind (1, ll_descriptorId);
-                pco_dbHandle->v_Bind (2, co_gram.i_GramNumber());   // Morphosyntactic values code
+                pco_dbHandle->v_Bind (2, co_gram.i_GramHash());   // Morphosyntactic values code
                 pco_dbHandle->v_Bind (3, (wstring)result[2]);       // Wordform
                 pco_dbHandle->v_InsertRow();
                 pco_dbHandle->v_Finalize();
@@ -200,12 +201,12 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
                                         (const wregex)L"\\s*([^,]+),?(.*)");
             if (b_match == true)
             {
-                co_gram.GramClear();
+                co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
                 co_gram.i_DecodeString((wstring)result[1]);
                 pco_dbHandle->v_PrepareForInsert (L"difficulties", 2);
                 pco_dbHandle->v_Bind (1, ll_descriptorId);
-                pco_dbHandle->v_Bind (2, co_gram.i_GramNumber());   // Morphosyntactic values code
+                pco_dbHandle->v_Bind (2, co_gram.i_GramHash());   // Morphosyntactic values code
                 pco_dbHandle->v_InsertRow();
                 pco_dbHandle->v_Finalize();
                 str_Difficulties = (wstring)result[2];
