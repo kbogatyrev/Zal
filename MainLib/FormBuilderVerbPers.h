@@ -16,14 +16,14 @@ public:
     HRESULT h_GetEndings();
     HRESULT h_GetStressType (ET_Number, ET_Person,  ET_StressLocation&);
     HRESULT h_GetAuslautType (ET_Number, ET_Person, ET_StemAuslaut&);
-    HRESULT h_GetLemma (ET_Number, ET_Person, CT_ExtString&);
-    HRESULT h_GetStressPositions (const CT_ExtString& xstr_lemma,
+    HRESULT h_GetLemma (ET_Number, ET_Person, wstring&);
+    HRESULT h_GetStressPositions (const wstring& str_lemma,
                                   const wstring& str_ending,
                                   ET_StressLocation eo_stressType,
                                   vector<int>& vec_iStressPositions);
-    HRESULT h_HandleFleetingVowel (CT_ExtString& xstr_verbForm);
-    HRESULT h_CreateFormTemplate (const CT_ExtString& xstr_lemma,
-                                  const CT_ExtString& xstr_wordForm,
+    HRESULT h_FleetingVowelCheck (wstring& str_verbForm);
+    HRESULT h_CreateFormTemplate (const wstring& str_lemma,
+                                  const wstring& str_wordForm,
                                   ET_Number eo_number, 
                                   ET_Person eo_person,
                                   CComObject<CT_WordForm> *& pco_wordForm);
