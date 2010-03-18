@@ -21,6 +21,12 @@ public:
                               ET_Gender eo_gender, 
                               vector<ET_StressLocation>& vec_eoStressType);
 
+    HRESULT h_CreateFormTemplate (const wstring& str_lemma,
+                                  const wstring& str_ending,
+                                  ET_Gender eo_gender,
+                                  ET_Number eo_number,
+                                  CComObject<CT_WordForm> *& pco_wordForm);
+
     HRESULT h_CreateWordForm (ET_Number eo_number, 
                               ET_Gender eo_gender, 
                               ET_StressLocation eo_stressType,
