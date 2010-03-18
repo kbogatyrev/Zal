@@ -33,8 +33,9 @@ HRESULT CT_NounEndings::h_AddEnding (const wstring& str_ending,
     //
     if (CASE_UNDEFINED == st_descriptor.eo_Case)
     {
-        ERROR_LOG (_T("Undefined case in noun ending."));
-        return E_INVALIDARG;
+        wstring str_msg (L"Undefined case in noun ending.");
+        ERROR_LOG (str_msg);
+        throw CT_Exception (E_INVALIDARG, str_msg);
     }
 
     std::vector<ET_StressLocation> vec_stress;
@@ -198,8 +199,9 @@ HRESULT CT_AdjShortEndings::h_AddEnding (const wstring& str_ending,
     //
     if (NUM_UNDEFINED == st_descriptor.eo_Number)
     {
-        ERROR_LOG (_T("Undefined number in short form ending."));
-        return E_INVALIDARG;
+        wstring str_msg (L"Undefined number in short form ending.");
+        ERROR_LOG (str_msg);
+        throw CT_Exception (E_INVALIDARG, str_msg);
     }
 
     //
@@ -253,8 +255,9 @@ HRESULT CT_PersonalEndings::h_AddEnding (const wstring& str_ending,
     std::vector<ET_Person> vec_person;
     if (PERSON_UNDEFINED == st_descriptor.eo_Person)
     {
-        ERROR_LOG (_T("Undefined person."));
-        return E_INVALIDARG;
+        wstring str_msg (L"Undefined person.");
+        ERROR_LOG (str_msg);
+        throw CT_Exception (E_INVALIDARG, str_msg);
     }
     else
     {
@@ -266,8 +269,9 @@ HRESULT CT_PersonalEndings::h_AddEnding (const wstring& str_ending,
     //
     if (NUM_UNDEFINED == st_descriptor.eo_Number)
     {
-        ERROR_LOG (_T("Undefined number in personal ending."));
-        return E_INVALIDARG;
+        wstring str_msg (L"Undefined number in personal ending.");
+        ERROR_LOG (str_msg);
+        throw CT_Exception (E_INVALIDARG, str_msg);
     }
 
     //
