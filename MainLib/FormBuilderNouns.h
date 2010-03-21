@@ -31,7 +31,10 @@ public:
                                   ET_StressLocation eo_stressType,
                                   vector<int>& vec_iStressPos);
 
-    HRESULT h_CreateFormTemplate (ET_Number, ET_Case, CComObject<CT_WordForm> *&);
+    HRESULT h_CreateFormTemplate (ET_Number eo_number, 
+                                  ET_Case eo_case, 
+                                  const wstring& str_lemma, 
+                                  CComObject<CT_WordForm> *&);
 
     HRESULT h_HandleStress (wstring& str_lemma, 
                             const wstring& str_ending, 
