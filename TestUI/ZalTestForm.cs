@@ -561,7 +561,25 @@ namespace TestUI
                     ap.eoNumber = wf.Number;
                     ap.eoSubparadigm = wf.Subparadigm;
                     ap.eoAnimacy = wf.Animacy;
-                    ap.eoTense = wf.Tense;
+                    if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE)
+                    {
+                        ap.eoTense = MainLib.ET_Tense.TENSE_PAST;
+                    }
+                    if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
+                        && wf.Aspect == MainLib.ET_Aspect.ASPECT_IMPERFECTIVE)
+                    {
+                        ap.eoTense = MainLib.ET_Tense.TENSE_FUTURE;
+                    }
+                    if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
+                        && wf.Aspect == MainLib.ET_Aspect.ASPECT_PERFECTIVE)
+                    {
+                        ap.eoTense = MainLib.ET_Tense.TENSE_PRESENT;
+                    }
+                    if (wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE)
+                    {
+                        ap.eoTense = MainLib.ET_Tense.TENSE_UNDEFINED;
+                    }
                     //ap.i_lexeme_id = wf.LexemeId;
                     lexPanel.Controls.Add(ap);
                     iWordform++;
