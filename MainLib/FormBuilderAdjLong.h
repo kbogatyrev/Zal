@@ -27,6 +27,8 @@ public:
                                   vector<int>& vec_iStressPos);
     HRESULT h_CreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, CComObject<CT_WordForm> *&);
     HRESULT h_Build();
+    int i_GetStressTemplateFormHash (ET_Subparadigm eo_subparadigm);
+    HRESULT h_BuildParticiple();
 
 private:
     wstring str_Lemma;
