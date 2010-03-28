@@ -223,12 +223,12 @@ HRESULT CT_Dictionary::h_GetData (const wstring& str_select)
             unsigned int ui_deviationHandle = pco_Db->ui_PrepareForSelect (str_deviationQuery);
             while (pco_Db->b_GetRow (ui_deviationHandle))
             {
-                St_CommonDeviation st_cd;
-                pco_Db->v_GetData (0, st_cd.i_Type, ui_deviationHandle);
-                pco_Db->v_GetData (1, st_cd.b_Optional, ui_deviationHandle);
-                sp_lexeme->vec_CommonDeviations.push_back (st_cd);
+                int i_type = -1;
+                bool b_optional = false;
+                pco_Db->v_GetData (0, i_type, ui_deviationHandle);
+                pco_Db->v_GetData (1, b_optional, ui_deviationHandle);
+                sp_lexeme->map_CommonDeviations[i_type] = b_optional;
             }
-
             m_coll.push_back (sp_lexeme);
         }
     }
