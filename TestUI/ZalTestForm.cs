@@ -288,10 +288,8 @@ namespace TestUI
                         }
                         catch (Exception ex)
                         {
-                            string sMsg = "Error in buttonLookup_Click: ";
+                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
                             sMsg += ex.Message;
-//                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
-//                            return;
                         }
 
                         ap.SetForm(sKey, strWordForm);
@@ -362,10 +360,8 @@ namespace TestUI
                         }
                         catch (Exception ex)
                         {
-                            string sMsg = "Error in buttonLookup_Click: ";
+                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
                             sMsg += ex.Message;
-                            //                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
-                            //                            return;
                         }
 
                         vp.SetForm(sKey, strWordForm);
@@ -395,10 +391,8 @@ namespace TestUI
                         }
                         catch (Exception ex)
                         {
-                            string sMsg = "Error in buttonLookup_Click: ";
+                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
                             sMsg += ex.Message;
-                            //                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
-                            //                            return;
                         }
 
                         vp.SetForm(sKey, strWordForm);
@@ -430,10 +424,8 @@ namespace TestUI
                             }
                             catch (Exception ex)
                             {
-                                string sMsg = "Error in buttonLookup_Click: ";
+                                string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
                                 sMsg += ex.Message;
-                                //                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
-                                //                            return;
                             }
 
                             vp.SetForm(sKey, strWordForm);
@@ -466,10 +458,8 @@ namespace TestUI
                             }
                             catch (Exception ex)
                             {
-                                string sMsg = "Error in buttonLookup_Click: ";
+                                string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
                                 sMsg += ex.Message;
-                                //                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
-                                //                            return;
                             }
 
                             vp.SetForm(sKey, strWordForm);
@@ -478,8 +468,95 @@ namespace TestUI
 
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_ADVERBIAL_PRESENT == wf.Subparadigm)
                     {
-                        vp.SetForm ("PresAdverbial", wf.Wordform);
+                        string strWordForm = wf.Wordform;
+                        try
+                        {
+                            if (wf.Stress >= 0)
+                            {
+                                if (wf.Stress >= wf.Wordform.Length)
+                                {
+                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                    return;
+                                }
+                                if (strWordForm[wf.Stress] != 'ё')
+                                {
+                                    string strStressMark = new string('\x301', 1);
+                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
+                            sMsg += ex.Message;
+                        }
+
+                        vp.SetForm("PresAdverbial", strWordForm);
                     }
+
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_ADVERBIAL_PAST == wf.Subparadigm)
+                    {
+                        string strWordForm = wf.Wordform;
+                        try
+                        {
+                            if (wf.Stress >= 0)
+                            {
+                                if (wf.Stress >= wf.Wordform.Length)
+                                {
+                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                    return;
+                                }
+                                if (strWordForm[wf.Stress] != 'ё')
+                                {
+                                    string strStressMark = new string('\x301', 1);
+                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
+                            sMsg += ex.Message;
+                        }
+
+                        vp.SetForm("PastAdverbial", strWordForm);
+                    }
+
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE == wf.Subparadigm)
+                    {
+                        string sKey = "PartPresPassive";
+                        if (wf.Number == MainLib.ET_Number.NUM_SG &&
+                            wf.Gender == MainLib.ET_Gender.GENDER_M &&
+                            wf.Case == MainLib.ET_Case.CASE_NOM)
+                        {
+                            string strWordForm = wf.Wordform;
+                            try
+                            {
+                                if (wf.Stress >= 0)
+                                {
+                                    if (wf.Stress >= wf.Wordform.Length)
+                                    {
+                                        MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                        return;
+                                    }
+                                    if (strWordForm[wf.Stress] != 'ё')
+                                    {
+                                        string strStressMark = new string('\x301', 1);
+                                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
+                                sMsg += ex.Message;
+                            }
+
+                            vp.SetForm(sKey, strWordForm);
+                        }
+                    }
+
+
                 }   // foreach
             }
 
