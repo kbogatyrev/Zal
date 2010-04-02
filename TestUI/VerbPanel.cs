@@ -52,7 +52,9 @@ namespace TestUI
             m_dictForms.Add("ImperativePl", new StCell(textBoxImperativePl));
             m_dictForms.Add("PartPresActive", new StCell(textBoxPartPresActive));
             m_dictForms.Add("PresAdverbial", new StCell(textBoxPresAdverbial));
-            m_dictForms.Add("PartPastActive", new StCell(textBoxPartPastPassive));            
+            m_dictForms.Add("PartPastActive", new StCell(textBoxPartPastActive));
+            m_dictForms.Add("PastAdverbial", new StCell(textBoxPastAdverbial));
+            m_dictForms.Add("PartPresPassive", new StCell(textBoxPartPresPassive));
         }
 
         private void btnShowPresActive_Click (object sender, EventArgs e)
@@ -68,6 +70,14 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent(iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE);
+            }
+        }
+
+        private void btnShowPresPassive_Click (object sender, EventArgs e)
+        {
+            if (ShowParticipialFormsEvent != null)
+            {
+                ShowParticipialFormsEvent(iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE);
             }
         }
     }
