@@ -533,6 +533,7 @@
             this.btnShowPresPassive.TabIndex = 73;
             this.btnShowPresPassive.Text = "Show Forms";
             this.btnShowPresPassive.UseVisualStyleBackColor = true;
+            this.btnShowPresPassive.Click += new System.EventHandler(this.btnShowPresPassive_Click);
             // 
             // btnShowPastPassive
             // 
