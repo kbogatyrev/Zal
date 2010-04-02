@@ -33,7 +33,7 @@ namespace TestUI
             m_dictForms.Add("MASgAnim", new StCell (textBoxMASgAnim));
             m_dictForms.Add("MGSg", new StCell (textBoxMGSg));
             m_dictForms.Add("MLSg", new StCell (textBoxMLSg));
-            m_dictForms.Add("MDSg", new StCell(textBoxMDSg));
+            m_dictForms.Add("MDSg", new StCell (textBoxMDSg));
             m_dictForms.Add("MISg", new StCell (textBoxMISg));
 
             m_dictForms.Add("FNSg", new StCell (textBoxFNSg));
