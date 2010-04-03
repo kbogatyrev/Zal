@@ -21,3 +21,15 @@ CREATE TABLE endings_meta (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, entr
 CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, stem TEXT, endings_link INTEGER);
 
 CREATE TABLE common_deviation (id INTEGER PRIMARY KEY ASC, inflection_id INTEGER, deviation_type INTEGER, is_optional BOOLEAN);
+
+CREATE INDEX idx_common_deviation_id ON common_deviation (id, inflection_id);
+CREATE INDEX idx_descriptor_id ON descriptor (id, word_id);
+CREATE INDEX idx_descriptor_gs ON descriptor (graphic_stem);
+CREATE INDEX idx_descriptor_ms ON descriptor (main_symbol);
+CREATE INDEX idx_descriptor_pos ON descriptor (part_of_speech);
+CREATE INDEX idx_headword_id ON headword (id);
+CREATE INDEX idx_headword_source ON headword (source);
+CREATE INDEX idx_inflection_id ON inflection (id, descriptor_id);
+CREATE INDEX idx_inflection_descr ON inflection (descriptor_id);
+CREATE INDEX idx_stress_id ON stress (id, headword_id);
+CREATE INDEX idx_stress_hw ON stress (headword_id);
