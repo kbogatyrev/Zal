@@ -43,15 +43,15 @@ bool ST_Headword::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64& ll_headwordId)
         }
         if (i_PrimaryStress2 >= 0)
         {
-            b_SaveStressData (pco_dbHandle, ll_headwordId, i_PrimaryStress, true);
+            b_SaveStressData (pco_dbHandle, ll_headwordId, i_PrimaryStress2, true);
         }
         if (i_SecondaryStress >= 0)
         {
-            b_SaveStressData (pco_dbHandle, ll_headwordId, i_PrimaryStress, false);
+            b_SaveStressData (pco_dbHandle, ll_headwordId, i_SecondaryStress, false);
         }
         if (i_SecondaryStress2 >= 0)
         {
-            b_SaveStressData (pco_dbHandle, ll_headwordId, i_PrimaryStress, false);
+            b_SaveStressData (pco_dbHandle, ll_headwordId, i_SecondaryStress2, false);
         }
 
     }
