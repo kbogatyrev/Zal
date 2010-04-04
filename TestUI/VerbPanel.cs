@@ -55,6 +55,7 @@ namespace TestUI
             m_dictForms.Add("PartPastActive", new StCell(textBoxPartPastActive));
             m_dictForms.Add("PastAdverbial", new StCell(textBoxPastAdverbial));
             m_dictForms.Add("PartPresPassive", new StCell(textBoxPartPresPassive));
+            m_dictForms.Add("PartPastPassive", new StCell(textBoxPartPastPassive));
         }
 
         private void btnShowPresActive_Click (object sender, EventArgs e)
@@ -78,6 +79,14 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent(iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE);
+            }
+        }
+
+        private void btnShowPastPassive_Click(object sender, EventArgs e)
+        {
+            if (ShowParticipialFormsEvent != null)
+            {
+                ShowParticipialFormsEvent(iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_PASSIVE);
             }
         }
     }

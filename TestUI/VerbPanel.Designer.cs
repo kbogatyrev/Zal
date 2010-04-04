@@ -544,6 +544,7 @@
             this.btnShowPastPassive.TabIndex = 74;
             this.btnShowPastPassive.Text = "Show Forms";
             this.btnShowPastPassive.UseVisualStyleBackColor = true;
+            this.btnShowPastPassive.Click += new System.EventHandler(this.btnShowPastPassive_Click);
             // 
             // textBox8
             // 
