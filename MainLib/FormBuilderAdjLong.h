@@ -11,11 +11,13 @@ public:
     CT_FormBuilderLongAdj (CT_Lexeme * pco_lexeme, 
                            const wstring& str_lemma,
                            ET_AccentType eo_accentType, 
-                           ET_Subparadigm eo_subparadigm) 
+                           ET_Subparadigm eo_subparadigm,
+                           int i_stemStressPos = -1) 
         : CT_FormBuilderBaseDecl (pco_lexeme),
           str_Lemma (str_lemma),
           eo_AccentType (eo_accentType),
-          eo_Subparadigm (eo_subparadigm)
+          eo_Subparadigm (eo_subparadigm),
+          i_StemStressPos (i_stemStressPos)
     {
         pco_Endings = new CT_AdjLongEndings();
     }
@@ -27,11 +29,11 @@ public:
                                   vector<int>& vec_iStressPos);
     HRESULT h_CreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, CComObject<CT_WordForm> *&);
     HRESULT h_Build();
-    int i_GetStressTemplateFormHash (ET_Subparadigm eo_subparadigm);
     HRESULT h_BuildParticiple();
 
 private:
     wstring str_Lemma;
     ET_AccentType eo_AccentType;
     ET_Subparadigm eo_Subparadigm;
+    int i_StemStressPos;        // participles only
 };
