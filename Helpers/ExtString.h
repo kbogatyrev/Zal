@@ -1304,9 +1304,10 @@ public:
     {
         if (str_Vowels_.length() == 0)
         {
-            ATLASSERT (0);
-            ERROR_LOG (L"Warning: vowels not defined.");
-            return -1;
+            ATLASSERT(0);
+            wstring str_msg (L"Vowels not defined");
+            ERROR_LOG (str_msg);
+            throw CT_Exception (E_FAIL, str_msg);
         }
 
         int i_syllables = 0;
@@ -1336,6 +1337,14 @@ public:
 
     int i_GetVowelPos (int i_vowel = 0)
     {
+        if (str_Vowels_.length() == 0)
+        {
+            ATLASSERT(0);
+            wstring str_msg (L"Vowels not defined");
+            ERROR_LOG (str_msg);
+            throw CT_Exception (E_FAIL, str_msg);
+        }
+
         int i_pos = -1;
         unsigned int ui_at = 0;
         for (int i_ = 0; i_ <= i_vowel; ++i_)
@@ -1354,6 +1363,50 @@ public:
         return i_pos;
     }
     
+    int i_GetSyllableFromVowelPos (int i_absPos)
+    {
+        if (str_Vowels_.length() == 0)
+        {
+            ATLASSERT(0);
+            wstring str_msg (L"Vowels not defined");
+            ERROR_LOG (str_msg);
+            throw CT_Exception (E_FAIL, str_msg);
+        }
+
+        if (length() <= (unsigned int)i_absPos)
+        {
+            ATLASSERT(0);
+            wstring str_msg (L"Vowel position invalid");
+            ERROR_LOG (str_msg);
+            throw CT_Exception (E_INVALIDARG, str_msg);
+        }
+
+        int i_syll = -1;
+        unsigned int ui_at = 0;
+        do
+        {
+            ui_at = find_first_of (str_Vowels_, ui_at);
+            if (wstring::npos != ui_at)
+            {
+                ++i_syll;
+
+                if (ui_at == (unsigned int)i_absPos)
+                {
+                    return i_syll;
+                }
+
+                if (++ui_at > (unsigned int)i_absPos)
+                {
+                    ui_at = wstring::npos;
+                }
+            }
+
+        } while (wstring::npos != ui_at);
+
+        return -1;
+
+    }   //  i_GetSyllableFromVowelPos (...)
+
     void v_SetBreakChars (const wstring& str_break)
     { 
         str_Break_ = str_break; 
