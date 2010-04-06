@@ -671,22 +671,32 @@ namespace TestUI
                     ap.eoNumber = wf.Number;
                     ap.eoSubparadigm = wf.Subparadigm;
                     ap.eoAnimacy = wf.Animacy;
-                    if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE)
+                    if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_PASSIVE
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE)
                     {
                         ap.eoTense = MainLib.ET_Tense.TENSE_PAST;
                     }
-                    if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-                        && wf.Aspect == MainLib.ET_Aspect.ASPECT_IMPERFECTIVE)
+                    if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE)
+                        && wf.Aspect == MainLib.ET_Aspect.ASPECT_PERFECTIVE)
                     {
                         ap.eoTense = MainLib.ET_Tense.TENSE_FUTURE;
                     }
-                    if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-                        && wf.Aspect == MainLib.ET_Aspect.ASPECT_PERFECTIVE)
+                    if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE)
+                        && wf.Aspect == MainLib.ET_Aspect.ASPECT_IMPERFECTIVE)
                     {
                         ap.eoTense = MainLib.ET_Tense.TENSE_PRESENT;
                     }
                     if (wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE)
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_PASSIVE
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE)
                     {
                         ap.eoTense = MainLib.ET_Tense.TENSE_UNDEFINED;
                     }
@@ -694,24 +704,33 @@ namespace TestUI
                     lexPanel.Controls.Add(ap);
                     iWordform++;
                 }
-                //MessageBox.Show ("Analysis not yet implemented.", "Zal Test", MessageBoxButtons.OK);
             }
             else if (radioButtonPreprocess.Checked)
             {
                 bSynthesis = false;
                 try
                 {
+                    int i_Stress = Convert.ToInt32(true); // It should've been bool
+                    if (Regex.IsMatch(textBoxSearchString.Text, (string)">"))
+                    {
+                        i_Stress = Convert.ToInt32(true);
+                    }
+                    else
+                    {
+                        i_Stress = Convert.ToInt32(true); // Test
+                    }
+                    textBoxSearchString.Text = textBoxSearchString.Text.Replace(">", "");
                     if (Regex.IsMatch(textBoxSearchString.Text, (string)"\\-"))
                     {
                         string[] arr_Range = Regex.Split(textBoxSearchString.Text, (string)"([0-9]*)\\-([0-9]*)");
                         long l_start_id = long.Parse(arr_Range[1]);
                         long l_end_id = long.Parse(arr_Range[2]);
-                        m_Analyzer.PrepareLexemes(l_start_id, l_end_id);
+                        m_Analyzer.PrepareLexemes(l_start_id, l_end_id, i_Stress);
                     }
                     else
                     {
                         long l_lexeme_id = long.Parse(textBoxSearchString.Text);
-                        m_Analyzer.PrepareLexeme(l_lexeme_id);
+                        m_Analyzer.PrepareLexeme(l_lexeme_id, i_Stress);
                     }
                 }
                 catch (Exception ex)

@@ -63,8 +63,8 @@ public:
 
 public:
     STDMETHOD (put_DbPath) (BSTR bstr_Path);
-    STDMETHOD (PrepareLexeme) (__int64 ll_Lexeme_id);
-    STDMETHOD (PrepareLexemes) (__int64 ll_First_Lexeme_id, __int64 ll_Last_Lexeme_id);
+    STDMETHOD (PrepareLexeme) (__int64 ll_Lexeme_id, BOOL b_Stress);
+    STDMETHOD (PrepareLexemes) (__int64 ll_First_Lexeme_id, __int64 ll_Last_Lexeme_id, BOOL b_Stress);
     STDMETHOD (Analyze) (BSTR bstr_Wordform);
 
     wstring str_DbPath;
@@ -75,6 +75,7 @@ public:
 
 private:
     CT_Sqlite* pco_db;
+    wstring str_InsertStress(int i_letter, wstring str_);
     int i_LCP(wstring* str_words, wstring** str_pfx, int i_words, int i_pfx);
 };
 
