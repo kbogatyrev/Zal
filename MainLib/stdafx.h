@@ -68,6 +68,8 @@ using namespace std::tr1;
            std::wstring (_T("\t")) + \
            std::wstring (_T(__FUNCTION__)));
 
+#define CYRILLIC
+
 #include "Error.h"
 #include "Exception.h"
 #include "ExtString.h"
