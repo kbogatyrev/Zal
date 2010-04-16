@@ -405,6 +405,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FormDescriptor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Lexeme.cpp"
 				>
 			</File>
@@ -532,6 +536,10 @@
 			</File>
 			<File
 				RelativePath=".\FormBuilderVerbPers.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormDescriptor.h"
 				>
 			</File>
 			<File
