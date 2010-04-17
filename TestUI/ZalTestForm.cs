@@ -92,34 +92,67 @@ namespace TestUI
             vp.ShowParticipialFormsEvent += new VerbPanel.ShowParticipialForms (VerbPanel_ShowParticipialForms);
         }
 
-        public void VerbPanel_ShowParticipialForms (int iLexemeId, MainLib.ET_Subparadigm eoType)
+        public void VerbPanel_ShowParticipialForms (int iLexemeId, 
+                                                    MainLib.ET_Subparadigm eoSpLong, 
+                                                    MainLib.ET_Subparadigm eoSpShort)
         {
             // Expect word forms to be ready by now
             MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
-            AdjPanel ap = new AdjPanel();
-            string strInitialForm = null;
+//            string strInitialForm = null;
 
+            MainLib.IFormDescriptor fd = lexeme.FormDescriptor;
+            fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
+            fd.Subparadigm = eoSpLong;
+            fd.Number = MainLib.ET_Number.NUM_SG;
+            fd.Case = MainLib.ET_Case.CASE_NOM;
+            fd.Gender = MainLib.ET_Gender.GENDER_M;
+            fd.Animacy = MainLib.ET_Animacy.ANIM_NO;
+            fd.Reflexivity = lexeme.IsReflexive;
+            fd.FindForms();
+            if (fd.Count > 0)
+            {
+                MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
+                AdjPanel adjPanel = new AdjPanel();
+                TabPage tabPageDetails = new TabPage (wf.Wordform);
+                tabPageDetails.Controls.Add (adjPanel);
+                tabControl.Controls.Add (tabPageDetails);
+                ShowLongParticipialForms (adjPanel, iLexemeId, eoSpLong);
+                if (MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED != eoSpShort)
+                {
+                    ShowShortParticipialForms (adjPanel, iLexemeId, eoSpShort);
+                }
+            }
+        }
+
+        public void ShowShortParticipialForms (AdjPanel ap, int iLexemeId, MainLib.ET_Subparadigm eoSpShort)
+        {
+        }
+
+        public void ShowLongParticipialForms (AdjPanel ap, int iLexemeId, MainLib.ET_Subparadigm eoSpLong)
+        {
+            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
             foreach (MainLib.IWordForm wf in lexeme)
             {
                 string sKey = "";
 
-                if (eoType != wf.Subparadigm)
+                if (eoSpLong != wf.Subparadigm)
                 {
                     continue;
                 }
 
-                if (MainLib.ET_Number.NUM_SG == wf.Number)
+                if (eoSpLong == wf.Subparadigm && MainLib.ET_Number.NUM_SG == wf.Number)
                 {
                     sKey = m_dictGender[wf.Gender];
                 }
 
-                if (MainLib.ET_Number.NUM_SG == wf.Number &&
-                    MainLib.ET_Gender.GENDER_M == wf.Gender &&
-                    MainLib.ET_Case.CASE_NOM == wf.Case)
-                {
-                    strInitialForm = wf.Wordform;
-                    ap.sLexName = strInitialForm;
-                }
+                //if (eoSpLong == wf.Subparadigm &&
+                //    MainLib.ET_Number.NUM_SG == wf.Number &&
+                //    MainLib.ET_Gender.GENDER_M == wf.Gender &&
+                //    MainLib.ET_Case.CASE_NOM == wf.Case)
+                //{
+                //    strInitialForm = wf.Wordform;
+                //    ap.sLexName = strInitialForm;
+                //}
 
                 sKey += m_dictCase[wf.Case];
                 sKey += (MainLib.ET_Number.NUM_SG == wf.Number) ? "Sg" : "Pl";
@@ -155,10 +188,6 @@ namespace TestUI
                 ap.SetForm(sKey, strWordForm);
 
             }   //  foreach (...)
-
-            TabPage tabPageDetails = new TabPage(strInitialForm);
-            tabPageDetails.Controls.Add(ap);
-            tabControl.Controls.Add(tabPageDetails);
 
         }   //  VerbPanel_ShowParticipialForms (...)
 
@@ -398,7 +427,7 @@ namespace TestUI
                         vp.SetForm(sKey, strWordForm);
                     }
 
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE == wf.Subparadigm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT == wf.Subparadigm)
                     {
                         string sKey = "PartPresActive";
                         if (wf.Number == MainLib.ET_Number.NUM_SG && 
@@ -432,7 +461,7 @@ namespace TestUI
                         }
                     }
 
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE == wf.Subparadigm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT == wf.Subparadigm)
                     {
                         string sKey = "PartPastActive";
                         if (wf.Number == MainLib.ET_Number.NUM_SG &&
@@ -522,7 +551,7 @@ namespace TestUI
                         vp.SetForm("PastAdverbial", strWordForm);
                     }
 
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE == wf.Subparadigm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG == wf.Subparadigm)
                     {
                         string sKey = "PartPresPassive";
                         if (wf.Number == MainLib.ET_Number.NUM_SG &&
@@ -556,7 +585,7 @@ namespace TestUI
                         }
                     }
 
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_PASSIVE == wf.Subparadigm)
+                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG == wf.Subparadigm)
                     {
                         string sKey = "PartPastPassive";
                         if (wf.Number == MainLib.ET_Number.NUM_SG &&
@@ -672,31 +701,31 @@ namespace TestUI
                     ap.eoSubparadigm = wf.Subparadigm;
                     ap.eoAnimacy = wf.Animacy;
                     if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
-                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_PASSIVE
-                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE)
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT)
                     {
                         ap.eoTense = MainLib.ET_Tense.TENSE_PAST;
                     }
                     if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE
-                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE)
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT)
                         && wf.Aspect == MainLib.ET_Aspect.ASPECT_PERFECTIVE)
                     {
                         ap.eoTense = MainLib.ET_Tense.TENSE_FUTURE;
                     }
                     if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE
-                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE)
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG
+                        || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT)
                         && wf.Aspect == MainLib.ET_Aspect.ASPECT_IMPERFECTIVE)
                     {
                         ap.eoTense = MainLib.ET_Tense.TENSE_PRESENT;
                     }
                     if (wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
                         && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
-                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE
-                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_PASSIVE
-                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE
-                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE)
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT
+                        && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG)
                     {
                         ap.eoTense = MainLib.ET_Tense.TENSE_UNDEFINED;
                     }
@@ -822,7 +851,7 @@ namespace TestUI
                 }
                 else
                 {
-                    MessageBox.Show("File Does not exist",
+                    MessageBox.Show ("File Does not exist",
                                      "Zal Test Error",
                                      MessageBoxButtons.OK,
                                      MessageBoxIcon.Exclamation);
