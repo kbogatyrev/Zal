@@ -11,7 +11,9 @@ namespace TestUI
 {
     public partial class VerbPanel : WordFormsPanel
     {
-        public delegate void ShowParticipialForms (int iLexemeId, MainLib.ET_Subparadigm eoSubparadigm);
+        public delegate void ShowParticipialForms (int iLexemeId, 
+                                                   MainLib.ET_Subparadigm eoSubparadigmLong,
+                                                   MainLib.ET_Subparadigm eoSubparadigmShort);
         public event ShowParticipialForms ShowParticipialFormsEvent;
 
         int iLexemeId;
@@ -62,7 +64,9 @@ namespace TestUI
         {
             if (ShowParticipialFormsEvent != null)
             {
-                ShowParticipialFormsEvent (iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_ACTIVE);
+                ShowParticipialFormsEvent (iLexemeId, 
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT,
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
         }
 
@@ -70,7 +74,9 @@ namespace TestUI
         {
             if (ShowParticipialFormsEvent != null)
             {
-                ShowParticipialFormsEvent(iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_ACTIVE);
+                ShowParticipialFormsEvent(iLexemeId,
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT,
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
         }
 
@@ -78,7 +84,9 @@ namespace TestUI
         {
             if (ShowParticipialFormsEvent != null)
             {
-                ShowParticipialFormsEvent(iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PRESENT_PASSIVE);
+                ShowParticipialFormsEvent (iLexemeId, 
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG,
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
         }
 
@@ -86,7 +94,9 @@ namespace TestUI
         {
             if (ShowParticipialFormsEvent != null)
             {
-                ShowParticipialFormsEvent(iLexemeId, MainLib.ET_Subparadigm.SUBPARADIGM_PARTICIPLE_PAST_PASSIVE);
+                ShowParticipialFormsEvent (iLexemeId, 
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG,
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
         }
     }
