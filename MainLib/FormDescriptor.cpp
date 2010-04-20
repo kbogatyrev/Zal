@@ -10,6 +10,7 @@ HRESULT CT_FormDescriptor::FindForms()
 {
     try
     {
+        m_coll.clear();
         v_FormsFromHash();
     }
     catch (CT_Exception co_ex)
