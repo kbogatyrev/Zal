@@ -29,7 +29,6 @@ public:
     HRESULT h_GetStressPositions (const wstring& str_lemma, 
                                   const wstring& str_ending,
                                   ET_StressLocation eo_stressType,
-								  bool b_hasFleetingVowel,
                                   vector<int>& vec_iStressPos);
 
     HRESULT h_CreateFormTemplate (ET_Number eo_number, 
