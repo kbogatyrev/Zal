@@ -156,6 +156,25 @@ namespace TestUI
                     ap.SetForm(sKey, strWordForm);
                 }
             }
+            fd.Number = MainLib.ET_Number.NUM_PL;
+            fd.Gender = MainLib.ET_Gender.GENDER_UNDEFINED;
+            fd.FindForms();
+            if (fd.Count > 0)
+            {
+                MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
+                string sKey = "Short";
+                sKey += m_dictNumber[wf.Number];
+                string strWordForm = wf.Wordform;
+                if (wf.Stress >= 0)
+                {
+                    if (strWordForm[wf.Stress] != 'ё')
+                    {
+                        string strStressMark = new string('\x301', 1);
+                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
+                    }
+                }
+                ap.SetForm(sKey, strWordForm);
+            }
         }
 
         public void ShowLongParticipialForms (AdjPanel ap, int iLexemeId, MainLib.ET_Subparadigm eoSpLong)
