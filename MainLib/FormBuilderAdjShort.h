@@ -7,12 +7,67 @@ using namespace std::tr1;
 class CT_FormBuilderShortAdj : public CT_FormBuilderBaseDecl
 {
 public:
-    CT_FormBuilderShortAdj (CT_Lexeme * pco_lexeme) : CT_FormBuilderBaseDecl (pco_lexeme)
+
+    //
+    // Use with adjectives
+    //
+    CT_FormBuilderShortAdj (CT_Lexeme * pco_lexeme) : 
+        CT_FormBuilderBaseDecl (pco_lexeme),
+        str_Lemma (pco_lexeme->xstr_GraphicStem.c_str()),
+        i_Type (pco_lexeme->i_Type),
+        eo_AccentType1 (pco_Lexeme->eo_AccentType1),
+        eo_AccentType2 (pco_Lexeme->eo_AccentType2),
+        map_CommonDeviations (pco_lexeme->map_CommonDeviations)
+    {
+        if (AT_UNDEFINED == eo_AccentType2)
+        {
+            switch (eo_AccentType1)
+            {
+                case AT_A:
+                {
+                    eo_AccentType2 = AT_A;
+                    break;
+                }
+                case AT_A1:
+                {
+                    eo_AccentType2 = AT_A1;
+                    break;
+                }
+                case AT_B:
+                {
+                    eo_AccentType2 = AT_B;
+                    break;
+                }
+                default:
+                {
+                    ATLASSERT(0);
+                    wstring str_msg (L"Accent type undefined for short forms.");
+                    ERROR_LOG (str_msg);
+                    throw CT_Exception (E_FAIL, str_msg);
+
+                }
+            }       // switch
+        }
+        pco_Endings = new CT_AdjShortEndings();
+    }
+
+    //
+    // Use with participles
+    //
+    CT_FormBuilderShortAdj (CT_Lexeme * pco_lexeme, 
+                            bool b_yoAlternation, 
+                            const wstring& str_lemma,
+                            ET_AccentType eo_accentType1,
+                            ET_AccentType eo_accentType2) : 
+        CT_FormBuilderBaseDecl (pco_lexeme, b_yoAlternation), 
+        str_Lemma (str_lemma), 
+        i_Type (1),
+        eo_AccentType1 (eo_accentType1),
+        eo_AccentType2 (eo_accentType2)
     {
         pco_Endings = new CT_AdjShortEndings();
     }
 
-public:
     HRESULT h_GetEndings();
 
     HRESULT h_StressOnEnding (ET_Number eo_number, ET_Gender eo_gender);
@@ -36,4 +91,11 @@ public:
     HRESULT h_HandleDeviations();
 
     HRESULT h_Build();
+
+private:
+    wstring str_Lemma;
+    int i_Type;
+    ET_AccentType eo_AccentType1, eo_AccentType2;
+    map<int, bool> map_CommonDeviations;
+
 };
