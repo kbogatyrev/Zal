@@ -98,7 +98,6 @@ namespace TestUI
         {
             // Expect word forms to be ready by now
             MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
-//            string strInitialForm = null;
 
             MainLib.IFormDescriptor fd = lexeme.FormDescriptor;
             fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
@@ -126,6 +125,37 @@ namespace TestUI
 
         public void ShowShortParticipialForms (AdjPanel ap, int iLexemeId, MainLib.ET_Subparadigm eoSpShort)
         {
+            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
+
+            MainLib.IFormDescriptor fd = lexeme.FormDescriptor;
+            fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
+            fd.Subparadigm = eoSpShort;
+            fd.Reflexivity = lexeme.IsReflexive;
+            fd.Number = MainLib.ET_Number.NUM_SG;
+            for (MainLib.ET_Gender eo_gender = MainLib.ET_Gender.GENDER_M;
+                 eo_gender < MainLib.ET_Gender.GENDER_COUNT;
+                 ++eo_gender)
+            {
+                fd.Gender = eo_gender;
+                fd.FindForms();
+                if (fd.Count > 0)
+                {
+                    MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
+                    string sKey = "Short";
+                    sKey += m_dictGender[wf.Gender];
+                    sKey += m_dictNumber[wf.Number];
+                    string strWordForm = wf.Wordform;
+                    if (wf.Stress >= 0)
+                    {
+                        if (strWordForm[wf.Stress] != 'ё')
+                        {
+                            string strStressMark = new string('\x301', 1);
+                            strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
+                        }
+                    }
+                    ap.SetForm(sKey, strWordForm);
+                }
+            }
         }
 
         public void ShowLongParticipialForms (AdjPanel ap, int iLexemeId, MainLib.ET_Subparadigm eoSpLong)
@@ -144,15 +174,6 @@ namespace TestUI
                 {
                     sKey = m_dictGender[wf.Gender];
                 }
-
-                //if (eoSpLong == wf.Subparadigm &&
-                //    MainLib.ET_Number.NUM_SG == wf.Number &&
-                //    MainLib.ET_Gender.GENDER_M == wf.Gender &&
-                //    MainLib.ET_Case.CASE_NOM == wf.Case)
-                //{
-                //    strInitialForm = wf.Wordform;
-                //    ap.sLexName = strInitialForm;
-                //}
 
                 sKey += m_dictCase[wf.Case];
                 sKey += (MainLib.ET_Number.NUM_SG == wf.Number) ? "Sg" : "Pl";
