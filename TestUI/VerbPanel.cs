@@ -86,7 +86,7 @@ namespace TestUI
             {
                 ShowParticipialFormsEvent (iLexemeId, 
                                            MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG,
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_SHORT);
             }
         }
 
@@ -96,7 +96,7 @@ namespace TestUI
             {
                 ShowParticipialFormsEvent (iLexemeId, 
                                            MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG,
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
+                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_SHORT);
             }
         }
     }
