@@ -130,7 +130,7 @@ namespace TestUI
             MainLib.IFormDescriptor fd = lexeme.FormDescriptor;
             fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
             fd.Subparadigm = eoSpShort;
-            fd.Reflexivity = lexeme.IsReflexive;
+//            fd.Reflexivity = lexeme.IsReflexive;
             fd.Number = MainLib.ET_Number.NUM_SG;
             for (MainLib.ET_Gender eo_gender = MainLib.ET_Gender.GENDER_M;
                  eo_gender < MainLib.ET_Gender.GENDER_COUNT;
