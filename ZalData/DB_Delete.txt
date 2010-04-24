@@ -1,0 +1,10 @@
+DELETE FROM headword;
+DELETE FROM homonyms;
+DELETE FROM stress;
+DELETE FROM descriptor;
+DELETE FROM difficulties;
+DELETE FROM second_locative;
+DELETE FROM inflection;
+DELETE FROM irregular_forms;
+DELETE FROM endings;
+DELETE FROM common_deviation;
