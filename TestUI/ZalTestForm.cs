@@ -120,6 +120,7 @@ namespace TestUI
                 {
                     ShowShortParticipialForms (adjPanel, iLexemeId, eoSpShort);
                 }
+                tabControl.SelectedTab = tabPageDetails;
             }
         }
 
@@ -138,9 +139,9 @@ namespace TestUI
             {
                 fd.Gender = eo_gender;
                 fd.FindForms();
-                if (fd.Count > 0)
+                for (int iForm = 1; iForm <= fd.Count; ++iForm)
                 {
-                    MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
+                    MainLib.IWordForm wf = (MainLib.IWordForm)fd[iForm];
                     string sKey = "Short";
                     sKey += m_dictGender[wf.Gender];
                     sKey += m_dictNumber[wf.Number];
@@ -159,7 +160,7 @@ namespace TestUI
             fd.Number = MainLib.ET_Number.NUM_PL;
             fd.Gender = MainLib.ET_Gender.GENDER_UNDEFINED;
             fd.FindForms();
-            if (fd.Count > 0)
+            for (int iForm = 1; iForm <= fd.Count; ++iForm)
             {
                 MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
                 string sKey = "Short";
@@ -663,6 +664,7 @@ namespace TestUI
             }
 
             tabControl.Controls.Add(tabPageDetails);
+            tabControl.SelectedTab = tabPageDetails;
 
         }   //  LexemeDataPanel_ShowLexemeDetails (int iLexemeId)
 
