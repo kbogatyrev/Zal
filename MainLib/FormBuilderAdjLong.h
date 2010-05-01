@@ -13,7 +13,7 @@ public:
                            ET_AccentType eo_accentType, 
                            ET_Subparadigm eo_subparadigm,
                            int i_stemStressPos = -1) 
-        : CT_FormBuilderBaseDecl (pco_lexeme),
+        : CT_FormBuilderBaseDecl (pco_lexeme, SUBPARADIGM_LONG_ADJ),
           str_Lemma (str_lemma),
           eo_AccentType (eo_accentType),
           eo_Subparadigm (eo_subparadigm),
@@ -28,6 +28,7 @@ public:
                                   ET_StressLocation,
                                   vector<int>& vec_iStressPos);
     HRESULT h_CreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, CComObject<CT_WordForm> *&);
+    HRESULT h_HandleCommonDeviations (CT_WordForm *);
     HRESULT h_Build();
     HRESULT h_BuildParticiple();
 
