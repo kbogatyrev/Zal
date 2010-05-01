@@ -12,9 +12,8 @@ public:
     // Use with adjectives
     //
     CT_FormBuilderShortAdj (CT_Lexeme * pco_lexeme) : 
-        CT_FormBuilderBaseDecl (pco_lexeme),
+        CT_FormBuilderBaseDecl (pco_lexeme, SUBPARADIGM_SHORT_ADJ),
         str_Lemma (pco_lexeme->xstr_GraphicStem.c_str()),
-        eo_Subparadigm (SUBPARADIGM_SHORT_ADJ),
         i_Type (pco_lexeme->i_Type),
         eo_AccentType1 (pco_Lexeme->eo_AccentType1),
         eo_AccentType2 (pco_Lexeme->eo_AccentType2),
@@ -64,9 +63,8 @@ public:
                             vector<int>& vec_iStressPos,
                             bool b_fleetingVowel,
                             int i_deviation = -1) : 
-        CT_FormBuilderBaseDecl (pco_lexeme, b_fleetingVowel, b_yoAlternation), 
+        CT_FormBuilderBaseDecl (pco_lexeme, eo_subparadigm, b_fleetingVowel, b_yoAlternation), 
         str_Lemma (str_lemma), 
-        eo_Subparadigm (eo_subparadigm),
         i_Type (1),
         vec_IStressPos (vec_iStressPos),
         eo_AccentType1 (eo_accentType1),
@@ -112,7 +110,6 @@ public:
     HRESULT h_Build();
 
 private:
-    ET_Subparadigm eo_Subparadigm;
     wstring str_Lemma;
     int i_Type;
     vector<int> vec_IStressPos;        // Participles only
