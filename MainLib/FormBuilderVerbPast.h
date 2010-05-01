@@ -17,7 +17,8 @@ class CT_FormBuilderPast : public CT_FormBuilderBaseConj
     };
 
 public:
-    CT_FormBuilderPast (CT_Lexeme * pco_lexeme) : CT_FormBuilderBaseConj (pco_lexeme)
+    CT_FormBuilderPast (CT_Lexeme * pco_lexeme) : 
+        CT_FormBuilderBaseConj (pco_lexeme, SUBPARADIGM_PAST_TENSE)
     {}
 
 public:
@@ -38,7 +39,10 @@ public:
                                   ET_Gender eo_gender, 
                                   CComObject<CT_WordForm> *& pco_wordForm);
 
-    HRESULT h_FleetingVowelCheck (wstring& str_verbForm);
+    HRESULT h_Assemble (CT_WordForm * pco_wordForm, 
+                        int i_stressPos, 
+                        wstring& str_lemma, 
+                        wstring& str_ending);
 
     HRESULT h_Build();
 };
