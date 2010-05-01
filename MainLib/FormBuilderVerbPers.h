@@ -7,7 +7,8 @@ using namespace std::tr1;
 class CT_FormBuilderPersonal : public CT_FormBuilderBaseConj
 {
 public:
-    CT_FormBuilderPersonal (CT_Lexeme * pco_lexeme) : CT_FormBuilderBaseConj (pco_lexeme)
+    CT_FormBuilderPersonal (CT_Lexeme * pco_lexeme) : 
+        CT_FormBuilderBaseConj (pco_lexeme, SUBPARADIGM_PRESENT_TENSE)
     {
         pco_Endings = new CT_PersonalEndings();
     }
