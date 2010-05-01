@@ -10,7 +10,8 @@ using namespace std::tr1;
 class CT_FormBuilderNouns : public CT_FormBuilderBaseDecl
 {
 public:
-    CT_FormBuilderNouns (CT_Lexeme * pco_lexeme) : CT_FormBuilderBaseDecl (pco_lexeme)
+    CT_FormBuilderNouns (CT_Lexeme * pco_lexeme) : 
+        CT_FormBuilderBaseDecl (pco_lexeme, SUBPARADIGM_NOUN)
     {
         pco_Endings = new CT_NounEndings();
     }
@@ -36,10 +37,10 @@ public:
                                   const wstring& str_lemma, 
                                   CComObject<CT_WordForm> *&);
 
-    HRESULT h_HandleStress (wstring& str_lemma, 
-                            const wstring& str_ending, 
-                            ET_StressLocation eo_stress, 
-                            CComObject<CT_WordForm> * pco_wordForm);
+    HRESULT h_Assemble (CT_WordForm *, 
+                        ET_StressLocation,
+                        int i_stressPos, 
+                        const wstring& str_ending);
 
     HRESULT h_Build();
 
