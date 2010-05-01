@@ -9,7 +9,8 @@ using namespace std::tr1;
 class CT_FormBuilderImperative : public CT_FormBuilderBaseConj
 {
 public:
-    CT_FormBuilderImperative (CT_Lexeme * pco_lexeme) : CT_FormBuilderBaseConj (pco_lexeme)
+    CT_FormBuilderImperative (CT_Lexeme * pco_lexeme) : 
+        CT_FormBuilderBaseConj (pco_lexeme, SUBPARADIGM_IMPERATIVE)
     {}
 
 public:
@@ -22,5 +23,8 @@ public:
                                   wstring& str_ending,
                                   ET_Number eo_number,
                                   CComObject<CT_WordForm> *& pco_wordForm);
+
+    HRESULT h_HandleCommonDeviations (CT_WordForm * pco_wordForm);
+
     HRESULT h_Build();
 };
