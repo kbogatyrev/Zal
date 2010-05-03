@@ -105,7 +105,7 @@ public:
                               const wstring& str_ending,
                               wstring& str_lemma);
 
-    HRESULT h_HandleDeviations();
+    HRESULT h_HandleDeviations (CT_WordForm *);
 
     HRESULT h_Build();
 
