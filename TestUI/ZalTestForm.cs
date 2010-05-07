@@ -162,7 +162,7 @@ namespace TestUI
             fd.FindForms();
             for (int iForm = 1; iForm <= fd.Count; ++iForm)
             {
-                MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
+                MainLib.IWordForm wf = (MainLib.IWordForm)fd[iForm];
                 string sKey = "Short";
                 sKey += m_dictNumber[wf.Number];
                 string strWordForm = wf.Wordform;
