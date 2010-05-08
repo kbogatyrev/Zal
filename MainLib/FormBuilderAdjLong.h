@@ -24,12 +24,22 @@ public:
 
 public:
     HRESULT h_GetEndings();
+
     HRESULT h_GetStressPositions (const wstring&,
                                   ET_StressLocation,
                                   vector<int>& vec_iStressPos);
-    HRESULT h_CreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, CComObject<CT_WordForm> *&);
+
+    HRESULT h_CreateFormTemplate (ET_Gender, 
+                                  ET_Number, 
+                                  ET_Case, 
+                                  ET_Animacy, 
+                                  const wstring& str_ending,
+                                  CComObject<CT_WordForm> *&); 
+
     HRESULT h_HandleCommonDeviations (CT_WordForm *);
+
     HRESULT h_Build();
+
     HRESULT h_BuildParticiple();
 
 private:
