@@ -179,6 +179,7 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
             {
                 co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
+                //co_gram.str_Lemma = str_Source;
                 co_gram.i_DecodeString((wstring)result[1]);
                 pco_dbHandle->v_PrepareForInsert (L"irregular_forms", 3);
                 pco_dbHandle->v_Bind (1, ll_descriptorId);
