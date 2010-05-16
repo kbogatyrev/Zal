@@ -41,6 +41,7 @@
             this.textBoxAdvanced = new System.Windows.Forms.TextBox();
             this.textBoxAdvancedValue = new System.Windows.Forms.TextBox();
             this.buttonShowWF = new System.Windows.Forms.Button();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxInitForm
@@ -50,15 +51,18 @@
             this.textBoxInitForm.Name = "textBoxInitForm";
             this.textBoxInitForm.ReadOnly = true;
             this.textBoxInitForm.Size = new System.Drawing.Size(100, 20);
-            this.textBoxInitForm.TabIndex = 0;
+            this.textBoxInitForm.TabIndex = 5;
+            this.textBoxInitForm.TabStop = false;
             this.textBoxInitForm.Text = "Initial Form";
             // 
             // textBoxInitFormValue
             // 
             this.textBoxInitFormValue.Location = new System.Drawing.Point(124, 9);
             this.textBoxInitFormValue.Name = "textBoxInitFormValue";
+            this.textBoxInitFormValue.ReadOnly = true;
             this.textBoxInitFormValue.Size = new System.Drawing.Size(185, 20);
-            this.textBoxInitFormValue.TabIndex = 1;
+            this.textBoxInitFormValue.TabIndex = 7;
+            this.textBoxInitFormValue.TabStop = false;
             // 
             // textBoxGrStem
             // 
@@ -68,14 +72,17 @@
             this.textBoxGrStem.ReadOnly = true;
             this.textBoxGrStem.Size = new System.Drawing.Size(100, 20);
             this.textBoxGrStem.TabIndex = 2;
+            this.textBoxGrStem.TabStop = false;
             this.textBoxGrStem.Text = "Graphic Stem";
             // 
             // textBoxGrStemValue
             // 
             this.textBoxGrStemValue.Location = new System.Drawing.Point(124, 36);
             this.textBoxGrStemValue.Name = "textBoxGrStemValue";
+            this.textBoxGrStemValue.ReadOnly = true;
             this.textBoxGrStemValue.Size = new System.Drawing.Size(185, 20);
             this.textBoxGrStemValue.TabIndex = 3;
+            this.textBoxGrStemValue.TabStop = false;
             // 
             // textBoxMainSymb
             // 
@@ -85,14 +92,17 @@
             this.textBoxMainSymb.ReadOnly = true;
             this.textBoxMainSymb.Size = new System.Drawing.Size(100, 20);
             this.textBoxMainSymb.TabIndex = 4;
+            this.textBoxMainSymb.TabStop = false;
             this.textBoxMainSymb.Text = "Main Symbol";
             // 
             // textBoxMainSymbValue
             // 
             this.textBoxMainSymbValue.Location = new System.Drawing.Point(124, 63);
             this.textBoxMainSymbValue.Name = "textBoxMainSymbValue";
+            this.textBoxMainSymbValue.ReadOnly = true;
             this.textBoxMainSymbValue.Size = new System.Drawing.Size(185, 20);
-            this.textBoxMainSymbValue.TabIndex = 5;
+            this.textBoxMainSymbValue.TabIndex = 3;
+            this.textBoxMainSymbValue.TabStop = false;
             // 
             // textBoxType
             // 
@@ -102,14 +112,17 @@
             this.textBoxType.ReadOnly = true;
             this.textBoxType.Size = new System.Drawing.Size(100, 20);
             this.textBoxType.TabIndex = 6;
+            this.textBoxType.TabStop = false;
             this.textBoxType.Text = "Type";
             // 
             // textBoxTypeValue
             // 
             this.textBoxTypeValue.Location = new System.Drawing.Point(125, 90);
             this.textBoxTypeValue.Name = "textBoxTypeValue";
+            this.textBoxTypeValue.ReadOnly = true;
             this.textBoxTypeValue.Size = new System.Drawing.Size(184, 20);
             this.textBoxTypeValue.TabIndex = 7;
+            this.textBoxTypeValue.TabStop = false;
             // 
             // textBoxStress
             // 
@@ -119,14 +132,17 @@
             this.textBoxStress.ReadOnly = true;
             this.textBoxStress.Size = new System.Drawing.Size(100, 20);
             this.textBoxStress.TabIndex = 8;
+            this.textBoxStress.TabStop = false;
             this.textBoxStress.Text = "Stress Type";
             // 
             // textBoxStressTypeValue
             // 
             this.textBoxStressTypeValue.Location = new System.Drawing.Point(125, 117);
             this.textBoxStressTypeValue.Name = "textBoxStressTypeValue";
+            this.textBoxStressTypeValue.ReadOnly = true;
             this.textBoxStressTypeValue.Size = new System.Drawing.Size(184, 20);
             this.textBoxStressTypeValue.TabIndex = 9;
+            this.textBoxStressTypeValue.TabStop = false;
             // 
             // textBoxAdvanced
             // 
@@ -136,6 +152,7 @@
             this.textBoxAdvanced.ReadOnly = true;
             this.textBoxAdvanced.Size = new System.Drawing.Size(100, 20);
             this.textBoxAdvanced.TabIndex = 10;
+            this.textBoxAdvanced.TabStop = false;
             this.textBoxAdvanced.Text = "Advanced";
             // 
             // textBoxAdvancedValue
@@ -143,24 +160,38 @@
             this.textBoxAdvancedValue.Location = new System.Drawing.Point(125, 142);
             this.textBoxAdvancedValue.Multiline = true;
             this.textBoxAdvancedValue.Name = "textBoxAdvancedValue";
+            this.textBoxAdvancedValue.ReadOnly = true;
             this.textBoxAdvancedValue.Size = new System.Drawing.Size(184, 49);
             this.textBoxAdvancedValue.TabIndex = 11;
+            this.textBoxAdvancedValue.TabStop = false;
             // 
             // buttonShowWF
             // 
-            this.buttonShowWF.Location = new System.Drawing.Point(324, 87);
+            this.buttonShowWF.Location = new System.Drawing.Point(324, 73);
             this.buttonShowWF.Name = "buttonShowWF";
             this.buttonShowWF.Size = new System.Drawing.Size(75, 23);
-            this.buttonShowWF.TabIndex = 12;
+            this.buttonShowWF.TabIndex = 1;
             this.buttonShowWF.Text = "Show Forms";
             this.buttonShowWF.UseVisualStyleBackColor = true;
             this.buttonShowWF.Click += new System.EventHandler(this.buttonShowWF_Click);
+            this.buttonShowWF.Enter += new System.EventHandler(this.buttonShowWF_Click);
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(324, 102);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.TabIndex = 2;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // LexemeDataPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonShowWF);
             this.Controls.Add(this.textBoxAdvancedValue);
             this.Controls.Add(this.textBoxAdvanced);
@@ -196,5 +227,6 @@
         private System.Windows.Forms.TextBox textBoxAdvanced;
         private System.Windows.Forms.TextBox textBoxAdvancedValue;
         private System.Windows.Forms.Button buttonShowWF;
+        private System.Windows.Forms.Button buttonSave;
     }
 }
