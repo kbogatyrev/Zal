@@ -107,6 +107,7 @@
             this.textBoxLabelSg.Name = "textBoxLabelSg";
             this.textBoxLabelSg.Size = new System.Drawing.Size(62, 24);
             this.textBoxLabelSg.TabIndex = 52;
+            this.textBoxLabelSg.TabStop = false;
             this.textBoxLabelSg.Text = "M Sg";
             this.textBoxLabelSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -119,6 +120,7 @@
             this.textBoxLabelISg.Name = "textBoxLabelISg";
             this.textBoxLabelISg.Size = new System.Drawing.Size(62, 24);
             this.textBoxLabelISg.TabIndex = 45;
+            this.textBoxLabelISg.TabStop = false;
             this.textBoxLabelISg.Text = "I";
             this.textBoxLabelISg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -131,6 +133,7 @@
             this.textBoxLabelDSg.Name = "textBoxLabelDSg";
             this.textBoxLabelDSg.Size = new System.Drawing.Size(62, 24);
             this.textBoxLabelDSg.TabIndex = 43;
+            this.textBoxLabelDSg.TabStop = false;
             this.textBoxLabelDSg.Text = "D";
             this.textBoxLabelDSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -143,6 +146,7 @@
             this.textBoxLabelLSg.Name = "textBoxLabelLSg";
             this.textBoxLabelLSg.Size = new System.Drawing.Size(62, 24);
             this.textBoxLabelLSg.TabIndex = 40;
+            this.textBoxLabelLSg.TabStop = false;
             this.textBoxLabelLSg.Text = "L";
             this.textBoxLabelLSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -155,6 +159,7 @@
             this.textBoxLabelGSg.Name = "textBoxLabelGSg";
             this.textBoxLabelGSg.Size = new System.Drawing.Size(62, 24);
             this.textBoxLabelGSg.TabIndex = 38;
+            this.textBoxLabelGSg.TabStop = false;
             this.textBoxLabelGSg.Text = "G";
             this.textBoxLabelGSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -167,6 +172,7 @@
             this.textBoxLabelMASgInanim.Name = "textBoxLabelMASgInanim";
             this.textBoxLabelMASgInanim.Size = new System.Drawing.Size(62, 24);
             this.textBoxLabelMASgInanim.TabIndex = 36;
+            this.textBoxLabelMASgInanim.TabStop = false;
             this.textBoxLabelMASgInanim.Text = "A Inanim.";
             this.textBoxLabelMASgInanim.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -179,6 +185,7 @@
             this.textBoxLabelNSg.Name = "textBoxLabelNSg";
             this.textBoxLabelNSg.Size = new System.Drawing.Size(62, 24);
             this.textBoxLabelNSg.TabIndex = 35;
+            this.textBoxLabelNSg.TabStop = false;
             this.textBoxLabelNSg.Text = "N";
             this.textBoxLabelNSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -190,6 +197,7 @@
             this.textBoxMISg.ReadOnly = true;
             this.textBoxMISg.Size = new System.Drawing.Size(215, 24);
             this.textBoxMISg.TabIndex = 33;
+            this.textBoxMISg.TabStop = false;
             // 
             // textBoxMDSg
             // 
@@ -199,6 +207,7 @@
             this.textBoxMDSg.ReadOnly = true;
             this.textBoxMDSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxMDSg.TabIndex = 32;
+            this.textBoxMDSg.TabStop = false;
             // 
             // textBoxMLSg
             // 
@@ -208,6 +217,7 @@
             this.textBoxMLSg.ReadOnly = true;
             this.textBoxMLSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxMLSg.TabIndex = 31;
+            this.textBoxMLSg.TabStop = false;
             // 
             // textBoxMGSg
             // 
@@ -217,6 +227,7 @@
             this.textBoxMGSg.ReadOnly = true;
             this.textBoxMGSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxMGSg.TabIndex = 30;
+            this.textBoxMGSg.TabStop = false;
             // 
             // textBoxMASgInanim
             // 
@@ -226,6 +237,7 @@
             this.textBoxMASgInanim.ReadOnly = true;
             this.textBoxMASgInanim.Size = new System.Drawing.Size(215, 24);
             this.textBoxMASgInanim.TabIndex = 29;
+            this.textBoxMASgInanim.TabStop = false;
             // 
             // textBoxMNSg
             // 
@@ -235,6 +247,7 @@
             this.textBoxMNSg.ReadOnly = true;
             this.textBoxMNSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxMNSg.TabIndex = 28;
+            this.textBoxMNSg.TabStop = false;
             // 
             // textBoxLexName
             // 
@@ -245,6 +258,7 @@
             this.textBoxLexName.ReadOnly = true;
             this.textBoxLexName.Size = new System.Drawing.Size(188, 24);
             this.textBoxLexName.TabIndex = 27;
+            this.textBoxLexName.TabStop = false;
             // 
             // textBox1
             // 
@@ -255,6 +269,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(29, 24);
             this.textBox1.TabIndex = 79;
+            this.textBox1.TabStop = false;
             this.textBox1.Text = "Pl";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -267,6 +282,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(62, 24);
             this.textBox2.TabIndex = 78;
+            this.textBox2.TabStop = false;
             this.textBox2.Text = "F Sg";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -279,6 +295,7 @@
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(62, 24);
             this.textBox3.TabIndex = 77;
+            this.textBox3.TabStop = false;
             this.textBox3.Text = "I";
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -291,6 +308,7 @@
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(62, 24);
             this.textBox4.TabIndex = 76;
+            this.textBox4.TabStop = false;
             this.textBox4.Text = "D";
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -303,6 +321,7 @@
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(62, 24);
             this.textBox5.TabIndex = 75;
+            this.textBox5.TabStop = false;
             this.textBox5.Text = "L";
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -315,6 +334,7 @@
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(62, 24);
             this.textBox6.TabIndex = 74;
+            this.textBox6.TabStop = false;
             this.textBox6.Text = "G";
             this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -327,6 +347,7 @@
             this.textBox7.ReadOnly = true;
             this.textBox7.Size = new System.Drawing.Size(62, 24);
             this.textBox7.TabIndex = 73;
+            this.textBox7.TabStop = false;
             this.textBox7.Text = "A Inanim.";
             this.textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -339,6 +360,7 @@
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(62, 24);
             this.textBox8.TabIndex = 72;
+            this.textBox8.TabStop = false;
             this.textBox8.Text = "N";
             this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -350,6 +372,7 @@
             this.textBoxIPl.ReadOnly = true;
             this.textBoxIPl.Size = new System.Drawing.Size(215, 24);
             this.textBoxIPl.TabIndex = 70;
+            this.textBoxIPl.TabStop = false;
             // 
             // textBoxDPl
             // 
@@ -359,6 +382,7 @@
             this.textBoxDPl.ReadOnly = true;
             this.textBoxDPl.Size = new System.Drawing.Size(215, 24);
             this.textBoxDPl.TabIndex = 68;
+            this.textBoxDPl.TabStop = false;
             // 
             // textBoxLPl
             // 
@@ -368,6 +392,7 @@
             this.textBoxLPl.ReadOnly = true;
             this.textBoxLPl.Size = new System.Drawing.Size(215, 24);
             this.textBoxLPl.TabIndex = 67;
+            this.textBoxLPl.TabStop = false;
             // 
             // textBoxGPl
             // 
@@ -377,6 +402,7 @@
             this.textBoxGPl.ReadOnly = true;
             this.textBoxGPl.Size = new System.Drawing.Size(215, 24);
             this.textBoxGPl.TabIndex = 65;
+            this.textBoxGPl.TabStop = false;
             // 
             // textBoxAPlInanim
             // 
@@ -386,6 +412,7 @@
             this.textBoxAPlInanim.ReadOnly = true;
             this.textBoxAPlInanim.Size = new System.Drawing.Size(215, 24);
             this.textBoxAPlInanim.TabIndex = 63;
+            this.textBoxAPlInanim.TabStop = false;
             // 
             // textBoxNPl
             // 
@@ -395,6 +422,7 @@
             this.textBoxNPl.ReadOnly = true;
             this.textBoxNPl.Size = new System.Drawing.Size(215, 24);
             this.textBoxNPl.TabIndex = 60;
+            this.textBoxNPl.TabStop = false;
             // 
             // textBox15
             // 
@@ -405,6 +433,7 @@
             this.textBox15.Name = "textBox15";
             this.textBox15.Size = new System.Drawing.Size(62, 24);
             this.textBox15.TabIndex = 71;
+            this.textBox15.TabStop = false;
             this.textBox15.Text = "I";
             this.textBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -417,6 +446,7 @@
             this.textBox16.Name = "textBox16";
             this.textBox16.Size = new System.Drawing.Size(62, 24);
             this.textBox16.TabIndex = 69;
+            this.textBox16.TabStop = false;
             this.textBox16.Text = "D";
             this.textBox16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -429,6 +459,7 @@
             this.textBox17.Name = "textBox17";
             this.textBox17.Size = new System.Drawing.Size(62, 24);
             this.textBox17.TabIndex = 66;
+            this.textBox17.TabStop = false;
             this.textBox17.Text = "L";
             this.textBox17.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -441,6 +472,7 @@
             this.textBox18.Name = "textBox18";
             this.textBox18.Size = new System.Drawing.Size(62, 24);
             this.textBox18.TabIndex = 64;
+            this.textBox18.TabStop = false;
             this.textBox18.Text = "G";
             this.textBox18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -453,6 +485,7 @@
             this.textBox19.Name = "textBox19";
             this.textBox19.Size = new System.Drawing.Size(62, 24);
             this.textBox19.TabIndex = 62;
+            this.textBox19.TabStop = false;
             this.textBox19.Text = "A";
             this.textBox19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -465,6 +498,7 @@
             this.textBox20.Name = "textBox20";
             this.textBox20.Size = new System.Drawing.Size(62, 24);
             this.textBox20.TabIndex = 61;
+            this.textBox20.TabStop = false;
             this.textBox20.Text = "N";
             this.textBox20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -476,6 +510,7 @@
             this.textBoxFISg.ReadOnly = true;
             this.textBoxFISg.Size = new System.Drawing.Size(215, 24);
             this.textBoxFISg.TabIndex = 59;
+            this.textBoxFISg.TabStop = false;
             // 
             // textBoxFDSg
             // 
@@ -485,6 +520,7 @@
             this.textBoxFDSg.ReadOnly = true;
             this.textBoxFDSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxFDSg.TabIndex = 58;
+            this.textBoxFDSg.TabStop = false;
             // 
             // textBoxFLSg
             // 
@@ -494,6 +530,7 @@
             this.textBoxFLSg.ReadOnly = true;
             this.textBoxFLSg.Size = new System.Drawing.Size(216, 24);
             this.textBoxFLSg.TabIndex = 57;
+            this.textBoxFLSg.TabStop = false;
             // 
             // textBoxFGSg
             // 
@@ -503,6 +540,7 @@
             this.textBoxFGSg.ReadOnly = true;
             this.textBoxFGSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxFGSg.TabIndex = 56;
+            this.textBoxFGSg.TabStop = false;
             // 
             // textBoxFASg
             // 
@@ -512,6 +550,7 @@
             this.textBoxFASg.ReadOnly = true;
             this.textBoxFASg.Size = new System.Drawing.Size(215, 24);
             this.textBoxFASg.TabIndex = 55;
+            this.textBoxFASg.TabStop = false;
             // 
             // textBoxFNSg
             // 
@@ -521,6 +560,7 @@
             this.textBoxFNSg.ReadOnly = true;
             this.textBoxFNSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxFNSg.TabIndex = 54;
+            this.textBoxFNSg.TabStop = false;
             // 
             // textBox28
             // 
@@ -531,6 +571,7 @@
             this.textBox28.Name = "textBox28";
             this.textBox28.Size = new System.Drawing.Size(62, 24);
             this.textBox28.TabIndex = 105;
+            this.textBox28.TabStop = false;
             this.textBox28.Text = "N Sg";
             this.textBox28.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -543,6 +584,7 @@
             this.textBox41.Name = "textBox41";
             this.textBox41.Size = new System.Drawing.Size(62, 24);
             this.textBox41.TabIndex = 98;
+            this.textBox41.TabStop = false;
             this.textBox41.Text = "I";
             this.textBox41.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -555,6 +597,7 @@
             this.textBox42.Name = "textBox42";
             this.textBox42.Size = new System.Drawing.Size(62, 24);
             this.textBox42.TabIndex = 96;
+            this.textBox42.TabStop = false;
             this.textBox42.Text = "D";
             this.textBox42.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -567,6 +610,7 @@
             this.textBox43.Name = "textBox43";
             this.textBox43.Size = new System.Drawing.Size(62, 24);
             this.textBox43.TabIndex = 93;
+            this.textBox43.TabStop = false;
             this.textBox43.Text = "L";
             this.textBox43.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -579,6 +623,7 @@
             this.textBox44.Name = "textBox44";
             this.textBox44.Size = new System.Drawing.Size(62, 24);
             this.textBox44.TabIndex = 91;
+            this.textBox44.TabStop = false;
             this.textBox44.Text = "G";
             this.textBox44.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -591,6 +636,7 @@
             this.textBox45.Name = "textBox45";
             this.textBox45.Size = new System.Drawing.Size(62, 24);
             this.textBox45.TabIndex = 89;
+            this.textBox45.TabStop = false;
             this.textBox45.Text = "A";
             this.textBox45.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -603,6 +649,7 @@
             this.textBox46.Name = "textBox46";
             this.textBox46.Size = new System.Drawing.Size(62, 24);
             this.textBox46.TabIndex = 88;
+            this.textBox46.TabStop = false;
             this.textBox46.Text = "N";
             this.textBox46.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -614,6 +661,7 @@
             this.textBoxNISg.ReadOnly = true;
             this.textBoxNISg.Size = new System.Drawing.Size(215, 24);
             this.textBoxNISg.TabIndex = 86;
+            this.textBoxNISg.TabStop = false;
             // 
             // textBoxNDSg
             // 
@@ -623,6 +671,7 @@
             this.textBoxNDSg.ReadOnly = true;
             this.textBoxNDSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxNDSg.TabIndex = 85;
+            this.textBoxNDSg.TabStop = false;
             // 
             // textBoxNLSg
             // 
@@ -632,6 +681,7 @@
             this.textBoxNLSg.ReadOnly = true;
             this.textBoxNLSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxNLSg.TabIndex = 84;
+            this.textBoxNLSg.TabStop = false;
             // 
             // textBoxNGSg
             // 
@@ -641,6 +691,7 @@
             this.textBoxNGSg.ReadOnly = true;
             this.textBoxNGSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxNGSg.TabIndex = 83;
+            this.textBoxNGSg.TabStop = false;
             // 
             // textBoxNASg
             // 
@@ -650,6 +701,7 @@
             this.textBoxNASg.ReadOnly = true;
             this.textBoxNASg.Size = new System.Drawing.Size(215, 24);
             this.textBoxNASg.TabIndex = 82;
+            this.textBoxNASg.TabStop = false;
             // 
             // textBoxNNSg
             // 
@@ -659,6 +711,7 @@
             this.textBoxNNSg.ReadOnly = true;
             this.textBoxNNSg.Size = new System.Drawing.Size(215, 24);
             this.textBoxNNSg.TabIndex = 81;
+            this.textBoxNNSg.TabStop = false;
             // 
             // textBox9
             // 
@@ -669,6 +722,7 @@
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(62, 24);
             this.textBox9.TabIndex = 110;
+            this.textBox9.TabStop = false;
             this.textBox9.Text = "A Anim.";
             this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -680,6 +734,7 @@
             this.textBoxMASgAnim.ReadOnly = true;
             this.textBoxMASgAnim.Size = new System.Drawing.Size(215, 24);
             this.textBoxMASgAnim.TabIndex = 109;
+            this.textBoxMASgAnim.TabStop = false;
             // 
             // textBox10
             // 
@@ -690,6 +745,7 @@
             this.textBox10.ReadOnly = true;
             this.textBox10.Size = new System.Drawing.Size(62, 24);
             this.textBox10.TabIndex = 112;
+            this.textBox10.TabStop = false;
             this.textBox10.Text = "A Anim.";
             this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -701,6 +757,7 @@
             this.textBoxAPlAnim.ReadOnly = true;
             this.textBoxAPlAnim.Size = new System.Drawing.Size(215, 24);
             this.textBoxAPlAnim.TabIndex = 111;
+            this.textBoxAPlAnim.TabStop = false;
             // 
             // textBox11
             // 
@@ -711,6 +768,7 @@
             this.textBox11.ReadOnly = true;
             this.textBox11.Size = new System.Drawing.Size(80, 24);
             this.textBox11.TabIndex = 113;
+            this.textBox11.TabStop = false;
             this.textBox11.Text = "Short Forms";
             this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -723,6 +781,7 @@
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(62, 24);
             this.textBox12.TabIndex = 115;
+            this.textBox12.TabStop = false;
             this.textBox12.Text = "M Sg";
             this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -734,6 +793,7 @@
             this.textBoxShortM.ReadOnly = true;
             this.textBoxShortM.Size = new System.Drawing.Size(215, 24);
             this.textBoxShortM.TabIndex = 114;
+            this.textBoxShortM.TabStop = false;
             // 
             // textBox13
             // 
@@ -744,6 +804,7 @@
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(62, 24);
             this.textBox13.TabIndex = 117;
+            this.textBox13.TabStop = false;
             this.textBox13.Text = "F Sg";
             this.textBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -755,6 +816,7 @@
             this.textBoxShortF.ReadOnly = true;
             this.textBoxShortF.Size = new System.Drawing.Size(215, 24);
             this.textBoxShortF.TabIndex = 116;
+            this.textBoxShortF.TabStop = false;
             // 
             // textBox21
             // 
@@ -765,6 +827,7 @@
             this.textBox21.Name = "textBox21";
             this.textBox21.Size = new System.Drawing.Size(62, 24);
             this.textBox21.TabIndex = 119;
+            this.textBox21.TabStop = false;
             this.textBox21.Text = "N Sg";
             this.textBox21.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -776,6 +839,7 @@
             this.textBoxShortN.ReadOnly = true;
             this.textBoxShortN.Size = new System.Drawing.Size(215, 24);
             this.textBoxShortN.TabIndex = 118;
+            this.textBoxShortN.TabStop = false;
             // 
             // textBox23
             // 
@@ -786,6 +850,7 @@
             this.textBox23.Name = "textBox23";
             this.textBox23.Size = new System.Drawing.Size(62, 24);
             this.textBox23.TabIndex = 121;
+            this.textBox23.TabStop = false;
             this.textBox23.Text = "Pl";
             this.textBox23.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -797,6 +862,7 @@
             this.textBoxShortPl.ReadOnly = true;
             this.textBoxShortPl.Size = new System.Drawing.Size(215, 24);
             this.textBoxShortPl.TabIndex = 120;
+            this.textBoxShortPl.TabStop = false;
             // 
             // textBox14
             // 
@@ -807,6 +873,7 @@
             this.textBox14.ReadOnly = true;
             this.textBox14.Size = new System.Drawing.Size(80, 24);
             this.textBox14.TabIndex = 122;
+            this.textBox14.TabStop = false;
             this.textBox14.Text = "Comparative";
             this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -818,6 +885,7 @@
             this.textBoxComparative.ReadOnly = true;
             this.textBoxComparative.Size = new System.Drawing.Size(215, 24);
             this.textBoxComparative.TabIndex = 123;
+            this.textBoxComparative.TabStop = false;
             // 
             // AdjPanel
             // 
