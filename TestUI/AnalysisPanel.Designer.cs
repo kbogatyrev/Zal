@@ -195,6 +195,7 @@
             this.TextBox_Animacy.ReadOnly = true;
             this.TextBox_Animacy.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Animacy.TabIndex = 23;
+            this.TextBox_Animacy.TabStop = false;
             // 
             // TextBox_Subparadigm
             // 
@@ -203,6 +204,7 @@
             this.TextBox_Subparadigm.ReadOnly = true;
             this.TextBox_Subparadigm.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Subparadigm.TabIndex = 22;
+            this.TextBox_Subparadigm.TabStop = false;
             // 
             // TextBox_Number
             // 
@@ -211,6 +213,7 @@
             this.TextBox_Number.ReadOnly = true;
             this.TextBox_Number.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Number.TabIndex = 21;
+            this.TextBox_Number.TabStop = false;
             // 
             // TextBox_Case
             // 
@@ -219,6 +222,7 @@
             this.TextBox_Case.ReadOnly = true;
             this.TextBox_Case.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Case.TabIndex = 20;
+            this.TextBox_Case.TabStop = false;
             // 
             // TextBox_Gender
             // 
@@ -227,6 +231,7 @@
             this.TextBox_Gender.ReadOnly = true;
             this.TextBox_Gender.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Gender.TabIndex = 19;
+            this.TextBox_Gender.TabStop = false;
             // 
             // VerbFeatures
             // 
@@ -255,6 +260,7 @@
             this.TextBox_Special.ReadOnly = true;
             this.TextBox_Special.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Special.TabIndex = 20;
+            this.TextBox_Special.TabStop = false;
             // 
             // TextBox_Reflective
             // 
@@ -263,6 +269,7 @@
             this.TextBox_Reflective.ReadOnly = true;
             this.TextBox_Reflective.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Reflective.TabIndex = 19;
+            this.TextBox_Reflective.TabStop = false;
             // 
             // TextBox_Voice
             // 
@@ -271,6 +278,7 @@
             this.TextBox_Voice.ReadOnly = true;
             this.TextBox_Voice.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Voice.TabIndex = 18;
+            this.TextBox_Voice.TabStop = false;
             // 
             // TextBox_Person
             // 
@@ -279,6 +287,7 @@
             this.TextBox_Person.ReadOnly = true;
             this.TextBox_Person.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Person.TabIndex = 17;
+            this.TextBox_Person.TabStop = false;
             // 
             // TextBox_Tense
             // 
@@ -287,6 +296,7 @@
             this.TextBox_Tense.ReadOnly = true;
             this.TextBox_Tense.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Tense.TabIndex = 16;
+            this.TextBox_Tense.TabStop = false;
             // 
             // label15
             // 
@@ -331,6 +341,7 @@
             this.TextBox_Wordform.ReadOnly = true;
             this.TextBox_Wordform.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Wordform.TabIndex = 15;
+            this.TextBox_Wordform.TabStop = false;
             // 
             // TextBox_Lemma
             // 
@@ -339,6 +350,7 @@
             this.TextBox_Lemma.ReadOnly = true;
             this.TextBox_Lemma.Size = new System.Drawing.Size(147, 20);
             this.TextBox_Lemma.TabIndex = 16;
+            this.TextBox_Lemma.TabStop = false;
             // 
             // TextBox_ID
             // 
@@ -347,6 +359,7 @@
             this.TextBox_ID.ReadOnly = true;
             this.TextBox_ID.Size = new System.Drawing.Size(147, 20);
             this.TextBox_ID.TabIndex = 17;
+            this.TextBox_ID.TabStop = false;
             // 
             // TextBox_POS
             // 
@@ -355,6 +368,7 @@
             this.TextBox_POS.ReadOnly = true;
             this.TextBox_POS.Size = new System.Drawing.Size(147, 20);
             this.TextBox_POS.TabIndex = 18;
+            this.TextBox_POS.TabStop = false;
             // 
             // TextBox_PanelNum
             // 
@@ -365,6 +379,7 @@
             this.TextBox_PanelNum.ReadOnly = true;
             this.TextBox_PanelNum.Size = new System.Drawing.Size(40, 22);
             this.TextBox_PanelNum.TabIndex = 19;
+            this.TextBox_PanelNum.TabStop = false;
             // 
             // AnalysisPanel
             // 
