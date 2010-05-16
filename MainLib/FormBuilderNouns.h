@@ -16,8 +16,12 @@ public:
         pco_Endings = new CT_NounEndings();
     }
 
-public:
+protected:
+    int i_GramHash (ET_Number eo_number, ET_Case eo_case);
+
     HRESULT h_GetEndings();
+
+    HRESULT h_GetIrregularForms();
 
     HRESULT h_HandleStemAugment (wstring& str_lemma);
 
@@ -42,6 +46,7 @@ public:
                         int i_stressPos, 
                         const wstring& str_ending);
 
+public:
     HRESULT h_Build();
 
 };
