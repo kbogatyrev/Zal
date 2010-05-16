@@ -84,6 +84,7 @@
             this.textBoxLabel2Pl.ReadOnly = true;
             this.textBoxLabel2Pl.Size = new System.Drawing.Size(48, 24);
             this.textBoxLabel2Pl.TabIndex = 35;
+            this.textBoxLabel2Pl.TabStop = false;
             this.textBoxLabel2Pl.Text = "2 Pl";
             this.textBoxLabel2Pl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -96,6 +97,7 @@
             this.textBoxLabel1Pl.ReadOnly = true;
             this.textBoxLabel1Pl.Size = new System.Drawing.Size(48, 24);
             this.textBoxLabel1Pl.TabIndex = 34;
+            this.textBoxLabel1Pl.TabStop = false;
             this.textBoxLabel1Pl.Text = "1 Pl";
             this.textBoxLabel1Pl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -107,6 +109,7 @@
             this.textBoxPres2Pl.ReadOnly = true;
             this.textBoxPres2Pl.Size = new System.Drawing.Size(192, 24);
             this.textBoxPres2Pl.TabIndex = 33;
+            this.textBoxPres2Pl.TabStop = false;
             // 
             // textBoxPres1Pl
             // 
@@ -116,6 +119,7 @@
             this.textBoxPres1Pl.ReadOnly = true;
             this.textBoxPres1Pl.Size = new System.Drawing.Size(192, 24);
             this.textBoxPres1Pl.TabIndex = 30;
+            this.textBoxPres1Pl.TabStop = false;
             // 
             // textBoxLabel2Sg
             // 
@@ -126,6 +130,7 @@
             this.textBoxLabel2Sg.Name = "textBoxLabel2Sg";
             this.textBoxLabel2Sg.Size = new System.Drawing.Size(48, 24);
             this.textBoxLabel2Sg.TabIndex = 32;
+            this.textBoxLabel2Sg.TabStop = false;
             this.textBoxLabel2Sg.Text = "2 Sg";
             this.textBoxLabel2Sg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -138,6 +143,7 @@
             this.textBoxLabel1Sg.Name = "textBoxLabel1Sg";
             this.textBoxLabel1Sg.Size = new System.Drawing.Size(48, 24);
             this.textBoxLabel1Sg.TabIndex = 31;
+            this.textBoxLabel1Sg.TabStop = false;
             this.textBoxLabel1Sg.Text = "1 Sg";
             this.textBoxLabel1Sg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -149,6 +155,7 @@
             this.textBoxPres2Sg.ReadOnly = true;
             this.textBoxPres2Sg.Size = new System.Drawing.Size(192, 24);
             this.textBoxPres2Sg.TabIndex = 29;
+            this.textBoxPres2Sg.TabStop = false;
             // 
             // textBoxPres1Sg
             // 
@@ -158,6 +165,7 @@
             this.textBoxPres1Sg.ReadOnly = true;
             this.textBoxPres1Sg.Size = new System.Drawing.Size(192, 24);
             this.textBoxPres1Sg.TabIndex = 28;
+            this.textBoxPres1Sg.TabStop = false;
             // 
             // textBoxLexName
             // 
@@ -168,6 +176,7 @@
             this.textBoxLexName.ReadOnly = true;
             this.textBoxLexName.Size = new System.Drawing.Size(188, 24);
             this.textBoxLexName.TabIndex = 27;
+            this.textBoxLexName.TabStop = false;
             // 
             // textBoxLabel3Pl
             // 
@@ -178,6 +187,7 @@
             this.textBoxLabel3Pl.ReadOnly = true;
             this.textBoxLabel3Pl.Size = new System.Drawing.Size(48, 24);
             this.textBoxLabel3Pl.TabIndex = 41;
+            this.textBoxLabel3Pl.TabStop = false;
             this.textBoxLabel3Pl.Text = "3 Pl";
             this.textBoxLabel3Pl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -189,6 +199,7 @@
             this.textBoxPres3Pl.ReadOnly = true;
             this.textBoxPres3Pl.Size = new System.Drawing.Size(192, 24);
             this.textBoxPres3Pl.TabIndex = 40;
+            this.textBoxPres3Pl.TabStop = false;
             // 
             // textBoxLabel3Sg
             // 
@@ -199,6 +210,7 @@
             this.textBoxLabel3Sg.Name = "textBoxLabel3Sg";
             this.textBoxLabel3Sg.Size = new System.Drawing.Size(48, 24);
             this.textBoxLabel3Sg.TabIndex = 39;
+            this.textBoxLabel3Sg.TabStop = false;
             this.textBoxLabel3Sg.Text = "3 Sg";
             this.textBoxLabel3Sg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -210,6 +222,7 @@
             this.textBoxPres3Sg.ReadOnly = true;
             this.textBoxPres3Sg.Size = new System.Drawing.Size(192, 24);
             this.textBoxPres3Sg.TabIndex = 38;
+            this.textBoxPres3Sg.TabStop = false;
             // 
             // textBoxImperativePl
             // 
@@ -219,6 +232,7 @@
             this.textBoxImperativePl.ReadOnly = true;
             this.textBoxImperativePl.Size = new System.Drawing.Size(192, 24);
             this.textBoxImperativePl.TabIndex = 46;
+            this.textBoxImperativePl.TabStop = false;
             // 
             // textBoxImperativeSg
             // 
@@ -228,6 +242,7 @@
             this.textBoxImperativeSg.ReadOnly = true;
             this.textBoxImperativeSg.Size = new System.Drawing.Size(192, 24);
             this.textBoxImperativeSg.TabIndex = 44;
+            this.textBoxImperativeSg.TabStop = false;
             // 
             // textBoxLabelPartActPr
             // 
@@ -238,6 +253,7 @@
             this.textBoxLabelPartActPr.ReadOnly = true;
             this.textBoxLabelPartActPr.Size = new System.Drawing.Size(124, 24);
             this.textBoxLabelPartActPr.TabIndex = 48;
+            this.textBoxLabelPartActPr.TabStop = false;
             this.textBoxLabelPartActPr.Text = "Present Active: ";
             this.textBoxLabelPartActPr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -249,6 +265,7 @@
             this.textBoxPartPresActive.ReadOnly = true;
             this.textBoxPartPresActive.Size = new System.Drawing.Size(274, 24);
             this.textBoxPartPresActive.TabIndex = 49;
+            this.textBoxPartPresActive.TabStop = false;
             // 
             // textBoxLabelPartPrAdv
             // 
@@ -259,6 +276,7 @@
             this.textBoxLabelPartPrAdv.ReadOnly = true;
             this.textBoxLabelPartPrAdv.Size = new System.Drawing.Size(124, 24);
             this.textBoxLabelPartPrAdv.TabIndex = 50;
+            this.textBoxLabelPartPrAdv.TabStop = false;
             this.textBoxLabelPartPrAdv.Text = "Present Adverbial: ";
             this.textBoxLabelPartPrAdv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -270,6 +288,7 @@
             this.textBoxPresAdverbial.ReadOnly = true;
             this.textBoxPresAdverbial.Size = new System.Drawing.Size(274, 24);
             this.textBoxPresAdverbial.TabIndex = 51;
+            this.textBoxPresAdverbial.TabStop = false;
             // 
             // textBoxLabelPartPasrAct
             // 
@@ -280,6 +299,7 @@
             this.textBoxLabelPartPasrAct.ReadOnly = true;
             this.textBoxLabelPartPasrAct.Size = new System.Drawing.Size(124, 24);
             this.textBoxLabelPartPasrAct.TabIndex = 52;
+            this.textBoxLabelPartPasrAct.TabStop = false;
             this.textBoxLabelPartPasrAct.Text = "Past Active: ";
             this.textBoxLabelPartPasrAct.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -291,6 +311,7 @@
             this.textBoxPartPastActive.ReadOnly = true;
             this.textBoxPartPastActive.Size = new System.Drawing.Size(274, 24);
             this.textBoxPartPastActive.TabIndex = 53;
+            this.textBoxPartPastActive.TabStop = false;
             // 
             // textBoxLabelPartPastAdv
             // 
@@ -301,6 +322,7 @@
             this.textBoxLabelPartPastAdv.ReadOnly = true;
             this.textBoxLabelPartPastAdv.Size = new System.Drawing.Size(124, 24);
             this.textBoxLabelPartPastAdv.TabIndex = 54;
+            this.textBoxLabelPartPastAdv.TabStop = false;
             this.textBoxLabelPartPastAdv.Text = "Past Adverbial: ";
             this.textBoxLabelPartPastAdv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -312,6 +334,7 @@
             this.textBoxPastAdverbial.ReadOnly = true;
             this.textBoxPastAdverbial.Size = new System.Drawing.Size(274, 24);
             this.textBoxPastAdverbial.TabIndex = 55;
+            this.textBoxPastAdverbial.TabStop = false;
             // 
             // textBoxPartPresPassive
             // 
@@ -321,6 +344,7 @@
             this.textBoxPartPresPassive.ReadOnly = true;
             this.textBoxPartPresPassive.Size = new System.Drawing.Size(274, 24);
             this.textBoxPartPresPassive.TabIndex = 57;
+            this.textBoxPartPresPassive.TabStop = false;
             // 
             // textBoxLabelPartPresPassive
             // 
@@ -331,6 +355,7 @@
             this.textBoxLabelPartPresPassive.ReadOnly = true;
             this.textBoxLabelPartPresPassive.Size = new System.Drawing.Size(124, 24);
             this.textBoxLabelPartPresPassive.TabIndex = 56;
+            this.textBoxLabelPartPresPassive.TabStop = false;
             this.textBoxLabelPartPresPassive.Text = "Present Passive: ";
             this.textBoxLabelPartPresPassive.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -342,6 +367,7 @@
             this.textBoxPartPastPassive.ReadOnly = true;
             this.textBoxPartPastPassive.Size = new System.Drawing.Size(274, 24);
             this.textBoxPartPastPassive.TabIndex = 59;
+            this.textBoxPartPastPassive.TabStop = false;
             // 
             // textBoxLabelPartPastPassive
             // 
@@ -352,6 +378,7 @@
             this.textBoxLabelPartPastPassive.ReadOnly = true;
             this.textBoxLabelPartPastPassive.Size = new System.Drawing.Size(124, 24);
             this.textBoxLabelPartPastPassive.TabIndex = 58;
+            this.textBoxLabelPartPastPassive.TabStop = false;
             this.textBoxLabelPartPastPassive.Text = "Past Passive: ";
             this.textBoxLabelPartPastPassive.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -364,6 +391,7 @@
             this.textBoxLabelImpvSg.Name = "textBoxLabelImpvSg";
             this.textBoxLabelImpvSg.Size = new System.Drawing.Size(48, 24);
             this.textBoxLabelImpvSg.TabIndex = 45;
+            this.textBoxLabelImpvSg.TabStop = false;
             this.textBoxLabelImpvSg.Text = "2 Sg";
             this.textBoxLabelImpvSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -376,6 +404,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(48, 24);
             this.textBox1.TabIndex = 47;
+            this.textBox1.TabStop = false;
             this.textBox1.Text = "2 Pl";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -389,6 +418,7 @@
             this.textBoxLabelImperative.ReadOnly = true;
             this.textBoxLabelImperative.Size = new System.Drawing.Size(127, 24);
             this.textBoxLabelImperative.TabIndex = 60;
+            this.textBoxLabelImperative.TabStop = false;
             this.textBoxLabelImperative.Text = "Imperative";
             this.textBoxLabelImperative.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -402,6 +432,7 @@
             this.textBoxLabelParticiples.ReadOnly = true;
             this.textBoxLabelParticiples.Size = new System.Drawing.Size(171, 24);
             this.textBoxLabelParticiples.TabIndex = 61;
+            this.textBoxLabelParticiples.TabStop = false;
             this.textBoxLabelParticiples.Text = "Participles & Adverbials";
             this.textBoxLabelParticiples.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -415,6 +446,7 @@
             this.textBoxPabelPastTense.ReadOnly = true;
             this.textBoxPabelPastTense.Size = new System.Drawing.Size(127, 24);
             this.textBoxPabelPastTense.TabIndex = 62;
+            this.textBoxPabelPastTense.TabStop = false;
             this.textBoxPabelPastTense.Text = "Past Tense";
             this.textBoxPabelPastTense.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -427,6 +459,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(48, 24);
             this.textBox2.TabIndex = 68;
+            this.textBox2.TabStop = false;
             this.textBox2.Text = "N Sg";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -438,6 +471,7 @@
             this.textBoxPastNSg.ReadOnly = true;
             this.textBoxPastNSg.Size = new System.Drawing.Size(192, 24);
             this.textBoxPastNSg.TabIndex = 67;
+            this.textBoxPastNSg.TabStop = false;
             // 
             // textBox4
             // 
@@ -448,6 +482,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(48, 24);
             this.textBox4.TabIndex = 66;
+            this.textBox4.TabStop = false;
             this.textBox4.Text = "F Sg";
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -460,6 +495,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(48, 24);
             this.textBox5.TabIndex = 65;
+            this.textBox5.TabStop = false;
             this.textBox5.Text = "M Sg";
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -471,6 +507,7 @@
             this.textBoxPastFSg.ReadOnly = true;
             this.textBoxPastFSg.Size = new System.Drawing.Size(192, 24);
             this.textBoxPastFSg.TabIndex = 64;
+            this.textBoxPastFSg.TabStop = false;
             // 
             // textBoxPastMSg
             // 
@@ -480,6 +517,7 @@
             this.textBoxPastMSg.ReadOnly = true;
             this.textBoxPastMSg.Size = new System.Drawing.Size(192, 24);
             this.textBoxPastMSg.TabIndex = 63;
+            this.textBoxPastMSg.TabStop = false;
             // 
             // textBoxPastPl
             // 
@@ -489,6 +527,7 @@
             this.textBoxPastPl.ReadOnly = true;
             this.textBoxPastPl.Size = new System.Drawing.Size(192, 24);
             this.textBoxPastPl.TabIndex = 69;
+            this.textBoxPastPl.TabStop = false;
             // 
             // textBoxLabelImpvPl
             // 
@@ -499,6 +538,7 @@
             this.textBoxLabelImpvPl.Name = "textBoxLabelImpvPl";
             this.textBoxLabelImpvPl.Size = new System.Drawing.Size(48, 24);
             this.textBoxLabelImpvPl.TabIndex = 70;
+            this.textBoxLabelImpvPl.TabStop = false;
             this.textBoxLabelImpvPl.Text = "Pl";
             this.textBoxLabelImpvPl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -508,7 +548,7 @@
             this.btnShowPresActive.Location = new System.Drawing.Point(431, 463);
             this.btnShowPresActive.Name = "btnShowPresActive";
             this.btnShowPresActive.Size = new System.Drawing.Size(94, 24);
-            this.btnShowPresActive.TabIndex = 71;
+            this.btnShowPresActive.TabIndex = 1;
             this.btnShowPresActive.Text = "Show Forms";
             this.btnShowPresActive.UseVisualStyleBackColor = true;
             this.btnShowPresActive.Click += new System.EventHandler(this.btnShowPresActive_Click);
@@ -519,7 +559,7 @@
             this.btnShowPastActive.Location = new System.Drawing.Point(431, 523);
             this.btnShowPastActive.Name = "btnShowPastActive";
             this.btnShowPastActive.Size = new System.Drawing.Size(94, 24);
-            this.btnShowPastActive.TabIndex = 72;
+            this.btnShowPastActive.TabIndex = 2;
             this.btnShowPastActive.Text = "Show Forms";
             this.btnShowPastActive.UseVisualStyleBackColor = true;
             this.btnShowPastActive.Click += new System.EventHandler(this.btnShowPastActive_Click);
@@ -530,7 +570,7 @@
             this.btnShowPresPassive.Location = new System.Drawing.Point(431, 580);
             this.btnShowPresPassive.Name = "btnShowPresPassive";
             this.btnShowPresPassive.Size = new System.Drawing.Size(94, 24);
-            this.btnShowPresPassive.TabIndex = 73;
+            this.btnShowPresPassive.TabIndex = 3;
             this.btnShowPresPassive.Text = "Show Forms";
             this.btnShowPresPassive.UseVisualStyleBackColor = true;
             this.btnShowPresPassive.Click += new System.EventHandler(this.btnShowPresPassive_Click);
@@ -541,7 +581,7 @@
             this.btnShowPastPassive.Location = new System.Drawing.Point(431, 614);
             this.btnShowPastPassive.Name = "btnShowPastPassive";
             this.btnShowPastPassive.Size = new System.Drawing.Size(94, 24);
-            this.btnShowPastPassive.TabIndex = 74;
+            this.btnShowPastPassive.TabIndex = 4;
             this.btnShowPastPassive.Text = "Show Forms";
             this.btnShowPastPassive.UseVisualStyleBackColor = true;
             this.btnShowPastPassive.Click += new System.EventHandler(this.btnShowPastPassive_Click);
@@ -556,6 +596,7 @@
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(127, 24);
             this.textBox8.TabIndex = 75;
+            this.textBox8.TabStop = false;
             this.textBox8.Text = "Present Tense";
             this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
