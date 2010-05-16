@@ -85,6 +85,7 @@ namespace TestUI
         public void SubscribeToLexemeEvents (LexemeDataPanel ldp)
         {
             ldp.ShowDetailsEvent += new LexemeDataPanel.ShowDetails (LexemeDataPanel_ShowLexemeDetails);
+            ldp.SaveEvent += new LexemeDataPanel.Save (LexemeDataPanel_Save);
         }
 
         public void SubscribeToVerbEvents (VerbPanel vp)
@@ -668,6 +669,17 @@ namespace TestUI
 
         }   //  LexemeDataPanel_ShowLexemeDetails (int iLexemeId)
 
+        public void LexemeDataPanel_Save (int iLexemeId)
+        {
+            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
+
+            foreach (MainLib.IWordForm wf in lexeme)
+            {
+                wf.SaveTestData();
+            }
+
+        }   //  LexemeDataPanel_Save()
+        
         private void buttonLookup_Click(object sender, EventArgs e)
         {
             if (bDBOpen == false)
