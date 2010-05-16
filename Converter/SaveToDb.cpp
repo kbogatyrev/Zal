@@ -152,7 +152,8 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
         pco_dbHandle->v_Bind (22, i_AspectPairType);
         pco_dbHandle->v_Bind (23, str_AspectPairComment);
         pco_dbHandle->v_Bind (24, str_Difficulties);
-        pco_dbHandle->v_Bind (25, str_IrregularForms);
+//        pco_dbHandle->v_Bind (25, str_IrregularForms);
+        pco_dbHandle->v_Bind (25, b_HasIrregularForms);
         pco_dbHandle->v_Bind (26, str_RestrictedForms);
         pco_dbHandle->v_Bind (27, str_Contexts);
         pco_dbHandle->v_Bind (28, str_TrailingComment);
