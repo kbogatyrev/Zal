@@ -22,7 +22,11 @@ public:
         pco_Endings = new CT_AdjLongEndings();
     }
 
-public:
+protected:
+    int i_GramHash (ET_PartOfSpeech eo_pos, ET_Subparadigm eo_subparadigm, ET_Case eo_case, 
+                    ET_Number eo_num, ET_Gender eo_gender, ET_Animacy eo_animacy, 
+                    ET_Reflexive eo_refl);
+
     HRESULT h_GetEndings();
 
     HRESULT h_GetStressPositions (const wstring&,
@@ -38,6 +42,7 @@ public:
 
     HRESULT h_HandleCommonDeviations (CT_WordForm *);
 
+public:
     HRESULT h_Build();
 
     HRESULT h_BuildParticiple();
