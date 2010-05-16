@@ -102,6 +102,7 @@
             this.textBoxLabelPl.Name = "textBoxLabelPl";
             this.textBoxLabelPl.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelPl.TabIndex = 26;
+            this.textBoxLabelPl.TabStop = false;
             this.textBoxLabelPl.Text = "Pl";
             this.textBoxLabelPl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -114,6 +115,7 @@
             this.textBoxLabelSg.Name = "textBoxLabelSg";
             this.textBoxLabelSg.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelSg.TabIndex = 25;
+            this.textBoxLabelSg.TabStop = false;
             this.textBoxLabelSg.Text = "Sg";
             this.textBoxLabelSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -126,6 +128,7 @@
             this.textBoxILabelPl.ReadOnly = true;
             this.textBoxILabelPl.Size = new System.Drawing.Size(29, 24);
             this.textBoxILabelPl.TabIndex = 24;
+            this.textBoxILabelPl.TabStop = false;
             this.textBoxILabelPl.Text = "I";
             this.textBoxILabelPl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -138,6 +141,7 @@
             this.textBoxLabelDPl.ReadOnly = true;
             this.textBoxLabelDPl.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelDPl.TabIndex = 23;
+            this.textBoxLabelDPl.TabStop = false;
             this.textBoxLabelDPl.Text = "D";
             this.textBoxLabelDPl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -150,6 +154,7 @@
             this.textBoxLabelLPl.ReadOnly = true;
             this.textBoxLabelLPl.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelLPl.TabIndex = 22;
+            this.textBoxLabelLPl.TabStop = false;
             this.textBoxLabelLPl.Text = "L";
             this.textBoxLabelLPl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -162,6 +167,7 @@
             this.textBoxLabelGPl.ReadOnly = true;
             this.textBoxLabelGPl.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelGPl.TabIndex = 21;
+            this.textBoxLabelGPl.TabStop = false;
             this.textBoxLabelGPl.Text = "G";
             this.textBoxLabelGPl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -174,6 +180,7 @@
             this.textBoxLabelAPl.ReadOnly = true;
             this.textBoxLabelAPl.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelAPl.TabIndex = 20;
+            this.textBoxLabelAPl.TabStop = false;
             this.textBoxLabelAPl.Text = "A";
             this.textBoxLabelAPl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -186,6 +193,7 @@
             this.textBoxLabelNPl.ReadOnly = true;
             this.textBoxLabelNPl.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelNPl.TabIndex = 19;
+            this.textBoxLabelNPl.TabStop = false;
             this.textBoxLabelNPl.Text = "N";
             this.textBoxLabelNPl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -197,6 +205,7 @@
             this.textBoxIPl.ReadOnly = true;
             this.textBoxIPl.Size = new System.Drawing.Size(204, 24);
             this.textBoxIPl.TabIndex = 12;
+            this.textBoxIPl.TabStop = false;
             // 
             // textBoxDPl
             // 
@@ -206,6 +215,7 @@
             this.textBoxDPl.ReadOnly = true;
             this.textBoxDPl.Size = new System.Drawing.Size(204, 24);
             this.textBoxDPl.TabIndex = 11;
+            this.textBoxDPl.TabStop = false;
             // 
             // textBoxLPl
             // 
@@ -215,6 +225,7 @@
             this.textBoxLPl.ReadOnly = true;
             this.textBoxLPl.Size = new System.Drawing.Size(204, 24);
             this.textBoxLPl.TabIndex = 10;
+            this.textBoxLPl.TabStop = false;
             // 
             // textBoxGPl
             // 
@@ -224,6 +235,7 @@
             this.textBoxGPl.ReadOnly = true;
             this.textBoxGPl.Size = new System.Drawing.Size(204, 24);
             this.textBoxGPl.TabIndex = 9;
+            this.textBoxGPl.TabStop = false;
             // 
             // textBoxAPl
             // 
@@ -233,6 +245,7 @@
             this.textBoxAPl.ReadOnly = true;
             this.textBoxAPl.Size = new System.Drawing.Size(204, 24);
             this.textBoxAPl.TabIndex = 8;
+            this.textBoxAPl.TabStop = false;
             // 
             // textBoxNPl
             // 
@@ -242,6 +255,7 @@
             this.textBoxNPl.ReadOnly = true;
             this.textBoxNPl.Size = new System.Drawing.Size(204, 24);
             this.textBoxNPl.TabIndex = 7;
+            this.textBoxNPl.TabStop = false;
             // 
             // textBoxLabelISg
             // 
@@ -252,6 +266,7 @@
             this.textBoxLabelISg.Name = "textBoxLabelISg";
             this.textBoxLabelISg.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelISg.TabIndex = 12;
+            this.textBoxLabelISg.TabStop = false;
             this.textBoxLabelISg.Text = "I";
             this.textBoxLabelISg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -264,6 +279,7 @@
             this.textBoxLabelDSg.Name = "textBoxLabelDSg";
             this.textBoxLabelDSg.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelDSg.TabIndex = 11;
+            this.textBoxLabelDSg.TabStop = false;
             this.textBoxLabelDSg.Text = "D";
             this.textBoxLabelDSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -276,6 +292,7 @@
             this.textBoxLabelLSg.Name = "textBoxLabelLSg";
             this.textBoxLabelLSg.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelLSg.TabIndex = 10;
+            this.textBoxLabelLSg.TabStop = false;
             this.textBoxLabelLSg.Text = "L";
             this.textBoxLabelLSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -288,6 +305,7 @@
             this.textBoxLabelGSg.Name = "textBoxLabelGSg";
             this.textBoxLabelGSg.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelGSg.TabIndex = 9;
+            this.textBoxLabelGSg.TabStop = false;
             this.textBoxLabelGSg.Text = "G";
             this.textBoxLabelGSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -300,6 +318,7 @@
             this.textBoxLabelASg.Name = "textBoxLabelASg";
             this.textBoxLabelASg.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelASg.TabIndex = 8;
+            this.textBoxLabelASg.TabStop = false;
             this.textBoxLabelASg.Text = "A";
             this.textBoxLabelASg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -312,6 +331,7 @@
             this.textBoxLabelNSg.Name = "textBoxLabelNSg";
             this.textBoxLabelNSg.Size = new System.Drawing.Size(29, 24);
             this.textBoxLabelNSg.TabIndex = 7;
+            this.textBoxLabelNSg.TabStop = false;
             this.textBoxLabelNSg.Text = "N";
             this.textBoxLabelNSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -323,6 +343,7 @@
             this.textBoxISg.ReadOnly = true;
             this.textBoxISg.Size = new System.Drawing.Size(204, 24);
             this.textBoxISg.TabIndex = 6;
+            this.textBoxISg.TabStop = false;
             // 
             // textBoxDSg
             // 
@@ -332,6 +353,7 @@
             this.textBoxDSg.ReadOnly = true;
             this.textBoxDSg.Size = new System.Drawing.Size(204, 24);
             this.textBoxDSg.TabIndex = 5;
+            this.textBoxDSg.TabStop = false;
             // 
             // textBoxLSg
             // 
@@ -341,6 +363,7 @@
             this.textBoxLSg.ReadOnly = true;
             this.textBoxLSg.Size = new System.Drawing.Size(204, 24);
             this.textBoxLSg.TabIndex = 4;
+            this.textBoxLSg.TabStop = false;
             // 
             // textBoxGSg
             // 
@@ -350,6 +373,7 @@
             this.textBoxGSg.ReadOnly = true;
             this.textBoxGSg.Size = new System.Drawing.Size(204, 24);
             this.textBoxGSg.TabIndex = 3;
+            this.textBoxGSg.TabStop = false;
             // 
             // textBoxASg
             // 
@@ -359,6 +383,7 @@
             this.textBoxASg.ReadOnly = true;
             this.textBoxASg.Size = new System.Drawing.Size(204, 24);
             this.textBoxASg.TabIndex = 2;
+            this.textBoxASg.TabStop = false;
             // 
             // textBoxNSg
             // 
@@ -368,6 +393,7 @@
             this.textBoxNSg.ReadOnly = true;
             this.textBoxNSg.Size = new System.Drawing.Size(204, 24);
             this.textBoxNSg.TabIndex = 1;
+            this.textBoxNSg.TabStop = false;
             // 
             // textBoxLexName
             // 
@@ -378,6 +404,7 @@
             this.textBoxLexName.ReadOnly = true;
             this.textBoxLexName.Size = new System.Drawing.Size(188, 24);
             this.textBoxLexName.TabIndex = 0;
+            this.textBoxLexName.TabStop = false;
             // 
             // NounPanel
             // 
