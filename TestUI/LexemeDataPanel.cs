@@ -14,6 +14,9 @@ namespace TestUI
         public delegate void ShowDetails (int iLexemeId);
         public event ShowDetails ShowDetailsEvent;
 
+        public delegate void Save(int iLexemeId);
+        public event Save SaveEvent;
+
         int iLexemeId;
 
         public string sInitialForm
@@ -105,6 +108,14 @@ namespace TestUI
             if (ShowDetailsEvent != null)
             {
                 ShowDetailsEvent(iLexemeId);
+            }
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            if (SaveEvent != null)
+            {
+                SaveEvent(iLexemeId);
             }
         }
     }
