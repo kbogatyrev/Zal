@@ -21,7 +21,6 @@ namespace TestUI
 
         protected Dictionary<string, StCell> m_dictForms;
 
-
         protected void Clear()
         {
             foreach (KeyValuePair<string, StCell> entry in m_dictForms)
