@@ -156,6 +156,9 @@
     <Compile Include="ZalTestForm.Designer.cs">
       <DependentUpon>ZalTestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ZalTestLogic.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="MainLib">
