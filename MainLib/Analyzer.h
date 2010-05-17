@@ -76,6 +76,7 @@ public:
 private:
     CT_Sqlite* pco_db;
     wstring str_InsertStress(int i_letter, wstring str_);
+    int CT_Analyzer::i_DeleteStress(wstring& str_);
     int i_LCP(wstring* str_words, wstring** str_pfx, int i_words, int i_pfx);
 };
 

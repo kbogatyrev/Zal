@@ -12,15 +12,17 @@ CREATE TABLE inflection (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, is_p
 
 CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash INTEGER, wordform TEXT, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
+CREATE TABLE irregular_stress (id INTEGER PRIMARY KEY ASC, form_id INTEGER, position INTEGER, is_primary BOOLEAN, FOREIGN KEY (form_id) REFERENCES irregular_forms (id));
+
 CREATE TABLE difficulties (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, parameter INTEGER, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending TEXT, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, stem_auslaut INTEGER);
 
-CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash INTEGER);
+CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash INTEGER, stress_pos INTEGER);
 
 CREATE TABLE endings_meta (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, entries_count INTEGER);
 
-CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, stem TEXT, endings_link INTEGER);
+CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, stem TEXT, stress_pos INTEGER, endings_link INTEGER);
 
 CREATE TABLE common_deviation (id INTEGER PRIMARY KEY ASC, inflection_id INTEGER, deviation_type INTEGER, is_optional BOOLEAN);
 
