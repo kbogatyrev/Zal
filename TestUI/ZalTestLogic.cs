@@ -15,15 +15,13 @@ namespace TestUI
     {
         protected void InitializeData()
         {
-            buttonLookup.Enabled = false;
-            radioButtonInitForm.Checked = true;
             m_bDBOpen = false;
 
-            textBoxDBPath.Text = Properties.Settings.Default.DbPath;
+            m_sDbPath = Properties.Settings.Default.DbPath;
 
             m_Dictionary = new MainLib.ZalDictionary();
             m_Analyzer = new MainLib.ZalAnalyzer();
-            m_listLexemes = new List<MainLib.ILexeme>();
+            m_dictLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
             m_listWordForms = new List<MainLib.IWordForm>();
 
             m_dictGender = new Dictionary<MainLib.ET_Gender, string>();
@@ -70,9 +68,9 @@ namespace TestUI
 
         }   //  InitializeData()
 
-        protected void ShowLexemeDetails (int iLexemeId)
+        protected void ShowLexemeDetails (LexemeDataPanel ldpSource)
         {
-            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
+            MainLib.ILexeme lexeme = m_dictLexemes[ldpSource];
             lexeme.GenerateWordForms();
 
             TabPage tabPageDetails = new TabPage(lexeme.InitialForm);
@@ -115,7 +113,7 @@ namespace TestUI
             {
                 AdjPanel ap = new AdjPanel();
                 tabPageDetails.Controls.Add(ap);
-                ap.sLexName = grSt;
+//                ap.sLexName = grSt;
 
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
@@ -212,9 +210,9 @@ namespace TestUI
 
             if (MainLib.ET_PartOfSpeech.POS_VERB == lexeme.PartOfSpeech)
             {
-                VerbPanel vp = new VerbPanel(iLexemeId);
-                SubscribeToVerbEvents(vp);
-                tabPageDetails.Controls.Add(vp);
+                VerbPanel vp = new VerbPanel (lexeme);
+                SubscribeToVerbEvents (vp);
+                tabPageDetails.Controls.Add (vp);
                 vp.sLexName = grSt;
 
                 foreach (MainLib.IWordForm wf in lexeme)
@@ -507,12 +505,11 @@ namespace TestUI
 
         }   //  ShowLexemeDetails (...)
 
-        protected void ShowParticipialForms (int iLexemeId,
+        protected void ShowParticipialForms (MainLib.ILexeme lexeme,
                                              MainLib.ET_Subparadigm eoSpLong,
                                              MainLib.ET_Subparadigm eoSpShort)
         {
             // Expect word forms to be ready by now
-            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
 
             MainLib.IFormDescriptor fd = lexeme.FormDescriptor;
             fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
@@ -530,19 +527,19 @@ namespace TestUI
                 TabPage tabPageDetails = new TabPage (wf.Wordform);
                 tabPageDetails.Controls.Add (adjPanel);
                 tabControl.Controls.Add (tabPageDetails);
-                ShowLongParticipialForms (adjPanel, iLexemeId, eoSpLong);
+                ShowLongParticipialForms (adjPanel, lexeme, eoSpLong);
                 if (MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED != eoSpShort)
                 {
-                    ShowShortParticipialForms (adjPanel, iLexemeId, eoSpShort);
+                    ShowShortParticipialForms (adjPanel, lexeme, eoSpShort);
                 }
                 tabControl.SelectedTab = tabPageDetails;
             }
         }
 
-        protected void ShowShortParticipialForms (AdjPanel ap, int iLexemeId, MainLib.ET_Subparadigm eoSpShort)
+        protected void ShowShortParticipialForms (AdjPanel ap, 
+                                                  MainLib.ILexeme lexeme, 
+                                                  MainLib.ET_Subparadigm eoSpShort)
         {
-            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
-
             MainLib.IFormDescriptor fd = lexeme.FormDescriptor;
             fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
             fd.Subparadigm = eoSpShort;
@@ -593,9 +590,10 @@ namespace TestUI
             }
         }   //  ShowShortParticipialForms (...)
 
-        protected void ShowLongParticipialForms (AdjPanel ap, int iLexemeId, MainLib.ET_Subparadigm eoSpLong)
+        protected void ShowLongParticipialForms (AdjPanel adjPanel, 
+                                                 MainLib.ILexeme lexeme, 
+                                                 MainLib.ET_Subparadigm eoSpLong)
         {
-            MainLib.ILexeme lexeme = m_listLexemes[iLexemeId];
             foreach (MainLib.IWordForm wf in lexeme)
             {
                 string sKey = "";
@@ -641,7 +639,7 @@ namespace TestUI
                     }
                 }
 
-                ap.SetForm(sKey, strWordForm);
+                adjPanel.SetForm(sKey, strWordForm);
 
             }   //  foreach (...)
 
@@ -720,7 +718,7 @@ namespace TestUI
                     ap.eoTense = MainLib.ET_Tense.TENSE_UNDEFINED;
                 }
                 //ap.i_lexeme_id = wf.LexemeId;
-                lexPanel.Controls.Add(ap);
+//                lexPanel.Controls.Add(ap);
                 iWordform++;
             }
 

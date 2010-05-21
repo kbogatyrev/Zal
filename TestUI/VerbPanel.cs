@@ -11,12 +11,13 @@ namespace TestUI
 {
     public partial class VerbPanel : WordFormsPanel
     {
-        public delegate void ShowParticipialForms (int iLexemeId, 
+        public delegate void ShowParticipialForms (MainLib.ILexeme lexeme, 
                                                    MainLib.ET_Subparadigm eoSubparadigmLong,
                                                    MainLib.ET_Subparadigm eoSubparadigmShort);
         public event ShowParticipialForms ShowParticipialFormsEvent;
 
-        int iLexemeId;
+        //int iLexemeId;
+        MainLib.ILexeme Lexeme;
 
         public string sLexName
         {
@@ -31,11 +32,12 @@ namespace TestUI
             }
         }
 
-        public VerbPanel (int iId)
+        public VerbPanel (MainLib.ILexeme lexeme)
         {
             InitializeComponent();
 
-            iLexemeId = iId;
+//            iLexemeId = iId;
+            Lexeme = lexeme;
 
             m_dictForms = new Dictionary<string, StCell>();
             m_dictForms.Add ("Pres1Sg", new StCell (textBoxPres1Sg));
@@ -64,7 +66,7 @@ namespace TestUI
         {
             if (ShowParticipialFormsEvent != null)
             {
-                ShowParticipialFormsEvent (iLexemeId, 
+                ShowParticipialFormsEvent (Lexeme, 
                                            MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT,
                                            MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
@@ -74,7 +76,7 @@ namespace TestUI
         {
             if (ShowParticipialFormsEvent != null)
             {
-                ShowParticipialFormsEvent(iLexemeId,
+                ShowParticipialFormsEvent (Lexeme,
                                            MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT,
                                            MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
@@ -84,17 +86,17 @@ namespace TestUI
         {
             if (ShowParticipialFormsEvent != null)
             {
-                ShowParticipialFormsEvent (iLexemeId, 
+                ShowParticipialFormsEvent (Lexeme, 
                                            MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG,
                                            MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_SHORT);
             }
         }
 
-        private void btnShowPastPassive_Click(object sender, EventArgs e)
+        private void btnShowPastPassive_Click (object sender, EventArgs e)
         {
             if (ShowParticipialFormsEvent != null)
             {
-                ShowParticipialFormsEvent (iLexemeId, 
+                ShowParticipialFormsEvent (Lexeme, 
                                            MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG,
                                            MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_SHORT);
             }

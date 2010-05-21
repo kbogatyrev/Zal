@@ -78,7 +78,7 @@
             // textBoxLabel2Pl
             // 
             this.textBoxLabel2Pl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabel2Pl.Location = new System.Drawing.Point(279, 132);
+            this.textBoxLabel2Pl.Location = new System.Drawing.Point(279, 114);
             this.textBoxLabel2Pl.Multiline = true;
             this.textBoxLabel2Pl.Name = "textBoxLabel2Pl";
             this.textBoxLabel2Pl.ReadOnly = true;
@@ -91,7 +91,7 @@
             // textBoxLabel1Pl
             // 
             this.textBoxLabel1Pl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabel1Pl.Location = new System.Drawing.Point(279, 104);
+            this.textBoxLabel1Pl.Location = new System.Drawing.Point(279, 86);
             this.textBoxLabel1Pl.Multiline = true;
             this.textBoxLabel1Pl.Name = "textBoxLabel1Pl";
             this.textBoxLabel1Pl.ReadOnly = true;
@@ -103,7 +103,7 @@
             // 
             // textBoxPres2Pl
             // 
-            this.textBoxPres2Pl.Location = new System.Drawing.Point(333, 132);
+            this.textBoxPres2Pl.Location = new System.Drawing.Point(333, 114);
             this.textBoxPres2Pl.Multiline = true;
             this.textBoxPres2Pl.Name = "textBoxPres2Pl";
             this.textBoxPres2Pl.ReadOnly = true;
@@ -113,7 +113,7 @@
             // 
             // textBoxPres1Pl
             // 
-            this.textBoxPres1Pl.Location = new System.Drawing.Point(333, 104);
+            this.textBoxPres1Pl.Location = new System.Drawing.Point(333, 86);
             this.textBoxPres1Pl.Multiline = true;
             this.textBoxPres1Pl.Name = "textBoxPres1Pl";
             this.textBoxPres1Pl.ReadOnly = true;
@@ -125,7 +125,7 @@
             // 
             this.textBoxLabel2Sg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabel2Sg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabel2Sg.Location = new System.Drawing.Point(18, 130);
+            this.textBoxLabel2Sg.Location = new System.Drawing.Point(18, 112);
             this.textBoxLabel2Sg.Multiline = true;
             this.textBoxLabel2Sg.Name = "textBoxLabel2Sg";
             this.textBoxLabel2Sg.Size = new System.Drawing.Size(48, 24);
@@ -138,7 +138,7 @@
             // 
             this.textBoxLabel1Sg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabel1Sg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabel1Sg.Location = new System.Drawing.Point(18, 102);
+            this.textBoxLabel1Sg.Location = new System.Drawing.Point(18, 84);
             this.textBoxLabel1Sg.Multiline = true;
             this.textBoxLabel1Sg.Name = "textBoxLabel1Sg";
             this.textBoxLabel1Sg.Size = new System.Drawing.Size(48, 24);
@@ -149,7 +149,7 @@
             // 
             // textBoxPres2Sg
             // 
-            this.textBoxPres2Sg.Location = new System.Drawing.Point(72, 131);
+            this.textBoxPres2Sg.Location = new System.Drawing.Point(72, 113);
             this.textBoxPres2Sg.Multiline = true;
             this.textBoxPres2Sg.Name = "textBoxPres2Sg";
             this.textBoxPres2Sg.ReadOnly = true;
@@ -159,7 +159,7 @@
             // 
             // textBoxPres1Sg
             // 
-            this.textBoxPres1Sg.Location = new System.Drawing.Point(72, 102);
+            this.textBoxPres1Sg.Location = new System.Drawing.Point(72, 84);
             this.textBoxPres1Sg.Multiline = true;
             this.textBoxPres1Sg.Name = "textBoxPres1Sg";
             this.textBoxPres1Sg.ReadOnly = true;
@@ -181,7 +181,7 @@
             // textBoxLabel3Pl
             // 
             this.textBoxLabel3Pl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabel3Pl.Location = new System.Drawing.Point(279, 160);
+            this.textBoxLabel3Pl.Location = new System.Drawing.Point(279, 142);
             this.textBoxLabel3Pl.Multiline = true;
             this.textBoxLabel3Pl.Name = "textBoxLabel3Pl";
             this.textBoxLabel3Pl.ReadOnly = true;
@@ -193,7 +193,7 @@
             // 
             // textBoxPres3Pl
             // 
-            this.textBoxPres3Pl.Location = new System.Drawing.Point(333, 160);
+            this.textBoxPres3Pl.Location = new System.Drawing.Point(333, 142);
             this.textBoxPres3Pl.Multiline = true;
             this.textBoxPres3Pl.Name = "textBoxPres3Pl";
             this.textBoxPres3Pl.ReadOnly = true;
@@ -205,7 +205,7 @@
             // 
             this.textBoxLabel3Sg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabel3Sg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabel3Sg.Location = new System.Drawing.Point(18, 158);
+            this.textBoxLabel3Sg.Location = new System.Drawing.Point(18, 140);
             this.textBoxLabel3Sg.Multiline = true;
             this.textBoxLabel3Sg.Name = "textBoxLabel3Sg";
             this.textBoxLabel3Sg.Size = new System.Drawing.Size(48, 24);
@@ -216,7 +216,7 @@
             // 
             // textBoxPres3Sg
             // 
-            this.textBoxPres3Sg.Location = new System.Drawing.Point(72, 160);
+            this.textBoxPres3Sg.Location = new System.Drawing.Point(72, 142);
             this.textBoxPres3Sg.Multiline = true;
             this.textBoxPres3Sg.Name = "textBoxPres3Sg";
             this.textBoxPres3Sg.ReadOnly = true;
@@ -226,7 +226,7 @@
             // 
             // textBoxImperativePl
             // 
-            this.textBoxImperativePl.Location = new System.Drawing.Point(333, 385);
+            this.textBoxImperativePl.Location = new System.Drawing.Point(333, 341);
             this.textBoxImperativePl.Multiline = true;
             this.textBoxImperativePl.Name = "textBoxImperativePl";
             this.textBoxImperativePl.ReadOnly = true;
@@ -236,7 +236,7 @@
             // 
             // textBoxImperativeSg
             // 
-            this.textBoxImperativeSg.Location = new System.Drawing.Point(72, 384);
+            this.textBoxImperativeSg.Location = new System.Drawing.Point(72, 340);
             this.textBoxImperativeSg.Multiline = true;
             this.textBoxImperativeSg.Name = "textBoxImperativeSg";
             this.textBoxImperativeSg.ReadOnly = true;
@@ -247,7 +247,7 @@
             // textBoxLabelPartActPr
             // 
             this.textBoxLabelPartActPr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelPartActPr.Location = new System.Drawing.Point(18, 463);
+            this.textBoxLabelPartActPr.Location = new System.Drawing.Point(18, 418);
             this.textBoxLabelPartActPr.Multiline = true;
             this.textBoxLabelPartActPr.Name = "textBoxLabelPartActPr";
             this.textBoxLabelPartActPr.ReadOnly = true;
@@ -259,7 +259,7 @@
             // 
             // textBoxPartPresActive
             // 
-            this.textBoxPartPresActive.Location = new System.Drawing.Point(148, 463);
+            this.textBoxPartPresActive.Location = new System.Drawing.Point(148, 418);
             this.textBoxPartPresActive.Multiline = true;
             this.textBoxPartPresActive.Name = "textBoxPartPresActive";
             this.textBoxPartPresActive.ReadOnly = true;
@@ -270,7 +270,7 @@
             // textBoxLabelPartPrAdv
             // 
             this.textBoxLabelPartPrAdv.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelPartPrAdv.Location = new System.Drawing.Point(18, 493);
+            this.textBoxLabelPartPrAdv.Location = new System.Drawing.Point(18, 448);
             this.textBoxLabelPartPrAdv.Multiline = true;
             this.textBoxLabelPartPrAdv.Name = "textBoxLabelPartPrAdv";
             this.textBoxLabelPartPrAdv.ReadOnly = true;
@@ -282,7 +282,7 @@
             // 
             // textBoxPresAdverbial
             // 
-            this.textBoxPresAdverbial.Location = new System.Drawing.Point(148, 493);
+            this.textBoxPresAdverbial.Location = new System.Drawing.Point(148, 448);
             this.textBoxPresAdverbial.Multiline = true;
             this.textBoxPresAdverbial.Name = "textBoxPresAdverbial";
             this.textBoxPresAdverbial.ReadOnly = true;
@@ -293,7 +293,7 @@
             // textBoxLabelPartPasrAct
             // 
             this.textBoxLabelPartPasrAct.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelPartPasrAct.Location = new System.Drawing.Point(18, 524);
+            this.textBoxLabelPartPasrAct.Location = new System.Drawing.Point(18, 479);
             this.textBoxLabelPartPasrAct.Multiline = true;
             this.textBoxLabelPartPasrAct.Name = "textBoxLabelPartPasrAct";
             this.textBoxLabelPartPasrAct.ReadOnly = true;
@@ -305,7 +305,7 @@
             // 
             // textBoxPartPastActive
             // 
-            this.textBoxPartPastActive.Location = new System.Drawing.Point(148, 523);
+            this.textBoxPartPastActive.Location = new System.Drawing.Point(148, 478);
             this.textBoxPartPastActive.Multiline = true;
             this.textBoxPartPastActive.Name = "textBoxPartPastActive";
             this.textBoxPartPastActive.ReadOnly = true;
@@ -316,7 +316,7 @@
             // textBoxLabelPartPastAdv
             // 
             this.textBoxLabelPartPastAdv.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelPartPastAdv.Location = new System.Drawing.Point(18, 554);
+            this.textBoxLabelPartPastAdv.Location = new System.Drawing.Point(18, 509);
             this.textBoxLabelPartPastAdv.Multiline = true;
             this.textBoxLabelPartPastAdv.Name = "textBoxLabelPartPastAdv";
             this.textBoxLabelPartPastAdv.ReadOnly = true;
@@ -328,7 +328,7 @@
             // 
             // textBoxPastAdverbial
             // 
-            this.textBoxPastAdverbial.Location = new System.Drawing.Point(148, 553);
+            this.textBoxPastAdverbial.Location = new System.Drawing.Point(148, 508);
             this.textBoxPastAdverbial.Multiline = true;
             this.textBoxPastAdverbial.Name = "textBoxPastAdverbial";
             this.textBoxPastAdverbial.ReadOnly = true;
@@ -338,7 +338,7 @@
             // 
             // textBoxPartPresPassive
             // 
-            this.textBoxPartPresPassive.Location = new System.Drawing.Point(148, 583);
+            this.textBoxPartPresPassive.Location = new System.Drawing.Point(148, 538);
             this.textBoxPartPresPassive.Multiline = true;
             this.textBoxPartPresPassive.Name = "textBoxPartPresPassive";
             this.textBoxPartPresPassive.ReadOnly = true;
@@ -349,7 +349,7 @@
             // textBoxLabelPartPresPassive
             // 
             this.textBoxLabelPartPresPassive.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelPartPresPassive.Location = new System.Drawing.Point(18, 584);
+            this.textBoxLabelPartPresPassive.Location = new System.Drawing.Point(18, 539);
             this.textBoxLabelPartPresPassive.Multiline = true;
             this.textBoxLabelPartPresPassive.Name = "textBoxLabelPartPresPassive";
             this.textBoxLabelPartPresPassive.ReadOnly = true;
@@ -361,7 +361,7 @@
             // 
             // textBoxPartPastPassive
             // 
-            this.textBoxPartPastPassive.Location = new System.Drawing.Point(148, 613);
+            this.textBoxPartPastPassive.Location = new System.Drawing.Point(148, 568);
             this.textBoxPartPastPassive.Multiline = true;
             this.textBoxPartPastPassive.Name = "textBoxPartPastPassive";
             this.textBoxPartPastPassive.ReadOnly = true;
@@ -372,7 +372,7 @@
             // textBoxLabelPartPastPassive
             // 
             this.textBoxLabelPartPastPassive.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelPartPastPassive.Location = new System.Drawing.Point(18, 614);
+            this.textBoxLabelPartPastPassive.Location = new System.Drawing.Point(18, 569);
             this.textBoxLabelPartPastPassive.Multiline = true;
             this.textBoxLabelPartPastPassive.Name = "textBoxLabelPartPastPassive";
             this.textBoxLabelPartPastPassive.ReadOnly = true;
@@ -386,7 +386,7 @@
             // 
             this.textBoxLabelImpvSg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelImpvSg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelImpvSg.Location = new System.Drawing.Point(18, 385);
+            this.textBoxLabelImpvSg.Location = new System.Drawing.Point(18, 341);
             this.textBoxLabelImpvSg.Multiline = true;
             this.textBoxLabelImpvSg.Name = "textBoxLabelImpvSg";
             this.textBoxLabelImpvSg.Size = new System.Drawing.Size(48, 24);
@@ -398,7 +398,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(279, 385);
+            this.textBox1.Location = new System.Drawing.Point(279, 341);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
@@ -412,7 +412,7 @@
             // 
             this.textBoxLabelImperative.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxLabelImperative.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelImperative.Location = new System.Drawing.Point(209, 354);
+            this.textBoxLabelImperative.Location = new System.Drawing.Point(209, 310);
             this.textBoxLabelImperative.Multiline = true;
             this.textBoxLabelImperative.Name = "textBoxLabelImperative";
             this.textBoxLabelImperative.ReadOnly = true;
@@ -426,7 +426,7 @@
             // 
             this.textBoxLabelParticiples.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxLabelParticiples.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelParticiples.Location = new System.Drawing.Point(195, 433);
+            this.textBoxLabelParticiples.Location = new System.Drawing.Point(195, 388);
             this.textBoxLabelParticiples.Multiline = true;
             this.textBoxLabelParticiples.Name = "textBoxLabelParticiples";
             this.textBoxLabelParticiples.ReadOnly = true;
@@ -440,7 +440,7 @@
             // 
             this.textBoxPabelPastTense.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxPabelPastTense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPabelPastTense.Location = new System.Drawing.Point(209, 215);
+            this.textBoxPabelPastTense.Location = new System.Drawing.Point(209, 181);
             this.textBoxPabelPastTense.Multiline = true;
             this.textBoxPabelPastTense.Name = "textBoxPabelPastTense";
             this.textBoxPabelPastTense.ReadOnly = true;
@@ -454,7 +454,7 @@
             // 
             this.textBox2.BackColor = System.Drawing.SystemColors.Control;
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(18, 301);
+            this.textBox2.Location = new System.Drawing.Point(18, 267);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(48, 24);
@@ -465,7 +465,7 @@
             // 
             // textBoxPastNSg
             // 
-            this.textBoxPastNSg.Location = new System.Drawing.Point(72, 303);
+            this.textBoxPastNSg.Location = new System.Drawing.Point(72, 269);
             this.textBoxPastNSg.Multiline = true;
             this.textBoxPastNSg.Name = "textBoxPastNSg";
             this.textBoxPastNSg.ReadOnly = true;
@@ -477,7 +477,7 @@
             // 
             this.textBox4.BackColor = System.Drawing.SystemColors.Control;
             this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(18, 273);
+            this.textBox4.Location = new System.Drawing.Point(18, 239);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(48, 24);
@@ -490,7 +490,7 @@
             // 
             this.textBox5.BackColor = System.Drawing.SystemColors.Control;
             this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(18, 245);
+            this.textBox5.Location = new System.Drawing.Point(18, 211);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(48, 24);
@@ -501,7 +501,7 @@
             // 
             // textBoxPastFSg
             // 
-            this.textBoxPastFSg.Location = new System.Drawing.Point(72, 274);
+            this.textBoxPastFSg.Location = new System.Drawing.Point(72, 240);
             this.textBoxPastFSg.Multiline = true;
             this.textBoxPastFSg.Name = "textBoxPastFSg";
             this.textBoxPastFSg.ReadOnly = true;
@@ -511,7 +511,7 @@
             // 
             // textBoxPastMSg
             // 
-            this.textBoxPastMSg.Location = new System.Drawing.Point(72, 245);
+            this.textBoxPastMSg.Location = new System.Drawing.Point(72, 211);
             this.textBoxPastMSg.Multiline = true;
             this.textBoxPastMSg.Name = "textBoxPastMSg";
             this.textBoxPastMSg.ReadOnly = true;
@@ -521,7 +521,7 @@
             // 
             // textBoxPastPl
             // 
-            this.textBoxPastPl.Location = new System.Drawing.Point(333, 247);
+            this.textBoxPastPl.Location = new System.Drawing.Point(333, 213);
             this.textBoxPastPl.Multiline = true;
             this.textBoxPastPl.Name = "textBoxPastPl";
             this.textBoxPastPl.ReadOnly = true;
@@ -533,7 +533,7 @@
             // 
             this.textBoxLabelImpvPl.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelImpvPl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelImpvPl.Location = new System.Drawing.Point(279, 247);
+            this.textBoxLabelImpvPl.Location = new System.Drawing.Point(279, 213);
             this.textBoxLabelImpvPl.Multiline = true;
             this.textBoxLabelImpvPl.Name = "textBoxLabelImpvPl";
             this.textBoxLabelImpvPl.Size = new System.Drawing.Size(48, 24);
@@ -545,7 +545,7 @@
             // btnShowPresActive
             // 
             this.btnShowPresActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowPresActive.Location = new System.Drawing.Point(431, 463);
+            this.btnShowPresActive.Location = new System.Drawing.Point(431, 418);
             this.btnShowPresActive.Name = "btnShowPresActive";
             this.btnShowPresActive.Size = new System.Drawing.Size(94, 24);
             this.btnShowPresActive.TabIndex = 1;
@@ -556,7 +556,7 @@
             // btnShowPastActive
             // 
             this.btnShowPastActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowPastActive.Location = new System.Drawing.Point(431, 523);
+            this.btnShowPastActive.Location = new System.Drawing.Point(431, 478);
             this.btnShowPastActive.Name = "btnShowPastActive";
             this.btnShowPastActive.Size = new System.Drawing.Size(94, 24);
             this.btnShowPastActive.TabIndex = 2;
@@ -567,7 +567,7 @@
             // btnShowPresPassive
             // 
             this.btnShowPresPassive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowPresPassive.Location = new System.Drawing.Point(431, 580);
+            this.btnShowPresPassive.Location = new System.Drawing.Point(431, 535);
             this.btnShowPresPassive.Name = "btnShowPresPassive";
             this.btnShowPresPassive.Size = new System.Drawing.Size(94, 24);
             this.btnShowPresPassive.TabIndex = 3;
@@ -578,7 +578,7 @@
             // btnShowPastPassive
             // 
             this.btnShowPastPassive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnShowPastPassive.Location = new System.Drawing.Point(431, 614);
+            this.btnShowPastPassive.Location = new System.Drawing.Point(431, 569);
             this.btnShowPastPassive.Name = "btnShowPastPassive";
             this.btnShowPastPassive.Size = new System.Drawing.Size(94, 24);
             this.btnShowPastPassive.TabIndex = 4;
@@ -590,7 +590,7 @@
             // 
             this.textBox8.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox8.Location = new System.Drawing.Point(209, 74);
+            this.textBox8.Location = new System.Drawing.Point(209, 56);
             this.textBox8.Multiline = true;
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
@@ -650,7 +650,7 @@
             this.Controls.Add(this.textBoxPres1Sg);
             this.Controls.Add(this.textBoxLexName);
             this.Name = "VerbPanel";
-            this.Size = new System.Drawing.Size(544, 657);
+            this.Size = new System.Drawing.Size(544, 618);
             this.ResumeLayout(false);
             this.PerformLayout();
 

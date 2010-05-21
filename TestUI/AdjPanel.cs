@@ -11,18 +11,19 @@ namespace TestUI
 {
     public partial class AdjPanel : WordFormsPanel
     {
-        public string sLexName
-        {
-            get
-            {
-                return textBoxLexName.Text;
-            }
+//        public string sLexName
+//        {
+//            get
+//            {
+//                return textBoxLexName.Text;
+//            }
 
-            set
-            {
-                textBoxLexName.Text = value;
-            }
-        }
+//            set
+//            {
+//                textBoxLexName.Text = value;
+//            }
+//        }
+
         public AdjPanel()
         {
             InitializeComponent();

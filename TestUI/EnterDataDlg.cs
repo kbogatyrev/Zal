@@ -11,7 +11,7 @@ namespace TestUI
 {
     public partial class EnterDataDlg : Form
     {
-        public string sLexeme
+        public string sData
         {
             get
             {
@@ -26,12 +26,12 @@ namespace TestUI
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-
+//            this.DialogResult = DialogResult.Cancel;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-
+//            this.DialogResult = DialogResult.Cancel;
         }
     }
 }

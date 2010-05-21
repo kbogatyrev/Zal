@@ -11,13 +11,11 @@ namespace TestUI
 {
     public partial class LexemeDataPanel : UserControl
     {
-        public delegate void ShowDetails (int iLexemeId);
+        public delegate void ShowDetails (LexemeDataPanel ldp);
         public event ShowDetails ShowDetailsEvent;
 
-        public delegate void Save(int iLexemeId);
+        public delegate void Save (LexemeDataPanel ldp);
         public event Save SaveEvent;
-
-        int iLexemeId;
 
         public string sInitialForm
         {
@@ -97,17 +95,21 @@ namespace TestUI
             }
         }
 
-        public LexemeDataPanel (int iId)
+        public LexemeDataPanel()
         {
             InitializeComponent();
-            iLexemeId = iId;
         }
 
-        private void buttonShowWF_Click (object sender, EventArgs e)
+        public void FocusShowButton()
+        {
+            buttonShowWF.Focus();
+        }
+
+        private void buttonShowWF_Click(object sender, EventArgs e)
         {
             if (ShowDetailsEvent != null)
             {
-                ShowDetailsEvent(iLexemeId);
+                ShowDetailsEvent (this);
             }
         }
 
@@ -115,8 +117,9 @@ namespace TestUI
         {
             if (SaveEvent != null)
             {
-                SaveEvent(iLexemeId);
+                SaveEvent (this);
             }
         }
+
     }
 }

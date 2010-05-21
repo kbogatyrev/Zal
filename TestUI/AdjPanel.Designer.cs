@@ -41,7 +41,6 @@
             this.textBoxMGSg = new System.Windows.Forms.TextBox();
             this.textBoxMASgInanim = new System.Windows.Forms.TextBox();
             this.textBoxMNSg = new System.Windows.Forms.TextBox();
-            this.textBoxLexName = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -102,7 +101,7 @@
             // 
             this.textBoxLabelSg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelSg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelSg.Location = new System.Drawing.Point(172, 67);
+            this.textBoxLabelSg.Location = new System.Drawing.Point(151, 16);
             this.textBoxLabelSg.Multiline = true;
             this.textBoxLabelSg.Name = "textBoxLabelSg";
             this.textBoxLabelSg.Size = new System.Drawing.Size(62, 24);
@@ -115,7 +114,7 @@
             // 
             this.textBoxLabelISg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelISg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelISg.Location = new System.Drawing.Point(37, 279);
+            this.textBoxLabelISg.Location = new System.Drawing.Point(16, 228);
             this.textBoxLabelISg.Multiline = true;
             this.textBoxLabelISg.Name = "textBoxLabelISg";
             this.textBoxLabelISg.Size = new System.Drawing.Size(62, 24);
@@ -128,7 +127,7 @@
             // 
             this.textBoxLabelDSg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelDSg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelDSg.Location = new System.Drawing.Point(37, 249);
+            this.textBoxLabelDSg.Location = new System.Drawing.Point(16, 198);
             this.textBoxLabelDSg.Multiline = true;
             this.textBoxLabelDSg.Name = "textBoxLabelDSg";
             this.textBoxLabelDSg.Size = new System.Drawing.Size(62, 24);
@@ -141,7 +140,7 @@
             // 
             this.textBoxLabelLSg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelLSg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelLSg.Location = new System.Drawing.Point(37, 220);
+            this.textBoxLabelLSg.Location = new System.Drawing.Point(16, 169);
             this.textBoxLabelLSg.Multiline = true;
             this.textBoxLabelLSg.Name = "textBoxLabelLSg";
             this.textBoxLabelLSg.Size = new System.Drawing.Size(62, 24);
@@ -154,7 +153,7 @@
             // 
             this.textBoxLabelGSg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelGSg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelGSg.Location = new System.Drawing.Point(37, 193);
+            this.textBoxLabelGSg.Location = new System.Drawing.Point(16, 142);
             this.textBoxLabelGSg.Multiline = true;
             this.textBoxLabelGSg.Name = "textBoxLabelGSg";
             this.textBoxLabelGSg.Size = new System.Drawing.Size(62, 24);
@@ -167,7 +166,7 @@
             // 
             this.textBoxLabelMASgInanim.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelMASgInanim.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelMASgInanim.Location = new System.Drawing.Point(37, 133);
+            this.textBoxLabelMASgInanim.Location = new System.Drawing.Point(16, 82);
             this.textBoxLabelMASgInanim.Multiline = true;
             this.textBoxLabelMASgInanim.Name = "textBoxLabelMASgInanim";
             this.textBoxLabelMASgInanim.Size = new System.Drawing.Size(62, 24);
@@ -180,7 +179,7 @@
             // 
             this.textBoxLabelNSg.BackColor = System.Drawing.SystemColors.Control;
             this.textBoxLabelNSg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLabelNSg.Location = new System.Drawing.Point(37, 103);
+            this.textBoxLabelNSg.Location = new System.Drawing.Point(16, 52);
             this.textBoxLabelNSg.Multiline = true;
             this.textBoxLabelNSg.Name = "textBoxLabelNSg";
             this.textBoxLabelNSg.Size = new System.Drawing.Size(62, 24);
@@ -191,7 +190,7 @@
             // 
             // textBoxMISg
             // 
-            this.textBoxMISg.Location = new System.Drawing.Point(105, 279);
+            this.textBoxMISg.Location = new System.Drawing.Point(84, 228);
             this.textBoxMISg.Multiline = true;
             this.textBoxMISg.Name = "textBoxMISg";
             this.textBoxMISg.ReadOnly = true;
@@ -201,7 +200,7 @@
             // 
             // textBoxMDSg
             // 
-            this.textBoxMDSg.Location = new System.Drawing.Point(104, 249);
+            this.textBoxMDSg.Location = new System.Drawing.Point(83, 198);
             this.textBoxMDSg.Multiline = true;
             this.textBoxMDSg.Name = "textBoxMDSg";
             this.textBoxMDSg.ReadOnly = true;
@@ -211,7 +210,7 @@
             // 
             // textBoxMLSg
             // 
-            this.textBoxMLSg.Location = new System.Drawing.Point(104, 220);
+            this.textBoxMLSg.Location = new System.Drawing.Point(83, 169);
             this.textBoxMLSg.Multiline = true;
             this.textBoxMLSg.Name = "textBoxMLSg";
             this.textBoxMLSg.ReadOnly = true;
@@ -221,7 +220,7 @@
             // 
             // textBoxMGSg
             // 
-            this.textBoxMGSg.Location = new System.Drawing.Point(103, 193);
+            this.textBoxMGSg.Location = new System.Drawing.Point(82, 142);
             this.textBoxMGSg.Multiline = true;
             this.textBoxMGSg.Name = "textBoxMGSg";
             this.textBoxMGSg.ReadOnly = true;
@@ -231,7 +230,7 @@
             // 
             // textBoxMASgInanim
             // 
-            this.textBoxMASgInanim.Location = new System.Drawing.Point(104, 133);
+            this.textBoxMASgInanim.Location = new System.Drawing.Point(83, 82);
             this.textBoxMASgInanim.Multiline = true;
             this.textBoxMASgInanim.Name = "textBoxMASgInanim";
             this.textBoxMASgInanim.ReadOnly = true;
@@ -241,7 +240,7 @@
             // 
             // textBoxMNSg
             // 
-            this.textBoxMNSg.Location = new System.Drawing.Point(103, 103);
+            this.textBoxMNSg.Location = new System.Drawing.Point(82, 52);
             this.textBoxMNSg.Multiline = true;
             this.textBoxMNSg.Name = "textBoxMNSg";
             this.textBoxMNSg.ReadOnly = true;
@@ -249,22 +248,11 @@
             this.textBoxMNSg.TabIndex = 28;
             this.textBoxMNSg.TabStop = false;
             // 
-            // textBoxLexName
-            // 
-            this.textBoxLexName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLexName.Location = new System.Drawing.Point(277, 28);
-            this.textBoxLexName.Multiline = true;
-            this.textBoxLexName.Name = "textBoxLexName";
-            this.textBoxLexName.ReadOnly = true;
-            this.textBoxLexName.Size = new System.Drawing.Size(188, 24);
-            this.textBoxLexName.TabIndex = 27;
-            this.textBoxLexName.TabStop = false;
-            // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Control;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(510, 67);
+            this.textBox1.Location = new System.Drawing.Point(489, 16);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(29, 24);
@@ -277,7 +265,7 @@
             // 
             this.textBox2.BackColor = System.Drawing.SystemColors.Control;
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(172, 330);
+            this.textBox2.Location = new System.Drawing.Point(151, 268);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(62, 24);
@@ -289,7 +277,7 @@
             // textBox3
             // 
             this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(365, 279);
+            this.textBox3.Location = new System.Drawing.Point(344, 228);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
@@ -302,7 +290,7 @@
             // textBox4
             // 
             this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(365, 249);
+            this.textBox4.Location = new System.Drawing.Point(344, 198);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
@@ -315,7 +303,7 @@
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(365, 220);
+            this.textBox5.Location = new System.Drawing.Point(344, 169);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
@@ -328,7 +316,7 @@
             // textBox6
             // 
             this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.Location = new System.Drawing.Point(365, 189);
+            this.textBox6.Location = new System.Drawing.Point(344, 138);
             this.textBox6.Multiline = true;
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
@@ -341,7 +329,7 @@
             // textBox7
             // 
             this.textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox7.Location = new System.Drawing.Point(365, 129);
+            this.textBox7.Location = new System.Drawing.Point(344, 78);
             this.textBox7.Multiline = true;
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
@@ -354,7 +342,7 @@
             // textBox8
             // 
             this.textBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox8.Location = new System.Drawing.Point(365, 99);
+            this.textBox8.Location = new System.Drawing.Point(344, 48);
             this.textBox8.Multiline = true;
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
@@ -366,7 +354,7 @@
             // 
             // textBoxIPl
             // 
-            this.textBoxIPl.Location = new System.Drawing.Point(433, 279);
+            this.textBoxIPl.Location = new System.Drawing.Point(412, 228);
             this.textBoxIPl.Multiline = true;
             this.textBoxIPl.Name = "textBoxIPl";
             this.textBoxIPl.ReadOnly = true;
@@ -376,7 +364,7 @@
             // 
             // textBoxDPl
             // 
-            this.textBoxDPl.Location = new System.Drawing.Point(433, 249);
+            this.textBoxDPl.Location = new System.Drawing.Point(412, 198);
             this.textBoxDPl.Multiline = true;
             this.textBoxDPl.Name = "textBoxDPl";
             this.textBoxDPl.ReadOnly = true;
@@ -386,7 +374,7 @@
             // 
             // textBoxLPl
             // 
-            this.textBoxLPl.Location = new System.Drawing.Point(433, 219);
+            this.textBoxLPl.Location = new System.Drawing.Point(412, 168);
             this.textBoxLPl.Multiline = true;
             this.textBoxLPl.Name = "textBoxLPl";
             this.textBoxLPl.ReadOnly = true;
@@ -396,7 +384,7 @@
             // 
             // textBoxGPl
             // 
-            this.textBoxGPl.Location = new System.Drawing.Point(433, 189);
+            this.textBoxGPl.Location = new System.Drawing.Point(412, 138);
             this.textBoxGPl.Multiline = true;
             this.textBoxGPl.Name = "textBoxGPl";
             this.textBoxGPl.ReadOnly = true;
@@ -406,7 +394,7 @@
             // 
             // textBoxAPlInanim
             // 
-            this.textBoxAPlInanim.Location = new System.Drawing.Point(433, 129);
+            this.textBoxAPlInanim.Location = new System.Drawing.Point(412, 78);
             this.textBoxAPlInanim.Multiline = true;
             this.textBoxAPlInanim.Name = "textBoxAPlInanim";
             this.textBoxAPlInanim.ReadOnly = true;
@@ -416,7 +404,7 @@
             // 
             // textBoxNPl
             // 
-            this.textBoxNPl.Location = new System.Drawing.Point(433, 99);
+            this.textBoxNPl.Location = new System.Drawing.Point(412, 48);
             this.textBoxNPl.Multiline = true;
             this.textBoxNPl.Name = "textBoxNPl";
             this.textBoxNPl.ReadOnly = true;
@@ -428,7 +416,7 @@
             // 
             this.textBox15.BackColor = System.Drawing.SystemColors.Control;
             this.textBox15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox15.Location = new System.Drawing.Point(37, 510);
+            this.textBox15.Location = new System.Drawing.Point(16, 448);
             this.textBox15.Multiline = true;
             this.textBox15.Name = "textBox15";
             this.textBox15.Size = new System.Drawing.Size(62, 24);
@@ -441,7 +429,7 @@
             // 
             this.textBox16.BackColor = System.Drawing.SystemColors.Control;
             this.textBox16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox16.Location = new System.Drawing.Point(37, 480);
+            this.textBox16.Location = new System.Drawing.Point(16, 418);
             this.textBox16.Multiline = true;
             this.textBox16.Name = "textBox16";
             this.textBox16.Size = new System.Drawing.Size(62, 24);
@@ -454,7 +442,7 @@
             // 
             this.textBox17.BackColor = System.Drawing.SystemColors.Control;
             this.textBox17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox17.Location = new System.Drawing.Point(37, 452);
+            this.textBox17.Location = new System.Drawing.Point(16, 390);
             this.textBox17.Multiline = true;
             this.textBox17.Name = "textBox17";
             this.textBox17.Size = new System.Drawing.Size(62, 24);
@@ -467,7 +455,7 @@
             // 
             this.textBox18.BackColor = System.Drawing.SystemColors.Control;
             this.textBox18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox18.Location = new System.Drawing.Point(37, 422);
+            this.textBox18.Location = new System.Drawing.Point(16, 360);
             this.textBox18.Multiline = true;
             this.textBox18.Name = "textBox18";
             this.textBox18.Size = new System.Drawing.Size(62, 24);
@@ -480,7 +468,7 @@
             // 
             this.textBox19.BackColor = System.Drawing.SystemColors.Control;
             this.textBox19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox19.Location = new System.Drawing.Point(37, 395);
+            this.textBox19.Location = new System.Drawing.Point(16, 333);
             this.textBox19.Multiline = true;
             this.textBox19.Name = "textBox19";
             this.textBox19.Size = new System.Drawing.Size(62, 24);
@@ -493,7 +481,7 @@
             // 
             this.textBox20.BackColor = System.Drawing.SystemColors.Control;
             this.textBox20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox20.Location = new System.Drawing.Point(37, 365);
+            this.textBox20.Location = new System.Drawing.Point(16, 303);
             this.textBox20.Multiline = true;
             this.textBox20.Name = "textBox20";
             this.textBox20.Size = new System.Drawing.Size(62, 24);
@@ -504,7 +492,7 @@
             // 
             // textBoxFISg
             // 
-            this.textBoxFISg.Location = new System.Drawing.Point(104, 510);
+            this.textBoxFISg.Location = new System.Drawing.Point(83, 448);
             this.textBoxFISg.Multiline = true;
             this.textBoxFISg.Name = "textBoxFISg";
             this.textBoxFISg.ReadOnly = true;
@@ -514,7 +502,7 @@
             // 
             // textBoxFDSg
             // 
-            this.textBoxFDSg.Location = new System.Drawing.Point(104, 481);
+            this.textBoxFDSg.Location = new System.Drawing.Point(83, 419);
             this.textBoxFDSg.Multiline = true;
             this.textBoxFDSg.Name = "textBoxFDSg";
             this.textBoxFDSg.ReadOnly = true;
@@ -524,7 +512,7 @@
             // 
             // textBoxFLSg
             // 
-            this.textBoxFLSg.Location = new System.Drawing.Point(103, 452);
+            this.textBoxFLSg.Location = new System.Drawing.Point(82, 390);
             this.textBoxFLSg.Multiline = true;
             this.textBoxFLSg.Name = "textBoxFLSg";
             this.textBoxFLSg.ReadOnly = true;
@@ -534,7 +522,7 @@
             // 
             // textBoxFGSg
             // 
-            this.textBoxFGSg.Location = new System.Drawing.Point(104, 423);
+            this.textBoxFGSg.Location = new System.Drawing.Point(83, 361);
             this.textBoxFGSg.Multiline = true;
             this.textBoxFGSg.Name = "textBoxFGSg";
             this.textBoxFGSg.ReadOnly = true;
@@ -544,7 +532,7 @@
             // 
             // textBoxFASg
             // 
-            this.textBoxFASg.Location = new System.Drawing.Point(103, 394);
+            this.textBoxFASg.Location = new System.Drawing.Point(82, 332);
             this.textBoxFASg.Multiline = true;
             this.textBoxFASg.Name = "textBoxFASg";
             this.textBoxFASg.ReadOnly = true;
@@ -554,7 +542,7 @@
             // 
             // textBoxFNSg
             // 
-            this.textBoxFNSg.Location = new System.Drawing.Point(103, 365);
+            this.textBoxFNSg.Location = new System.Drawing.Point(82, 303);
             this.textBoxFNSg.Multiline = true;
             this.textBoxFNSg.Name = "textBoxFNSg";
             this.textBoxFNSg.ReadOnly = true;
@@ -566,7 +554,7 @@
             // 
             this.textBox28.BackColor = System.Drawing.SystemColors.Control;
             this.textBox28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox28.Location = new System.Drawing.Point(172, 555);
+            this.textBox28.Location = new System.Drawing.Point(151, 490);
             this.textBox28.Multiline = true;
             this.textBox28.Name = "textBox28";
             this.textBox28.Size = new System.Drawing.Size(62, 24);
@@ -579,7 +567,7 @@
             // 
             this.textBox41.BackColor = System.Drawing.SystemColors.Control;
             this.textBox41.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox41.Location = new System.Drawing.Point(37, 730);
+            this.textBox41.Location = new System.Drawing.Point(16, 665);
             this.textBox41.Multiline = true;
             this.textBox41.Name = "textBox41";
             this.textBox41.Size = new System.Drawing.Size(62, 24);
@@ -592,7 +580,7 @@
             // 
             this.textBox42.BackColor = System.Drawing.SystemColors.Control;
             this.textBox42.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox42.Location = new System.Drawing.Point(37, 702);
+            this.textBox42.Location = new System.Drawing.Point(16, 637);
             this.textBox42.Multiline = true;
             this.textBox42.Name = "textBox42";
             this.textBox42.Size = new System.Drawing.Size(62, 24);
@@ -605,7 +593,7 @@
             // 
             this.textBox43.BackColor = System.Drawing.SystemColors.Control;
             this.textBox43.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox43.Location = new System.Drawing.Point(37, 674);
+            this.textBox43.Location = new System.Drawing.Point(16, 609);
             this.textBox43.Multiline = true;
             this.textBox43.Name = "textBox43";
             this.textBox43.Size = new System.Drawing.Size(62, 24);
@@ -618,7 +606,7 @@
             // 
             this.textBox44.BackColor = System.Drawing.SystemColors.Control;
             this.textBox44.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox44.Location = new System.Drawing.Point(37, 646);
+            this.textBox44.Location = new System.Drawing.Point(16, 581);
             this.textBox44.Multiline = true;
             this.textBox44.Name = "textBox44";
             this.textBox44.Size = new System.Drawing.Size(62, 24);
@@ -631,7 +619,7 @@
             // 
             this.textBox45.BackColor = System.Drawing.SystemColors.Control;
             this.textBox45.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox45.Location = new System.Drawing.Point(37, 618);
+            this.textBox45.Location = new System.Drawing.Point(16, 553);
             this.textBox45.Multiline = true;
             this.textBox45.Name = "textBox45";
             this.textBox45.Size = new System.Drawing.Size(62, 24);
@@ -644,7 +632,7 @@
             // 
             this.textBox46.BackColor = System.Drawing.SystemColors.Control;
             this.textBox46.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox46.Location = new System.Drawing.Point(37, 590);
+            this.textBox46.Location = new System.Drawing.Point(16, 525);
             this.textBox46.Multiline = true;
             this.textBox46.Name = "textBox46";
             this.textBox46.Size = new System.Drawing.Size(62, 24);
@@ -655,7 +643,7 @@
             // 
             // textBoxNISg
             // 
-            this.textBoxNISg.Location = new System.Drawing.Point(105, 730);
+            this.textBoxNISg.Location = new System.Drawing.Point(84, 665);
             this.textBoxNISg.Multiline = true;
             this.textBoxNISg.Name = "textBoxNISg";
             this.textBoxNISg.ReadOnly = true;
@@ -665,7 +653,7 @@
             // 
             // textBoxNDSg
             // 
-            this.textBoxNDSg.Location = new System.Drawing.Point(105, 702);
+            this.textBoxNDSg.Location = new System.Drawing.Point(84, 637);
             this.textBoxNDSg.Multiline = true;
             this.textBoxNDSg.Name = "textBoxNDSg";
             this.textBoxNDSg.ReadOnly = true;
@@ -675,7 +663,7 @@
             // 
             // textBoxNLSg
             // 
-            this.textBoxNLSg.Location = new System.Drawing.Point(105, 674);
+            this.textBoxNLSg.Location = new System.Drawing.Point(84, 609);
             this.textBoxNLSg.Multiline = true;
             this.textBoxNLSg.Name = "textBoxNLSg";
             this.textBoxNLSg.ReadOnly = true;
@@ -685,7 +673,7 @@
             // 
             // textBoxNGSg
             // 
-            this.textBoxNGSg.Location = new System.Drawing.Point(105, 646);
+            this.textBoxNGSg.Location = new System.Drawing.Point(84, 581);
             this.textBoxNGSg.Multiline = true;
             this.textBoxNGSg.Name = "textBoxNGSg";
             this.textBoxNGSg.ReadOnly = true;
@@ -695,7 +683,7 @@
             // 
             // textBoxNASg
             // 
-            this.textBoxNASg.Location = new System.Drawing.Point(105, 618);
+            this.textBoxNASg.Location = new System.Drawing.Point(84, 553);
             this.textBoxNASg.Multiline = true;
             this.textBoxNASg.Name = "textBoxNASg";
             this.textBoxNASg.ReadOnly = true;
@@ -705,7 +693,7 @@
             // 
             // textBoxNNSg
             // 
-            this.textBoxNNSg.Location = new System.Drawing.Point(105, 590);
+            this.textBoxNNSg.Location = new System.Drawing.Point(84, 525);
             this.textBoxNNSg.Multiline = true;
             this.textBoxNNSg.Name = "textBoxNNSg";
             this.textBoxNNSg.ReadOnly = true;
@@ -717,7 +705,7 @@
             // 
             this.textBox9.BackColor = System.Drawing.SystemColors.Control;
             this.textBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox9.Location = new System.Drawing.Point(37, 163);
+            this.textBox9.Location = new System.Drawing.Point(16, 112);
             this.textBox9.Multiline = true;
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(62, 24);
@@ -728,7 +716,7 @@
             // 
             // textBoxMASgAnim
             // 
-            this.textBoxMASgAnim.Location = new System.Drawing.Point(103, 163);
+            this.textBoxMASgAnim.Location = new System.Drawing.Point(82, 112);
             this.textBoxMASgAnim.Multiline = true;
             this.textBoxMASgAnim.Name = "textBoxMASgAnim";
             this.textBoxMASgAnim.ReadOnly = true;
@@ -739,7 +727,7 @@
             // textBox10
             // 
             this.textBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox10.Location = new System.Drawing.Point(365, 159);
+            this.textBox10.Location = new System.Drawing.Point(344, 108);
             this.textBox10.Multiline = true;
             this.textBox10.Name = "textBox10";
             this.textBox10.ReadOnly = true;
@@ -751,7 +739,7 @@
             // 
             // textBoxAPlAnim
             // 
-            this.textBoxAPlAnim.Location = new System.Drawing.Point(433, 159);
+            this.textBoxAPlAnim.Location = new System.Drawing.Point(412, 108);
             this.textBoxAPlAnim.Multiline = true;
             this.textBoxAPlAnim.Name = "textBoxAPlAnim";
             this.textBoxAPlAnim.ReadOnly = true;
@@ -762,7 +750,7 @@
             // textBox11
             // 
             this.textBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox11.Location = new System.Drawing.Point(486, 330);
+            this.textBox11.Location = new System.Drawing.Point(465, 268);
             this.textBox11.Multiline = true;
             this.textBox11.Name = "textBox11";
             this.textBox11.ReadOnly = true;
@@ -776,7 +764,7 @@
             // 
             this.textBox12.BackColor = System.Drawing.SystemColors.Control;
             this.textBox12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox12.Location = new System.Drawing.Point(365, 367);
+            this.textBox12.Location = new System.Drawing.Point(344, 305);
             this.textBox12.Multiline = true;
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(62, 24);
@@ -787,7 +775,7 @@
             // 
             // textBoxShortM
             // 
-            this.textBoxShortM.Location = new System.Drawing.Point(433, 367);
+            this.textBoxShortM.Location = new System.Drawing.Point(412, 305);
             this.textBoxShortM.Multiline = true;
             this.textBoxShortM.Name = "textBoxShortM";
             this.textBoxShortM.ReadOnly = true;
@@ -799,7 +787,7 @@
             // 
             this.textBox13.BackColor = System.Drawing.SystemColors.Control;
             this.textBox13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox13.Location = new System.Drawing.Point(365, 396);
+            this.textBox13.Location = new System.Drawing.Point(344, 334);
             this.textBox13.Multiline = true;
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(62, 24);
@@ -810,7 +798,7 @@
             // 
             // textBoxShortF
             // 
-            this.textBoxShortF.Location = new System.Drawing.Point(433, 396);
+            this.textBoxShortF.Location = new System.Drawing.Point(412, 334);
             this.textBoxShortF.Multiline = true;
             this.textBoxShortF.Name = "textBoxShortF";
             this.textBoxShortF.ReadOnly = true;
@@ -822,7 +810,7 @@
             // 
             this.textBox21.BackColor = System.Drawing.SystemColors.Control;
             this.textBox21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox21.Location = new System.Drawing.Point(365, 425);
+            this.textBox21.Location = new System.Drawing.Point(344, 363);
             this.textBox21.Multiline = true;
             this.textBox21.Name = "textBox21";
             this.textBox21.Size = new System.Drawing.Size(62, 24);
@@ -833,7 +821,7 @@
             // 
             // textBoxShortN
             // 
-            this.textBoxShortN.Location = new System.Drawing.Point(433, 425);
+            this.textBoxShortN.Location = new System.Drawing.Point(412, 363);
             this.textBoxShortN.Multiline = true;
             this.textBoxShortN.Name = "textBoxShortN";
             this.textBoxShortN.ReadOnly = true;
@@ -845,7 +833,7 @@
             // 
             this.textBox23.BackColor = System.Drawing.SystemColors.Control;
             this.textBox23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox23.Location = new System.Drawing.Point(365, 455);
+            this.textBox23.Location = new System.Drawing.Point(344, 393);
             this.textBox23.Multiline = true;
             this.textBox23.Name = "textBox23";
             this.textBox23.Size = new System.Drawing.Size(62, 24);
@@ -856,7 +844,7 @@
             // 
             // textBoxShortPl
             // 
-            this.textBoxShortPl.Location = new System.Drawing.Point(433, 454);
+            this.textBoxShortPl.Location = new System.Drawing.Point(412, 392);
             this.textBoxShortPl.Multiline = true;
             this.textBoxShortPl.Name = "textBoxShortPl";
             this.textBoxShortPl.ReadOnly = true;
@@ -867,7 +855,7 @@
             // textBox14
             // 
             this.textBox14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox14.Location = new System.Drawing.Point(486, 555);
+            this.textBox14.Location = new System.Drawing.Point(465, 490);
             this.textBox14.Multiline = true;
             this.textBox14.Name = "textBox14";
             this.textBox14.ReadOnly = true;
@@ -879,7 +867,7 @@
             // 
             // textBoxComparative
             // 
-            this.textBoxComparative.Location = new System.Drawing.Point(433, 590);
+            this.textBoxComparative.Location = new System.Drawing.Point(412, 525);
             this.textBoxComparative.Multiline = true;
             this.textBoxComparative.Name = "textBoxComparative";
             this.textBoxComparative.ReadOnly = true;
@@ -958,9 +946,8 @@
             this.Controls.Add(this.textBoxMGSg);
             this.Controls.Add(this.textBoxMASgInanim);
             this.Controls.Add(this.textBoxMNSg);
-            this.Controls.Add(this.textBoxLexName);
             this.Name = "AdjPanel";
-            this.Size = new System.Drawing.Size(682, 777);
+            this.Size = new System.Drawing.Size(647, 705);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -981,7 +968,6 @@
         private System.Windows.Forms.TextBox textBoxMGSg;
         private System.Windows.Forms.TextBox textBoxMASgInanim;
         private System.Windows.Forms.TextBox textBoxMNSg;
-        private System.Windows.Forms.TextBox textBoxLexName;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;

@@ -51,7 +51,7 @@
             this.textBoxInitForm.Name = "textBoxInitForm";
             this.textBoxInitForm.ReadOnly = true;
             this.textBoxInitForm.Size = new System.Drawing.Size(100, 20);
-            this.textBoxInitForm.TabIndex = 5;
+            this.textBoxInitForm.TabIndex = 2;
             this.textBoxInitForm.TabStop = false;
             this.textBoxInitForm.Text = "Initial Form";
             // 
@@ -61,7 +61,7 @@
             this.textBoxInitFormValue.Name = "textBoxInitFormValue";
             this.textBoxInitFormValue.ReadOnly = true;
             this.textBoxInitFormValue.Size = new System.Drawing.Size(185, 20);
-            this.textBoxInitFormValue.TabIndex = 7;
+            this.textBoxInitFormValue.TabIndex = 3;
             this.textBoxInitFormValue.TabStop = false;
             // 
             // textBoxGrStem
@@ -71,7 +71,7 @@
             this.textBoxGrStem.Name = "textBoxGrStem";
             this.textBoxGrStem.ReadOnly = true;
             this.textBoxGrStem.Size = new System.Drawing.Size(100, 20);
-            this.textBoxGrStem.TabIndex = 2;
+            this.textBoxGrStem.TabIndex = 4;
             this.textBoxGrStem.TabStop = false;
             this.textBoxGrStem.Text = "Graphic Stem";
             // 
@@ -81,7 +81,7 @@
             this.textBoxGrStemValue.Name = "textBoxGrStemValue";
             this.textBoxGrStemValue.ReadOnly = true;
             this.textBoxGrStemValue.Size = new System.Drawing.Size(185, 20);
-            this.textBoxGrStemValue.TabIndex = 3;
+            this.textBoxGrStemValue.TabIndex = 5;
             this.textBoxGrStemValue.TabStop = false;
             // 
             // textBoxMainSymb
@@ -91,7 +91,7 @@
             this.textBoxMainSymb.Name = "textBoxMainSymb";
             this.textBoxMainSymb.ReadOnly = true;
             this.textBoxMainSymb.Size = new System.Drawing.Size(100, 20);
-            this.textBoxMainSymb.TabIndex = 4;
+            this.textBoxMainSymb.TabIndex = 6;
             this.textBoxMainSymb.TabStop = false;
             this.textBoxMainSymb.Text = "Main Symbol";
             // 
@@ -101,7 +101,7 @@
             this.textBoxMainSymbValue.Name = "textBoxMainSymbValue";
             this.textBoxMainSymbValue.ReadOnly = true;
             this.textBoxMainSymbValue.Size = new System.Drawing.Size(185, 20);
-            this.textBoxMainSymbValue.TabIndex = 3;
+            this.textBoxMainSymbValue.TabIndex = 7;
             this.textBoxMainSymbValue.TabStop = false;
             // 
             // textBoxType
@@ -111,7 +111,7 @@
             this.textBoxType.Name = "textBoxType";
             this.textBoxType.ReadOnly = true;
             this.textBoxType.Size = new System.Drawing.Size(100, 20);
-            this.textBoxType.TabIndex = 6;
+            this.textBoxType.TabIndex = 8;
             this.textBoxType.TabStop = false;
             this.textBoxType.Text = "Type";
             // 
@@ -121,7 +121,7 @@
             this.textBoxTypeValue.Name = "textBoxTypeValue";
             this.textBoxTypeValue.ReadOnly = true;
             this.textBoxTypeValue.Size = new System.Drawing.Size(184, 20);
-            this.textBoxTypeValue.TabIndex = 7;
+            this.textBoxTypeValue.TabIndex = 9;
             this.textBoxTypeValue.TabStop = false;
             // 
             // textBoxStress
@@ -131,7 +131,7 @@
             this.textBoxStress.Name = "textBoxStress";
             this.textBoxStress.ReadOnly = true;
             this.textBoxStress.Size = new System.Drawing.Size(100, 20);
-            this.textBoxStress.TabIndex = 8;
+            this.textBoxStress.TabIndex = 10;
             this.textBoxStress.TabStop = false;
             this.textBoxStress.Text = "Stress Type";
             // 
@@ -141,7 +141,7 @@
             this.textBoxStressTypeValue.Name = "textBoxStressTypeValue";
             this.textBoxStressTypeValue.ReadOnly = true;
             this.textBoxStressTypeValue.Size = new System.Drawing.Size(184, 20);
-            this.textBoxStressTypeValue.TabIndex = 9;
+            this.textBoxStressTypeValue.TabIndex = 11;
             this.textBoxStressTypeValue.TabStop = false;
             // 
             // textBoxAdvanced
@@ -151,7 +151,7 @@
             this.textBoxAdvanced.Name = "textBoxAdvanced";
             this.textBoxAdvanced.ReadOnly = true;
             this.textBoxAdvanced.Size = new System.Drawing.Size(100, 20);
-            this.textBoxAdvanced.TabIndex = 10;
+            this.textBoxAdvanced.TabIndex = 12;
             this.textBoxAdvanced.TabStop = false;
             this.textBoxAdvanced.Text = "Advanced";
             // 
@@ -162,7 +162,7 @@
             this.textBoxAdvancedValue.Name = "textBoxAdvancedValue";
             this.textBoxAdvancedValue.ReadOnly = true;
             this.textBoxAdvancedValue.Size = new System.Drawing.Size(184, 49);
-            this.textBoxAdvancedValue.TabIndex = 11;
+            this.textBoxAdvancedValue.TabIndex = 13;
             this.textBoxAdvancedValue.TabStop = false;
             // 
             // buttonShowWF
@@ -170,18 +170,17 @@
             this.buttonShowWF.Location = new System.Drawing.Point(324, 73);
             this.buttonShowWF.Name = "buttonShowWF";
             this.buttonShowWF.Size = new System.Drawing.Size(75, 23);
-            this.buttonShowWF.TabIndex = 1;
+            this.buttonShowWF.TabIndex = 0;
             this.buttonShowWF.Text = "Show Forms";
             this.buttonShowWF.UseVisualStyleBackColor = true;
             this.buttonShowWF.Click += new System.EventHandler(this.buttonShowWF_Click);
-            this.buttonShowWF.Enter += new System.EventHandler(this.buttonShowWF_Click);
             // 
             // buttonSave
             // 
             this.buttonSave.Location = new System.Drawing.Point(324, 102);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 2;
+            this.buttonSave.TabIndex = 1;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
