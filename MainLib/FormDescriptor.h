@@ -64,7 +64,9 @@ using namespace WordFormVector;
 class ATL_NO_VTABLE CT_FormDescriptor :
 	public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CT_FormDescriptor, &CLSID_ZalFormDescriptor>,
-    public IDispatchImpl<VectorCollection, &IID_IFormDescriptor, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
+    public VectorCollection,
+    public IError
+//    public IDispatchImpl<VectorCollection, &IID_IFormDescriptor, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 friend class CT_Lexeme;
 
@@ -77,9 +79,10 @@ public:
     DECLARE_NO_REGISTRY()
 
     BEGIN_COM_MAP(CT_FormDescriptor)
-	COM_INTERFACE_ENTRY(IFormDescriptor)
-    COM_INTERFACE_ENTRY(IDispatch)
-END_COM_MAP()
+	    COM_INTERFACE_ENTRY(IFormDescriptor)
+        COM_INTERFACE_ENTRY(IError)
+//    COM_INTERFACE_ENTRY(IDispatch)
+    END_COM_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
@@ -91,6 +94,24 @@ END_COM_MAP()
 	void FinalRelease()
 	{}
 
+// IError
+    STDMETHOD (get_LastError) (BSTR * pbstr_description)
+    {
+        USES_CONVERSION;
+
+        CT_Error * pco_error = CT_Error::pco_CreateInstance();
+        if (!pco_error)
+        {
+            return E_POINTER;
+        }
+
+        CComBSTR sp_error (pco_error->str_GetLastError().c_str());
+        *pbstr_description = sp_error.Detach();
+
+        return S_OK;
+    }
+
+// IFormDescriptor
     STDMETHOD (FindForms) ();
     STDMETHOD (put_PartOfSpeech) (ET_PartOfSpeech);
     STDMETHOD (put_Subparadigm) (ET_Subparadigm);
@@ -109,7 +130,7 @@ protected:
 
 private:
     CT_GramHasher co_Hasher;
-    CComPtr<CT_Lexeme> sp_Lexeme;
+    CT_Lexeme * pco_Lexeme;
 
 };
 
