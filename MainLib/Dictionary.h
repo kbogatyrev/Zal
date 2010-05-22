@@ -49,7 +49,9 @@ using namespace LexemeVector;
 class ATL_NO_VTABLE CT_Dictionary :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_Dictionary, &CLSID_ZalDictionary>,
-    public IDispatchImpl<LexemeCollection, &IID_IDictionary, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
+    public IError,
+    public LexemeCollection
+//    public IDispatchImpl<LexemeCollection, &IID_IDictionary, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
 	CT_Dictionary()
@@ -61,7 +63,8 @@ DECLARE_REGISTRY_RESOURCEID(IDR_DICTIONARY)
 
 BEGIN_COM_MAP(CT_Dictionary)
 	COM_INTERFACE_ENTRY(IDictionary)
-    COM_INTERFACE_ENTRY(IDispatch)
+	COM_INTERFACE_ENTRY(IError)
+//    COM_INTERFACE_ENTRY(IDispatch)
 END_COM_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
@@ -78,10 +81,27 @@ END_COM_MAP()
 	}
 
 public:
-    STDMETHOD (put_DbPath) (BSTR DbPath);
-    STDMETHOD (GetLexeme) (LONG Id, ILexeme ** Lexeme);
-    STDMETHOD (GetLexemesByGraphicStem) (BSTR Key);
-    STDMETHOD (GetLexemesByInitialForm) (BSTR Key);
+    STDMETHOD (put_DbPath) (BSTR bstr_dbPath);
+    STDMETHOD (GetLexeme) (LONG Id, ILexeme ** pp_lexeme);
+    STDMETHOD (GetLexemesByGraphicStem) (BSTR bstr_key);
+    STDMETHOD (GetLexemesByInitialForm) (BSTR bstr_key);
+
+// IError
+    STDMETHOD (get_LastError) (BSTR * pbstr_description)
+    {
+        USES_CONVERSION;
+
+        CT_Error * pco_error = CT_Error::pco_CreateInstance();
+        if (!pco_error)
+        {
+            return E_POINTER;
+        }
+
+        CComBSTR sp_error (pco_error->str_GetLastError().c_str());
+        *pbstr_description = sp_error.Detach();
+
+        return S_OK;
+    }
 
 private:
     wstring str_DbPath;
