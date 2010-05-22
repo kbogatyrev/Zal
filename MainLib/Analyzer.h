@@ -27,12 +27,14 @@ typedef VCUE::ICollectionOnSTLCopyImpl <IAnalyzer,
                                         VARIANT,
                                         VCUE::GenericCopy<VARIANT, 
                                                           std::vector<CComVariant>::value_type>,
-                                        EnumeratorType> WordformCollection;
+                                        EnumeratorType> WordFormCollection;
 
 class ATL_NO_VTABLE CT_Analyzer :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_Analyzer, &CLSID_ZalAnalyzer>,
-    public IDispatchImpl<WordformCollection, &IID_IAnalyzer, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
+    public WordFormCollection,
+    public IError
+//    public IDispatchImpl<WordformCollection, &IID_IAnalyzer, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
 	CT_Analyzer()
@@ -45,7 +47,8 @@ public:
 
     BEGIN_COM_MAP(CT_Analyzer)
 	    COM_INTERFACE_ENTRY(IAnalyzer)
-        COM_INTERFACE_ENTRY(IDispatch)
+	    COM_INTERFACE_ENTRY(IError)
+//        COM_INTERFACE_ENTRY(IDispatch)
     END_COM_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
@@ -62,6 +65,25 @@ public:
 	}
 
 public:
+// IError
+    STDMETHOD (get_LastError) (BSTR * pbstr_description)
+    {
+        USES_CONVERSION;
+
+        CT_Error * pco_error = CT_Error::pco_CreateInstance();
+        if (!pco_error)
+        {
+            return E_POINTER;
+        }
+
+        CComBSTR sp_error (pco_error->str_GetLastError().c_str());
+        *pbstr_description = sp_error.Detach();
+
+        return S_OK;
+    }
+
+
+//  IAnalyze
     STDMETHOD (put_DbPath) (BSTR bstr_Path);
     STDMETHOD (PrepareLexeme) (__int64 ll_Lexeme_id, BOOL b_Stress);
     STDMETHOD (PrepareLexemes) (__int64 ll_First_Lexeme_id, __int64 ll_Last_Lexeme_id, BOOL b_Stress);
