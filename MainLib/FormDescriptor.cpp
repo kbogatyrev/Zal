@@ -15,6 +15,9 @@ HRESULT CT_FormDescriptor::FindForms()
     }
     catch (CT_Exception co_ex)
     {
+        wstring str_msg (L"Exception in v_FormsFromHash(): ");
+        str_msg += co_ex.str_GetDescription();
+        ERROR_LOG (str_msg);
         return E_FAIL;  // logging should be always done by callee
     }
 
