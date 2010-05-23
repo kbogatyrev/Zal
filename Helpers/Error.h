@@ -7,49 +7,78 @@
 
 using namespace std;
 
+class CT_Error;
+static CT_Error * spco_This;     // singleton
+
 class CT_Error
 {
-public:
-
 private:
-	int i_ErrCode_;
-	wstring str_BriefDescription_;
-    wstring str_Location_;
-	wstring str_DetailedDescription_;
-    wstring str_FormattedMsg_;
+    vector<wstring> vec_Log_;
 
-public:
     CT_Error() {};
 
-    CT_Error  (const wstring& str_briefDescription,
-               const wstring& str_location,
-		       const wstring& str_detailedDescription = L"",
-               int i_errCode = -1) 
-               : str_BriefDescription_ (str_briefDescription),
-                 str_Location_ (str_location),
-	             str_DetailedDescription_ (str_detailedDescription),
-	              i_ErrCode_ (i_errCode)
+    void v_HandleError (const wstring& str_briefDescription,
+                        const wstring& str_location,
+		                const wstring& str_detailedDescription,
+                        int i_errCode,
+                        bool b_writeLog) 
     {
-        str_FormattedMsg_ = str_Format_ (str_BriefDescription_, 
-                                         str_Location_, 
-                                         str_DetailedDescription_, 
-                                         i_ErrCode_);
-        b_WriteLog (str_FormattedMsg_);
+        wstring str_formattedMsg = str_Format_ (str_briefDescription, 
+                                                str_location, 
+                                                str_detailedDescription, 
+                                                i_errCode);
+        if (b_writeLog)
+        {
+            b_WriteLog (str_formattedMsg);
+        }
+        else
+        {
+            vec_Log_.push_back (str_formattedMsg);
+        }
+   }
+
+public:
+    virtual ~CT_Error() {};
+
+    static CT_Error * pco_CreateInstance()
+    {
+        if (!spco_This)
+        {
+            spco_This = new CT_Error();
+        }
+
+        return spco_This;
     }
 
-	//
-	//  Non-virtual destructor: this is not a base class
-	//
-    ~CT_Error() {};
-
-    CT_Error& operator = (const CT_Error& co_rhs)
+    static void CreateInstance  (const wstring& str_briefDescription,
+                                 const wstring& str_location,
+		                         const wstring& str_detailedDescription = L"",
+                                 int i_errCode = -1,
+                                 bool b_writeLog = true) 
     {
-	    str_BriefDescription_ = co_rhs.str_BriefDescription_;
-        str_Location_ = co_rhs.str_Location_;
-	    str_DetailedDescription_ = co_rhs.str_DetailedDescription_;
-	    i_ErrCode_  = co_rhs.i_ErrCode_;
-	
-	    return *this;
+        if (!spco_This)
+        {
+            spco_This = new CT_Error();
+        }
+
+        spco_This->v_HandleError (str_briefDescription,
+                                  str_location,
+		                          str_detailedDescription,
+                                  i_errCode,
+                                  b_writeLog);
+    }
+
+    wstring str_GetLastError()
+    {
+        if (vec_Log_.size() > 0)
+        {
+            return vec_Log_.back();
+        }
+        else
+        {
+            wstring str_msg (L"No last error description.");
+            return str_msg;
+        }
     }
 
     template <typename T>
