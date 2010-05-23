@@ -55,9 +55,9 @@ using namespace ATL;
 
 #define ERROR_LOG(str_Msg) wstringstream io__; \
         io__ << __LINE__; \
-        CT_Error (str_Msg, \
-           std::wstring (_T(__FILE__)) + \
-           std::wstring (_T("\t")) + \
-           io__.str() + \
-           std::wstring (_T("\t")) + \
-           std::wstring (_T(__FUNCTION__)));
+        CT_Error::CreateInstance (str_Msg, \
+                                  std::wstring (_T(__FILE__)) + \
+                                  std::wstring (_T("\t")) + \
+                                  io__.str() + \
+                                  std::wstring (_T("\t")) + \
+                                  std::wstring (_T(__FUNCTION__)));
