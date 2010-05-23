@@ -71,7 +71,19 @@ namespace TestUI
         protected void ShowLexemeDetails (LexemeDataPanel ldpSource)
         {
             MainLib.ILexeme lexeme = m_dictLexemes[ldpSource];
-            lexeme.GenerateWordForms();
+
+            try
+            {
+                lexeme.GenerateWordForms();
+            }
+            catch (Exception ex)
+            {
+                string sMsg = "ShowLexemeDetails: ";
+                MainLib.IError err = (MainLib.IError)lexeme;
+                sMsg += ((MainLib.IError)lexeme).LastError;
+                MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
+                return;
+            }
 
             TabPage tabPageDetails = new TabPage(lexeme.InitialForm);
 
@@ -103,17 +115,15 @@ namespace TestUI
                         }
                     }
 
-                    np.SetForm(sKey, strWordForm);
+                    np.SetForm (sKey, strWordForm);
 
                 }   // foreach
-
             }
 
             if (MainLib.ET_PartOfSpeech.POS_ADJ == lexeme.PartOfSpeech)
             {
                 AdjPanel ap = new AdjPanel();
                 tabPageDetails.Controls.Add(ap);
-//                ap.sLexName = grSt;
 
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
