@@ -162,7 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="MainLib">
-      <Guid>{0DB47D63-783E-4807-8455-DAE4AF543BDF}</Guid>
+      <Guid>{7D779CC0-7005-4082-87D1-0468ED94EDF4}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
