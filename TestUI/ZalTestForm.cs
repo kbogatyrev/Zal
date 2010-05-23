@@ -67,9 +67,9 @@ namespace TestUI
             }
         }
 
-        private void buttonSelect_Click(object sender, EventArgs e)
-        {
-        }
+        //private void buttonSelect_Click(object sender, EventArgs e)
+        //{
+        //}
 
         private void TestApplet_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -219,7 +219,9 @@ namespace TestUI
 
             TabPage tabPageLexemes = new TabPage (m_sSearchString);
             tabPageLexemes.AutoScroll = true;
-            
+
+            LexemeDataPanel ldpFocused = null;
+
             int iLexeme = 0;
             foreach (MainLib.ILexeme lex in m_Dictionary)
             {
@@ -240,11 +242,16 @@ namespace TestUI
                 tabPageLexemes.Controls.Add (ldp);
                 ldp.Left += 20;
                 ldp.Top += 20;
+                if (0 == iLexeme)
+                {
+                    ldpFocused = ldp;
+                }
                 ++iLexeme;
             }
 
             tabControl.Controls.Add (tabPageLexemes);
             tabControl.SelectTab(tabPageLexemes);
+            ldpFocused.FocusShowButton();
 
         }   // ShowLexemes()
 
