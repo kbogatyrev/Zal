@@ -85,6 +85,7 @@ public:
     STDMETHOD (GetLexeme) (LONG Id, ILexeme ** pp_lexeme);
     STDMETHOD (GetLexemesByGraphicStem) (BSTR bstr_key);
     STDMETHOD (GetLexemesByInitialForm) (BSTR bstr_key);
+    STDMETHOD (LoadStoredLexemes) (long l_lowBound, long l_highBound);
 
 // IError
     STDMETHOD (get_LastError) (BSTR * pbstr_description)
@@ -108,6 +109,7 @@ private:
     CT_Sqlite * pco_Db;
 
     HRESULT h_GetData (const wstring& str_select);
+    HRESULT h_GetStoredLexemeData (const wstring& str_select);
     HRESULT h_ReadFromDb (__int64 ll_lexemeId);
     HRESULT h_ReadFromDb (const CT_ExtString& str_stem);
 };
