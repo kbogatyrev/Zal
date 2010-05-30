@@ -39,7 +39,7 @@
             this.parseWordFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.batchTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectBySourceFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -127,7 +127,7 @@
             // 
             this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.batchTestToolStripMenuItem,
-            this.selectBySourceFormToolStripMenuItem});
+            this.testRangeToolStripMenuItem});
             this.testToolStripMenuItem.Enabled = false;
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
@@ -136,9 +136,16 @@
             // batchTestToolStripMenuItem
             // 
             this.batchTestToolStripMenuItem.Name = "batchTestToolStripMenuItem";
-            this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.batchTestToolStripMenuItem.Text = "Batch Test";
+            this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.batchTestToolStripMenuItem.Text = "Test All";
             this.batchTestToolStripMenuItem.Click += new System.EventHandler(this.batchTestToolStripMenuItem_Click);
+            // 
+            // testRangeToolStripMenuItem
+            // 
+            this.testRangeToolStripMenuItem.Name = "testRangeToolStripMenuItem";
+            this.testRangeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.testRangeToolStripMenuItem.Text = "Test Range";
+            this.testRangeToolStripMenuItem.Click += new System.EventHandler(this.testRangeToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -160,7 +167,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 25);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(660, 758);
+            this.tabControl.Size = new System.Drawing.Size(660, 738);
             this.tabControl.TabIndex = 0;
             // 
             // TestApplet
@@ -172,7 +179,11 @@
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(668, 790);
+            this.MinimumSize = new System.Drawing.Size(668, 790);
             this.Name = "TestApplet";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Zal Test Applet";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestApplet_FormClosing);
@@ -198,7 +209,7 @@
         private System.Windows.Forms.ToolStripMenuItem parseWordFormToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem batchTestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem selectBySourceFormToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem testRangeToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.TabControl tabControl;

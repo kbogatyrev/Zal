@@ -20,57 +20,58 @@ namespace TestUI
             m_sDbPath = Properties.Settings.Default.DbPath;
 
             m_Dictionary = new MainLib.ZalDictionary();
+            m_SavedFormDictionary = new MainLib.ZalDictionary();
             m_Analyzer = new MainLib.ZalAnalyzer();
-            m_dictLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
+            m_hashLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
             m_listWordForms = new List<MainLib.IWordForm>();
 
-            m_dictGender = new Dictionary<MainLib.ET_Gender, string>();
-            m_dictGender.Add(MainLib.ET_Gender.GENDER_UNDEFINED, "Undefined");
-            m_dictGender.Add(MainLib.ET_Gender.GENDER_M, "M");
-            m_dictGender.Add(MainLib.ET_Gender.GENDER_F, "F");
-            m_dictGender.Add(MainLib.ET_Gender.GENDER_N, "N");
+            m_hashGender = new Dictionary<MainLib.ET_Gender, string>();
+            m_hashGender.Add(MainLib.ET_Gender.GENDER_UNDEFINED, "Undefined");
+            m_hashGender.Add(MainLib.ET_Gender.GENDER_M, "M");
+            m_hashGender.Add(MainLib.ET_Gender.GENDER_F, "F");
+            m_hashGender.Add(MainLib.ET_Gender.GENDER_N, "N");
 
-            m_dictNumber = new Dictionary<MainLib.ET_Number, string>();
-            m_dictNumber.Add(MainLib.ET_Number.NUM_UNDEFINED, "Undefined");
-            m_dictNumber.Add(MainLib.ET_Number.NUM_SG, "Sg");
-            m_dictNumber.Add(MainLib.ET_Number.NUM_PL, "Pl");
+            m_hashNumber = new Dictionary<MainLib.ET_Number, string>();
+            m_hashNumber.Add(MainLib.ET_Number.NUM_UNDEFINED, "Undefined");
+            m_hashNumber.Add(MainLib.ET_Number.NUM_SG, "Sg");
+            m_hashNumber.Add(MainLib.ET_Number.NUM_PL, "Pl");
 
-            m_dictCase = new Dictionary<MainLib.ET_Case, string>();
-            m_dictCase.Add(MainLib.ET_Case.CASE_UNDEFINED, "Undefined");
-            m_dictCase.Add(MainLib.ET_Case.CASE_NOM, "N");
-            m_dictCase.Add(MainLib.ET_Case.CASE_ACC, "A");
-            m_dictCase.Add(MainLib.ET_Case.CASE_GEN, "G");
-            m_dictCase.Add(MainLib.ET_Case.CASE_LOC, "L");
-            m_dictCase.Add(MainLib.ET_Case.CASE_DAT, "D");
-            m_dictCase.Add(MainLib.ET_Case.CASE_INST, "I");
+            m_hashCase = new Dictionary<MainLib.ET_Case, string>();
+            m_hashCase.Add(MainLib.ET_Case.CASE_UNDEFINED, "Undefined");
+            m_hashCase.Add(MainLib.ET_Case.CASE_NOM, "N");
+            m_hashCase.Add(MainLib.ET_Case.CASE_ACC, "A");
+            m_hashCase.Add(MainLib.ET_Case.CASE_GEN, "G");
+            m_hashCase.Add(MainLib.ET_Case.CASE_LOC, "L");
+            m_hashCase.Add(MainLib.ET_Case.CASE_DAT, "D");
+            m_hashCase.Add(MainLib.ET_Case.CASE_INST, "I");
 
-            m_dictPerson = new Dictionary<MainLib.ET_Person, string>();
-            m_dictPerson.Add(MainLib.ET_Person.PERSON_UNDEFINED, "Undefined");
-            m_dictPerson.Add(MainLib.ET_Person.PERSON_1, "1");
-            m_dictPerson.Add(MainLib.ET_Person.PERSON_2, "2");
-            m_dictPerson.Add(MainLib.ET_Person.PERSON_3, "3");
+            m_hashPerson = new Dictionary<MainLib.ET_Person, string>();
+            m_hashPerson.Add(MainLib.ET_Person.PERSON_UNDEFINED, "Undefined");
+            m_hashPerson.Add(MainLib.ET_Person.PERSON_1, "1");
+            m_hashPerson.Add(MainLib.ET_Person.PERSON_2, "2");
+            m_hashPerson.Add(MainLib.ET_Person.PERSON_3, "3");
 
-            m_dictAccent = new Dictionary<MainLib.ET_AccentType, string>();
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_UNDEFINED, "Undefined");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_A, "a");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_A1, "a'");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_B, "b");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_B1, "b'");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_C, "c");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_C1, "c'");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_C2, "c''");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_D, "d");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_D1, "d'");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_E, "e");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_F, "f");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_F1, "f'");
-            m_dictAccent.Add(MainLib.ET_AccentType.AT_F2, "f''");
+            m_hashAccent = new Dictionary<MainLib.ET_AccentType, string>();
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_UNDEFINED, "Undefined");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_A, "a");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_A1, "a'");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_B, "b");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_B1, "b'");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_C, "c");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_C1, "c'");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_C2, "c''");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_D, "d");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_D1, "d'");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_E, "e");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_F, "f");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_F1, "f'");
+            m_hashAccent.Add(MainLib.ET_AccentType.AT_F2, "f''");
 
         }   //  InitializeData()
 
         protected void ShowLexemeDetails (LexemeDataPanel ldpSource)
         {
-            MainLib.ILexeme lexeme = m_dictLexemes[ldpSource];
+            MainLib.ILexeme lexeme = m_hashLexemes[ldpSource];
 
             try
             {
@@ -97,7 +98,7 @@ namespace TestUI
 
                 foreach (MainLib.IWordForm wf in lexeme)
                 {
-                    string sKey = m_dictCase[wf.Case];
+                    string sKey = m_hashCase[wf.Case];
                     sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
                     string strWordForm = wf.Wordform;
@@ -133,9 +134,9 @@ namespace TestUI
                     {
                         if (MainLib.ET_Number.NUM_SG == wf.Number)
                         {
-                            sKey = m_dictGender[wf.Gender];
+                            sKey = m_hashGender[wf.Gender];
                         }
-                        sKey += m_dictCase[wf.Case];
+                        sKey += m_hashCase[wf.Case];
                         sKey += (MainLib.ET_Number.NUM_SG == wf.Number) ? "Sg" : "Pl";
                         if (MainLib.ET_Case.CASE_ACC == wf.Case)
                         {
@@ -167,9 +168,9 @@ namespace TestUI
                         sKey = "Short";
                         if (MainLib.ET_Number.NUM_SG == wf.Number)
                         {
-                            sKey += m_dictGender[wf.Gender];
+                            sKey += m_hashGender[wf.Gender];
                         }
-                        sKey += m_dictNumber[wf.Number];
+                        sKey += m_hashNumber[wf.Number];
 
                         string strWordForm = wf.Wordform;
                         if (wf.Stress >= 0)
@@ -229,7 +230,7 @@ namespace TestUI
                 {
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE == wf.Subparadigm)
                     {
-                        string sKey = "Pres" + m_dictPerson[wf.Person];
+                        string sKey = "Pres" + m_hashPerson[wf.Person];
                         sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
                         string strWordForm = wf.Wordform;
@@ -254,7 +255,7 @@ namespace TestUI
                         string sKey = "Past";
                         if (MainLib.ET_Number.NUM_SG == wf.Number)
                         {
-                            sKey += m_dictGender[wf.Gender];
+                            sKey += m_hashGender[wf.Gender];
                         }
                         sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
@@ -565,8 +566,8 @@ namespace TestUI
                 {
                     MainLib.IWordForm wf = (MainLib.IWordForm)fd[iForm];
                     string sKey = "Short";
-                    sKey += m_dictGender[wf.Gender];
-                    sKey += m_dictNumber[wf.Number];
+                    sKey += m_hashGender[wf.Gender];
+                    sKey += m_hashNumber[wf.Number];
                     string strWordForm = wf.Wordform;
                     if (wf.Stress >= 0)
                     {
@@ -586,7 +587,7 @@ namespace TestUI
             {
                 MainLib.IWordForm wf = (MainLib.IWordForm)fd[iForm];
                 string sKey = "Short";
-                sKey += m_dictNumber[wf.Number];
+                sKey += m_hashNumber[wf.Number];
                 string strWordForm = wf.Wordform;
                 if (wf.Stress >= 0)
                 {
@@ -615,10 +616,10 @@ namespace TestUI
 
                 if (eoSpLong == wf.Subparadigm && MainLib.ET_Number.NUM_SG == wf.Number)
                 {
-                    sKey = m_dictGender[wf.Gender];
+                    sKey = m_hashGender[wf.Gender];
                 }
 
-                sKey += m_dictCase[wf.Case];
+                sKey += m_hashCase[wf.Case];
                 sKey += (MainLib.ET_Number.NUM_SG == wf.Number) ? "Sg" : "Pl";
                 if (MainLib.ET_Case.CASE_ACC == wf.Case)
                 {
@@ -733,6 +734,33 @@ namespace TestUI
             }
 
         }   //  ShowParseOutput()
+
+        public bool VerifyLexeme (int iLexemeId)
+        {
+            m_Dictionary.GetLexeme (iLexemeId);
+            if (m_Dictionary.Count != 1)
+            {
+                MessageBox.Show("Unexpected number of lexemes", "Error", MessageBoxButtons.OK);
+                return false;
+            }
+
+            MainLib.ILexeme lexeme = (MainLib.ILexeme)m_Dictionary[1];
+            lexeme.GenerateWordForms();
+            bool bOk = true;
+            foreach (MainLib.IWordForm wf in lexeme)
+            {
+                MainLib.ET_TestResult eResult;
+                MainLib.ZalWordForm savedWf;
+                wf.Verify (iLexemeId, out eResult, out savedWf);
+                if (MainLib.ET_TestResult.TEST_RESULT_OK != eResult)
+                {
+                    bOk = false;
+                }
+            }
+
+            return bOk;
+
+        }   //  VerifyLexeme
 
     }   //  public partial class TestApplet
 

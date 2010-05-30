@@ -14,15 +14,16 @@ namespace TestUI
     public partial class TestApplet : Form
     {
         private MainLib.IDictionary m_Dictionary;
+        private MainLib.IDictionary m_SavedFormDictionary;
         private MainLib.IAnalyzer m_Analyzer;
         private List<MainLib.IWordForm> m_listWordForms;
-        private Dictionary<LexemeDataPanel, MainLib.ILexeme> m_dictLexemes;
+        private Dictionary<LexemeDataPanel, MainLib.ILexeme> m_hashLexemes;
 
-        private Dictionary<MainLib.ET_Gender, string> m_dictGender;
-        private Dictionary<MainLib.ET_Number, string> m_dictNumber;
-        private Dictionary<MainLib.ET_Case, string> m_dictCase;
-        private Dictionary<MainLib.ET_Person, string> m_dictPerson;
-        private Dictionary<MainLib.ET_AccentType, string> m_dictAccent;
+        private Dictionary<MainLib.ET_Gender, string> m_hashGender;
+        private Dictionary<MainLib.ET_Number, string> m_hashNumber;
+        private Dictionary<MainLib.ET_Case, string> m_hashCase;
+        private Dictionary<MainLib.ET_Person, string> m_hashPerson;
+        private Dictionary<MainLib.ET_AccentType, string> m_hashAccent;
 
         private string m_sDbPath;
         private bool m_bDBOpen;
@@ -59,12 +60,12 @@ namespace TestUI
 
         public void LexemeDataPanel_Save (LexemeDataPanel ldpSource)
         {
-            MainLib.ILexeme lexeme = m_dictLexemes[ldpSource];
-
-            foreach (MainLib.IWordForm wf in lexeme)
-            {
-                wf.SaveTestData();
-            }
+            MainLib.ILexeme lexeme = m_hashLexemes[ldpSource];
+            lexeme.SaveTestData();
+//            foreach (MainLib.IWordForm wf in lexeme)
+//            {
+//                wf.SaveTestData();
+//            }
         }
 
         //private void buttonSelect_Click(object sender, EventArgs e)
@@ -92,6 +93,7 @@ namespace TestUI
                 {
                     m_sDbPath = fd.FileName;
                     m_Dictionary.DbPath = m_sDbPath;
+                    m_SavedFormDictionary.DbPath = m_sDbPath;
                     m_Analyzer.DbPath = m_sDbPath;
                     toolStripStatusLabel.Text = m_sDbPath;
 
@@ -204,11 +206,6 @@ namespace TestUI
 
         }   //  parseWordFormToolStripMenuItem_Click (...)
 
-        private void batchTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ShowLexemes()
         {
             if (m_Dictionary.Count < 1)
@@ -226,17 +223,17 @@ namespace TestUI
             foreach (MainLib.ILexeme lex in m_Dictionary)
             {
                 LexemeDataPanel ldp = new LexemeDataPanel();
-                m_dictLexemes.Add (ldp, lex);
+                m_hashLexemes.Add (ldp, lex);
                 SubscribeToLexemeEvents (ldp);
                 ldp.Location = new System.Drawing.Point (0, iLexeme * ldp.Size.Height + 4);
                 ldp.sInitialForm = lex.InitialForm;
                 ldp.sGraphicStem = lex.GraphicStem;
                 ldp.sMainSymbol = lex.MainSymbol;
                 ldp.sType = lex.Type.ToString();
-                ldp.sStressType = m_dictAccent[lex.AccentType1];
+                ldp.sStressType = m_hashAccent[lex.AccentType1];
                 if (lex.AccentType2 != MainLib.ET_AccentType.AT_UNDEFINED)
                 {
-                    ldp.sStressType += "/" + m_dictAccent[lex.AccentType2];
+                    ldp.sStressType += "/" + m_hashAccent[lex.AccentType2];
                 }
 
                 tabPageLexemes.Controls.Add (ldp);
@@ -253,7 +250,34 @@ namespace TestUI
             tabControl.SelectTab(tabPageLexemes);
             ldpFocused.FocusShowButton();
 
-        }   // ShowLexemes()
+        }   //  ShowLexemes()
+
+        private void batchTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_SavedFormDictionary.LoadStoredLexemes (-1, -1);
+            if (m_SavedFormDictionary.Count <= 0)
+            {
+                return;
+            }
+
+            TabPage tabPageTestCases = new TabPage ("Test");
+            GridViewUserControl gv = new GridViewUserControl();
+
+            tabPageTestCases.Controls.Add (gv);
+
+            foreach (MainLib.IStoredForms sf in m_SavedFormDictionary)
+            {
+                gv.AddLexeme (sf.LexemeId, sf.Headword);
+            }
+
+            tabControl.Controls.Add (tabPageTestCases);
+            tabControl.SelectTab (tabPageTestCases);
+        }
+
+        private void testRangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
 
     }   //  public partial class TestApplet : Form
 }
