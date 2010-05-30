@@ -465,6 +465,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\StoredForms.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\WordForm.cpp"
 				>
 			</File>
@@ -552,6 +556,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StoredForms.h"
 				>
 			</File>
 			<File
