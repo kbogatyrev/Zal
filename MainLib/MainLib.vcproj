@@ -465,7 +465,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\StoredForms.cpp"
+				RelativePath=".\TestData.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Verifier.cpp"
 				>
 			</File>
 			<File
@@ -559,11 +563,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\StoredForms.h"
+				RelativePath=".\targetver.h"
 				>
 			</File>
 			<File
-				RelativePath=".\targetver.h"
+				RelativePath=".\TestData.h"
 				>
 			</File>
 			<File
@@ -572,6 +576,10 @@
 			</File>
 			<File
 				RelativePath=".\VCUE_Copy.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Verifier.h"
 				>
 			</File>
 			<File
@@ -598,6 +606,10 @@
 			</File>
 			<File
 				RelativePath=".\ZalDictionary.rgs"
+				>
+			</File>
+			<File
+				RelativePath=".\ZalTestData.rgs"
 				>
 			</File>
 		</Filter>
