@@ -16,14 +16,14 @@ namespace TestUI
             InitializeComponent();
         }
 
-        public void AddLexeme (int iId, string sSource)
+        public void AddLexeme (MainLib.IVerifier v)
         {
             DataGridViewRow r = new DataGridViewRow();
             r.CreateCells (dataGridView);
             r.Cells[0].Value = true;
-            r.Cells[1].Value = iId;
-            r.Cells[1].Tag = iId;
-            r.Cells[2].Value = sSource;
+            r.Cells[1].Value = v.LexemeId;
+            r.Cells[1].Tag = v;
+            r.Cells[2].Value = v.Headword;
             dataGridView.Rows.Add (r);
         }
 
@@ -32,11 +32,24 @@ namespace TestUI
             this.Size = Parent.Size;
             dataGridView.Width = buttonRun.Location.X - 
                 (Width - buttonRun.Width - buttonRun.Location.X);
+            buttonRun.Focus();
         }
 
         private void buttonRun_Click (object sender, EventArgs e)
         {
-            MainLib.IDictionary dict = new MainLib.ZalDictionary();
+            buttonRun.Enabled = false;
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                DataGridViewCheckBoxCell cbCheckBox = (DataGridViewCheckBoxCell)row.Cells[0];
+                if (false == (bool)cbCheckBox.Value)
+                {
+                    continue;
+                }
+
+                DataGridViewCell cbStatus = row.Cells[3];
+                cbStatus.Value = "Testing...";
+            }
+
             foreach (DataGridViewRow row in dataGridView.Rows)
             {
                 DataGridViewCheckBoxCell cbCheckBox = (DataGridViewCheckBoxCell)row.Cells[0];
@@ -46,26 +59,57 @@ namespace TestUI
                 }
 
                 DataGridViewCell cbId = (DataGridViewCell)row.Cells[1];
-                int iLexemeId = (int)cbId.Tag;
-                TestApplet ta = (TestApplet)Parent.Parent.Parent;
-                bool bRet = ta.VerifyLexeme (iLexemeId);
+                MainLib.IVerifier v = (MainLib.IVerifier) cbId.Tag;
+                MainLib.ET_TestResult eResult = v.Verify();
                 DataGridViewCell cbResult = row.Cells[3];
-                cbResult.Value = bRet ? "Pass" : "Fail";
-            }
+                switch (eResult)
+                {
+                    case MainLib.ET_TestResult.TEST_RESULT_OK:
+                    {
+                        cbResult.Value = "Pass";
+                        break;
+                    }
+                    case MainLib.ET_TestResult.TEST_RESULT_FAIL:
+                    {
+                        cbResult.Value = "Fail";
+                        break;
+                    }
+                    case MainLib.ET_TestResult.TEST_RESULT_INCOMPLETE:
+                    {
+                        cbResult.Value = "Missing forms";
+                        break;
+                    }
+                    default:
+                    {
+                        MessageBox.Show ("Unexpected return from IVerifier", 
+                                         "Error", 
+                                         MessageBoxButtons.OK);
+                        return;
+                    }
+
+                }       //  switch ...
+
+            }   //  foreach (DataGridViewRow row in dataGridView.Rows)
+
+        }   // buttonRun_Click (...)
+
+        private void buttonSave_Click (object sender, EventArgs e)
+        {
+            TestApplet ta = (TestApplet)Parent.Parent.Parent;
+            ta.SaveTestResults();
+
+            ((Button)sender).Enabled = false;
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void buttonCancel_Click (object sender, EventArgs e)
         {
 
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void buttonClose_Click (object sender, EventArgs e)
         {
-
-        }
-
-        private void buttonClose_Click(object sender, EventArgs e)
-        {
+            TestApplet ta = (TestApplet)Parent.Parent.Parent;
+            ta.CloseCurrentTab();
         }
 
     }

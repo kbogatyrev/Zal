@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -20,7 +21,6 @@ namespace TestUI
             m_sDbPath = Properties.Settings.Default.DbPath;
 
             m_Dictionary = new MainLib.ZalDictionary();
-            m_SavedFormDictionary = new MainLib.ZalDictionary();
             m_Analyzer = new MainLib.ZalAnalyzer();
             m_hashLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
             m_listWordForms = new List<MainLib.IWordForm>();
@@ -735,32 +735,51 @@ namespace TestUI
 
         }   //  ShowParseOutput()
 
-        public bool VerifyLexeme (int iLexemeId)
+        public void SaveTestResults()
         {
-            m_Dictionary.GetLexeme (iLexemeId);
-            if (m_Dictionary.Count != 1)
+            SaveFileDialog fd = new SaveFileDialog();
+            fd.CheckFileExists = false;
+            fd.CheckPathExists = true;
+            fd.Title = "Save Report Data"; 
+            DialogResult dr = fd.ShowDialog();
+            if (DialogResult.OK != dr)
             {
-                MessageBox.Show("Unexpected number of lexemes", "Error", MessageBoxButtons.OK);
-                return false;
+                return;
             }
 
-            MainLib.ILexeme lexeme = (MainLib.ILexeme)m_Dictionary[1];
-            lexeme.GenerateWordForms();
-            bool bOk = true;
-            foreach (MainLib.IWordForm wf in lexeme)
+            using (StreamWriter swReport = new StreamWriter (fd.FileName, false, Encoding.Unicode))
             {
-                MainLib.ET_TestResult eResult;
-                MainLib.ZalWordForm savedWf;
-                wf.Verify (iLexemeId, out eResult, out savedWf);
-                if (MainLib.ET_TestResult.TEST_RESULT_OK != eResult)
+                try
                 {
-                    bOk = false;
+                    swReport.WriteLine ("     ==== Test Report {0} ====\r\n", DateTime.Now);
+                    foreach (MainLib.IVerifier v in m_TestData)
+                    {
+                        if (v.Result != MainLib.ET_TestResult.TEST_RESULT_UNDEFINED)
+                        {
+                            string sLine = v.Headword;
+                            sLine += new string(' ', 40 - sLine.Length);
+                            sLine += (v.Count > 0) ? "***  Fail" : "     Pass";
+                            swReport.WriteLine(sLine);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string sMsg = "Error in StreamWriter: ";
+                    sMsg += ex.Message;
+                    MessageBox.Show (sMsg, 
+                                     "Zal Error", 
+                                     MessageBoxButtons.OK, 
+                                     MessageBoxIcon.Exclamation);
+                    return;
                 }
             }
+        }       //  SaveTestResults()
 
-            return bOk;
-
-        }   //  VerifyLexeme
+        public void CloseCurrentTab()
+        {
+            tabControl.TabPages.Remove (tabControl.SelectedTab);
+        }
 
     }   //  public partial class TestApplet
 

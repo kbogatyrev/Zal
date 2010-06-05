@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -14,7 +15,7 @@ namespace TestUI
     public partial class TestApplet : Form
     {
         private MainLib.IDictionary m_Dictionary;
-        private MainLib.IDictionary m_SavedFormDictionary;
+        private MainLib.ITestData m_TestData;
         private MainLib.IAnalyzer m_Analyzer;
         private List<MainLib.IWordForm> m_listWordForms;
         private Dictionary<LexemeDataPanel, MainLib.ILexeme> m_hashLexemes;
@@ -93,7 +94,6 @@ namespace TestUI
                 {
                     m_sDbPath = fd.FileName;
                     m_Dictionary.DbPath = m_sDbPath;
-                    m_SavedFormDictionary.DbPath = m_sDbPath;
                     m_Analyzer.DbPath = m_sDbPath;
                     toolStripStatusLabel.Text = m_sDbPath;
 
@@ -254,8 +254,13 @@ namespace TestUI
 
         private void batchTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_SavedFormDictionary.LoadStoredLexemes (-1, -1);
-            if (m_SavedFormDictionary.Count <= 0)
+            if (null == m_TestData)
+            {
+                m_TestData = new MainLib.ZalTestData();
+                m_TestData.DbPath = m_sDbPath;
+            }
+
+            if (m_TestData.Count <= 0)
             {
                 return;
             }
@@ -265,9 +270,9 @@ namespace TestUI
 
             tabPageTestCases.Controls.Add (gv);
 
-            foreach (MainLib.IStoredForms sf in m_SavedFormDictionary)
+            foreach (MainLib.IVerifier v in m_TestData)
             {
-                gv.AddLexeme (sf.LexemeId, sf.Headword);
+                gv.AddLexeme (v);
             }
 
             tabControl.Controls.Add (tabPageTestCases);

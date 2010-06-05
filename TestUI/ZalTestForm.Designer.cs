@@ -136,14 +136,15 @@
             // batchTestToolStripMenuItem
             // 
             this.batchTestToolStripMenuItem.Name = "batchTestToolStripMenuItem";
-            this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.batchTestToolStripMenuItem.Text = "Test All";
             this.batchTestToolStripMenuItem.Click += new System.EventHandler(this.batchTestToolStripMenuItem_Click);
             // 
             // testRangeToolStripMenuItem
             // 
+            this.testRangeToolStripMenuItem.Enabled = false;
             this.testRangeToolStripMenuItem.Name = "testRangeToolStripMenuItem";
-            this.testRangeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.testRangeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.testRangeToolStripMenuItem.Text = "Test Range";
             this.testRangeToolStripMenuItem.Click += new System.EventHandler(this.testRangeToolStripMenuItem_Click);
             // 
