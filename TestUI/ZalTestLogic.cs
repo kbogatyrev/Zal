@@ -69,6 +69,88 @@ namespace TestUI
 
         }   //  InitializeData()
 
+
+        private void GetDbPath()
+        {
+            FileDialog fd = new OpenFileDialog ();
+            fd.CheckFileExists = false;
+            fd.CheckPathExists = true;
+            fd.FileName = m_sDbPath;
+            fd.Filter = "SQLite3 Files (*.db3)|*.db3|SQLite Files (*.db)|*.db|All Files (*.*)|*.*";
+            m_bDBOpen = false;
+            DialogResult dr = fd.ShowDialog();
+            if (DialogResult.OK == dr)
+            {
+                if (File.Exists (fd.FileName))
+                {
+                    m_bDBOpen = true;
+                    m_sDbPath = fd.FileName;
+                    m_Dictionary.DbPath = m_sDbPath;
+                    m_Analyzer.DbPath = m_sDbPath;
+                    toolStripStatusLabel.Text = m_sDbPath;
+
+// TODO path validation
+
+                    synthesizeToolStripMenuItem.Enabled = true;
+                    analyzeToolStripMenuItem.Enabled = true;
+                    testToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    MessageBox.Show ("File Does not exist",
+                                     "Zal Test Error",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Exclamation);
+                }
+            }
+        }       //  GetDbPath()
+
+        private void ShowLexemes()
+        {
+            if (m_Dictionary.Count < 1)
+            {
+                MessageBox.Show(this, "Not in the dictionary.", "Zal Synthesizer");
+                return;
+            }
+
+            TabPage tabPageLexemes = new TabPage(m_sSearchString);
+            tabPageLexemes.AutoScroll = true;
+
+            LexemeDataPanel ldpFocused = null;
+
+            int iLexeme = 0;
+            foreach (MainLib.ILexeme lex in m_Dictionary)
+            {
+                LexemeDataPanel ldp = new LexemeDataPanel();
+                m_hashLexemes.Add(ldp, lex);
+                SubscribeToLexemeEvents(ldp);
+                ldp.Location = new System.Drawing.Point(0, iLexeme * ldp.Size.Height + 4);
+                ldp.sInitialForm = lex.InitialForm;
+                ldp.sGraphicStem = lex.GraphicStem;
+                ldp.sMainSymbol = lex.MainSymbol;
+                ldp.sType = lex.Type.ToString();
+                ldp.sStressType = m_hashAccent[lex.AccentType1];
+                if (lex.AccentType2 != MainLib.ET_AccentType.AT_UNDEFINED)
+                {
+                    ldp.sStressType += "/" + m_hashAccent[lex.AccentType2];
+                }
+
+                tabPageLexemes.Controls.Add(ldp);
+                ldp.Left += 20;
+                ldp.Top += 20;
+                if (0 == iLexeme)
+                {
+                    ldpFocused = ldp;
+                }
+                ++iLexeme;
+            }
+
+            tabControl.Controls.Add(tabPageLexemes);
+            tabControl.SelectTab(tabPageLexemes);
+            ldpFocused.FocusShowButton();
+
+        }   //  ShowLexemes()
+
         protected void ShowLexemeDetails (LexemeDataPanel ldpSource)
         {
             MainLib.ILexeme lexeme = m_hashLexemes[ldpSource];
@@ -535,17 +617,21 @@ namespace TestUI
             {
                 MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
                 AdjPanel adjPanel = new AdjPanel();
-                TabPage tabPageDetails = new TabPage (wf.Wordform);
-                tabPageDetails.Controls.Add (adjPanel);
-                tabControl.Controls.Add (tabPageDetails);
-                ShowLongParticipialForms (adjPanel, lexeme, eoSpLong);
+                TabPage tabPageDetails = new TabPage(wf.Wordform);
+                tabPageDetails.Controls.Add(adjPanel);
+                tabControl.Controls.Add(tabPageDetails);
+                ShowLongParticipialForms(adjPanel, lexeme, eoSpLong);
                 if (MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED != eoSpShort)
                 {
-                    ShowShortParticipialForms (adjPanel, lexeme, eoSpShort);
+                    ShowShortParticipialForms(adjPanel, lexeme, eoSpShort);
                 }
                 tabControl.SelectedTab = tabPageDetails;
             }
-        }
+            else
+            {
+                MessageBox.Show ("No forms available", "Zal Error", MessageBoxButtons.OK);
+            }
+        }       //  ShowParticipialForms (...)
 
         protected void ShowShortParticipialForms (AdjPanel ap, 
                                                   MainLib.ILexeme lexeme, 
@@ -599,6 +685,7 @@ namespace TestUI
                 }
                 ap.SetForm(sKey, strWordForm);
             }
+
         }   //  ShowShortParticipialForms (...)
 
         protected void ShowLongParticipialForms (AdjPanel adjPanel, 
