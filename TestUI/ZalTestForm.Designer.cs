@@ -71,8 +71,8 @@
             // dBPathToolStripMenuItem
             // 
             this.dBPathToolStripMenuItem.Name = "dBPathToolStripMenuItem";
-            this.dBPathToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.dBPathToolStripMenuItem.Text = "Open DB";
+            this.dBPathToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.dBPathToolStripMenuItem.Text = "Open Dictionary";
             this.dBPathToolStripMenuItem.Click += new System.EventHandler(this.dBPathToolStripMenuItem_Click);
             // 
             // synthesizeToolStripMenuItem
