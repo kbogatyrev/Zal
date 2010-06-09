@@ -61,12 +61,20 @@ namespace TestUI
 
         public void LexemeDataPanel_Save (LexemeDataPanel ldpSource)
         {
-            MainLib.ILexeme lexeme = m_hashLexemes[ldpSource];
-            lexeme.SaveTestData();
-//            foreach (MainLib.IWordForm wf in lexeme)
-//            {
-//                wf.SaveTestData();
-//            }
+            try
+            {
+                MainLib.ILexeme lexeme = m_hashLexemes[ldpSource];
+                lexeme.GenerateWordForms();
+                lexeme.SaveTestData();
+                MessageBox.Show ("Forms saved in the database.", "Zal", MessageBoxButtons.OK);
+            }
+            catch (Exception ex)
+            {
+                string sMsg = "LexemeDataPanel_Save: ";
+                sMsg += ex.Message;
+                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                return;
+            }
         }
 
         //private void buttonSelect_Click(object sender, EventArgs e)
@@ -81,40 +89,10 @@ namespace TestUI
 
         private void dBPathToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            FileDialog fd = new OpenFileDialog ();
-            fd.CheckFileExists = false;
-            fd.CheckPathExists = true;
-            fd.FileName = m_sDbPath;
-            fd.Filter = "SQLite3 Files (*.db3)|*.db3|SQLite Files (*.db)|*.db|All Files (*.*)|*.*";
-            m_bDBOpen = false;
-            DialogResult dr = fd.ShowDialog();
-            if (DialogResult.OK == dr)
-            {
-                if (File.Exists (fd.FileName))
-                {
-                    m_sDbPath = fd.FileName;
-                    m_Dictionary.DbPath = m_sDbPath;
-                    m_Analyzer.DbPath = m_sDbPath;
-                    toolStripStatusLabel.Text = m_sDbPath;
+            GetDbPath();
+        }
 
-// TODO path validation
-
-                    synthesizeToolStripMenuItem.Enabled = true;
-                    analyzeToolStripMenuItem.Enabled = true;
-                    testToolStripMenuItem.Enabled = true;
-                }
-                else
-                {
-                    MessageBox.Show ("File Does not exist",
-                                     "Zal Test Error",
-                                     MessageBoxButtons.OK,
-                                     MessageBoxIcon.Exclamation);
-                }
-            }
-
-        }   //  dBPathToolStripMenuItem_Click (...)
-
-        private void byEntryFormToolStripMenuItem_Click (object sender, EventArgs e)
+        private void byEntryFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -206,78 +184,38 @@ namespace TestUI
 
         }   //  parseWordFormToolStripMenuItem_Click (...)
 
-        private void ShowLexemes()
+        private void batchTestToolStripMenuItem_Click (object sender, EventArgs e)
         {
-            if (m_Dictionary.Count < 1)
+            if (!m_bDBOpen)
             {
-                MessageBox.Show(this, "Not in the dictionary.", "Zal Synthesizer");
-                return;
+                GetDbPath();
             }
 
-            TabPage tabPageLexemes = new TabPage (m_sSearchString);
-            tabPageLexemes.AutoScroll = true;
-
-            LexemeDataPanel ldpFocused = null;
-
-            int iLexeme = 0;
-            foreach (MainLib.ILexeme lex in m_Dictionary)
-            {
-                LexemeDataPanel ldp = new LexemeDataPanel();
-                m_hashLexemes.Add (ldp, lex);
-                SubscribeToLexemeEvents (ldp);
-                ldp.Location = new System.Drawing.Point (0, iLexeme * ldp.Size.Height + 4);
-                ldp.sInitialForm = lex.InitialForm;
-                ldp.sGraphicStem = lex.GraphicStem;
-                ldp.sMainSymbol = lex.MainSymbol;
-                ldp.sType = lex.Type.ToString();
-                ldp.sStressType = m_hashAccent[lex.AccentType1];
-                if (lex.AccentType2 != MainLib.ET_AccentType.AT_UNDEFINED)
-                {
-                    ldp.sStressType += "/" + m_hashAccent[lex.AccentType2];
-                }
-
-                tabPageLexemes.Controls.Add (ldp);
-                ldp.Left += 20;
-                ldp.Top += 20;
-                if (0 == iLexeme)
-                {
-                    ldpFocused = ldp;
-                }
-                ++iLexeme;
-            }
-
-            tabControl.Controls.Add (tabPageLexemes);
-            tabControl.SelectTab(tabPageLexemes);
-            ldpFocused.FocusShowButton();
-
-        }   //  ShowLexemes()
-
-        private void batchTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
             if (null == m_TestData)
             {
                 m_TestData = new MainLib.ZalTestData();
-                m_TestData.DbPath = m_sDbPath;
             }
 
             if (m_TestData.Count <= 0)
             {
+                MessageBox.Show ("No test forms in the database", "Zal Test", MessageBoxButtons.OK);
                 return;
             }
 
             TabPage tabPageTestCases = new TabPage ("Test");
             GridViewUserControl gv = new GridViewUserControl();
 
-            tabPageTestCases.Controls.Add (gv);
+            tabPageTestCases.Controls.Add(gv);
 
             foreach (MainLib.IVerifier v in m_TestData)
             {
-                gv.AddLexeme (v);
+                gv.AddLexeme(v);
             }
 
             tabControl.Controls.Add (tabPageTestCases);
             tabControl.SelectTab (tabPageTestCases);
-        }
+
+        }   //  batchTestToolStripMenuItem_Click (...)
 
         private void testRangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
