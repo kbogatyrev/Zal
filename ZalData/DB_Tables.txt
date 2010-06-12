@@ -26,10 +26,6 @@ CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEG
 
 CREATE TABLE common_deviation (id INTEGER PRIMARY KEY ASC, inflection_id INTEGER, deviation_type INTEGER, is_optional BOOLEAN);
 
-CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id INTEGER, hash INTEGER, wordform TEXT);
-
-CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, form_id INTEGER, position INTEGER, is_primary BOOLEAN);
-
 CREATE INDEX idx_common_deviation_id ON common_deviation (id, inflection_id);
 CREATE INDEX idx_descriptor_id ON descriptor (id, word_id);
 CREATE INDEX idx_descriptor_gs ON descriptor (graphic_stem);
@@ -41,3 +37,12 @@ CREATE INDEX idx_inflection_id ON inflection (id, descriptor_id);
 CREATE INDEX idx_inflection_descr ON inflection (descriptor_id);
 CREATE INDEX idx_stress_id ON stress (id, headword_id);
 CREATE INDEX idx_stress_hw ON stress (headword_id);
+
+
+CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id INTEGER, hash INTEGER, wordform TEXT);
+
+CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, form_id INTEGER, position INTEGER, is_primary BOOLEAN);
+
+CREATE INDEX idx_test_data_id ON test_data (id, lexeme_id);
+
+CREATE INDEX idx_test_data_stress ON test_data_stress (id, form_id);
