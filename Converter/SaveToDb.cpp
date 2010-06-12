@@ -5,6 +5,68 @@
 
 using namespace std::tr1;
 
+bool b_ExtractStress (const wstring& str_in, wstring& str_out, map<int, ET_StressType>& map_stress)
+{
+    CT_ExtString xstr_in (str_in, L"<>");
+
+    str_out = L"";
+
+    for (int i_textField = 0; i_textField < xstr_in.i_GetNumOfFields(); ++i_textField)
+    {
+        str_out += xstr_in.str_GetField (i_textField);
+    }
+
+    int i_marksFound = 0;
+    for (int i_breakField = 0; 
+         i_breakField < xstr_in.i_GetNumOfFields (CT_ExtString::ec_TokenBreakChars); 
+         ++i_breakField)
+    {
+        wstring str_stressMark = xstr_in.str_GetField (i_breakField, CT_ExtString::ec_TokenBreakChars);
+        if (str_stressMark.length() != 1)
+        {
+            ATLASSERT(0);
+            wstring str_msg (L"Error processing stress marks: ");
+            str_msg += str_in;
+            ERROR_LOG (str_msg);
+            return false;
+        }
+
+        int i_pos = xstr_in.i_GetFieldOffset (i_breakField, CT_ExtString::ec_TokenBreakChars);
+        i_pos -= i_marksFound;
+        ++i_marksFound;
+
+        if (L"<" == str_stressMark)
+        {
+            map_stress[i_pos] = STRESS_PRIMARY;
+        }
+        else if (L">" == str_stressMark)
+        {
+            map_stress[i_pos] = STRESS_SECONDARY;
+        }
+        else
+        {
+            ATLASSERT(0);
+            wstring str_msg (L"Error extracting stress marks: ");
+            str_msg += str_in;
+            ERROR_LOG (str_msg);
+            return false;
+        }
+
+    }   //  for (int i_breakField = 0; ...)
+
+    return true;
+
+//    if (xstr_source.i_NFields() < 2)
+//    {
+//        ATLASSERT(0);
+//        wstring str_msg (L"Expected field is not found: ");
+//        str_msg += str_Source;
+//        ERROR_LOG (str_msg);
+//        return false;
+//    }
+
+}   //  b_ExtractStress (...)
+
 bool ST_Headword::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64& ll_headwordId)
 {
     try
@@ -37,23 +99,11 @@ bool ST_Headword::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64& ll_headwordId)
         //
         // Stress
         //
-        if (i_PrimaryStress >= 0)
+        map<int, ET_StressType>::iterator it_stress = map_Stress.begin();
+        for (; it_stress != map_Stress.end(); ++it_stress)
         {
-            b_SaveStressData (pco_dbHandle, ll_headwordId, i_PrimaryStress, true);
+            b_SaveStressData (pco_dbHandle, ll_headwordId, (*it_stress).first, (*it_stress).second);
         }
-        if (i_PrimaryStress2 >= 0)
-        {
-            b_SaveStressData (pco_dbHandle, ll_headwordId, i_PrimaryStress2, true);
-        }
-        if (i_SecondaryStress >= 0)
-        {
-            b_SaveStressData (pco_dbHandle, ll_headwordId, i_SecondaryStress, false);
-        }
-        if (i_SecondaryStress2 >= 0)
-        {
-            b_SaveStressData (pco_dbHandle, ll_headwordId, i_SecondaryStress2, false);
-        }
-
     }
     catch (...)
     {
@@ -84,14 +134,14 @@ bool ST_Headword::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64& ll_headwordId)
 bool ST_Headword::b_SaveStressData (CT_Sqlite * pco_dbHandle, 
                                     __int64 ll_headwordId, 
                                     int i_position, 
-                                    bool b_isPrimary)
+                                    ET_StressType eo_type)
 {
     try
     {
         pco_dbHandle->v_PrepareForInsert (L"stress", 3);
         pco_dbHandle->v_Bind (1, ll_headwordId);  // 0-based
         pco_dbHandle->v_Bind (2, i_position);
-        pco_dbHandle->v_Bind (3, b_isPrimary);    // is_primary
+        pco_dbHandle->v_Bind (3, (STRESS_PRIMARY == eo_type) ? true : false);    // is_primary
         pco_dbHandle->v_InsertRow();
         pco_dbHandle->v_Finalize();
     }
@@ -178,16 +228,26 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
                                         (const wregex)L"\\s*_([^_]+)_\\s*([^\\s,]+),?(.*)");
             if (b_match == true)
             {
+                wstring str_form = (wstring)result[2];
+                map<int, ET_StressType> map_stress;
+                bool b_ret = b_ExtractStress (str_form, str_form, map_stress);
+
                 co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
                 //co_gram.str_Lemma = str_Source;
                 co_gram.i_DecodeString((wstring)result[1]);
                 pco_dbHandle->v_PrepareForInsert (L"irregular_forms", 3);
                 pco_dbHandle->v_Bind (1, ll_descriptorId);
-                pco_dbHandle->v_Bind (2, co_gram.i_GramHash());   // Morphosyntactic values code
-                pco_dbHandle->v_Bind (3, (wstring)result[2]);       // Wordform
+                pco_dbHandle->v_Bind (2, co_gram.i_GramHash());     // Morphosyntactic values code
+//                pco_dbHandle->v_Bind (3, (wstring)result[2]);         // Wordform
+                pco_dbHandle->v_Bind (3, str_form);                 // Wordform
                 pco_dbHandle->v_InsertRow();
                 pco_dbHandle->v_Finalize();
+
+                b_SaveIrregularStressData (pco_dbHandle, 
+                                           pco_dbHandle->ll_GetLastKey(), 
+                                           map_stress);
+
                 str_IrregularForms = (wstring)result[3];
             }
             else
@@ -303,7 +363,7 @@ bool ST_Descriptor::b_SaveInflectionGroup (CT_Sqlite * pco_dbHandle,
         }
 
         pco_dbHandle->v_Bind (10, st_data.b_FleetingVowel);
-        pco_dbHandle->v_Bind (11, st_data.b_StemAugment);
+        pco_dbHandle->v_Bind (11, st_data.i_StemAugmentType);
         pco_dbHandle->v_InsertRow();
         pco_dbHandle->v_Finalize();
 
@@ -343,3 +403,46 @@ bool ST_Descriptor::b_SaveInflectionGroup (CT_Sqlite * pco_dbHandle,
     return true;
 
 }   //  b_SaveInflectionGroup (...)
+
+bool ST_Descriptor::b_SaveIrregularStressData (CT_Sqlite * pco_dbHandle, 
+                                               __int64 ll_formId, 
+                                               const map<int, ET_StressType>& map_stress) 
+{
+    try
+    {
+        map<int, ET_StressType>::const_iterator it_at = map_stress.begin();
+        for (; it_at != map_stress.end(); ++it_at)
+        {
+            pco_dbHandle->v_PrepareForInsert (L"irregular_stress", 3);
+            pco_dbHandle->v_Bind (1, ll_formId);
+            pco_dbHandle->v_Bind (2, (*it_at).first);
+            pco_dbHandle->v_Bind (3, (STRESS_PRIMARY == (*it_at).second) ? true : false);
+            pco_dbHandle->v_InsertRow();
+            pco_dbHandle->v_Finalize();
+        }
+    }
+    catch (CT_Exception& co_exc)
+    {
+        wstring str_msg (co_exc.str_GetDescription());
+        wstring str_error;
+        try
+        {
+            pco_dbHandle->v_GetLastError (str_error);
+            str_msg += wstring (L", error %d: ");
+            str_msg += str_error;
+        }
+        catch (...)
+        {
+            str_msg = L"Apparent DB error ";
+        }
+    
+        CString cs_msg;
+        cs_msg.Format (str_msg.c_str(), pco_dbHandle->i_GetLastError());
+        ERROR_LOG ((LPCTSTR)cs_msg);
+
+        return false;
+    }
+
+    return true;
+
+}   //  b_SaveIrregularStressData (...)
