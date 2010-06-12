@@ -92,8 +92,8 @@ public:
     wstring str_DbPath;
 
     int i_Analyze(wstring str_wordform, vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms);
-    int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left);
-    int i_CheckEndings(vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right);
+    int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left, int i_StressPosStem);
+    int i_CheckEndings(vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right, int i_StressPosEnding);
 
 private:
     CT_Sqlite* pco_db;

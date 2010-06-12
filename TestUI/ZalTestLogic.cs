@@ -772,7 +772,8 @@ namespace TestUI
 
         protected void ShowParseOutput()
         {
-            int iWordform = 0;
+            int iWordform = 0, iPreviousID = -1;
+            tabControl.TabPages.Clear();
             foreach (MainLib.IWordForm wf in m_Analyzer)
             {
                 m_listWordForms.Add(wf);
@@ -815,9 +816,22 @@ namespace TestUI
                 {
                     ap.eoTense = MainLib.ET_Tense.TENSE_UNDEFINED;
                 }
-                //ap.i_lexeme_id = wf.LexemeId;
-//                lexPanel.Controls.Add(ap);
-                iWordform++;
+                if (wf.LexemeId != iPreviousID)
+                {
+                    iWordform = 0;
+                    iPreviousID = wf.LexemeId;
+                    TabPage tab_Lexeme = new TabPage(wf.Lemma);
+                    tab_Lexeme.Controls.Add(ap);
+                    tabControl.TabPages.Add(tab_Lexeme);
+                    tab_Lexeme.Show();
+                    tab_Lexeme.Focus();
+                }
+                else
+                {
+                    tabControl.TabPages[tabControl.TabPages.Count - 1].Controls.Add(ap);
+                }
+                ++iWordform;
+                ap.Show();
             }
 
         }   //  ShowParseOutput()
