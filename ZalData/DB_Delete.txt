@@ -6,5 +6,8 @@ DELETE FROM difficulties;
 DELETE FROM second_locative;
 DELETE FROM inflection;
 DELETE FROM irregular_forms;
+DELETE FROM irregular_stress;
 DELETE FROM endings;
 DELETE FROM common_deviation;
+DELETE FROM test_data;
+DELETE FROM test_data_stress;
