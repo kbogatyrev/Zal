@@ -21,9 +21,7 @@ protected:
 
     HRESULT h_GetEndings();
 
-    HRESULT h_GetIrregularForms();
-
-    HRESULT h_HandleStemAugment (wstring& str_lemma);
+    HRESULT h_HandleStemAugment (wstring& str_lemma, ET_Number, ET_Case);
 
     HRESULT h_GetStressType (ET_Number eo_number,                 // in
                              ET_Case eo_case,                     // in
