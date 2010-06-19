@@ -91,15 +91,24 @@ public:
 
     wstring str_DbPath;
 
-    int i_Analyze(wstring str_wordform, vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms);
+    int i_Analyze(wstring str_wordform, vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms, BOOL b_guess);
     int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left, int i_StressPosStem);
     int i_CheckEndings(vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right, int i_StressPosEnding);
+    int i_ClassifyStems();
 
 private:
     CT_Sqlite* pco_db;
     wstring str_InsertStress(int i_letter, wstring str_);
-    int CT_Analyzer::i_DeleteStress(wstring& str_);
+    int i_DeleteStress(wstring& str_);
+    void v_DeleteRepeats(vector<wstring>& vec_strings);
     int i_LCP(wstring* str_words, wstring** str_pfx, int i_words, int i_pfx);
+
+    // Helper functions for common DB queries
+    // (Stored in AnalyzerQueries.cpp)
+    int i_LastID(wstring str_TableName);
+    void v_LongStemsBySubtable(int i_subtable, int i_min_len, vector<wstring>& vec_stems);
+    void v_InsertCommonSfx(wstring **parr_str_sfx, int i_sfx, int i_subtable);
+    void v_InsertStemsAndLinks(wstring **parr_str_stems, int *arr_i_subtable_id, int i_stems, __int64 ll_lexeme_id);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CT_Analyzer)
