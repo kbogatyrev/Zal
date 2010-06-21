@@ -27,4 +27,6 @@ public:
     HRESULT h_HandleCommonDeviations (CT_WordForm * pco_wordForm);
 
     HRESULT h_Build();
+    HRESULT h_BuildIrregular();
+
 };
