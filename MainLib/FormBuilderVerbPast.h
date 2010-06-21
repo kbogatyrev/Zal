@@ -45,4 +45,7 @@ public:
                         wstring& str_ending);
 
     HRESULT h_Build();
+
+    HRESULT h_BuildIrregular();
+
 };
