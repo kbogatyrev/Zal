@@ -29,4 +29,7 @@ public:
                                   ET_Person eo_person,
                                   CComObject<CT_WordForm> *& pco_wordForm);
     HRESULT h_Build();
+    HRESULT h_BuildIrregular();
+    HRESULT h_BuildIrregularForm (ET_Number, ET_Person, CComObject<CT_WordForm>* );
+
 };
