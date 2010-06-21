@@ -177,36 +177,37 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
     static CT_GramHasher co_gram;
     try
     {
-        pco_dbHandle->v_PrepareForInsert (L"descriptor", 28);
+        pco_dbHandle->v_PrepareForInsert (L"descriptor", 29);
         pco_dbHandle->v_Bind (1, ll_wordId);
         pco_dbHandle->v_Bind (2, str_GraphicStem);
         pco_dbHandle->v_Bind (3, b_Variant);
         pco_dbHandle->v_Bind (4, str_MainSymbol);
-        pco_dbHandle->v_Bind (5, b_PluralOf);
-        pco_dbHandle->v_Bind (6, b_Intransitive);
-        pco_dbHandle->v_Bind (7, str_MainSymbolPluralOf);
-        pco_dbHandle->v_Bind (8, str_AltMainSymbol);
-        pco_dbHandle->v_Bind (9, str_InflectionSymbol);
-        pco_dbHandle->v_Bind (10, e_PartOfSpeech);
-        pco_dbHandle->v_Bind (11, str_Comment);
-        pco_dbHandle->v_Bind (12, str_AltMainSymbolComment);
-        pco_dbHandle->v_Bind (13, str_AltInflectionComment);
-        pco_dbHandle->v_Bind (14, str_VerbAlternation);
-        pco_dbHandle->v_Bind (15, i_Section);
-        pco_dbHandle->v_Bind (16, b_NoComparative);
-        pco_dbHandle->v_Bind (17, b_AssumedForms);
-        pco_dbHandle->v_Bind (18, b_Yo);
-        pco_dbHandle->v_Bind (19, b_O);
-        pco_dbHandle->v_Bind (20, b_Gen2);
-        pco_dbHandle->v_Bind (21, b_HasAspectPair);
-        pco_dbHandle->v_Bind (22, i_AspectPairType);
-        pco_dbHandle->v_Bind (23, str_AspectPairComment);
-        pco_dbHandle->v_Bind (24, str_Difficulties);
+        pco_dbHandle->v_Bind (5, e_PartOfSpeech);
+        pco_dbHandle->v_Bind (6, b_PluralOf);
+        pco_dbHandle->v_Bind (7, b_Intransitive);
+        pco_dbHandle->v_Bind (8, b_Reflexive);
+        pco_dbHandle->v_Bind (9, str_MainSymbolPluralOf);
+        pco_dbHandle->v_Bind (10, str_AltMainSymbol);
+        pco_dbHandle->v_Bind (11, str_InflectionSymbol);
+        pco_dbHandle->v_Bind (12, str_Comment);
+        pco_dbHandle->v_Bind (13, str_AltMainSymbolComment);
+        pco_dbHandle->v_Bind (14, str_AltInflectionComment);
+        pco_dbHandle->v_Bind (15, str_VerbAlternation);
+        pco_dbHandle->v_Bind (16, i_Section);
+        pco_dbHandle->v_Bind (17, b_NoComparative);
+        pco_dbHandle->v_Bind (18, b_AssumedForms);
+        pco_dbHandle->v_Bind (19, b_Yo);
+        pco_dbHandle->v_Bind (20, b_O);
+        pco_dbHandle->v_Bind (21, b_Gen2);
+        pco_dbHandle->v_Bind (22, b_HasAspectPair);
+        pco_dbHandle->v_Bind (23, i_AspectPairType);
+        pco_dbHandle->v_Bind (24, str_AspectPairComment);
+        pco_dbHandle->v_Bind (25, str_Difficulties);
 //        pco_dbHandle->v_Bind (25, str_IrregularForms);
-        pco_dbHandle->v_Bind (25, b_HasIrregularForms);
-        pco_dbHandle->v_Bind (26, str_RestrictedForms);
-        pco_dbHandle->v_Bind (27, str_Contexts);
-        pco_dbHandle->v_Bind (28, str_TrailingComment);
+        pco_dbHandle->v_Bind (26, b_HasIrregularForms);
+        pco_dbHandle->v_Bind (27, str_RestrictedForms);
+        pco_dbHandle->v_Bind (28, str_Contexts);
+        pco_dbHandle->v_Bind (29, str_TrailingComment);
         pco_dbHandle->v_InsertRow();
         pco_dbHandle->v_Finalize();
 
@@ -236,10 +237,15 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
                 co_gram.eo_POS = e_PartOfSpeech;
                 //co_gram.str_Lemma = str_Source;
                 co_gram.i_DecodeString((wstring)result[1]);
+// TODO can DecodeString handle this?
+                if (POS_VERB == e_PartOfSpeech)
+                {
+                    co_gram.eo_Reflexive = b_Reflexive ? REFL_YES : REFL_NO;
+                }
                 pco_dbHandle->v_PrepareForInsert (L"irregular_forms", 3);
                 pco_dbHandle->v_Bind (1, ll_descriptorId);
                 pco_dbHandle->v_Bind (2, co_gram.i_GramHash());     // Morphosyntactic values code
-//                pco_dbHandle->v_Bind (3, (wstring)result[2]);         // Wordform
+//                pco_dbHandle->v_Bind (3, (wstring)result[2]); 
                 pco_dbHandle->v_Bind (3, str_form);                 // Wordform
                 pco_dbHandle->v_InsertRow();
                 pco_dbHandle->v_Finalize();
