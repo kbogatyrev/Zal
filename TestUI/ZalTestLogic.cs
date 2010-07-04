@@ -24,6 +24,7 @@ namespace TestUI
             m_Analyzer = new MainLib.ZalAnalyzer();
             m_hashLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
             m_listWordForms = new List<MainLib.IWordForm>();
+            m_TestData = null;
 
             m_hashGender = new Dictionary<MainLib.ET_Gender, string>();
             m_hashGender.Add(MainLib.ET_Gender.GENDER_UNDEFINED, "Undefined");
