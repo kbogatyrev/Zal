@@ -194,6 +194,7 @@ namespace TestUI
             if (null == m_TestData)
             {
                 m_TestData = new MainLib.ZalTestData();
+                m_TestData.DbPath = m_sDbPath;
             }
 
             if (m_TestData.Count <= 0)
