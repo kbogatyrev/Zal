@@ -97,9 +97,10 @@ public:
 
     // ITestData
     STDMETHOD (put_DbPath) (BSTR bstr_path);
+    STDMETHOD (LoadStoredLexemes) ();
 
 private:
-    HRESULT h_LoadStoredLexemes (long l_lowBound, long l_highBound);
+//    HRESULT h_LoadStoredLexemes (long l_lowBound, long l_highBound);
     HRESULT h_GetStoredLexemeData (const wstring& str_select);
 
 private:
