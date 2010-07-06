@@ -197,6 +197,7 @@ namespace TestUI
                 m_TestData.DbPath = m_sDbPath;
             }
 
+            m_TestData.LoadStoredLexemes();
             if (m_TestData.Count <= 0)
             {
                 MessageBox.Show ("No test forms in the database", "Zal Test", MessageBoxButtons.OK);
