@@ -177,7 +177,7 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
     static CT_GramHasher co_gram;
     try
     {
-        pco_dbHandle->v_PrepareForInsert (L"descriptor", 29);
+        pco_dbHandle->v_PrepareForInsert (L"descriptor", 30);
         pco_dbHandle->v_Bind (1, ll_wordId);
         pco_dbHandle->v_Bind (2, str_GraphicStem);
         pco_dbHandle->v_Bind (3, b_Variant);
@@ -193,21 +193,22 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
         pco_dbHandle->v_Bind (13, str_AltMainSymbolComment);
         pco_dbHandle->v_Bind (14, str_AltInflectionComment);
         pco_dbHandle->v_Bind (15, str_VerbAlternation);
-        pco_dbHandle->v_Bind (16, i_Section);
-        pco_dbHandle->v_Bind (17, b_NoComparative);
-        pco_dbHandle->v_Bind (18, b_AssumedForms);
-        pco_dbHandle->v_Bind (19, b_Yo);
-        pco_dbHandle->v_Bind (20, b_O);
-        pco_dbHandle->v_Bind (21, b_Gen2);
-        pco_dbHandle->v_Bind (22, b_HasAspectPair);
-        pco_dbHandle->v_Bind (23, i_AspectPairType);
-        pco_dbHandle->v_Bind (24, str_AspectPairComment);
-        pco_dbHandle->v_Bind (25, str_Difficulties);
+        pco_dbHandle->v_Bind (16, b_PastPartPassZhD);
+        pco_dbHandle->v_Bind (17, i_Section);
+        pco_dbHandle->v_Bind (18, b_NoComparative);
+        pco_dbHandle->v_Bind (19, b_AssumedForms);
+        pco_dbHandle->v_Bind (20, b_Yo);
+        pco_dbHandle->v_Bind (21, b_O);
+        pco_dbHandle->v_Bind (22, b_Gen2);
+        pco_dbHandle->v_Bind (23, b_HasAspectPair);
+        pco_dbHandle->v_Bind (24, i_AspectPairType);
+        pco_dbHandle->v_Bind (25, str_AspectPairComment);
+        pco_dbHandle->v_Bind (26, str_Difficulties);
 //        pco_dbHandle->v_Bind (25, str_IrregularForms);
-        pco_dbHandle->v_Bind (26, b_HasIrregularForms);
-        pco_dbHandle->v_Bind (27, str_RestrictedForms);
-        pco_dbHandle->v_Bind (28, str_Contexts);
-        pco_dbHandle->v_Bind (29, str_TrailingComment);
+        pco_dbHandle->v_Bind (27, b_HasIrregularForms);
+        pco_dbHandle->v_Bind (28, str_RestrictedForms);
+        pco_dbHandle->v_Bind (29, str_Contexts);
+        pco_dbHandle->v_Bind (30, str_TrailingComment);
         pco_dbHandle->v_InsertRow();
         pco_dbHandle->v_Finalize();
 
