@@ -177,7 +177,7 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
     static CT_GramHasher co_gram;
     try
     {
-        pco_dbHandle->v_PrepareForInsert (L"descriptor", 30);
+        pco_dbHandle->v_PrepareForInsert (L"descriptor", 31);
         pco_dbHandle->v_Bind (1, ll_wordId);
         pco_dbHandle->v_Bind (2, str_GraphicStem);
         pco_dbHandle->v_Bind (3, b_Variant);
@@ -200,15 +200,18 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
         pco_dbHandle->v_Bind (20, b_Yo);
         pco_dbHandle->v_Bind (21, b_O);
         pco_dbHandle->v_Bind (22, b_Gen2);
-        pco_dbHandle->v_Bind (23, b_HasAspectPair);
-        pco_dbHandle->v_Bind (24, i_AspectPairType);
-        pco_dbHandle->v_Bind (25, str_AspectPairComment);
+        pco_dbHandle->v_Bind (23, b_IsImpersonal);
+        pco_dbHandle->v_Bind (24, b_IsIterative);
+        pco_dbHandle->v_Bind (25, b_HasAspectPair);
+        //pco_dbHandle->v_Bind (26, i_AspectPairType);
+        //pco_dbHandle->v_Bind (27, str_AspectPairComment);
         pco_dbHandle->v_Bind (26, str_Difficulties);
-//        pco_dbHandle->v_Bind (25, str_IrregularForms);
+//        pco_dbHandle->v_Bind (27, str_IrregularForms);
         pco_dbHandle->v_Bind (27, b_HasIrregularForms);
         pco_dbHandle->v_Bind (28, str_RestrictedForms);
         pco_dbHandle->v_Bind (29, str_Contexts);
-        pco_dbHandle->v_Bind (30, str_TrailingComment);
+        pco_dbHandle->v_Bind (30, str_Cognate);
+        pco_dbHandle->v_Bind (31, str_TrailingComment);
         pco_dbHandle->v_InsertRow();
         pco_dbHandle->v_Finalize();
 
@@ -224,10 +227,26 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
             pco_dbHandle->v_Finalize();
         }
 
+        if (b_HasAspectPair)
+        {
+            vector<wstring>::iterator iter_aspect_comment = vec_str_AspectPairComment.begin();
+            for (vector<int>::iterator iter_aspect_type = vec_i_AspectPairType.begin();
+                iter_aspect_type != vec_i_AspectPairType.end();
+                ++iter_aspect_type, ++iter_aspect_comment)
+            {
+                pco_dbHandle->v_PrepareForInsert (L"aspect_pair", 3);
+                pco_dbHandle->v_Bind (1, ll_descriptorId);
+                pco_dbHandle->v_Bind (2, *iter_aspect_type);
+                pco_dbHandle->v_Bind (3, *iter_aspect_comment);
+                pco_dbHandle->v_InsertRow();
+                pco_dbHandle->v_Finalize();
+            }
+        }
+
         while (str_IrregularForms.length()) // it deletes str_IrregularForms
         {
             bool b_match = regex_match(str_IrregularForms, result, 
-                                        (const wregex)L"\\s*_([^_]+)_\\s*([^\\s,]+),?(.*)");
+                                        (const wregex)L"\\s*_([^_]+)_\\s*([^\\s,;]+),?;?(.*)");
             if (b_match == true)
             {
                 wstring str_form = (wstring)result[2];
@@ -236,7 +255,7 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
 
                 co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
-                //co_gram.str_Lemma = str_Source;
+                //co_gram.str_Lemma = st_Head.str_Source;
                 co_gram.i_DecodeString((wstring)result[1]);
 // TODO can DecodeString handle this?
                 if (POS_VERB == e_PartOfSpeech)
@@ -246,7 +265,6 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
                 pco_dbHandle->v_PrepareForInsert (L"irregular_forms", 3);
                 pco_dbHandle->v_Bind (1, ll_descriptorId);
                 pco_dbHandle->v_Bind (2, co_gram.i_GramHash());     // Morphosyntactic values code
-//                pco_dbHandle->v_Bind (3, (wstring)result[2]); 
                 pco_dbHandle->v_Bind (3, str_form);                 // Wordform
                 pco_dbHandle->v_InsertRow();
                 pco_dbHandle->v_Finalize();
@@ -270,11 +288,15 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
         while (str_Difficulties.length()) // it deletes str_Difficulties
         {
             bool b_match = regex_match(str_Difficulties, result, 
-                                        (const wregex)L"\\s*([^,]+),?(.*)");
+                                        (const wregex)L"\\s*([^,]+),?\\s*(.*)");
             if (b_match == true)
             {
                 co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
+                if (POS_VERB == e_PartOfSpeech)
+                {
+                    co_gram.eo_Reflexive = b_Reflexive ? REFL_YES : REFL_NO;
+                }
                 co_gram.i_DecodeString((wstring)result[1]);
                 pco_dbHandle->v_PrepareForInsert (L"difficulties", 2);
                 pco_dbHandle->v_Bind (1, ll_descriptorId);
@@ -288,6 +310,36 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
                 if (str_Difficulties.length() > 0)
                 {
                     ERROR_LOG(L"INSERT>  str_Difficulties is non-empty after extraction: " + str_Difficulties);
+                }
+                break;
+            }
+        }
+
+        while (str_Deficient.length()) // it deletes str_Deficient
+        {
+            bool b_match = regex_match(str_Deficient, result, 
+                                        (const wregex)L"\\s*([^,]+),?\\s*(.*)");
+            if (b_match == true)
+            {
+                co_gram.h_GramClear();
+                co_gram.eo_POS = e_PartOfSpeech;
+                if (POS_VERB == e_PartOfSpeech)
+                {
+                    co_gram.eo_Reflexive = b_Reflexive ? REFL_YES : REFL_NO;
+                }
+                co_gram.i_DecodeString((wstring)result[1]);
+                pco_dbHandle->v_PrepareForInsert (L"nonexistent_forms", 2);
+                pco_dbHandle->v_Bind (1, ll_descriptorId);
+                pco_dbHandle->v_Bind (2, co_gram.i_GramHash());   // Morphosyntactic values code
+                pco_dbHandle->v_InsertRow();
+                pco_dbHandle->v_Finalize();
+                str_Deficient = (wstring)result[2];
+            }
+            else
+            {
+                if (str_Difficulties.length() > 0)
+                {
+                    ERROR_LOG(L"INSERT>  str_Deficient is non-empty after extraction: " + str_Deficient);
                 }
                 break;
             }
@@ -347,7 +399,7 @@ bool ST_Descriptor::b_SaveInflectionGroup (CT_Sqlite * pco_dbHandle,
     {
         bool b_dummy = false;
 
-        pco_dbHandle->v_PrepareForInsert (L"inflection", 11);
+        pco_dbHandle->v_PrepareForInsert (L"inflection", 12);
         pco_dbHandle->v_Bind (1, ll_descriptorId);
         pco_dbHandle->v_Bind (2, b_isPrimary);
         pco_dbHandle->v_Bind (3, st_data.i_Type);
@@ -371,6 +423,7 @@ bool ST_Descriptor::b_SaveInflectionGroup (CT_Sqlite * pco_dbHandle,
 
         pco_dbHandle->v_Bind (10, st_data.b_FleetingVowel);
         pco_dbHandle->v_Bind (11, st_data.i_StemAugmentType);
+        pco_dbHandle->v_Bind (12, st_data.i_InflectedParts);
         pco_dbHandle->v_InsertRow();
         pco_dbHandle->v_Finalize();
 
