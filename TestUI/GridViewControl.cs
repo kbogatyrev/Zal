@@ -21,7 +21,7 @@ namespace TestUI
             DataGridViewRow r = new DataGridViewRow();
             r.CreateCells (dataGridView);
             r.Cells[0].Value = true;
-            r.Cells[1].Value = v.LexemeId;
+            r.Cells[1].Value = (uint)v.LexemeId;
             r.Cells[1].Tag = v;
             r.Cells[2].Value = v.Headword;
             dataGridView.Rows.Add (r);
@@ -81,9 +81,10 @@ namespace TestUI
                     }
                     default:
                     {
-                        MessageBox.Show ("Unexpected return from IVerifier", 
-                                         "Error", 
-                                         MessageBoxButtons.OK);
+                        MainLib.IError err = (MainLib.IError)v;
+                        string sMsg = "Unexpected return from IVerifier; error msg: ";
+                        sMsg += err.LastError;
+                        MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
                         return;
                     }
 
