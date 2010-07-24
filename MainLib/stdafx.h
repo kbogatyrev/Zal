@@ -78,5 +78,6 @@ using namespace std::tr1;
 #include "ExtString.h"
 #include "SqliteWrapper.h"
 #include "Globals.h"
+#include "GenericHash.h"
 
 using namespace std;
