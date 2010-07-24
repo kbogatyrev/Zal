@@ -11,3 +11,4 @@ DELETE FROM endings;
 DELETE FROM common_deviation;
 DELETE FROM test_data;
 DELETE FROM test_data_stress;
+DELETE FROM lexeme_hash_to_descriptor;
