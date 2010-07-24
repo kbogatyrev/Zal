@@ -70,8 +70,9 @@ namespace TestUI
             }
             catch (Exception ex)
             {
+                MainLib.IError err = (MainLib.IError)m_hashLexemes[ldpSource];
                 string sMsg = "LexemeDataPanel_Save: ";
-                sMsg += ex.Message;
+                sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
@@ -109,7 +110,8 @@ namespace TestUI
             catch (Exception ex)
             {
                 string sMsg = "byEntryFormToolStripMenuItem_Click: ";
-                sMsg += ex.Message;
+                MainLib.IError err = (MainLib.IError)m_Dictionary;
+                sMsg += err.LastError;
                 MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
@@ -131,8 +133,9 @@ namespace TestUI
             catch (Exception ex)
             {
                 string sMsg = "Error: ";
-                sMsg += ex.Message;
-                MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                MainLib.IError err = (MainLib.IError)m_Dictionary;
+                sMsg += err.LastError;
+                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
 
@@ -175,7 +178,8 @@ namespace TestUI
             catch (Exception ex)
             {
                 string sMsg = "Error: ";
-                sMsg += ex.Message;
+                MainLib.IError err = (MainLib.IError)m_Analyzer;
+                sMsg += err.LastError;
                 MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
