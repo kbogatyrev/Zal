@@ -171,8 +171,10 @@ bool ST_Headword::b_SaveStressData (CT_Sqlite * pco_dbHandle,
 
 }   //  b_SaveStressData()
 
-bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
+bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId, __int64& ll_descriptorId)
 {
+    ll_descriptorId = -1;
+
     wsmatch result;
     static CT_GramHasher co_gram;
     try
@@ -215,7 +217,7 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
         pco_dbHandle->v_InsertRow();
         pco_dbHandle->v_Finalize();
 
-        __int64 ll_descriptorId = pco_dbHandle->ll_GetLastKey();
+        ll_descriptorId = pco_dbHandle->ll_GetLastKey();
 
         if (b_Loc2)
         {
@@ -366,6 +368,7 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId)
     }
     catch (CT_Exception& co_exc)
     {
+        ATLASSERT(0);
         wstring str_msg (co_exc.str_GetDescription());
         wstring str_error;
         try
