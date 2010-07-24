@@ -230,6 +230,25 @@ public:
         }
     }
 
+    void v_Bind (int i_column, unsigned int ui_value)
+    {
+        v_Bind (i_column, ui_value, po_Stmt_);
+    }
+
+    void v_Bind (int i_column, unsigned int ui_value, unsigned int ui_handle)
+    {
+        v_Bind (i_column, ui_value, (sqlite3_stmt *)ui_handle);
+    }
+
+    void v_Bind (int i_column, unsigned int ui_value, sqlite3_stmt * po_stmt)
+    {
+        int i_ret = sqlite3_bind_int64 (po_stmt, i_column, (__int64)ui_value);
+        if (SQLITE_OK != i_ret)
+        {
+            throw CT_Exception (i_ret, L"sqlite3_bind_int64 failed");
+        }
+    }
+
     void v_Bind (int i_column, __int64 ll_value)
     {
         v_Bind (i_column, ll_value, po_Stmt_);
