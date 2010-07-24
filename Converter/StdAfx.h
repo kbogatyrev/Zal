@@ -51,7 +51,12 @@ using namespace ATL;
 //
 #include "Error.h"
 #include "Exception.h"
+#include "GenericHash.h"
 
+//
+// Zal (MainLib)
+//
+#include "MainLib_i.h"
 
 #define ERROR_LOG(str_Msg) wstringstream io__; \
         io__ << __LINE__; \
