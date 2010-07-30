@@ -70,7 +70,6 @@ namespace TestUI
 
         }   //  InitializeData()
 
-
         private void GetDbPath()
         {
             FileDialog fd = new OpenFileDialog ();
@@ -605,7 +604,7 @@ namespace TestUI
         {
             // Expect word forms to be ready by now
 
-            MainLib.IFormDescriptor fd = lexeme.FormDescriptor;
+            MainLib.IFormFinder fd = lexeme.FormDescriptor;
             fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
             fd.Subparadigm = eoSpLong;
             fd.Number = MainLib.ET_Number.NUM_SG;
@@ -638,7 +637,7 @@ namespace TestUI
                                                   MainLib.ILexeme lexeme, 
                                                   MainLib.ET_Subparadigm eoSpShort)
         {
-            MainLib.IFormDescriptor fd = lexeme.FormDescriptor;
+            MainLib.IFormFinder fd = lexeme.FormDescriptor;
             fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
             fd.Subparadigm = eoSpShort;
 //            fd.Reflexivity = lexeme.IsReflexive;
@@ -860,7 +859,8 @@ namespace TestUI
                         {
                             string sLine = v.Headword;
                             sLine += new string(' ', 40 - sLine.Length);
-                            sLine += (v.Count > 0) ? "***  Fail" : "     Pass";
+                            sLine += (MainLib.ET_TestResult.TEST_RESULT_OK == v.Result) ?
+                                "     Pass" : "***  Fail";
                             swReport.WriteLine(sLine);
                         }
                     }
