@@ -36,7 +36,7 @@ typedef CComEnumOnSTL <IEnumVARIANT,
                                          std::vector<CComVariant>::value_type>,
                        std::vector<CComVariant> > EnumeratorType;
 
-typedef VCUE::ICollectionOnSTLCopyImpl <ITestData, 
+typedef VCUE::ICollectionOnSTLCopyImpl <ILexemeCollection, 
                                         std::vector<CComVariant>, 
                                         VARIANT,
                                         VCUE::GenericCopy<VARIANT, 
@@ -47,8 +47,8 @@ typedef VCUE::ICollectionOnSTLCopyImpl <ITestData,
 using namespace TestDataVector;
 
 class ATL_NO_VTABLE CT_TestData :
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CT_TestData, &CLSID_ZalTestData>,
+	public CComObjectRootEx<CComMultiThreadModel>,
+	public CComCoClass<CT_TestData, &CLSID_ZalStoredLexemeData>,
     public IError,
     public TestDataCollection
 {
@@ -60,7 +60,7 @@ public:
     DECLARE_REGISTRY_RESOURCEID(IDR_TESTDATA)
 
     BEGIN_COM_MAP(CT_TestData)
-        COM_INTERFACE_ENTRY(ITestData)
+        COM_INTERFACE_ENTRY(ILexemeCollection)
 	    COM_INTERFACE_ENTRY(IError)
     END_COM_MAP()
 
@@ -95,7 +95,7 @@ public:
         return S_OK;
     }
 
-    // ITestData
+    // ILexemeCollection
     STDMETHOD (put_DbPath) (BSTR bstr_path);
     STDMETHOD (LoadStoredLexemes) ();
 
@@ -109,4 +109,4 @@ private:
 
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(ZalTestData), CT_TestData)
+OBJECT_ENTRY_AUTO(__uuidof(ZalStoredLexemeData), CT_TestData)
