@@ -15,7 +15,7 @@ namespace TestUI
     public partial class TestApplet : Form
     {
         private MainLib.IDictionary m_Dictionary;
-        private MainLib.ITestData m_TestData;
+        private MainLib.ILexemeCollection m_TestData;
         private MainLib.IAnalyzer m_Analyzer;
         private List<MainLib.IWordForm> m_listWordForms;
         private Dictionary<LexemeDataPanel, MainLib.ILexeme> m_hashLexemes;
@@ -197,7 +197,7 @@ namespace TestUI
 
             if (null == m_TestData)
             {
-                m_TestData = new MainLib.ZalTestData();
+                m_TestData = new MainLib.ZalStoredLexemeData();
                 m_TestData.DbPath = m_sDbPath;
             }
 
@@ -209,7 +209,7 @@ namespace TestUI
             }
 
             TabPage tabPageTestCases = new TabPage ("Test");
-            GridViewUserControl gv = new GridViewUserControl();
+            GridViewUserControl gv = new GridViewUserControl (m_sDbPath);
 
             tabPageTestCases.Controls.Add(gv);
 
