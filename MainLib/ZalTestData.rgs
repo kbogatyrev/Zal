@@ -1,20 +1,20 @@
 HKCR
 {
-	MainLib.ZalTestData.1 = s 'ZalTestData Class'
+	MainLib.ZalStoredLexemeData.1 = s 'ZalStoredLexemeData Class'
 	{
 		CLSID = s '{A26AFF1C-7FB8-480b-89CE-C882AE46CBCC}'
 	}
-	MainLib.ZalTestData = s 'ZalTestData Class'
+	MainLib.ZalStoredLexemeData = s 'ZalStoredLexemeData Class'
 	{
 		CLSID = s '{A26AFF1C-7FB8-480b-89CE-C882AE46CBCC}'
-		CurVer = s 'MainLib.ZalTestData.1'
+		CurVer = s 'MainLib.ZalStoredLexemeData.1'
 	}	
 	NoRemove CLSID
 	{
-		ForceRemove {A26AFF1C-7FB8-480b-89CE-C882AE46CBCC} = s 'ZalTestData Class'
+		ForceRemove {A26AFF1C-7FB8-480b-89CE-C882AE46CBCC} = s 'ZalStoredLexemeData Class'
 		{
-			ProgID = s 'MainLib.ZalTestData.1'
-			VersionIndependentProgID = s 'MainLib.ZalTestData'
+			ProgID = s 'MainLib.ZalStoredLexemeData.1'
+			VersionIndependentProgID = s 'MainLib.ZalStoredLexemeData'
 			ForceRemove 'Programmable'
 			InprocServer32 = s '%MODULE%'
 			{
