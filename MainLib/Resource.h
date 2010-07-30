@@ -8,6 +8,7 @@
 #define IDR_LEXEME                      103
 #define IDR_ANALYZER                    104
 #define IDR_TESTDATA                    105
+#define IDR_VERIFIER                    106
 
 // Next default values for new objects
 // 
