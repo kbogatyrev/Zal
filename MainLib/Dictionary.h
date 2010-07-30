@@ -47,7 +47,7 @@ typedef VCUE::ICollectionOnSTLCopyImpl <IDictionary,
 using namespace LexemeVector;
 
 class ATL_NO_VTABLE CT_Dictionary :
-	public CComObjectRootEx<CComSingleThreadModel>,
+	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CT_Dictionary, &CLSID_ZalDictionary>,
     public IError,
     public LexemeCollection
@@ -85,6 +85,7 @@ END_COM_MAP()
 public:
     STDMETHOD (put_DbPath) (BSTR bstr_dbPath);
     STDMETHOD (GetLexeme) (LONG Id, ILexeme ** pp_lexeme);
+    STDMETHOD (GetLexemeByHash) (ULONG ul_LexemeHash, ILexeme ** pp_lexeme);
     STDMETHOD (GetLexemesByGraphicStem) (BSTR bstr_key);
     STDMETHOD (GetLexemesByInitialForm) (BSTR bstr_key);
 
