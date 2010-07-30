@@ -3,7 +3,7 @@
 #include "FormDescriptor.h"
 
 //
-// IFormDescriptor
+// IFormFinder
 //
 
 HRESULT CT_FormDescriptor::FindForms()
