@@ -13,8 +13,15 @@ namespace TestUI
     public partial class GridViewUserControl : UserControl
     {
         Thread m_WorkerThread;
-
         public string m_sDbPath;
+        public bool bCancelTest = false;
+
+        public GridViewUserControl(string sDbPath)
+        {
+            InitializeComponent();
+            m_sDbPath = sDbPath;
+            checkBoxSelectAll.Checked = true;
+        }
 
         public int iRows
         {
@@ -57,21 +64,14 @@ namespace TestUI
             return (string)textBoxCell.Value;
         }
 
-        public GridViewUserControl (string sDbPath)
-        {
-            InitializeComponent();
-            m_sDbPath = sDbPath;
-        }
-
         public void AddLexeme (MainLib.IVerifier v)
         {
             DataGridViewRow r = new DataGridViewRow();
             r.CreateCells(dataGridView);
             r.Cells[0].Value = true;
             r.Cells[1].Value = (uint)v.LexemeId;
-            r.Cells[1].Tag = v;
+//            r.Cells[1].Tag = v;
             r.Cells[2].Value = v.Headword;
-//            m_LexemeHashToVerifier.Add(v.LexemeId, v);
             dataGridView.Rows.Add(r);
         }
 
@@ -86,6 +86,7 @@ namespace TestUI
         private void buttonRun_Click (object sender, EventArgs e)
         {
             buttonRun.Enabled = false;
+            buttonCancel.Enabled = true;
 
             foreach (DataGridViewRow row in dataGridView.Rows)
             {
@@ -108,49 +109,6 @@ namespace TestUI
             m_WorkerThread.Start();
 //            m_WorkerThread.Join();
 
-            /*
-                        foreach (DataGridViewRow row in dataGridView.Rows)
-                        {
-                            DataGridViewCheckBoxCell cbCheckBox = (DataGridViewCheckBoxCell)row.Cells[0];
-                            if (false == (bool)cbCheckBox.Value)
-                            {
-                                continue;
-                            }
-
-                            DataGridViewCell cbId = (DataGridViewCell)row.Cells[1];
-                            MainLib.IVerifier v = (MainLib.IVerifier) cbId.Tag;
-                            MainLib.ET_TestResult eResult = v.Verify();
-                            DataGridViewCell cbResult = row.Cells[3];
-                            switch (eResult)
-                            {
-                                case MainLib.ET_TestResult.TEST_RESULT_OK:
-                                {
-                                    cbResult.Value = "Pass";
-                                    break;
-                                }
-                                case MainLib.ET_TestResult.TEST_RESULT_FAIL:
-                                {
-                                    cbResult.Value = "Fail";
-                                    break;
-                                }
-                                case MainLib.ET_TestResult.TEST_RESULT_INCOMPLETE:
-                                {
-                                    cbResult.Value = "Missing forms";
-                                    break;
-                                }
-                                default:
-                                {
-                                    MainLib.IError err = (MainLib.IError)v;
-                                    string sMsg = "Unexpected return from IVerifier; error msg: ";
-                                    sMsg += err.LastError;
-                                    MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
-                                    return;
-                                }
-
-                            }       //  switch ...
-
-                        }   //  foreach (DataGridViewRow row in dataGridView.Rows)
-            */
         }   // buttonRun_Click (...)
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -163,13 +121,79 @@ namespace TestUI
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-
+            bCancelTest = true;
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
             TestApplet ta = (TestApplet)Parent.Parent.Parent;
             ta.CloseCurrentTab();
+        }
+
+        private void checkBoxSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                DataGridViewCheckBoxCell cbCheckBox = (DataGridViewCheckBoxCell)row.Cells[0];
+                cbCheckBox.Value = checkBoxSelectAll.Checked;
+                buttonRun.Enabled = checkBoxSelectAll.Checked;
+            }
+        }
+
+        private void dataGridView_CellValueChanged (object sender, DataGridViewCellEventArgs e)
+        {
+            if (0 == e.ColumnIndex)
+            {
+                if (true == (bool)dataGridView[e.ColumnIndex, e.RowIndex].Value)
+                {
+                    buttonRun.Enabled = true;
+                }
+            }
+        }
+
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (0 == e.ColumnIndex)
+            {
+                if (true == (bool)dataGridView[e.ColumnIndex, e.RowIndex].Value)
+                {
+                    buttonRun.Enabled = true;
+                }
+            }
+        }
+
+        private void dataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (0 == e.ColumnIndex)
+            {
+                if (true == (bool)dataGridView[e.ColumnIndex, e.RowIndex].Value)
+                {
+                    buttonRun.Enabled = true;
+                }
+            }
+        }
+
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (0 == e.ColumnIndex)
+            {
+                if (true == (bool)dataGridView[e.ColumnIndex, e.RowIndex].EditedFormattedValue)
+                {
+                    buttonRun.Enabled = true;
+                }
+                else
+                {
+                    foreach (DataGridViewRow row in dataGridView.Rows)
+                    {
+                        buttonRun.Enabled = false;
+                        DataGridViewCell cell = row.Cells[0];
+                        if ((bool)cell.EditedFormattedValue)
+                        {
+                            buttonRun.Enabled = true;
+                        }
+                    }
+                }
+            }
         }
     }       //  public partial class GridViewUserControl
 
@@ -187,21 +211,17 @@ namespace TestUI
             MainLib.IVerifier v = null;
             try
             {
-                //                foreach (DataGridViewRow row in m_Caller.GridView.Rows)
-                //                {
-                //                    DataGridViewCheckBoxCell cbCheckBox = (DataGridViewCheckBoxCell)row.Cells[0];
-                //                    if (false == (bool)cbCheckBox.Value)
-                //                    {
-                //                        continue;
-                //                    }
-
-                //                    DataGridViewCell cbStatus = row.Cells[3];
-                //                    cbStatus.Value = "Testing...";
-                //                }
-
-                //                foreach (DataGridViewRow row in m_Caller.GridView.Rows)
                 for (int iAt = 0; iAt < m_Caller.iRows; ++iAt)
                 {
+                    if (m_Caller.bCancelTest)
+                    {
+                        for (int iRow = iAt; iRow < m_Caller.iRows; ++iRow)
+                        {
+                            m_Caller.SetResult (iRow, "Cancelled");
+                        }
+                        break;
+                    }
+
                     if (!m_Caller.bRowChecked(iAt))
                     {
                         continue;
