@@ -19,6 +19,7 @@ namespace TestUI
         private MainLib.IAnalyzer m_Analyzer;
         private List<MainLib.IWordForm> m_listWordForms;
         private Dictionary<LexemeDataPanel, MainLib.ILexeme> m_hashLexemes;
+        private Dictionary<MainLib.ILexeme, ArrayList> m_lexemeToTabs;
 
         private Dictionary<MainLib.ET_Gender, string> m_hashGender;
         private Dictionary<MainLib.ET_Number, string> m_hashNumber;
@@ -109,9 +110,13 @@ namespace TestUI
             }
             catch (Exception ex)
             {
-                string sMsg = "byEntryFormToolStripMenuItem_Click: ";
+                string sMsg = "byEntryFormToolStripMenuItem_Click \n";
                 MainLib.IError err = (MainLib.IError)m_Dictionary;
+                sMsg += "MainLib error: ";
                 sMsg += err.LastError;
+                sMsg += "\n";
+                sMsg += ".Net client error: ";
+                sMsg += ex.Message;
                 MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }

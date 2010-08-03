@@ -20,6 +20,8 @@ namespace TestUI
 
             m_sDbPath = Properties.Settings.Default.DbPath;
 
+            m_lexemeToTabs = new Dictionary<MainLib.ILexeme, ArrayList>();
+
             m_Dictionary = new MainLib.ZalDictionary();
             m_Analyzer = new MainLib.ZalAnalyzer();
             m_hashLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
@@ -72,7 +74,7 @@ namespace TestUI
 
         private void GetDbPath()
         {
-            FileDialog fd = new OpenFileDialog ();
+            FileDialog fd = new OpenFileDialog();
             fd.CheckFileExists = false;
             fd.CheckPathExists = true;
             fd.FileName = m_sDbPath;
@@ -113,7 +115,7 @@ namespace TestUI
                 return;
             }
 
-            TabPage tabPageLexemes = new TabPage(m_sSearchString);
+            TabPage tabPageLexemes = new TabPage (m_sSearchString);
             tabPageLexemes.AutoScroll = true;
 
             LexemeDataPanel ldpFocused = null;
@@ -142,11 +144,15 @@ namespace TestUI
                 {
                     ldpFocused = ldp;
                 }
+
+                ArrayList alTabs = new ArrayList();
+                m_lexemeToTabs.Add (lex, alTabs);
+
                 ++iLexeme;
             }
 
-            tabControl.Controls.Add(tabPageLexemes);
-            tabControl.SelectTab(tabPageLexemes);
+            tabControl.Controls.Add (tabPageLexemes);
+            tabControl.SelectTab (tabPageLexemes);
             ldpFocused.FocusShowButton();
 
         }   //  ShowLexemes()
@@ -169,6 +175,8 @@ namespace TestUI
             }
 
             TabPage tabPageDetails = new TabPage(lexeme.InitialForm);
+            ArrayList al = m_lexemeToTabs[lexeme];
+            al.Add (tabPageDetails);
 
             string grSt = lexeme.GraphicStem;
 
@@ -617,13 +625,15 @@ namespace TestUI
             {
                 MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
                 AdjPanel adjPanel = new AdjPanel();
-                TabPage tabPageDetails = new TabPage(wf.Wordform);
-                tabPageDetails.Controls.Add(adjPanel);
-                tabControl.Controls.Add(tabPageDetails);
-                ShowLongParticipialForms(adjPanel, lexeme, eoSpLong);
+                TabPage tabPageDetails = new TabPage (wf.Wordform);
+                ArrayList al = m_lexemeToTabs[lexeme];
+                al.Add (tabPageDetails);
+                tabPageDetails.Controls.Add (adjPanel);
+                tabControl.Controls.Add (tabPageDetails);
+                ShowLongParticipialForms (adjPanel, lexeme, eoSpLong);
                 if (MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED != eoSpShort)
                 {
-                    ShowShortParticipialForms(adjPanel, lexeme, eoSpShort);
+                    ShowShortParticipialForms (adjPanel, lexeme, eoSpShort);
                 }
                 tabControl.SelectedTab = tabPageDetails;
             }
@@ -881,6 +891,22 @@ namespace TestUI
         public void CloseCurrentTab()
         {
             tabControl.TabPages.Remove (tabControl.SelectedTab);
+        }
+
+        public void CloseLexemeTabs (LexemeDataPanel ldp)
+        {
+            ArrayList alTabs = m_lexemeToTabs [m_hashLexemes[ldp]];
+            foreach (TabPage tp in alTabs)
+            {
+                tabControl.TabPages.Remove(tp);
+            }
+
+            TabPage tpParent = (TabPage)ldp.Parent;
+            tpParent.Controls.Remove(ldp);
+            if (0 == tpParent.Controls.Count)
+            {
+                tabControl.TabPages.Remove(tpParent);
+            }
         }
 
     }   //  public partial class TestApplet

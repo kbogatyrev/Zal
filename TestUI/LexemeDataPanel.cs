@@ -121,5 +121,11 @@ namespace TestUI
             }
         }
 
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            TestApplet ta = (TestApplet)Parent.Parent.Parent;
+//            ta.CloseCurrentTab();
+            ta.CloseLexemeTabs (this);            
+        }
     }
 }

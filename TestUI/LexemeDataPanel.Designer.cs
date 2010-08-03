@@ -42,6 +42,7 @@
             this.textBoxAdvancedValue = new System.Windows.Forms.TextBox();
             this.buttonShowWF = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxInitForm
@@ -167,7 +168,7 @@
             // 
             // buttonShowWF
             // 
-            this.buttonShowWF.Location = new System.Drawing.Point(324, 73);
+            this.buttonShowWF.Location = new System.Drawing.Point(324, 52);
             this.buttonShowWF.Name = "buttonShowWF";
             this.buttonShowWF.Size = new System.Drawing.Size(75, 23);
             this.buttonShowWF.TabIndex = 0;
@@ -177,7 +178,7 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(324, 102);
+            this.buttonSave.Location = new System.Drawing.Point(324, 79);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 1;
@@ -185,11 +186,22 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // buttonClose
+            // 
+            this.buttonClose.Location = new System.Drawing.Point(324, 106);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(75, 23);
+            this.buttonClose.TabIndex = 2;
+            this.buttonClose.Text = "Close";
+            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
+            // 
             // LexemeDataPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonShowWF);
             this.Controls.Add(this.textBoxAdvancedValue);
@@ -227,5 +239,6 @@
         private System.Windows.Forms.TextBox textBoxAdvancedValue;
         private System.Windows.Forms.Button buttonShowWF;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonClose;
     }
 }
