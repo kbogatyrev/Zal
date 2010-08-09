@@ -257,6 +257,14 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId, __i
 
                 co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
+                if (str_MainSymbol == L"св")
+                {
+                    co_gram.eo_Aspect = ASPECT_PERFECTIVE;
+                }
+                else if (str_MainSymbol == L"нсв")
+                {
+                    co_gram.eo_Aspect = ASPECT_IMPERFECTIVE;
+                }
                 //co_gram.str_Lemma = st_Head.str_Source;
                 co_gram.i_DecodeString((wstring)result[1]);
 // TODO can DecodeString handle this?
@@ -295,6 +303,14 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId, __i
             {
                 co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
+                if (str_MainSymbol == L"св")
+                {
+                    co_gram.eo_Aspect = ASPECT_PERFECTIVE;
+                }
+                else if (str_MainSymbol == L"нсв")
+                {
+                    co_gram.eo_Aspect = ASPECT_IMPERFECTIVE;
+                }
                 if (POS_VERB == e_PartOfSpeech)
                 {
                     co_gram.eo_Reflexive = b_Reflexive ? REFL_YES : REFL_NO;
@@ -325,6 +341,14 @@ bool ST_Descriptor::b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_wordId, __i
             {
                 co_gram.h_GramClear();
                 co_gram.eo_POS = e_PartOfSpeech;
+                if (str_MainSymbol == L"св")
+                {
+                    co_gram.eo_Aspect = ASPECT_PERFECTIVE;
+                }
+                else if (str_MainSymbol == L"нсв")
+                {
+                    co_gram.eo_Aspect = ASPECT_IMPERFECTIVE;
+                }
                 if (POS_VERB == e_PartOfSpeech)
                 {
                     co_gram.eo_Reflexive = b_Reflexive ? REFL_YES : REFL_NO;
