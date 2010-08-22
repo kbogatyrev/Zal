@@ -23,7 +23,7 @@ public:
     };
 
     CT_Exception (int i_errorCode, const std::wstring& str_description)
-        : i_ErrorCode_ (i_errorCode), str_Description_ (str_Description_)
+        : i_ErrorCode_ (i_errorCode), str_Description_ (str_description)
     {}
 
     virtual ~CT_Exception() {};
