@@ -7,7 +7,7 @@
 
 // CT_Sqlite
 
-static const wchar_t * SZ_SEPARATOR = L"|";
+static const wchar_t * SZ_SEPARATOR = L",| ";
 
 class CT_Sqlite
 {
@@ -196,7 +196,7 @@ public:
 
         return (unsigned int)po_stmt;
     }
-
+   
     void v_Bind (int i_column, bool b_value)
     {
         v_Bind (i_column, b_value, po_Stmt_);
@@ -517,7 +517,7 @@ public:
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
         }
 
-        int i_ret = sqlite3_step (po_Stmt_);
+        i_ret = sqlite3_step (po_Stmt_);
         if (SQLITE_DONE == i_ret)
         {
             i_ret = sqlite3_reset (po_Stmt_);
@@ -530,9 +530,66 @@ public:
         }
 
         return true;
-    }
 
-    bool b_ExportTable (const wstring& str_table, const wstring& str_path)
+    }   //  b_TableExists (...)
+
+    bool b_TableEmpty (const wstring& str_table)
+    {
+        wstring str_query (L"SELECT * FROM ");
+        str_query += str_table;
+        str_query += L";";
+        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_Stmt_, NULL);
+        if (SQLITE_OK != i_ret)
+        {
+            throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
+        }
+
+        i_ret = sqlite3_step (po_Stmt_);
+        if (SQLITE_DONE == i_ret)
+        {
+            i_ret = sqlite3_reset (po_Stmt_);
+            return false;
+        }
+
+        if (SQLITE_ROW != i_ret)
+        {
+            throw CT_Exception (i_ret, L"sqlite3_step failed");
+        }
+
+        return true;
+
+    }   //  b_TableEmpty (...)
+
+    __int64 ll_Rows (const wstring& str_table)
+    {
+        wstring str_query (L"SELECT COUNT (*) FROM ");
+        str_query += str_table;
+        str_query += L";";
+        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_Stmt_, NULL);
+        if (SQLITE_OK != i_ret)
+        {
+            throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
+        }
+
+        i_ret = sqlite3_step (po_Stmt_);
+        if (SQLITE_DONE == i_ret)
+        {
+            i_ret = sqlite3_reset (po_Stmt_);
+            return 0;
+        }
+
+        if (SQLITE_ROW != i_ret)
+        {
+            throw CT_Exception (i_ret, L"sqlite3_step failed");
+        }
+
+        return sqlite3_column_int64 (po_Stmt_, 0);
+
+    }   //  ll_Rows (...)
+
+    bool b_ExportTable (const wstring& str_path,
+                        const wstring& str_table, 
+                        CT_ProgressCallback& co_progress)
     {
         if (NULL == po_Db_)
         {
@@ -577,6 +634,14 @@ public:
             ERROR_LOG (L"Error writing export table header. \n");
         }
 
+        __int64 ll_rowsToExport = ll_Rows (str_table);
+        if (ll_rowsToExport < 1)
+        {
+            return true;
+        }
+
+        __int64 ll_row = 0;
+        int i_percentDone = 0;
         while (b_GetRow (po_stmt))
         {
             wstring str_out;
@@ -597,6 +662,15 @@ public:
             {
                 throw CT_Exception (i_error, L"Error writing export table header.");
             }
+            
+            int i_pd = (int) (((double)ll_row/(double)ll_rowsToExport) * 100);
+            if (i_pd > i_percentDone)
+            {
+                i_percentDone = min (i_pd, 100);
+                co_progress (i_percentDone);
+            }
+
+            ++ll_row;
         }       //  while (...)
 
         fclose (io_outStream);
@@ -605,8 +679,8 @@ public:
 
     }   //  b_ExportTable (...)
 
-    bool b_ImportTable (const wstring& str_table, 
-                        const wstring& str_path, 
+    bool b_ImportTable (const wstring& str_path, 
+                        const wstring& str_table, 
                         CT_ProgressCallback& co_progress)
     {
         if (NULL == po_Db_)
@@ -746,10 +820,7 @@ public:
             if (i_pd > i_percentDone)
             {
                 i_percentDone = min (i_pd, 100);
-//                if (pStatusUpdate)
-//                {
-                    co_progress (i_percentDone);
-//                }
+                co_progress (i_percentDone);
             }
 
         }   //  for (; !feof (io_inStream); ++i_entriesRead)
