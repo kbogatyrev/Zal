@@ -426,8 +426,8 @@ namespace Converter
 
         private void buttonSourcePath_Click (object sender, EventArgs e)
         {
-            FileDialog fd = new OpenFileDialog ();
-            DialogResult dr = fd.ShowDialog ();
+            FileDialog fd = new OpenFileDialog();
+            DialogResult dr = fd.ShowDialog();
             if (DialogResult.OK == dr)
             {
                 m_sSourcePath = fd.FileName;
@@ -703,7 +703,7 @@ namespace Converter
  */ 
     }   // ConverterForm class
 
-    public class EventSink : ZalConversionLib.IZalNotification
+    public class EventSink : ZalConversionLib.IZalNotification2
     {
         private ConverterForm m_Form;
         public EventSink (ConverterForm Form)
