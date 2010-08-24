@@ -1,6 +1,7 @@
 // Dictionary.h : Declaration of the CDictionary
 
 #pragma once
+
 #include "resource.h"       // main symbols
 #include "MainLib_i.h"
 
@@ -46,8 +47,9 @@ typedef VCUE::ICollectionOnSTLCopyImpl <ILexemeCollection,
 
 using namespace TestDataVector;
 
+
 class ATL_NO_VTABLE CT_TestData :
-	public CComObjectRootEx<CComMultiThreadModel>,
+	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_TestData, &CLSID_ZalStoredLexemeData>,
     public IError,
     public TestDataCollection
@@ -64,7 +66,7 @@ public:
 	    COM_INTERFACE_ENTRY(IError)
     END_COM_MAP()
 
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
 	HRESULT FinalConstruct()
 	{
@@ -100,7 +102,6 @@ public:
     STDMETHOD (LoadStoredLexemes) ();
 
 private:
-//    HRESULT h_LoadStoredLexemes (long l_lowBound, long l_highBound);
     HRESULT h_GetStoredLexemeData (const wstring& str_select);
 
 private:
