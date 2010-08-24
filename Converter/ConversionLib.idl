@@ -46,10 +46,10 @@ interface IZalSourceReader : IUnknown
 [
 	object,
 	uuid(DD2CCF34-A642-495d-9DA9-7B9666AC8D90),
-	helpstring("IZalNotification Interface"),
+	helpstring("IZalNotification2 Interface"),
 	pointer_default(unique)
 ]
-interface IZalNotification : IUnknown
+interface IZalNotification2 : IUnknown
 {
     [helpstring("method ProgressNotification")]
     HRESULT ProgressNotification ([in] int i_progress);
@@ -80,7 +80,7 @@ library ZalConversionLib
     coclass ZalSourceReader
     {
         [default] interface IZalSourceReader;
-        [default, source] interface IZalNotification;
+        [default, source] interface IZalNotification2;
     };
 
 // ---------------------------------------------------------------------------
