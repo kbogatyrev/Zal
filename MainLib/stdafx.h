@@ -79,5 +79,6 @@ using namespace std::tr1;
 #include "SqliteWrapper.h"
 #include "Globals.h"
 #include "GenericHash.h"
+#include "Callbacks.h"
 
 using namespace std;
