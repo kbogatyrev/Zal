@@ -16,6 +16,8 @@ namespace TestUI
     {
         protected void InitializeData()
         {
+            m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar(this.UpdateProgressBar);
+
             m_bDBOpen = false;
 
             m_sDbPath = Properties.Settings.Default.DbPath;
