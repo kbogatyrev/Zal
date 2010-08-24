@@ -9,6 +9,8 @@
 #define IDR_ANALYZER                    104
 #define IDR_TESTDATA                    105
 #define IDR_VERIFIER                    106
+#define IDR_WORDFORM                    108
+#define IDR_SQLITEWRAPPER               109
 
 // Next default values for new objects
 // 
@@ -17,6 +19,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32768
 #define _APS_NEXT_CONTROL_VALUE         201
-#define _APS_NEXT_SYMED_VALUE           104
+#define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
