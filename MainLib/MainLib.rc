@@ -102,6 +102,9 @@ IDR_DICTIONARY          REGISTRY                "ZalDictionary.rgs"
 IDR_ANALYZER            REGISTRY                "ZalAnalyzer.rgs"
 IDR_TESTDATA            REGISTRY                "ZalTestData.rgs"
 IDR_VERIFIER            REGISTRY                "ZalVerifier.rgs"
+IDR_WORDFORM            REGISTRY                "ZalWordForm.rgs"
+IDR_LEXEME              REGISTRY                "ZalLexeme.rgs"
+IDR_SQLITEWRAPPER       REGISTRY                "ZalSqliteComWrapper.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
