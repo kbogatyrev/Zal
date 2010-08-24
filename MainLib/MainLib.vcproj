@@ -45,7 +45,8 @@
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="true"
+				GenerateStublessProxies="false"
+				GenerateTypeLibrary="true"
 				TypeLibraryName="$(IntDir)/MainLib.tlb"
 				HeaderFileName="MainLib_i.h"
 				DLLDataFileName=""
@@ -61,7 +62,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -431,6 +432,14 @@
 			<File
 				RelativePath=".\MainLib.idl"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						GenerateStublessProxies="true"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\Sqlite\sqlite3.c"
@@ -451,6 +460,10 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\SqliteComWrapper.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp"
@@ -567,6 +580,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SqliteComWrapper.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
@@ -617,11 +634,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ZalMarshaler.rgs"
+				>
+			</File>
+			<File
+				RelativePath=".\ZalSqliteComWrapper.rgs"
+				>
+			</File>
+			<File
 				RelativePath=".\ZalTestData.rgs"
 				>
 			</File>
 			<File
 				RelativePath=".\ZalVerifier.rgs"
+				>
+			</File>
+			<File
+				RelativePath=".\ZalWordForm.rgs"
 				>
 			</File>
 		</Filter>
