@@ -40,9 +40,11 @@
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.batchTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportTestDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.importTestDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -127,7 +129,9 @@
             // 
             this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.batchTestToolStripMenuItem,
-            this.testRangeToolStripMenuItem});
+            this.testRangeToolStripMenuItem,
+            this.exportTestDataToolStripMenuItem,
+            this.importTestDataToolStripMenuItem});
             this.testToolStripMenuItem.Enabled = false;
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
@@ -136,7 +140,7 @@
             // batchTestToolStripMenuItem
             // 
             this.batchTestToolStripMenuItem.Name = "batchTestToolStripMenuItem";
-            this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.batchTestToolStripMenuItem.Text = "Test All";
             this.batchTestToolStripMenuItem.Click += new System.EventHandler(this.batchTestToolStripMenuItem_Click);
             // 
@@ -144,9 +148,16 @@
             // 
             this.testRangeToolStripMenuItem.Enabled = false;
             this.testRangeToolStripMenuItem.Name = "testRangeToolStripMenuItem";
-            this.testRangeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.testRangeToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.testRangeToolStripMenuItem.Text = "Test Range";
             this.testRangeToolStripMenuItem.Click += new System.EventHandler(this.testRangeToolStripMenuItem_Click);
+            // 
+            // exportTestDataToolStripMenuItem
+            // 
+            this.exportTestDataToolStripMenuItem.Name = "exportTestDataToolStripMenuItem";
+            this.exportTestDataToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.exportTestDataToolStripMenuItem.Text = "Export Test Data";
+            this.exportTestDataToolStripMenuItem.Click += new System.EventHandler(this.exportTestDataToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -170,6 +181,13 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(660, 738);
             this.tabControl.TabIndex = 0;
+            // 
+            // importTestDataToolStripMenuItem
+            // 
+            this.importTestDataToolStripMenuItem.Name = "importTestDataToolStripMenuItem";
+            this.importTestDataToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.importTestDataToolStripMenuItem.Text = "Import Test Data";
+            this.importTestDataToolStripMenuItem.Click += new System.EventHandler(this.importTestDataToolStripMenuItem_Click);
             // 
             // TestApplet
             // 
@@ -214,6 +232,8 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.ToolStripMenuItem exportTestDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importTestDataToolStripMenuItem;
     }
 }
 
