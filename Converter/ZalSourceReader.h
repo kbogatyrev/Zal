@@ -4,7 +4,7 @@
 
 class ATL_NO_VTABLE CT_ZalSourceReader :
     public IConnectionPointContainerImpl<CT_ZalSourceReader>,
-    public IConnectionPointImpl<CT_ZalSourceReader, &IID_IZalNotification, CComDynamicUnkArray>,
+    public IConnectionPointImpl<CT_ZalSourceReader, &IID_IZalNotification2, CComDynamicUnkArray>,
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_ZalSourceReader, &CLSID_ZalSourceReader>,
     public IZalSourceReader
@@ -23,7 +23,7 @@ BEGIN_COM_MAP(CT_ZalSourceReader)
 END_COM_MAP()
 
 BEGIN_CONNECTION_POINT_MAP(CT_ZalSourceReader)
-    CONNECTION_POINT_ENTRY(IID_IZalNotification)
+    CONNECTION_POINT_ENTRY(IID_IZalNotification2)
 END_CONNECTION_POINT_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
