@@ -47,7 +47,7 @@ typedef VCUE::ICollectionOnSTLCopyImpl <IDictionary,
 using namespace LexemeVector;
 
 class ATL_NO_VTABLE CT_Dictionary :
-	public CComObjectRootEx<CComMultiThreadModel>,
+	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_Dictionary, &CLSID_ZalDictionary>,
     public IError,
     public LexemeCollection
