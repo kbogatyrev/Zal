@@ -15,6 +15,13 @@ namespace TestUI
 {
     public delegate void DelegateUpdateProgressBar (int iPercentDone);
 
+    public enum etDbOperation
+    {
+        eDbOperationUndefined,
+        eExportTable,
+        eImportTable
+    };
+
     public partial class TestApplet : Form
     {
         private MainLib.IDictionary m_Dictionary;
@@ -35,7 +42,6 @@ namespace TestUI
         private string m_sDbPath;
         private bool m_bDBOpen;
         private string m_sSearchString;
-//        private string m_sImportFilePath;
 
         public string sDbPath
         {
@@ -217,8 +223,6 @@ namespace TestUI
             if (null == m_TestData)
             {
                 m_TestData = new MainLib.ZalStoredLexemeData();
-                EventSink sink = new EventSink (this);
-                m_TestData.ProgressNotification += sink.ProgressNotification;
                 m_TestData.DbPath = m_sDbPath;
             }
 
@@ -256,14 +260,6 @@ namespace TestUI
                 GetDbPath();
             }
 
-            if (null == m_TestData)
-            {
-                m_TestData = new MainLib.ZalStoredLexemeData();
-                EventSink sink = new EventSink (this);
-                m_TestData.ProgressNotification += sink.ProgressNotification;
-                m_TestData.DbPath = m_sDbPath;
-            }
-
             FileDialog fd = new OpenFileDialog();
             fd.CheckFileExists = false;
             fd.CheckPathExists = true;
@@ -279,7 +275,7 @@ namespace TestUI
                         string sMsg = "File ";
                         sMsg += fd.FileName + " ";
                         sMsg += "already exists. Do you want to overwrite it?";
-                        DialogResult dRes = MessageBox.Show(sMsg,
+                        DialogResult dRes = MessageBox.Show (sMsg,
                                                              "Zal Test Export",
                                                              MessageBoxButtons.YesNoCancel,
                                                              MessageBoxIcon.Question);
@@ -318,8 +314,10 @@ namespace TestUI
             {
                 MainLib.IError err = (MainLib.IError)m_TestData;
                 string sMsg = "exportTestDataToolStripMenuItem_Click: ";
+                sMsg += ex.Message;
+                sMsg += "\n";
                 sMsg += err.LastError;
-                MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
 
@@ -330,14 +328,6 @@ namespace TestUI
             if (!m_bDBOpen)
             {
                 GetDbPath();
-            }
-
-            if (null == m_TestData)
-            {
-//                m_TestData = new MainLib.ZalStoredLexemeData();
-//                EventSink sink = new EventSink(m_DelegateUpdateProgressBar);
-//                m_TestData.ProgressNotification += sink.ProgressNotification;
-//                m_TestData.DbPath = m_sDbPath;
             }
 
             FileDialog fd = new OpenFileDialog();
@@ -354,20 +344,6 @@ namespace TestUI
                 }
             }       // while ...
 
-/*
-            try
-            {
-                m_TestData.ImportStoredTestData (fd.FileName);
-            }
-            catch (Exception ex)
-            {
-                MainLib.IError err = (MainLib.IError)m_TestData;
-                string sMsg = "importTestDataToolStripMenuItem_Click: ";
-                sMsg += err.LastError;
-                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
-                return;
-            }
-*/
             m_ProgressDlg = new ProgressDialog();
             m_ProgressDlg.Text = "Table Import";
             string sMsg = "Importing stored test results from ";
@@ -377,7 +353,7 @@ namespace TestUI
             m_ProgressDlg.Show();
             m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
             EventSink sink = new EventSink (this);
-            ImportThread importThread = new ImportThread (this, fd.FileName);
+            DbOperationThread importThread = new DbOperationThread (etDbOperation.eImportTable, this, fd.FileName);
             Thread t = new Thread (new ThreadStart (importThread.ThreadProc));
             t.Name = "Zal import worker thread";
             t.IsBackground = true;
@@ -397,35 +373,19 @@ namespace TestUI
             m_ProgressDlg.Refresh();
         }
 
-/*
-        public void ImportThreadProc()
-        {
-            try
-            {
-                m_TestData.ImportStoredTestData(m_sImportFilePath);
-            }
-            catch (Exception ex)
-            {
-                MainLib.IError err = (MainLib.IError)m_TestData;
-                string sMsg = "importTestDataToolStripMenuItem_Click: ";
-                sMsg += err.LastError;
-                MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
-                return;
-            }
-
-        }   //  ThreadProc()
-*/
     }   //  public partial class TestApplet : Form
 
-    public class ImportThread
+    public class DbOperationThread
     {
-        TestApplet m_Parent;
-        string m_sImportFilePath;
+        etDbOperation m_eOperationType;
+        TestApplet m_formParent;
+        string m_sPath;
 
-        public ImportThread (TestApplet parent, string sPath)
+        public DbOperationThread (etDbOperation eOpType, TestApplet formParent, string sPath)
         {
-            m_Parent = parent;
-            m_sImportFilePath = sPath;
+            m_eOperationType = eOpType;
+            m_formParent = formParent;
+            m_sPath = sPath;
         }
 
         public void ThreadProc()
@@ -434,16 +394,31 @@ namespace TestUI
             try
             {
                 sqlite = new MainLib.ZalSqliteWrapper();
-                EventSink sink = new EventSink (m_Parent);
+                EventSink sink = new EventSink (m_formParent);
                 sqlite.ProgressNotification += sink.ProgressNotification;
-                sqlite.DbPath = m_Parent.sDbPath;
-                sqlite.ImportTable (m_sImportFilePath, "test_data");
-//                m_iTestData.ImportStoredTestData (m_sImportFilePath);
+                sqlite.DbPath = m_formParent.sDbPath;
+                if (etDbOperation.eExportTable == m_eOperationType)
+                {
+                    sqlite.ExportTable (m_sPath, "test_data");
+                }
+                else if (etDbOperation.eImportTable == m_eOperationType)
+                {
+                    sqlite.ImportTable (m_sPath, "test_data");
+                }
+                else
+                {
+                    MessageBox.Show ("Internal error: bad DB opcode", 
+                                     "Zal Error", 
+                                     MessageBoxButtons.OK);
+                    return;
+                }
             }
             catch (Exception ex)
             {
                 MainLib.IError err = (MainLib.IError)sqlite;
                 string sMsg = "importTestDataToolStripMenuItem_Click: ";
+                sMsg += ex.Message;
+                sMsg += "\n";
                 sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
@@ -452,23 +427,6 @@ namespace TestUI
         }   //  ThreadProc()
 
     }   //  public class ImportThread
-
-/*
-    public class EventSink : MainLib.IZalNotification
-    {
-        private DelegateUpdateProgressBar m_UpdateProgressBar;
-        public EventSink (DelegateUpdateProgressBar updateProgressBar)
-        {
-            m_UpdateProgressBar = updateProgressBar;
-        }
-
-        public void ProgressNotification (int iPercentDone)
-        {
-            m_UpdateProgressBar (iPercentDone);
-        }
-
-    }   // EventSink 
-*/
 
     public class EventSink : MainLib.IZalNotification
     {
@@ -490,14 +448,3 @@ namespace TestUI
     }   // EventSink 
 
 }   //  namespace TestUI
-
-/*
-&&&&
-[DllImport("ole32.dll")]
-static extern int CoMarshalInterThreadInterfaceInStream([In] ref Guid riid,
-   [MarshalAs(UnmanagedType.IUnknown)] object pUnk, out UCOMIStream ppStm);
-
-[DllImport("ole32.dll")]
-static extern int CoGetInterfaceAndReleaseStream(UCOMIStream pStm, [In] ref
-   Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppv);
-*/
