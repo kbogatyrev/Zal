@@ -47,7 +47,6 @@ typedef VCUE::ICollectionOnSTLCopyImpl <ILexemeCollection,
 
 using namespace TestDataVector;
 
-
 class ATL_NO_VTABLE CT_TestData :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_TestData, &CLSID_ZalStoredLexemeData>,
