@@ -1,0 +1,26 @@
+HKCR
+{
+	MainLib.ZalSqliteWrapper.1 = s 'ZalSqliteWrapper Class'
+	{
+		CLSID = s '{5ECEDA76-32F7-46E2-86B7-DBCBF1371EC7}'
+	}
+	MainLib.ZalSqliteWrapper = s 'ZalSqliteWrapper Class'
+	{
+		CLSID = s '{5ECEDA76-32F7-46E2-86B7-DBCBF1371EC7}'
+		CurVer = s 'MainLib.ZalSqliteWrapper.1'
+	}	
+	NoRemove CLSID
+	{
+		ForceRemove {5ECEDA76-32F7-46E2-86B7-DBCBF1371EC7} = s 'ZalSqliteWrapper Class'
+		{
+			ProgID = s 'MainLib.ZalSqliteWrapper.1'
+			VersionIndependentProgID = s 'MainLib.ZalSqliteWrapper'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
+		}
+	}
+}
