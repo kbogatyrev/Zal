@@ -64,9 +64,7 @@ using namespace WordFormVector;
 class ATL_NO_VTABLE CT_FormDescriptor :
 	public CComObjectRootEx<CComSingleThreadModel>,
     public CComCoClass<CT_FormDescriptor, &CLSID_ZalFormDescriptor>,
-    public VectorCollection,
-    public IError
-//    public IDispatchImpl<VectorCollection, &IID_IFormFinder, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
+    public IDispatchImpl<VectorCollection, &IID_IFormFinder, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 friend class CT_Lexeme;
 
@@ -80,8 +78,8 @@ public:
 
     BEGIN_COM_MAP(CT_FormDescriptor)
 	    COM_INTERFACE_ENTRY(IFormFinder)
-        COM_INTERFACE_ENTRY(IError)
-//    COM_INTERFACE_ENTRY(IDispatch)
+//        COM_INTERFACE_ENTRY(IError)
+        COM_INTERFACE_ENTRY(IDispatch)
     END_COM_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
@@ -93,23 +91,6 @@ public:
 
 	void FinalRelease()
 	{}
-
-// IError
-    STDMETHOD (get_LastError) (BSTR * pbstr_description)
-    {
-        USES_CONVERSION;
-
-        CT_Error * pco_error = CT_Error::pco_CreateInstance();
-        if (!pco_error)
-        {
-            return E_POINTER;
-        }
-
-        CComBSTR sp_error (pco_error->str_GetLastError().c_str());
-        *pbstr_description = sp_error.Detach();
-
-        return S_OK;
-    }
 
 // IFormFinder
     STDMETHOD (FindForms) ();
