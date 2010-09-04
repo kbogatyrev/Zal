@@ -524,6 +524,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ErrorComWrapper.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FormBuilderAdjComparative.h"
 				>
 			</File>
@@ -631,6 +635,14 @@
 			</File>
 			<File
 				RelativePath=".\ZalDictionary.rgs"
+				>
+			</File>
+			<File
+				RelativePath=".\ZalError.rgs"
+				>
+			</File>
+			<File
+				RelativePath=".\ZalLexeme.rgs"
 				>
 			</File>
 			<File
