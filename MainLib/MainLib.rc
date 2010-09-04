@@ -105,6 +105,7 @@ IDR_VERIFIER            REGISTRY                "ZalVerifier.rgs"
 IDR_WORDFORM            REGISTRY                "ZalWordForm.rgs"
 IDR_LEXEME              REGISTRY                "ZalLexeme.rgs"
 IDR_SQLITEWRAPPER       REGISTRY                "ZalSqliteComWrapper.rgs"
+IDR_ERROR               REGISTRY                "ZalError.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
