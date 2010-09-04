@@ -169,8 +169,8 @@ namespace TestUI
             catch (Exception ex)
             {
                 string sMsg = "ShowLexemeDetails: ";
-                MainLib.IError err = (MainLib.IError)lexeme;
-                sMsg += ((MainLib.IError)lexeme).LastError;
+                MainLib.ZalError err = new MainLib.ZalError();
+                sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
                 return;
             }
