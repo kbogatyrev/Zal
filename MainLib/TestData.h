@@ -50,8 +50,7 @@ using namespace TestDataVector;
 class ATL_NO_VTABLE CT_TestData :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_TestData, &CLSID_ZalStoredLexemeData>,
-    public IError,
-    public TestDataCollection
+    public IDispatchImpl<TestDataCollection, &IID_ILexemeCollection, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
     CT_TestData()
@@ -62,7 +61,7 @@ public:
 
     BEGIN_COM_MAP(CT_TestData)
         COM_INTERFACE_ENTRY(ILexemeCollection)
-	    COM_INTERFACE_ENTRY(IError)
+	    COM_INTERFACE_ENTRY(IDispatch)
     END_COM_MAP()
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
@@ -78,24 +77,6 @@ public:
 	}
 
 public:
-
-// IError
-    STDMETHOD (get_LastError) (BSTR * pbstr_description)
-    {
-        USES_CONVERSION;
-
-        CT_Error * pco_error = CT_Error::pco_CreateInstance();
-        if (!pco_error)
-        {
-            return E_POINTER;
-        }
-
-        CComBSTR sp_error (pco_error->str_GetLastError().c_str());
-        *pbstr_description = sp_error.Detach();
-
-        return S_OK;
-    }
-
     // ILexemeCollection
     STDMETHOD (put_DbPath) (BSTR bstr_path);
     STDMETHOD (LoadStoredLexemes) ();
