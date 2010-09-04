@@ -80,5 +80,6 @@ using namespace std::tr1;
 #include "Globals.h"
 #include "GenericHash.h"
 #include "Callbacks.h"
+#include "ErrorComWrapper.h"
 
 using namespace std;
