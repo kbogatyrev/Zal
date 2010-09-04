@@ -7,7 +7,7 @@
 
 // CT_Sqlite
 
-static const wchar_t * SZ_SEPARATOR = L",| ";
+static const wchar_t * SZ_SEPARATOR = L"|";
 
 class CT_Sqlite
 {
@@ -508,28 +508,40 @@ public:
 
     bool b_TableExists (const wstring& str_table)
     {
-        wstring str_query (L"SELECT ");
-        str_query += str_table;
-        str_query += L" FROM sqlite_master WHERE type='table';";
+        wstring str_query (L"SELECT name FROM sqlite_master WHERE type='table';");
         int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_Stmt_, NULL);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
         }
 
-        i_ret = sqlite3_step (po_Stmt_);
-        if (SQLITE_DONE == i_ret)
+        do
         {
-            i_ret = sqlite3_reset (po_Stmt_);
-            return false;
-        }
+            i_ret = sqlite3_step (po_Stmt_);
+            if (SQLITE_DONE == i_ret)
+            {
+                i_ret = sqlite3_reset (po_Stmt_);
+                v_Finalize();
+                return false;
+            }
 
-        if (SQLITE_ROW != i_ret)
-        {
-            throw CT_Exception (i_ret, L"sqlite3_step failed");
-        }
+            if (SQLITE_ROW != i_ret)
+            {
+                throw CT_Exception (i_ret, L"sqlite3_step failed");
+            }
+ 
+            wstring str_current;
+            v_GetData (0, str_current);
+            if (str_table == str_current)
+            {
+                v_Finalize();
+                return true;
+            }
 
-        return true;
+        } while (SQLITE_ROW == i_ret);
+
+        v_Finalize();
+        return false;
 
     }   //  b_TableExists (...)
 
@@ -587,9 +599,9 @@ public:
 
     }   //  ll_Rows (...)
 
-    bool b_ExportTable (const wstring& str_path,
-                        const wstring& str_table, 
-                        CT_ProgressCallback& co_progress)
+    bool b_ExportTables (const wstring& str_path,
+                         const vector<wstring>& vec_tables,
+                         CT_ProgressCallback& co_progress)
     {
         if (NULL == po_Db_)
         {
@@ -605,83 +617,117 @@ public:
             throw CT_Exception (-1, wstring (cs_msg));
         }
 
-        wstring str_query (L"SELECT * FROM ");
-        str_query += str_table;
-        str_query += L";";
+        vector<wstring>::const_iterator it_table  = vec_tables.begin();
 
-        sqlite3_stmt * po_stmt = NULL;
-        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_stmt, NULL);
-        if (SQLITE_OK != i_ret)
+        __int64 ll_rowsToExport = 0;
+        for (it_table = vec_tables.begin(); 
+             it_table != vec_tables.end();
+             ++it_table)
         {
-            throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
+            ll_rowsToExport += ll_Rows (*it_table);
         }
-
-        wstring str_header;
-        int i_columns = sqlite3_column_count (po_stmt);
-        for (int i_colName = 0; i_colName < i_columns; ++i_colName)
-        {
-            str_header += (wchar_t *)sqlite3_column_name16 (po_stmt, i_colName);
-            if (i_colName < i_columns - 1)
-            {
-                str_header += SZ_SEPARATOR;
-            }
-        }
-        str_header += L"\n";
-
-        i_error = _fputts (str_header.c_str(), io_outStream);
-        if (0 != i_error)
-        {
-            ERROR_LOG (L"Error writing export table header. \n");
-        }
-
-        __int64 ll_rowsToExport = ll_Rows (str_table);
+        
         if (ll_rowsToExport < 1)
         {
             return true;
         }
 
         __int64 ll_row = 0;
-        int i_percentDone = 0;
-        while (b_GetRow (po_stmt))
+        
+        for (vector<wstring>::const_iterator it_table = vec_tables.begin(); 
+             it_table != vec_tables.end();
+             ++it_table)
         {
-            wstring str_out;
-            for (int i_col = 0; i_col < i_columns; ++i_col)
-            {
-                wstring str_col;
-                v_GetData (i_col, str_col, po_stmt);
-                if (str_out.length() > 0)
-                {
-                    str_out += SZ_SEPARATOR;
-                }
-                str_out += str_col;
-            }
-            str_out += L"\n";
+            wstring str_query (L"SELECT * FROM ");
+//            str_query += str_table;
+            str_query += *it_table;
+            str_query += L";";
 
-            i_error = _fputts (str_out.c_str(), io_outStream);
+            sqlite3_stmt * po_stmt = NULL;
+            int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_stmt, NULL);
+            if (SQLITE_OK != i_ret)
+            {
+                throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
+            }
+
+            wstring str_tableName (*it_table);
+            str_tableName += L"\n";
+            i_error = _fputts (str_tableName.c_str(), io_outStream);
             if (0 != i_error)
             {
-                throw CT_Exception (i_error, L"Error writing export table header.");
-            }
-            
-            int i_pd = (int) (((double)ll_row/(double)ll_rowsToExport) * 100);
-            if (i_pd > i_percentDone)
-            {
-                i_percentDone = min (i_pd, 100);
-                co_progress (i_percentDone);
+                ERROR_LOG (L"Error writing export table name. \n");
             }
 
-            ++ll_row;
-        }       //  while (...)
+            wstring str_header;
+            int i_columns = sqlite3_column_count (po_stmt);
+            for (int i_colName = 0; i_colName < i_columns; ++i_colName)
+            {
+                str_header += (wchar_t *)sqlite3_column_name16 (po_stmt, i_colName);
+                if (i_colName < i_columns - 1)
+                {
+                    str_header += SZ_SEPARATOR;
+                }
+            }
+            str_header += L"\n";
+
+            i_error = _fputts (str_header.c_str(), io_outStream);
+            if (0 != i_error)
+            {
+                ERROR_LOG (L"Error writing export table header. \n");
+            }
+
+            int i_percentDone = 0;
+            while (b_GetRow (po_stmt))
+            {
+                wstring str_out;
+                for (int i_col = 0; i_col < i_columns; ++i_col)
+                {
+                    wstring str_col;
+                    v_GetData (i_col, str_col, po_stmt);
+                    if (str_out.length() > 0)
+                    {
+                        str_out += SZ_SEPARATOR;
+                    }
+                    str_out += str_col;
+                }
+                str_out += L"\n";
+
+                i_error = _fputts (str_out.c_str(), io_outStream);
+                if (0 != i_error)
+                {
+                    throw CT_Exception (i_error, L"Error writing export table header.");
+                }
+                
+                int i_pd = (int) (((double)ll_row/(double)ll_rowsToExport) * 100);
+                if (i_pd > i_percentDone)
+                {
+                    i_percentDone = min (i_pd, 100);
+                    co_progress (i_percentDone);
+                }
+
+                ++ll_row;
+
+            }       //  while (...)
+            
+            i_error = _fputts (L"\n", io_outStream);
+            if (0 != i_error)
+            {
+                ERROR_LOG (L"Error writing terminating line. \n");
+            }
+
+        }
 
         fclose (io_outStream);
 
         return true;
 
-    }   //  b_ExportTable (...)
+    }   //  b_ExportTables (...)
 
-    bool b_ImportTable (const wstring& str_path, 
-                        const wstring& str_table, 
-                        CT_ProgressCallback& co_progress)
+    //
+    // Note: existing tables will be overwritten
+    //
+    bool b_ImportTables (const wstring& str_path, 
+                         CT_ProgressCallback& co_progress)
     {
         if (NULL == po_Db_)
         {
@@ -697,42 +743,144 @@ public:
             throw CT_Exception (-1, wstring (cs_msg));
         }
 
-        long l_fileLength = _filelength (_fileno (io_inStream))/sizeof (wchar_t);
-        long l_charsRead = 0;
+        int i_charsRead = 0;
         int i_percentDone = 0;
 //        int i_entriesRead = 0;
 
         TCHAR sz_lineBuf[10000];
-        
-        TCHAR * sz_ret = _fgetts (sz_lineBuf, 10000, io_inStream);
-        if (NULL == sz_ret)
-        {
-            i_error = ferror (io_inStream);
-            if (0 != i_error)
-            {
-                throw CT_Exception (i_error, L"Error reading import file header.");
-            }
-            else
-            {
-                throw CT_Exception (i_error, L"Empty header.");
-            }
-        }
 
+        while (!feof (io_inStream))
+        {
+            //
+            // Get table name
+            //
+            CT_ExtString xstr_table;
+            while (!feof (io_inStream) && xstr_table.empty())
+            {
+                TCHAR * sz_ret = _fgetts (sz_lineBuf, 10000, io_inStream);
+                if (NULL == sz_ret)
+                {
+                    i_error = ferror (io_inStream);
+                    if (0 != i_error)
+                    {
+                        throw CT_Exception (i_error, L"Error reading table name.");
+                    }
+                }
+                else
+                {
+                    xstr_table = sz_lineBuf;
+                }
+            }
+
+            if (feof (io_inStream))
+            {
+                continue;
+            }
+
+            if (xstr_table.empty())
+            {
+                ATLASSERT(0);
+                throw CT_Exception (-1, L"Empty table name.");
+            }
+
+            xstr_table.v_Trim (L"\n ");
+
+            //
+            // Get table descriptor
+            //
+            CT_ExtString xstr_descriptor;
+            while (!feof (io_inStream) && xstr_descriptor.empty())
+            {
+                TCHAR * sz_ret = _fgetts (sz_lineBuf, 10000, io_inStream);
+                if (NULL == sz_ret)
+                {
+                    i_error = ferror (io_inStream);
+                    if (0 != i_error)
+                    {
+                        throw CT_Exception (i_error, L"Error reading import file header.");
+                    }
+                }
+                else
+                {
+                    xstr_descriptor = sz_lineBuf;
+                }
+            }
+
+            xstr_descriptor.v_Trim (L"\n ");
+
+            if (feof (io_inStream))
+            {
+                continue;
+            }
+
+            if (xstr_descriptor.empty())
+            {
+                ATLASSERT(0);
+                throw CT_Exception (-1, L"Empty table descriptor.");
+            }
+
+            int i_columns = 0;
+            bool b_ret = b_CreateImportTable (xstr_table, xstr_descriptor, i_columns);
+            if (!b_ret)
+            {
+                throw CT_Exception (-1, L"Unable to create import table.");
+            }
+
+            b_ret = b_Import (io_inStream, xstr_table, i_columns, i_charsRead, co_progress);
+            if (!b_ret)
+            {
+                throw CT_Exception (-1, L"Table import failed.");
+            }
+
+        }   //  while (!feof (io_inStream))
+    
+        co_progress (100);
+        fclose (io_inStream);
+        return true;
+        
+    }   //  b_ImportTables (...)
+
+    //
+    //  Helpers
+    //
+    bool b_CreateImportTable (const wstring& str_table, const wstring& str_descriptor, int& i_columns)
+    {
         wstring str_separators (SZ_SEPARATOR);
-        str_separators += L"\n";
-        CT_ExtString xstr_header (sz_lineBuf, str_separators);
+        str_separators += L", \n";
+        CT_ExtString xstr_header (str_descriptor, str_separators);
         if (xstr_header.i_GetNumOfFields() < 1)
         {
             throw CT_Exception (-1, L"Parsing error: no fields.");
         }
 
-        int i_columns = xstr_header.i_NFields();
+        i_columns = xstr_header.i_NFields();
 
+        if (b_TableExists (str_table))
+        {
+            wstring str_dropStmt (L"DROP TABLE ");
+            str_dropStmt += str_table;
+
+            sqlite3_stmt * po_stmt = NULL;
+            int i_ret = sqlite3_prepare16_v2 (po_Db_, str_dropStmt.c_str(), -1, &po_stmt, NULL);
+            if (SQLITE_OK != i_ret)
+            {
+                throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed for drop.");
+            }
+
+	        i_ret = sqlite3_step (po_stmt);
+	        if (SQLITE_DONE != i_ret) 
+            {
+                throw CT_Exception (i_ret, L"sqlite3_step failed for drop.");
+            }
+
+            sqlite3_reset (po_stmt);
+        }
+        
         wstring str_createStmt (L"CREATE TABLE ");
         str_createStmt += str_table;
         str_createStmt += L" (";
         str_createStmt += xstr_header.str_GetField (0);
-        str_createStmt += L" INTEGER ";
+        str_createStmt += L" INTEGER PRIMARY KEY ASC";
         for (int i_col = 1; i_col < i_columns; ++i_col)
         {
             str_createStmt += L", ";
@@ -760,6 +908,19 @@ public:
             throw CT_Exception (i_ret, L"sqlite3_finalize failed for create.");
         }
 
+        return true;
+    
+    }   //  b_CreateImportTable (...)
+
+    bool b_Import (FILE * io_inStream, 
+                   const wstring& str_table, 
+                   int i_columns,
+                   int i_charsRead,
+                   CT_ProgressCallback& co_progress)
+    {
+        long l_fileLength = _filelength (_fileno (io_inStream))/sizeof (wchar_t);
+        int i_percentDone = 0;
+
         wstring str_stmt = L"INSERT INTO ";
         str_stmt += str_table;
         str_stmt += L" VALUES (";
@@ -773,22 +934,31 @@ public:
         }
         str_stmt += L")";
 
-        i_ret = sqlite3_prepare16_v2 (po_Db_, str_stmt.c_str(), -1, &po_stmt, NULL);
-        if (SQLITE_OK != i_ret)
-        {
-            throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
-        }
+        sqlite3_stmt * po_stmt = NULL;
 
         v_BeginTransaction (po_stmt);
        
+        wstring str_separators (SZ_SEPARATOR);
+        str_separators += L", \n";
         int i_entriesRead = 0;
+
+        TCHAR sz_lineBuf[10000];
+        CT_ExtString xstr_line;
+        xstr_line.v_SetBreakChars (str_separators);
         for (; !feof (io_inStream); ++i_entriesRead)
         {
-            sz_ret = _fgetts (sz_lineBuf, 10000, io_inStream);
-            CT_ExtString xstr_line (sz_lineBuf, str_separators);
+            int i_ret = sqlite3_prepare16_v2 (po_Db_, str_stmt.c_str(), -1, &po_stmt, NULL);
+            if (SQLITE_OK != i_ret)
+            {
+                throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
+            }
+
+            TCHAR * sz_ret = _fgetts (sz_lineBuf, 10000, io_inStream);
+            xstr_line = sz_lineBuf;
+            xstr_line.v_Trim (str_separators);
             if (NULL == sz_ret)
             {
-                i_error = ferror (io_inStream);
+                errno_t i_error = ferror (io_inStream);
                 if (0 != i_error)
                 {
                     throw CT_Exception (i_ret, L"Error reading import file.");
@@ -799,7 +969,12 @@ public:
                 }
             }
 
-            l_charsRead += xstr_line.length();
+            if (xstr_line.empty())
+            {
+                break;
+            }
+
+            i_charsRead += xstr_line.length();
 
             if (xstr_line.i_NFields() != i_columns)
             {
@@ -815,8 +990,9 @@ public:
             }
             
             v_InsertRow (po_stmt);
+            v_Finalize (po_stmt);
 
-            int i_pd = (int) (((double)l_charsRead/(double)l_fileLength) * 100);
+            int i_pd = (int) (((double)i_charsRead/(double)l_fileLength) * 100);
             if (i_pd > i_percentDone)
             {
                 i_percentDone = min (i_pd, 100);
@@ -825,15 +1001,10 @@ public:
 
         }   //  for (; !feof (io_inStream); ++i_entriesRead)
 
-        co_progress (100);
-
-        v_Finalize (po_stmt);
-
         v_CommitTransaction (po_stmt);
-
-        fclose (io_inStream);
 
         return true;
 
-    }   //  b_ImportTable (...)
-};
+    }   // Import (...)
+
+};  //  class CT_Sqlite
