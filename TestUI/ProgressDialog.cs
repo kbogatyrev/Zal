@@ -11,14 +11,44 @@ namespace TestUI
 {
     public partial class ProgressDialog : Form
     {
+        private int m_iStartPos;
+        private int m_iRange;
+
+        public int iStartPos
+        {
+            get
+            {
+                return m_iStartPos;
+            }
+            set
+            {
+                m_iStartPos = iStartPos;
+            }
+        }
+
+        public int iRange
+        {
+            get
+            {
+                return m_iRange;
+            }
+            set
+            {
+                m_iRange = iRange;
+            }
+        }
+
         public ProgressDialog()
         {
             InitializeComponent();
+            m_iStartPos = 0;
+            m_iRange = 100;
         }
 
         public void SetProgressBarPos (int iPercent)
         {
-            progressBar.Value = iPercent;
+            int iScaleFactor = 100 / m_iRange;
+            progressBar.Value = m_iStartPos + iPercent / iScaleFactor;
         }
 
         public void SetMessage(string sMsg)
