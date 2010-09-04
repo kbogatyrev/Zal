@@ -251,10 +251,10 @@ namespace TestUI
                         }
                         default:
                         {
-                            MainLib.IError err = (MainLib.IError)v;
+                            MainLib.ZalError err = new MainLib.ZalError();
                             string sMsg = "Unexpected return from IVerifier; error msg: ";
                             sMsg += err.LastError;
-                            MessageBox.Show(sMsg, "Error", MessageBoxButtons.OK);
+                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                             return;
                         }
 
@@ -264,7 +264,7 @@ namespace TestUI
             }
             catch (Exception ex)
             {
-                MainLib.IError err = (MainLib.IError)v;
+                MainLib.ZalError err = new MainLib.ZalError();
                 string sMsg = ex.Message;
                 sMsg += "\n";
                 sMsg += err.LastError;
