@@ -24,8 +24,7 @@ class ATL_NO_VTABLE CT_SqliteComWrapper :
     public IConnectionPointImpl<CT_SqliteComWrapper, &IID_IZalNotification, CComDynamicUnkArray>,
     public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CT_SqliteComWrapper, &CLSID_ZalSqliteWrapper>,
-    public ISqliteWrapper,
-    public IError
+    public IDispatchImpl<ISqliteWrapper, &IID_ISqliteWrapper, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 
 public:
@@ -33,13 +32,12 @@ public:
 	{
 	}
 
-//    DECLARE_NO_REGISTRY()
     DECLARE_REGISTRY_RESOURCEID(IDR_SQLITEWRAPPER)
 
     BEGIN_COM_MAP(CT_SqliteComWrapper)
-        COM_INTERFACE_ENTRY(IConnectionPointContainer)
         COM_INTERFACE_ENTRY(ISqliteWrapper)
-        COM_INTERFACE_ENTRY(IError)
+        COM_INTERFACE_ENTRY(IDispatch)
+        COM_INTERFACE_ENTRY(IConnectionPointContainer)
     END_COM_MAP()
 
     BEGIN_CONNECTION_POINT_MAP(CT_SqliteComWrapper)
@@ -58,29 +56,11 @@ public:
     {}
 
 public:
-
-// IError
-    STDMETHOD (get_LastError) (BSTR * pbstr_description)
-    {
-        USES_CONVERSION;
-
-        CT_Error * pco_error = CT_Error::pco_CreateInstance();
-        if (!pco_error)
-        {
-            return E_POINTER;
-        }
-
-        CComBSTR sp_error (pco_error->str_GetLastError().c_str());
-        *pbstr_description = sp_error.Detach();
-
-        return S_OK;
-    }
-
 // ISqliteWrapper
     STDMETHOD (put_DbPath) (BSTR bstr_dbPath);
     STDMETHOD (TableExists) (BSTR bstr_table, BOOL * b_exists);
-    STDMETHOD (ExportTable) (BSTR bstr_path, BSTR bstr_name);
-    STDMETHOD (ImportTable) (BSTR bstr_path, BSTR bstr_name);
+    STDMETHOD (Export) (BSTR bstr_path, SAFEARRAY * sarr_names);
+    STDMETHOD (Import) (BSTR bstr_path);
     STDMETHOD (StatusUpdate) (int i_progress);
 
 private:
