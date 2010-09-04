@@ -1,0 +1,26 @@
+HKCR
+{
+	MainLib.ZalError.1 = s 'ZalError Class'
+	{
+		CLSID = s '{0BB9FE60-72F9-43ab-AABA-970D1C0F79B5}'
+	}
+	MainLib.ZalError = s 'ZalError Class'
+	{
+		CLSID = s '{0BB9FE60-72F9-43ab-AABA-970D1C0F79B5}'
+		CurVer = s 'MainLib.ZalError.1'
+	}	
+	NoRemove CLSID
+	{
+		ForceRemove {0BB9FE60-72F9-43ab-AABA-970D1C0F79B5} = s 'ZalError Class'
+		{
+			ProgID = s 'MainLib.ZalError.1'
+			VersionIndependentProgID = s 'MainLib.ZalError'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
+		}
+	}
+}
