@@ -580,6 +580,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MainLib_i.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
@@ -691,10 +695,6 @@
 						CompileAsManaged="0"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\MainLib_i.h"
-				>
 			</File>
 		</Filter>
 		<File
