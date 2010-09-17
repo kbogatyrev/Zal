@@ -22,7 +22,7 @@ public:
                                   const wstring& str_ending,
                                   ET_StressLocation eo_stressType,
                                   vector<int>& vec_iStressPositions);
-    HRESULT h_FleetingVowelCheck (wstring& str_verbForm);
+//    HRESULT h_FleetingVowelCheck (wstring& str_verbForm);
     HRESULT h_CreateFormTemplate (const wstring& str_lemma,
                                   const wstring& str_wordForm,
                                   ET_Number eo_number, 
