@@ -62,14 +62,16 @@ public:
                             ET_AccentType eo_accentType2,
                             vector<int>& vec_iStressPos,
                             bool b_fleetingVowel,
-                            int i_deviation = -1) : 
+                            int i_deviation = -1,
+                            ET_Status eo_status = STATUS_COMMON) : 
         CT_FormBuilderBaseDecl (pco_lexeme, eo_subparadigm, b_fleetingVowel, b_yoAlternation), 
         str_Lemma (str_lemma), 
         i_Type (1),
         vec_IStressPos (vec_iStressPos),
         eo_AccentType1 (eo_accentType1),
         eo_AccentType2 (eo_accentType2),
-        b_FleetingVowel (b_fleetingVowel)
+        b_FleetingVowel (b_fleetingVowel),
+        eo_Status (eo_status)
     {
         pco_Endings = new CT_AdjShortEndings();
         if (i_deviation > 0)
@@ -116,5 +118,5 @@ private:
     ET_AccentType eo_AccentType1, eo_AccentType2;
     bool b_FleetingVowel;
     map<int, bool> map_CommonDeviations;
-
+    ET_Status eo_Status;
 };
