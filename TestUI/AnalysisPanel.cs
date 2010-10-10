@@ -209,7 +209,7 @@ namespace TestUI
                 }
             }
         }
-
+/*
         public MainLib.ET_Tense eoTense
         {
             set
@@ -231,7 +231,7 @@ namespace TestUI
                 }
             }
         }
-
+*/
         public int i_lexeme_id
         {
             set
