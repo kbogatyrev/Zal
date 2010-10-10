@@ -54,11 +54,11 @@ HRESULT CT_FormDescriptor::put_Gender (ET_Gender eo_gender)
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_Tense (ET_Tense eo_tense)
-{
-    co_Hasher.eo_Tense = eo_tense;
-    return S_OK;
-}
+//HRESULT CT_FormDescriptor::put_Tense (ET_Tense eo_tense)
+//{
+//    co_Hasher.eo_Tense = eo_tense;
+//    return S_OK;
+//}
 
 HRESULT CT_FormDescriptor::put_Person (ET_Person eo_person)
 {
@@ -78,17 +78,17 @@ HRESULT CT_FormDescriptor::put_Reflexivity (ET_Reflexive eo_reflexivity)
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_Voice (ET_Voice eo_voice)
-{
-    co_Hasher.eo_Voice = eo_voice;
-    return S_OK;
-}
+//HRESULT CT_FormDescriptor::put_Voice (ET_Voice eo_voice)
+//{
+//    co_Hasher.eo_Voice = eo_voice;
+//    return S_OK;
+//}
 
-HRESULT CT_FormDescriptor::put_Aspect (ET_Aspect eo_aspect)
-{
-    co_Hasher.eo_Aspect = eo_aspect;
-    return S_OK;
-}
+//HRESULT CT_FormDescriptor::put_Aspect (ET_Aspect eo_aspect)
+//{
+//    co_Hasher.eo_Aspect = eo_aspect;
+//    return S_OK;
+//}
 
 void CT_FormDescriptor::v_FormsFromHash()
 {
