@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="ConversionLib"
 	ProjectGUID="{70614BC7-05AD-4585-A0E2-628DE2A14183}"
 	RootNamespace="ConversionLib"
@@ -410,6 +410,10 @@
 			</File>
 			<File
 				RelativePath=".\EndingsParser.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ErrorComWrapper.h"
 				>
 			</File>
 			<File
