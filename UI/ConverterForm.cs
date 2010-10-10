@@ -789,7 +789,8 @@ namespace Converter
             catch (Exception ex)
             {
                 string sMsg = "Error in WorkerThread: ";
-                sMsg += ex.Message;
+                ZalConversionLib.ZalError err = new ZalConversionLib.ZalError();
+                sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
