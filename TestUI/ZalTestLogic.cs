@@ -207,7 +207,7 @@ namespace TestUI
                         }
                     }
 
-                    np.SetForm (sKey, strWordForm);
+                    np.SetForm (sKey, strWordForm, wf.Status);
 
                 }   // foreach
             }
@@ -249,7 +249,7 @@ namespace TestUI
                             }
                         }
 
-                        ap.SetForm(sKey, strWordForm);
+                        ap.SetForm (sKey, strWordForm, wf.Status);
 
                         continue;
                     }
@@ -273,7 +273,7 @@ namespace TestUI
                             }
                         }
 
-                        ap.SetForm(sKey, strWordForm);
+                        ap.SetForm (sKey, strWordForm, wf.Status);
 
                         continue;
                     }
@@ -301,7 +301,7 @@ namespace TestUI
                             sMsg += ex.Message;
                         }
 
-                        ap.SetForm(sKey, strWordForm);
+                        ap.SetForm (sKey, strWordForm, wf.Status);
 
                         continue;
                     }
@@ -325,20 +325,31 @@ namespace TestUI
                         sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
 
                         string strWordForm = wf.Wordform;
-                        if (wf.Stress >= 0)
+                        try
                         {
-                            if (wf.Stress >= wf.Wordform.Length)
+                            if (wf.Stress >= 0)
                             {
-                                MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                return;
-                            }
-                            if (strWordForm[wf.Stress] != 'ё')
-                            {
-                                string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
+                                if (wf.Stress >= wf.Wordform.Length)
+                                {
+                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                    return;
+                                }
                             }
                         }
-                        vp.SetForm(sKey, strWordForm);
+                        catch (Exception ex)
+                        {
+                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
+                            sMsg += ex.Message;
+                            MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                            continue;
+                        }
+
+                        if (strWordForm[wf.Stress] != 'ё')
+                        {
+                            string strStressMark = new string('\x301', 1);
+                            strWordForm = strWordForm.Insert (wf.Stress + 1, strStressMark);
+                        }
+                        vp.SetForm (sKey, strWordForm, wf.Status);
                     }
 
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE == wf.Subparadigm)
@@ -373,7 +384,7 @@ namespace TestUI
                             sMsg += ex.Message;
                         }
 
-                        vp.SetForm(sKey, strWordForm);
+                        vp.SetForm (sKey, strWordForm, wf.Status);
                     }
 
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_IMPERATIVE == wf.Subparadigm)
@@ -404,7 +415,7 @@ namespace TestUI
                             sMsg += ex.Message;
                         }
 
-                        vp.SetForm(sKey, strWordForm);
+                        vp.SetForm (sKey, strWordForm, wf.Status);
                     }
 
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT == wf.Subparadigm)
@@ -437,7 +448,7 @@ namespace TestUI
                                 sMsg += ex.Message;
                             }
 
-                            vp.SetForm(sKey, strWordForm);
+                            vp.SetForm (sKey, strWordForm, wf.Status);
                         }
                     }
 
@@ -471,7 +482,7 @@ namespace TestUI
                                 sMsg += ex.Message;
                             }
 
-                            vp.SetForm(sKey, strWordForm);
+                            vp.SetForm (sKey, strWordForm, wf.Status);
                         }
                     }
 
@@ -484,13 +495,13 @@ namespace TestUI
                             {
                                 if (wf.Stress >= wf.Wordform.Length)
                                 {
-                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
+                                    MessageBox.Show ("Bad stress position", "Zal Error", MessageBoxButtons.OK);
                                     return;
                                 }
                                 if (strWordForm[wf.Stress] != 'ё')
                                 {
-                                    string strStressMark = new string('\x301', 1);
-                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
+                                    string strStressMark = new string ('\x301', 1);
+                                    strWordForm = strWordForm.Insert (wf.Stress + 1, strStressMark);
                                 }
                             }
                         }
@@ -500,7 +511,7 @@ namespace TestUI
                             sMsg += ex.Message;
                         }
 
-                        vp.SetForm("PresAdverbial", strWordForm);
+                        vp.SetForm ("PresAdverbial", strWordForm, wf.Status);
                     }
 
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_ADVERBIAL_PAST == wf.Subparadigm)
@@ -528,7 +539,7 @@ namespace TestUI
                             sMsg += ex.Message;
                         }
 
-                        vp.SetForm("PastAdverbial", strWordForm);
+                        vp.SetForm ("PastAdverbial", strWordForm, wf.Status);
                     }
 
                     if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG == wf.Subparadigm)
@@ -561,7 +572,7 @@ namespace TestUI
                                 sMsg += ex.Message;
                             }
 
-                            vp.SetForm(sKey, strWordForm);
+                            vp.SetForm (sKey, strWordForm, wf.Status);
                         }
                     }
 
@@ -595,7 +606,7 @@ namespace TestUI
                                 sMsg += ex.Message;
                             }
 
-                            vp.SetForm(sKey, strWordForm);
+                            vp.SetForm (sKey, strWordForm, wf.Status);
                         }
                     }
 
@@ -674,7 +685,7 @@ namespace TestUI
                             strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                         }
                     }
-                    ap.SetForm(sKey, strWordForm);
+                    ap.SetForm (sKey, strWordForm, wf.Status);
                 }
             }
             fd.Number = MainLib.ET_Number.NUM_PL;
@@ -694,7 +705,7 @@ namespace TestUI
                         strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
                     }
                 }
-                ap.SetForm(sKey, strWordForm);
+                ap.SetForm (sKey, strWordForm, wf.Status);
             }
 
         }   //  ShowShortParticipialForms (...)
@@ -748,7 +759,7 @@ namespace TestUI
                     }
                 }
 
-                adjPanel.SetForm(sKey, strWordForm);
+                adjPanel.SetForm (sKey, strWordForm, wf.Status);
 
             }   //  foreach (...)
 
@@ -798,35 +809,35 @@ namespace TestUI
                 ap.eoNumber = wf.Number;
                 ap.eoSubparadigm = wf.Subparadigm;
                 ap.eoAnimacy = wf.Animacy;
-                if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
-                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG
-                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT)
-                {
-                    ap.eoTense = MainLib.ET_Tense.TENSE_PAST;
-                }
-                if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG
-                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT)
-                    && wf.Aspect == MainLib.ET_Aspect.ASPECT_PERFECTIVE)
-                {
-                    ap.eoTense = MainLib.ET_Tense.TENSE_FUTURE;
-                }
-                if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG
-                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT)
-                    && wf.Aspect == MainLib.ET_Aspect.ASPECT_IMPERFECTIVE)
-                {
-                    ap.eoTense = MainLib.ET_Tense.TENSE_PRESENT;
-                }
-                if (wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
-                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT
-                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG
-                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT
-                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG)
-                {
-                    ap.eoTense = MainLib.ET_Tense.TENSE_UNDEFINED;
-                }
+//                if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
+//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG
+//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT)
+//                {
+//                    ap.eoTense = MainLib.ET_Tense.TENSE_PAST;
+//                }
+//                if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
+//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG
+//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT)
+//                    && wf.Aspect == MainLib.ET_Aspect.ASPECT_PERFECTIVE)
+//                {
+//                    ap.eoTense = MainLib.ET_Tense.TENSE_FUTURE;
+//                }
+//                if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
+//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG
+//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT)
+//                    && wf.Aspect == MainLib.ET_Aspect.ASPECT_IMPERFECTIVE)
+//                {
+//                    ap.eoTense = MainLib.ET_Tense.TENSE_PRESENT;
+//                }
+//                if (wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
+//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
+//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT
+//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG
+//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT
+//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG)
+//                {
+//                    ap.eoTense = MainLib.ET_Tense.TENSE_UNDEFINED;
+//                }
                 if (wf.LexemeId != iPreviousID)
                 {
                     iWordform = 0;
