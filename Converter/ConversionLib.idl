@@ -8,6 +8,22 @@ import "oaidl.idl";
 import "ocidl.idl";
 
 //
+// Error reporting
+//
+[
+    object,
+    uuid(A88EFFF9-8C28-421E-B101-8ECA30920860),
+    nonextensible,
+    helpstring("IError Interface"),
+    pointer_default(unique)
+]
+interface IError : IDispatch
+{
+    [propget] HRESULT LastError ([out, retval] BSTR * pVal);
+};
+
+
+//
 // GDRL Conversion
 //
 [
@@ -70,6 +86,14 @@ library ZalConversionLib
 {
 	importlib("stdole2.tlb");
 
+    [
+        uuid(0BB9FE60-72F9-43ab-AABA-970D1C0F79B5),
+        helpstring("Zal Error class")
+    ]
+    coclass ZalError
+    {
+        [default] interface IError;
+    };
     //
     // Reader class
     //
