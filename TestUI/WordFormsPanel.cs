@@ -9,13 +9,13 @@ namespace TestUI
     {
         public struct StCell
         {
-            public TextBox textboxTarget;
-            public HashSet<string> setContents;
+            public TextBox m_TextboxTarget;
+            public HashSet<string> m_SetContents;
 
-            public StCell(TextBox textBox)
+            public StCell (TextBox textBoxWordForms)
             {
-                textboxTarget = textBox;
-                setContents = new HashSet<string>();
+                m_TextboxTarget = textBoxWordForms;
+                m_SetContents = new HashSet<string>();
             }
         }
 
@@ -25,33 +25,64 @@ namespace TestUI
         {
             foreach (KeyValuePair<string, StCell> entry in m_dictForms)
             {
-                entry.Value.textboxTarget.Text.Remove(0);
+                entry.Value.m_TextboxTarget.Text.Remove(0);
             }
         }
 
-        public void SetForm(string sKey, string sText)
+        public void SetForm (string sKey, string sText, MainLib.ET_Status eStatus)
         {
-            if (m_dictForms[sKey].setContents.Contains(sText))
+            switch (eStatus)
+            {
+                case MainLib.ET_Status.STATUS_COMMON:
+                {
+                    break;
+                }
+                case MainLib.ET_Status.STATUS_INCORRECT:
+                {
+                    sText += "*" + sText;
+                    break;
+                }
+                case MainLib.ET_Status.STATUS_OBSOLETE:
+                {
+                    sText += " (Obsolete)";
+                    break;
+                }
+                case MainLib.ET_Status.STATUS_QUESTIONABLE:
+                {
+                    sText += "?" + sText;
+                    break;
+                }
+                case MainLib.ET_Status.STATUS_RARE:
+                {
+                    sText += " (Rare)";
+                    break;
+                }
+            }
+
+            if (m_dictForms[sKey].m_SetContents.Contains(sText))
             {
                 return;
             }
 
-            m_dictForms[sKey].setContents.Add(sText);
+            m_dictForms[sKey].m_SetContents.Add(sText);
 
-            if (m_dictForms[sKey].textboxTarget.Text.Length > 0)
+            if (m_dictForms[sKey].m_TextboxTarget.Text.Length > 0)
             {
-                m_dictForms[sKey].textboxTarget.Text += "\r\n";
+                m_dictForms[sKey].m_TextboxTarget.Text += "\r\n";
             }
-            m_dictForms[sKey].textboxTarget.Text += sText;
+            m_dictForms[sKey].m_TextboxTarget.Text += sText;
 
-            if (m_dictForms[sKey].textboxTarget.Lines.Length > 1)
+            if (m_dictForms[sKey].m_TextboxTarget.Lines.Length > 1)
             {
-                m_dictForms[sKey].textboxTarget.ScrollBars = ScrollBars.Vertical;
+                m_dictForms[sKey].m_TextboxTarget.ScrollBars = ScrollBars.Vertical;
             }
             else
             {
-                m_dictForms[sKey].textboxTarget.ScrollBars = ScrollBars.None;
+                m_dictForms[sKey].m_TextboxTarget.ScrollBars = ScrollBars.None;
             }
-        }
-    }
-}
+
+        }   //  SetForm (...)
+
+    }   //  public class WordFormsPanel 
+
+}   //  namespace TestUI
