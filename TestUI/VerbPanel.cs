@@ -41,25 +41,25 @@ namespace TestUI
 
             m_dictForms = new Dictionary<string, StCell>();
             m_dictForms.Add ("Pres1Sg", new StCell (textBoxPres1Sg));
-            m_dictForms.Add ("Pres2Sg", new StCell (textBoxPres2Sg));
-            m_dictForms.Add ("Pres3Sg", new StCell (textBoxPres3Sg));
-            m_dictForms.Add ("Pres1Pl", new StCell (textBoxPres1Pl));
-            m_dictForms.Add ("Pres2Pl", new StCell (textBoxPres2Pl));
-            m_dictForms.Add ("Pres3Pl", new StCell (textBoxPres3Pl));
+            m_dictForms.Add("Pres2Sg", new StCell (textBoxPres2Sg));
+            m_dictForms.Add("Pres3Sg", new StCell (textBoxPres3Sg));
+            m_dictForms.Add("Pres1Pl", new StCell (textBoxPres1Pl));
+            m_dictForms.Add("Pres2Pl", new StCell (textBoxPres2Pl));
+            m_dictForms.Add("Pres3Pl", new StCell (textBoxPres3Pl));
 
-            m_dictForms.Add("PastMSg", new StCell(textBoxPastMSg));
-            m_dictForms.Add("PastFSg", new StCell(textBoxPastFSg));
-            m_dictForms.Add("PastNSg", new StCell(textBoxPastNSg));
-            m_dictForms.Add("PastPl", new StCell(textBoxPastPl));
+            m_dictForms.Add("PastMSg", new StCell (textBoxPastMSg));
+            m_dictForms.Add("PastFSg", new StCell (textBoxPastFSg));
+            m_dictForms.Add("PastNSg", new StCell (textBoxPastNSg));
+            m_dictForms.Add("PastPl", new StCell (textBoxPastPl));
 
-            m_dictForms.Add("ImperativeSg", new StCell(textBoxImperativeSg));
-            m_dictForms.Add("ImperativePl", new StCell(textBoxImperativePl));
-            m_dictForms.Add("PartPresActive", new StCell(textBoxPartPresActive));
-            m_dictForms.Add("PresAdverbial", new StCell(textBoxPresAdverbial));
-            m_dictForms.Add("PartPastActive", new StCell(textBoxPartPastActive));
-            m_dictForms.Add("PastAdverbial", new StCell(textBoxPastAdverbial));
-            m_dictForms.Add("PartPresPassive", new StCell(textBoxPartPresPassive));
-            m_dictForms.Add("PartPastPassive", new StCell(textBoxPartPastPassive));
+            m_dictForms.Add("ImperativeSg", new StCell (textBoxImperativeSg));
+            m_dictForms.Add("ImperativePl", new StCell (textBoxImperativePl));
+            m_dictForms.Add("PartPresActive", new StCell (textBoxPartPresActive));
+            m_dictForms.Add("PresAdverbial", new StCell (textBoxPresAdverbial));
+            m_dictForms.Add("PartPastActive", new StCell (textBoxPartPastActive));
+            m_dictForms.Add("PastAdverbial", new StCell (textBoxPastAdverbial));
+            m_dictForms.Add("PartPresPassive", new StCell (textBoxPartPresPassive));
+            m_dictForms.Add("PartPastPassive", new StCell (textBoxPartPastPassive));
         }
 
         private void btnShowPresActive_Click (object sender, EventArgs e)
