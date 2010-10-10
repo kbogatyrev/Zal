@@ -30,6 +30,6 @@ public:
                                   CComObject<CT_WordForm> *& pco_wordForm);
     HRESULT h_Build();
     HRESULT h_BuildIrregular();
-    HRESULT h_BuildIrregularForm (ET_Number, ET_Person, CComObject<CT_WordForm>* );
+    HRESULT h_BuildIrregularForm (ET_Number, ET_Person, ST_IrregularForm& it_if);
 
 };
