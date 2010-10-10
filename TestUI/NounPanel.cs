@@ -42,6 +42,9 @@ namespace TestUI
             m_dictForms.Add ("LPl", new StCell (textBoxLPl));
             m_dictForms.Add ("DPl", new StCell (textBoxDPl));
             m_dictForms.Add ("IPl", new StCell (textBoxIPl));
-        }
-    }
-}
+
+        }   // NounPanel
+
+    }   //  public partial class NounPanel 
+
+}   //  namespace TestUI
