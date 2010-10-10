@@ -65,6 +65,9 @@ namespace TestUI
             m_dictForms.Add("ShortPl", new StCell (textBoxShortPl));
 
             m_dictForms.Add("Comparative", new StCell (textBoxComparative));
-        }
-    }
-}
+
+        }   //  public AdjPanel()
+
+    }   //  public partial class AdjPanel
+
+}   //  namespace TestUI
