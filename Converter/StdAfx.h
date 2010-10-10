@@ -66,3 +66,5 @@ using namespace ATL;
                                   io__.str() + \
                                   std::wstring (_T("\t")) + \
                                   std::wstring (_T(__FUNCTION__)));
+
+#include "ErrorComWrapper.h"
