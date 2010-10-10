@@ -99,12 +99,12 @@ public:
     STDMETHOD (put_Case) (ET_Case);
     STDMETHOD (put_Number) (ET_Number);
     STDMETHOD (put_Gender) (ET_Gender);
-    STDMETHOD (put_Tense) (ET_Tense);
+//    STDMETHOD (put_Tense) (ET_Tense);
     STDMETHOD (put_Person) (ET_Person);
     STDMETHOD (put_Animacy) (ET_Animacy);
     STDMETHOD (put_Reflexivity) (ET_Reflexive);
-    STDMETHOD (put_Voice) (ET_Voice);
-    STDMETHOD (put_Aspect) (ET_Aspect);
+//    STDMETHOD (put_Voice) (ET_Voice);
+//    STDMETHOD (put_Aspect) (ET_Aspect);
 
 protected:
     void v_FormsFromHash();
