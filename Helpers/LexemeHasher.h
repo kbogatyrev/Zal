@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "SqliteWrapper.h"
+#include "MD5.h"
 
 struct ST_LexemeHasher
 {
@@ -13,7 +14,7 @@ struct ST_LexemeHasher
     int i_AccentType2;
     wstring str_Comment;
 
-    unsigned int ui_Hash()
+    wstring str_Hash()
     {
         wstring str_text (str_SourceForm);
 
@@ -39,19 +40,20 @@ struct ST_LexemeHasher
 
         str_text += str_Comment;
 
-        unsigned int ui_hash = GenericHash::ui_hash ((unsigned char *)str_text.c_str(), 
-                                                     str_text.length()*sizeof (wchar_t), 
-                                                     0);
-        return ui_hash;
+//        unsigned int ui_hash = GenericHash::ui_hash ((unsigned char *)str_text.c_str(), 
+//                                                     str_text.length()*sizeof (wchar_t), 
+//                                                     0);
+        CT_MD5 co_md5;
+        return co_md5.str_Hash (str_text);
 
-    }   // unsigned int ui_Hash()
+    }   // unsigned int str_Hash()
 
     bool b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_descriptorId)
     {
         try
         {
             pco_dbHandle->v_PrepareForInsert (L"lexeme_hash_to_descriptor", 2);
-            pco_dbHandle->v_Bind (1, ui_Hash());
+            pco_dbHandle->v_Bind (1, str_Hash());
             pco_dbHandle->v_Bind (2, ll_descriptorId);
             pco_dbHandle->v_InsertRow();
             pco_dbHandle->v_Finalize();
