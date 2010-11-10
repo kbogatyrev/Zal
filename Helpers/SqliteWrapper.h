@@ -114,6 +114,7 @@ public:
         }
     }
 
+/*
     void v_Exec (const wstring& str_stmt, void (*v_Callback_)(sqlite3_stmt*, void*), void* po_Arguments)
     {
         if (NULL == po_Db_)
@@ -146,6 +147,7 @@ public:
         }
 
     }   // v_Exec()
+*/
 
     void v_PrepareForSelect (const wstring& str_stmt)
     {
