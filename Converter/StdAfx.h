@@ -51,7 +51,8 @@ using namespace ATL;
 //
 #include "Error.h"
 #include "Exception.h"
-#include "GenericHash.h"
+//#include "GenericHash.h"
+#include "MD5.h"
 
 //
 // Zal (MainLib)
