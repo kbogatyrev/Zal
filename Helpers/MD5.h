@@ -43,7 +43,9 @@ public:
 
     wstring str_Hash (const wstring& str_source)
     {
-        BOOL ui_ret = CryptHashData (h_Hash, (BYTE *)str_source.c_str(), str_source.length(), 0);
+        BOOL ui_ret = CryptHashData (h_Hash, 
+                                     (BYTE *)str_source.c_str(), 
+                                     str_source.length()* sizeof(wchar_t), 0);
         if (!ui_ret)
         {
             throw CT_Exception (-1, L"CT_Hash::b_Hash():CryptHashData() failed.");
