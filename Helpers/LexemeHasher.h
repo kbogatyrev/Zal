@@ -30,13 +30,13 @@ struct ST_LexemeHasher
         str_text += str_MainSymbol;
 
         unsigned char * pchr_at = (unsigned char *)&i_InflectionType;
-        str_text += pchr_at[0];
+        str_text += 32 + pchr_at[0];
 
         pchr_at = (unsigned char *)&i_AccentType1;
-        str_text += pchr_at[0];
+        str_text += 32 + pchr_at[0];
 
         pchr_at = (unsigned char *)&i_AccentType2;
-        str_text += pchr_at[0];
+        str_text += 32 + pchr_at[0];
 
         str_text += str_Comment;
 
