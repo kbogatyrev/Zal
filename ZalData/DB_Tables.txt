@@ -1,4 +1,4 @@
-CREATE TABLE headword (id INTEGER PRIMARY KEY ASC, source TEXT, plural_of TEXT, comment TEXT, usage TEXT, variant TEXT, see_ref TEXT, is_subentry_of TEXT);
+CREATE TABLE headword (id INTEGER PRIMARY KEY ASC, source TEXT, plural_of TEXT, comment TEXT, usage TEXT, variant TEXT, variant_comment TEXT, see_ref TEXT, is_subentry_of TEXT);
 
 CREATE TABLE homonyms (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, homonym_number INTEGER, FOREIGN KEY (headword_id) REFERENCES headword (id));
 
