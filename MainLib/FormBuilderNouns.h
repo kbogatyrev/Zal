@@ -17,7 +17,10 @@ public:
     }
 
 protected:
-    int i_GramHash (ET_Number eo_number, ET_Case eo_case);
+    int i_GramHash (ET_Gender eo_gender,
+                    ET_Animacy eo_animacy,
+                    ET_Case eo_case,
+                    ET_Number eo_number);
 
     HRESULT h_GetEndings();
 
