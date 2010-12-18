@@ -1,4 +1,5 @@
 #include "Analyzer_Helpers.h"
+#include "Lexeme.h"
 #include "WordForm.h"
 
 using namespace std;
@@ -38,6 +39,15 @@ class ATL_NO_VTABLE CT_Analyzer :
 public:
 	CT_Analyzer()
 	{
+        wstring arr_strMainSymbol[ ] = { L"м", L"мо", L"ж", L"жо", L"с", L"со", L"мо-жо", L"мн.",
+            L"мн. неод.", L"мн. одуш.", L"мн. _от_", L"п", L"мс", L"мс-п", L"мс-предик.", L"числ.", L"числ.-п", 
+            L"св", L"нсв", L"св-нсв", L"н", L"предл.", L"союз", L"предик.", L"вводн.", L"сравн.", 
+            L"част.", L"межд.", L"NULL"  };
+        
+        for (ET_MainSymbol eo_ms = MS_START; eo_ms < MS_END; ++eo_ms)
+        {
+            map_MainSymbol[arr_strMainSymbol[eo_ms]] = eo_ms; 
+        }
 	}
 
     DECLARE_REGISTRY_RESOURCEID(IDR_ANALYZER)
@@ -78,9 +88,13 @@ public:
     int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left, int i_StressPosStem);
     int i_CheckEndings(vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right, int i_StressPosEnding);
     int i_ClassifyStems();
+    HRESULT h_AddClassifyingCategories(CComObject<CT_WordForm>* co_wf);
 
 private:
     CT_Sqlite* pco_db;
+    
+    map<wstring, ET_MainSymbol> map_MainSymbol;
+    
     wstring str_InsertStress(int i_letter, wstring str_);
     int i_DeleteStress(wstring& str_);
     void v_DeleteRepeats(vector<wstring>& vec_strings);

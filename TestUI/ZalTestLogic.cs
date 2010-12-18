@@ -803,6 +803,7 @@ namespace TestUI
                 ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
                 ap.sLemma = wf.Lemma;
                 ap.sWordform = wf.Wordform;
+                ap.sID = wf.LexemeId.ToString();
                 ap.eoPOS = wf.PartOfSpeech;
                 ap.eoGender = wf.Gender;
                 ap.eoCase = wf.Case;
