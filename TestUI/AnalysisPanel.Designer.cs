@@ -60,6 +60,10 @@
             this.TextBox_ID = new System.Windows.Forms.TextBox();
             this.TextBox_POS = new System.Windows.Forms.TextBox();
             this.TextBox_PanelNum = new System.Windows.Forms.TextBox();
+            this.TextBox_Mood = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.TextBox_Aspect = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.NominalBox.SuspendLayout();
             this.VerbFeatures.SuspendLayout();
             this.SuspendLayout();
@@ -134,7 +138,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 92);
+            this.label8.Location = new System.Drawing.Point(3, 91);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(88, 13);
             this.label8.TabIndex = 7;
@@ -143,7 +147,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(66, 114);
+            this.label9.Location = new System.Drawing.Point(66, 113);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(38, 13);
             this.label9.TabIndex = 8;
@@ -152,7 +156,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(33, 114);
+            this.label10.Location = new System.Drawing.Point(33, 113);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(58, 13);
             this.label10.TabIndex = 9;
@@ -190,7 +194,7 @@
             // 
             // TextBox_Animacy
             // 
-            this.TextBox_Animacy.Location = new System.Drawing.Point(98, 111);
+            this.TextBox_Animacy.Location = new System.Drawing.Point(98, 110);
             this.TextBox_Animacy.Name = "TextBox_Animacy";
             this.TextBox_Animacy.ReadOnly = true;
             this.TextBox_Animacy.Size = new System.Drawing.Size(147, 20);
@@ -199,7 +203,7 @@
             // 
             // TextBox_Subparadigm
             // 
-            this.TextBox_Subparadigm.Location = new System.Drawing.Point(98, 89);
+            this.TextBox_Subparadigm.Location = new System.Drawing.Point(98, 88);
             this.TextBox_Subparadigm.Name = "TextBox_Subparadigm";
             this.TextBox_Subparadigm.ReadOnly = true;
             this.TextBox_Subparadigm.Size = new System.Drawing.Size(147, 20);
@@ -235,6 +239,10 @@
             // 
             // VerbFeatures
             // 
+            this.VerbFeatures.Controls.Add(this.TextBox_Aspect);
+            this.VerbFeatures.Controls.Add(this.label12);
+            this.VerbFeatures.Controls.Add(this.TextBox_Mood);
+            this.VerbFeatures.Controls.Add(this.label11);
             this.VerbFeatures.Controls.Add(this.TextBox_Special);
             this.VerbFeatures.Controls.Add(this.TextBox_Reflective);
             this.VerbFeatures.Controls.Add(this.TextBox_Voice);
@@ -246,16 +254,16 @@
             this.VerbFeatures.Controls.Add(this.label18);
             this.VerbFeatures.Controls.Add(this.label9);
             this.VerbFeatures.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VerbFeatures.Location = new System.Drawing.Point(262, 125);
+            this.VerbFeatures.Location = new System.Drawing.Point(262, 101);
             this.VerbFeatures.Name = "VerbFeatures";
-            this.VerbFeatures.Size = new System.Drawing.Size(265, 142);
+            this.VerbFeatures.Size = new System.Drawing.Size(265, 186);
             this.VerbFeatures.TabIndex = 14;
             this.VerbFeatures.TabStop = false;
             this.VerbFeatures.Text = "Features of verbs";
             // 
             // TextBox_Special
             // 
-            this.TextBox_Special.Location = new System.Drawing.Point(110, 111);
+            this.TextBox_Special.Location = new System.Drawing.Point(110, 110);
             this.TextBox_Special.Name = "TextBox_Special";
             this.TextBox_Special.ReadOnly = true;
             this.TextBox_Special.Size = new System.Drawing.Size(147, 20);
@@ -264,7 +272,7 @@
             // 
             // TextBox_Reflective
             // 
-            this.TextBox_Reflective.Location = new System.Drawing.Point(110, 89);
+            this.TextBox_Reflective.Location = new System.Drawing.Point(110, 88);
             this.TextBox_Reflective.Name = "TextBox_Reflective";
             this.TextBox_Reflective.ReadOnly = true;
             this.TextBox_Reflective.Size = new System.Drawing.Size(147, 20);
@@ -273,7 +281,7 @@
             // 
             // TextBox_Voice
             // 
-            this.TextBox_Voice.Location = new System.Drawing.Point(110, 67);
+            this.TextBox_Voice.Location = new System.Drawing.Point(110, 66);
             this.TextBox_Voice.Name = "TextBox_Voice";
             this.TextBox_Voice.ReadOnly = true;
             this.TextBox_Voice.Size = new System.Drawing.Size(147, 20);
@@ -319,7 +327,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(61, 70);
+            this.label17.Location = new System.Drawing.Point(61, 69);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(43, 13);
             this.label17.TabIndex = 6;
@@ -328,7 +336,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(9, 92);
+            this.label18.Location = new System.Drawing.Point(9, 91);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(95, 13);
             this.label18.TabIndex = 7;
@@ -381,6 +389,42 @@
             this.TextBox_PanelNum.TabIndex = 19;
             this.TextBox_PanelNum.TabStop = false;
             // 
+            // TextBox_Mood
+            // 
+            this.TextBox_Mood.Location = new System.Drawing.Point(110, 132);
+            this.TextBox_Mood.Name = "TextBox_Mood";
+            this.TextBox_Mood.ReadOnly = true;
+            this.TextBox_Mood.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Mood.TabIndex = 22;
+            this.TextBox_Mood.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(62, 135);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(42, 13);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Mood:";
+            // 
+            // TextBox_Aspect
+            // 
+            this.TextBox_Aspect.Location = new System.Drawing.Point(110, 154);
+            this.TextBox_Aspect.Name = "TextBox_Aspect";
+            this.TextBox_Aspect.ReadOnly = true;
+            this.TextBox_Aspect.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Aspect.TabIndex = 24;
+            this.TextBox_Aspect.TabStop = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(54, 157);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(50, 13);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "Aspect:";
+            // 
             // AnalysisPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -399,7 +443,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "AnalysisPanel";
-            this.Size = new System.Drawing.Size(545, 293);
+            this.Size = new System.Drawing.Size(545, 297);
             this.Load += new System.EventHandler(this.AnalysisPanel_Load);
             this.NominalBox.ResumeLayout(false);
             this.NominalBox.PerformLayout();
@@ -444,5 +488,9 @@
         private System.Windows.Forms.TextBox TextBox_ID;
         private System.Windows.Forms.TextBox TextBox_POS;
         private System.Windows.Forms.TextBox TextBox_PanelNum;
+        private System.Windows.Forms.TextBox TextBox_Mood;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox TextBox_Aspect;
+        private System.Windows.Forms.Label label12;
     }
 }

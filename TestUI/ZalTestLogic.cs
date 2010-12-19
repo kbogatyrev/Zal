@@ -805,40 +805,13 @@ namespace TestUI
                 ap.sWordform = wf.Wordform;
                 ap.sID = wf.LexemeId.ToString();
                 ap.eoPOS = wf.PartOfSpeech;
+                ap.eoAspect = wf.Aspect;
                 ap.eoGender = wf.Gender;
                 ap.eoCase = wf.Case;
                 ap.eoNumber = wf.Number;
-                ap.eoSubparadigm = wf.Subparadigm;
                 ap.eoAnimacy = wf.Animacy;
-//                if (wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
-//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG
-//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT)
-//                {
-//                    ap.eoTense = MainLib.ET_Tense.TENSE_PAST;
-//                }
-//                if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG
-//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT)
-//                    && wf.Aspect == MainLib.ET_Aspect.ASPECT_PERFECTIVE)
-//                {
-//                    ap.eoTense = MainLib.ET_Tense.TENSE_FUTURE;
-//                }
-//                if ((wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG
-//                    || wf.Subparadigm == MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT)
-//                    && wf.Aspect == MainLib.ET_Aspect.ASPECT_IMPERFECTIVE)
-//                {
-//                    ap.eoTense = MainLib.ET_Tense.TENSE_PRESENT;
-//                }
-//                if (wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE
-//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE
-//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT
-//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG
-//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT
-//                    && wf.Subparadigm != MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG)
-//                {
-//                    ap.eoTense = MainLib.ET_Tense.TENSE_UNDEFINED;
-//                }
+                ap.eoReflexiveness = wf.IsReflexive;
+                ap.eoSubparadigm = wf.Subparadigm;
                 if (wf.LexemeId != iPreviousID)
                 {
                     iWordform = 0;
