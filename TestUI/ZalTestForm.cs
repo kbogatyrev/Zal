@@ -28,6 +28,7 @@ namespace TestUI
         private MainLib.IDictionary m_Dictionary;
         private MainLib.ZalStoredLexemeData m_TestData;
         private MainLib.IAnalyzer m_Analyzer;
+        private TextAnalyzer m_TextAnalyzer;
         private List<MainLib.IWordForm> m_listWordForms;
         private Dictionary<LexemeDataPanel, MainLib.ILexeme> m_hashLexemes;
         private Dictionary<MainLib.ILexeme, ArrayList> m_lexemeToTabs;
@@ -214,6 +215,33 @@ namespace TestUI
             ShowParseOutput();
 
         }   //  parseWordFormToolStripMenuItem_Click (...)
+
+        private void parseTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Choose the new file path
+            string str_FilePath = "";
+            OpenFileDialog fDialog = new OpenFileDialog();
+            fDialog.Title = "Open Raw Text";
+            fDialog.Filter = "Text files|*.txt|All files|*";
+            fDialog.InitialDirectory = @"\";
+            if (fDialog.ShowDialog() == DialogResult.OK)
+            {
+                str_FilePath = fDialog.FileName.ToString();
+                int i_wf = m_TextAnalyzer.i_AnalyzeText(str_FilePath);
+                if (i_wf >= 0)
+                {
+                    MessageBox.Show("The file has been parsed successfully, " + i_wf.ToString() + " wordforms processed.");
+                }
+                else
+                {
+                    MessageBox.Show("An error occurred during parsing");
+                }
+            }
+            else
+            {
+                return;
+            }
+        }   //  parseTextToolStripMenuItem_Click (...)
 
         private void batchTestToolStripMenuItem_Click (object sender, EventArgs e)
         {

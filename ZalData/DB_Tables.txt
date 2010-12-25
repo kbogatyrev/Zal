@@ -50,3 +50,9 @@ CREATE INDEX idx_stress_hw ON stress (headword_id);
 CREATE INDEX idx_test_data_id ON test_data (id, lexeme_id);
 CREATE INDEX idx_test_data_stress ON test_data_stress (id, form_id);
 CREATE INDEX idx_lexeme_hash_to_descriptor ON lexeme_hash_to_descriptor (lexeme_hash);
+
+CREATE INDEX idx_endings_id ON endings_for_analysis (id);
+CREATE INDEX idx_endings_subtable_id ON endings_for_analysis (subtable_id);
+CREATE INDEX idx_endings ON endings_for_analysis (ending);
+CREATE INDEX idx_stems ON stems_for_analysis (stem);
+CREATE INDEX idx_stems_id ON stems_for_analysis (id);

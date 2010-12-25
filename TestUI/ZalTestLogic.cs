@@ -26,6 +26,7 @@ namespace TestUI
 
             m_Dictionary = new MainLib.ZalDictionary();
             m_Analyzer = new MainLib.ZalAnalyzer();
+            m_TextAnalyzer = new TextAnalyzer(m_Analyzer);
             m_hashLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
             m_listWordForms = new List<MainLib.IWordForm>();
 

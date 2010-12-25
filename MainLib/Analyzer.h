@@ -65,6 +65,7 @@ public:
 	HRESULT FinalConstruct()
 	{
         pco_db = NULL;
+        sp_dict = NULL;
 		return S_OK;
 	}
 
@@ -84,20 +85,24 @@ public:
 
     wstring str_DbPath;
 
-    int i_Analyze(wstring str_wordform, vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms, BOOL b_guess);
+    int i_Analyze(wstring str_wordform, vector<CT_Hasher>* pvec_possible_wordforms, BOOL b_guess);
     int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left, int i_StressPosStem);
-    int i_CheckEndings(vector<CComObject<CT_WordForm>*>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right, int i_StressPosEnding);
+    int i_CheckEndings(vector<CT_Hasher>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right, int i_StressPosEnding);
     int i_ClassifyStems();
-    HRESULT h_AddClassifyingCategories(CComObject<CT_WordForm>* co_wf);
+    HRESULT h_AddClassifyingCategories(CT_Hasher* pco_wf);
 
 private:
     CT_Sqlite* pco_db;
+    CComPtr<IDictionary> sp_dict;
     
     map<wstring, ET_MainSymbol> map_MainSymbol;
     
     wstring str_InsertStress(int i_letter, wstring str_);
     int i_DeleteStress(wstring& str_);
     void v_DeleteRepeats(vector<wstring>& vec_strings);
+    HRESULT h_Hasher2Wordform (const wstring& str_wordform,
+                                CT_Hasher co_from,
+                                CComObject<CT_WordForm> *& pco_to);
     int i_LCP(wstring* str_words, wstring** str_pfx, int i_words, int i_pfx);
 
     // Helper functions for common DB queries

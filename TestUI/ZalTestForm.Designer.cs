@@ -41,10 +41,11 @@
             this.batchTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportTestDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importTestDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.importTestDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.parseTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -58,7 +59,7 @@
             this.testToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(660, 24);
+            this.menuStrip.Size = new System.Drawing.Size(652, 24);
             this.menuStrip.TabIndex = 3;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -67,13 +68,13 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dBPathToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // dBPathToolStripMenuItem
             // 
             this.dBPathToolStripMenuItem.Name = "dBPathToolStripMenuItem";
-            this.dBPathToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.dBPathToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.dBPathToolStripMenuItem.Text = "Open Dictionary";
             this.dBPathToolStripMenuItem.Click += new System.EventHandler(this.dBPathToolStripMenuItem_Click);
             // 
@@ -84,20 +85,20 @@
             this.byGraphicStemToolStripMenuItem});
             this.synthesizeToolStripMenuItem.Enabled = false;
             this.synthesizeToolStripMenuItem.Name = "synthesizeToolStripMenuItem";
-            this.synthesizeToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.synthesizeToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
             this.synthesizeToolStripMenuItem.Text = "Synthesize";
             // 
             // byEntryFormToolStripMenuItem
             // 
             this.byEntryFormToolStripMenuItem.Name = "byEntryFormToolStripMenuItem";
-            this.byEntryFormToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.byEntryFormToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.byEntryFormToolStripMenuItem.Text = "By Entry Source";
             this.byEntryFormToolStripMenuItem.Click += new System.EventHandler(this.byEntryFormToolStripMenuItem_Click);
             // 
             // byGraphicStemToolStripMenuItem
             // 
             this.byGraphicStemToolStripMenuItem.Name = "byGraphicStemToolStripMenuItem";
-            this.byGraphicStemToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.byGraphicStemToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.byGraphicStemToolStripMenuItem.Text = "By Graphic Stem";
             this.byGraphicStemToolStripMenuItem.Click += new System.EventHandler(this.byGraphicStemToolStripMenuItem_Click);
             // 
@@ -105,23 +106,24 @@
             // 
             this.analyzeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.preprocessToolStripMenuItem,
-            this.parseWordFormToolStripMenuItem});
+            this.parseWordFormToolStripMenuItem,
+            this.parseTextToolStripMenuItem});
             this.analyzeToolStripMenuItem.Enabled = false;
             this.analyzeToolStripMenuItem.Name = "analyzeToolStripMenuItem";
-            this.analyzeToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.analyzeToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.analyzeToolStripMenuItem.Text = "Analyze";
             // 
             // preprocessToolStripMenuItem
             // 
             this.preprocessToolStripMenuItem.Name = "preprocessToolStripMenuItem";
-            this.preprocessToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.preprocessToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.preprocessToolStripMenuItem.Text = "Preprocess";
             this.preprocessToolStripMenuItem.Click += new System.EventHandler(this.preprocessToolStripMenuItem_Click);
             // 
             // parseWordFormToolStripMenuItem
             // 
             this.parseWordFormToolStripMenuItem.Name = "parseWordFormToolStripMenuItem";
-            this.parseWordFormToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.parseWordFormToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.parseWordFormToolStripMenuItem.Text = "Parse Word Form";
             this.parseWordFormToolStripMenuItem.Click += new System.EventHandler(this.parseWordFormToolStripMenuItem_Click);
             // 
@@ -134,13 +136,13 @@
             this.importTestDataToolStripMenuItem});
             this.testToolStripMenuItem.Enabled = false;
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.testToolStripMenuItem.Text = "Test";
             // 
             // batchTestToolStripMenuItem
             // 
             this.batchTestToolStripMenuItem.Name = "batchTestToolStripMenuItem";
-            this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.batchTestToolStripMenuItem.Text = "Test All";
             this.batchTestToolStripMenuItem.Click += new System.EventHandler(this.batchTestToolStripMenuItem_Click);
             // 
@@ -148,30 +150,37 @@
             // 
             this.testRangeToolStripMenuItem.Enabled = false;
             this.testRangeToolStripMenuItem.Name = "testRangeToolStripMenuItem";
-            this.testRangeToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.testRangeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.testRangeToolStripMenuItem.Text = "Test Range";
             this.testRangeToolStripMenuItem.Click += new System.EventHandler(this.testRangeToolStripMenuItem_Click);
             // 
             // exportTestDataToolStripMenuItem
             // 
             this.exportTestDataToolStripMenuItem.Name = "exportTestDataToolStripMenuItem";
-            this.exportTestDataToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.exportTestDataToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.exportTestDataToolStripMenuItem.Text = "Export Test Data";
             this.exportTestDataToolStripMenuItem.Click += new System.EventHandler(this.exportTestDataToolStripMenuItem_Click);
+            // 
+            // importTestDataToolStripMenuItem
+            // 
+            this.importTestDataToolStripMenuItem.Name = "importTestDataToolStripMenuItem";
+            this.importTestDataToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.importTestDataToolStripMenuItem.Text = "Import Test Data";
+            this.importTestDataToolStripMenuItem.Click += new System.EventHandler(this.importTestDataToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 741);
+            this.statusStrip.Location = new System.Drawing.Point(0, 732);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(660, 22);
+            this.statusStrip.Size = new System.Drawing.Size(652, 22);
             this.statusStrip.TabIndex = 4;
             // 
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(80, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(87, 17);
             this.toolStripStatusLabel.Text = "No data source";
             // 
             // tabControl
@@ -182,18 +191,18 @@
             this.tabControl.Size = new System.Drawing.Size(660, 738);
             this.tabControl.TabIndex = 0;
             // 
-            // importTestDataToolStripMenuItem
+            // parseTextToolStripMenuItem
             // 
-            this.importTestDataToolStripMenuItem.Name = "importTestDataToolStripMenuItem";
-            this.importTestDataToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.importTestDataToolStripMenuItem.Text = "Import Test Data";
-            this.importTestDataToolStripMenuItem.Click += new System.EventHandler(this.importTestDataToolStripMenuItem_Click);
+            this.parseTextToolStripMenuItem.Name = "parseTextToolStripMenuItem";
+            this.parseTextToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.parseTextToolStripMenuItem.Text = "Parse Text";
+            this.parseTextToolStripMenuItem.Click += new System.EventHandler(this.parseTextToolStripMenuItem_Click);
             // 
             // TestApplet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 763);
+            this.ClientSize = new System.Drawing.Size(652, 754);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip);
@@ -234,6 +243,7 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.ToolStripMenuItem exportTestDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importTestDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem parseTextToolStripMenuItem;
     }
 }
 
