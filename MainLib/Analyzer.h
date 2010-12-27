@@ -1,6 +1,7 @@
 #include "Analyzer_Helpers.h"
 #include "Lexeme.h"
 #include "WordForm.h"
+#include <unordered_map>
 
 using namespace std;
 using namespace std::tr1;
@@ -39,15 +40,7 @@ class ATL_NO_VTABLE CT_Analyzer :
 public:
 	CT_Analyzer()
 	{
-        wstring arr_strMainSymbol[ ] = { L"м", L"мо", L"ж", L"жо", L"с", L"со", L"мо-жо", L"мн.",
-            L"мн. неод.", L"мн. одуш.", L"мн. _от_", L"п", L"мс", L"мс-п", L"мс-предик.", L"числ.", L"числ.-п", 
-            L"св", L"нсв", L"св-нсв", L"н", L"предл.", L"союз", L"предик.", L"вводн.", L"сравн.", 
-            L"част.", L"межд.", L"NULL"  };
-        
-        for (ET_MainSymbol eo_ms = MS_START; eo_ms < MS_END; ++eo_ms)
-        {
-            map_MainSymbol[arr_strMainSymbol[eo_ms]] = eo_ms; 
-        }
+        v_Init();
 	}
 
     DECLARE_REGISTRY_RESOURCEID(IDR_ANALYZER)
@@ -66,12 +59,17 @@ public:
 	{
         pco_db = NULL;
         sp_dict = NULL;
+        arr_freq_endings = NULL;
 		return S_OK;
 	}
 
 	void FinalRelease()
 	{
         delete pco_db;
+        if (arr_freq_endings != NULL)
+        {
+            delete[] arr_freq_endings;
+        }
 	}
 
 public:
@@ -86,8 +84,14 @@ public:
     wstring str_DbPath;
 
     int i_Analyze(wstring str_wordform, vector<CT_Hasher>* pvec_possible_wordforms, BOOL b_guess);
-    int i_LookUpStems(vector<int>* pvec_stems_id, wstring str_left, int i_StressPosStem);
-    int i_CheckEndings(vector<CT_Hasher>* pvec_possible_wordforms, vector<int>* pvec_stems_id, wstring str_left, wstring str_right, int i_StressPosEnding);
+    int i_LookUpStems(vector<struct_stem_links>* pvec_stems,
+                      wstring str_left,
+                      int i_StressPosStem);
+    int i_CheckEndings(vector<CT_Hasher>* pvec_possible_wordforms,
+                       vector<struct_stem_links>* pvec_stems,
+                       wstring str_left,
+                       wstring str_right,
+                       int i_StressPosEnding);
     int i_ClassifyStems();
     HRESULT h_AddClassifyingCategories(CT_Hasher* pco_wf);
 
@@ -97,6 +101,10 @@ private:
     
     map<wstring, ET_MainSymbol> map_MainSymbol;
     
+    unordered_multimap<wstring, struct_stem_links> umap_freq_stems;
+    CT_EndingsTable* arr_freq_endings;
+    
+    void v_Init();
     wstring str_InsertStress(int i_letter, wstring str_);
     int i_DeleteStress(wstring& str_);
     void v_DeleteRepeats(vector<wstring>& vec_strings);
