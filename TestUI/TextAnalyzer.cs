@@ -47,6 +47,7 @@ namespace TestUI
 
             while (!sr_in.EndOfStream)
             {
+                Application.DoEvents(); // to be replaced by introducing a separater thread
                 str_line = sr_in.ReadLine();
                 if (Regex.IsMatch(str_line, "^\\s*(<[^>]*>)*\\s*$"))    // e.g. <meta ...></meta> or an empty line
                 {
