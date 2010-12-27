@@ -85,6 +85,7 @@ public:
     STDMETHOD (GetLexemeByHash) (ULONG ul_LexemeHash, ILexeme ** pp_lexeme);
     STDMETHOD (GetLexemesByGraphicStem) (BSTR bstr_key);
     STDMETHOD (GetLexemesByInitialForm) (BSTR bstr_key);
+    STDMETHOD (Clear) ();
 
 private:
     wstring str_DbPath;
