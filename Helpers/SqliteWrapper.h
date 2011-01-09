@@ -4,36 +4,93 @@
 #include "Callbacks.h"
 #include "sqlite3.h"
 
-
-// CT_Sqlite
-
 static const wchar_t * SZ_SEPARATOR = L"|";
 
 class CT_Sqlite
 {
-public:
-    CT_Sqlite() : po_Db_ (NULL), po_Stmt_ (NULL)
-    {}
+private:
 
-    CT_Sqlite (const wstring& str_dbPath) : po_Stmt_ (NULL)
+static sqlite3 * spo_Db;
+static int si_Refcount;
+
+public:
+
+    CT_Sqlite()
     {
-        int i_ret = sqlite3_open16 (str_dbPath.c_str(), &po_Db_);
-        if (SQLITE_OK != i_ret)
-        {
-            po_Db_ = NULL;
-        }
+        ++si_Refcount;
     }
 
-protected:
-    sqlite3 * po_Db_;
+    CT_Sqlite (const wstring& str_dbPath)
+    {
+        if (0 >= si_Refcount)
+        {
+            if (spo_Db)
+            {
+                ATLASSERT(0);
+                throw CT_Exception (-1, L"DB is initialized but ref count is 0.");
+            }
+            int i_ret = sqlite3_open16 (str_dbPath.c_str(), &spo_Db);
+            if (SQLITE_OK != i_ret)
+            {
+                spo_Db = NULL;
+                throw CT_Exception (i_ret, L"sqlite3_open16 failed.");
+            }
+        }
+        else
+        {
+            if (!spo_Db)
+            {
+                throw CT_Exception (-1, L"BD is not initialized but ref count is positive.");
+            }
+        }
+
+        ++si_Refcount;
+    }
+
+
+    ~CT_Sqlite()
+    {
+        --si_Refcount;
+        if (0 == si_Refcount)
+        {
+            if (spo_Db)
+            {
+                int i_ret = sqlite3_close (spo_Db);
+                if (SQLITE_BUSY == i_ret)
+                {
+                    ERROR_LOG (L"Warning: DB is still in use; trying to finalize open statements. \n");
+                    for (int i_cycle = 0; i_cycle < 1000 && i_ret == SQLITE_BUSY; ++i_cycle)
+                    {
+                        sqlite3_stmt * stmt = sqlite3_next_stmt (spo_Db, NULL);
+                        i_ret = sqlite3_finalize (stmt);
+                        i_ret = sqlite3_close (spo_Db);
+                    }
+                    i_ret = sqlite3_close (spo_Db);
+                    if (SQLITE_OK != i_ret)
+                    {
+                        throw CT_Exception (i_ret, L"Unable to close database");
+                    }
+                }
+                spo_Db = NULL;
+            }
+        }
+        
+//        _CrtDumpMemoryLeaks();
+
+    }
+
+    
+private:
+
     sqlite3_stmt * po_Stmt_;
+    wstring str_DbPath_;
 
     int i_ExtendedErrCode_;
 
 public:
     void v_Open (const wstring& str_path)
     {
-        int i_ret = sqlite3_open16 (str_path.c_str(), &po_Db_);
+        int i_ret = sqlite3_open16 (str_path.c_str(), &spo_Db);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"Unable to open database");
@@ -52,13 +109,13 @@ public:
 
     void v_BeginTransaction (sqlite3_stmt * po_stmt)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
 
         int i_ret = SQLITE_OK;
-        i_ret = sqlite3_prepare16_v2 (po_Db_, L"BEGIN;", -1, &po_stmt, NULL);
+        i_ret = sqlite3_prepare16_v2 (spo_Db, L"BEGIN;", -1, &po_stmt, NULL);
 	    if (SQLITE_OK != i_ret) 
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -89,13 +146,13 @@ public:
 
     void v_CommitTransaction (sqlite3_stmt * po_stmt)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
 
         int i_ret = SQLITE_OK;
-        i_ret = sqlite3_prepare16_v2 (po_Db_, L"COMMIT;", -1, &po_stmt, NULL);
+        i_ret = sqlite3_prepare16_v2 (spo_Db, L"COMMIT;", -1, &po_stmt, NULL);
 	    if (SQLITE_OK != i_ret) 
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -117,13 +174,13 @@ public:
 /*
     void v_Exec (const wstring& str_stmt, void (*v_Callback_)(sqlite3_stmt*, void*), void* po_Arguments)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
 
         int i_ret = SQLITE_OK;
-        i_ret = sqlite3_prepare16_v2 (po_Db_, str_stmt.c_str(), -1, &po_Stmt_, NULL);
+        i_ret = sqlite3_prepare16_v2 (spo_Db, str_stmt.c_str(), -1, &po_Stmt_, NULL);
 	    if (SQLITE_OK != i_ret) 
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -163,7 +220,7 @@ public:
 
     void v_PrepareForSelect (const wstring& str_stmt, sqlite3_stmt *& po_stmt)
     {
-        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_stmt.c_str(), -1, &po_stmt, NULL);
+        int i_ret = sqlite3_prepare16_v2 (spo_Db, str_stmt.c_str(), -1, &po_stmt, NULL);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -190,7 +247,7 @@ public:
         }
         str_stmt += L")";
 
-        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_stmt.c_str(), -1, &po_stmt, NULL);
+        int i_ret = sqlite3_prepare16_v2 (spo_Db, str_stmt.c_str(), -1, &po_stmt, NULL);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -306,7 +363,7 @@ public:
 
     void v_InsertRow (sqlite3_stmt * po_stmt)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
@@ -342,7 +399,7 @@ public:
 
     bool b_GetRow (sqlite3_stmt * po_stmt)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
@@ -445,7 +502,7 @@ public:
 
     void v_Finalize (sqlite3_stmt * po_stmt)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
@@ -474,7 +531,7 @@ public:
 
     __int64 ll_GetLastKey (sqlite3_stmt * po_stmt)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
@@ -484,34 +541,34 @@ public:
             throw CT_Exception (-1, L"No statement handle");
         }
 
-        return sqlite3_last_insert_rowid (po_Db_);    
+        return sqlite3_last_insert_rowid (spo_Db);    
     }
 
     int i_GetLastError()
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             return -1;
         }
 
-        return sqlite3_extended_errcode (po_Db_);
+        return sqlite3_extended_errcode (spo_Db);
     }
 
     void v_GetLastError (wstring& str_error)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
 
-        wchar_t * sz_error = (wchar_t *)sqlite3_errmsg16 (po_Db_);
+        wchar_t * sz_error = (wchar_t *)sqlite3_errmsg16 (spo_Db);
         str_error = wstring (sz_error);
     }
 
     bool b_TableExists (const wstring& str_table)
     {
         wstring str_query (L"SELECT name FROM sqlite_master WHERE type='table';");
-        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_Stmt_, NULL);
+        int i_ret = sqlite3_prepare16_v2 (spo_Db, str_query.c_str(), -1, &po_Stmt_, NULL);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -552,7 +609,7 @@ public:
         wstring str_query (L"SELECT * FROM ");
         str_query += str_table;
         str_query += L";";
-        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_Stmt_, NULL);
+        int i_ret = sqlite3_prepare16_v2 (spo_Db, str_query.c_str(), -1, &po_Stmt_, NULL);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -579,7 +636,7 @@ public:
         wstring str_query (L"SELECT COUNT (*) FROM ");
         str_query += str_table;
         str_query += L";";
-        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_Stmt_, NULL);
+        int i_ret = sqlite3_prepare16_v2 (spo_Db, str_query.c_str(), -1, &po_Stmt_, NULL);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -605,7 +662,7 @@ public:
                          const vector<wstring>& vec_tables,
                          CT_ProgressCallback& co_progress)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
@@ -646,7 +703,7 @@ public:
             str_query += L";";
 
             sqlite3_stmt * po_stmt = NULL;
-            int i_ret = sqlite3_prepare16_v2 (po_Db_, str_query.c_str(), -1, &po_stmt, NULL);
+            int i_ret = sqlite3_prepare16_v2 (spo_Db, str_query.c_str(), -1, &po_stmt, NULL);
             if (SQLITE_OK != i_ret)
             {
                 throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
@@ -731,7 +788,7 @@ public:
     bool b_ImportTables (const wstring& str_path, 
                          CT_ProgressCallback& co_progress)
     {
-        if (NULL == po_Db_)
+        if (NULL == spo_Db)
         {
             throw CT_Exception (-1, L"No DB handle");
         }
@@ -863,7 +920,7 @@ public:
             str_dropStmt += str_table;
 
             sqlite3_stmt * po_stmt = NULL;
-            int i_ret = sqlite3_prepare16_v2 (po_Db_, str_dropStmt.c_str(), -1, &po_stmt, NULL);
+            int i_ret = sqlite3_prepare16_v2 (spo_Db, str_dropStmt.c_str(), -1, &po_stmt, NULL);
             if (SQLITE_OK != i_ret)
             {
                 throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed for drop.");
@@ -892,7 +949,7 @@ public:
         str_createStmt += L");";
 
         sqlite3_stmt * po_stmt = NULL;
-        int i_ret = sqlite3_prepare16_v2 (po_Db_, str_createStmt.c_str(), -1, &po_stmt, NULL);
+        int i_ret = sqlite3_prepare16_v2 (spo_Db, str_createStmt.c_str(), -1, &po_stmt, NULL);
         if (SQLITE_OK != i_ret)
         {
             throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed for create.");
@@ -949,7 +1006,7 @@ public:
         xstr_line.v_SetBreakChars (str_separators);
         for (; !feof (io_inStream); ++i_entriesRead)
         {
-            int i_ret = sqlite3_prepare16_v2 (po_Db_, str_stmt.c_str(), -1, &po_stmt, NULL);
+            int i_ret = sqlite3_prepare16_v2 (spo_Db, str_stmt.c_str(), -1, &po_stmt, NULL);
             if (SQLITE_OK != i_ret)
             {
                 throw CT_Exception (i_ret, L"sqlite3_prepare16_v2 failed");
