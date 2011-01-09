@@ -7,21 +7,20 @@
 
 using namespace std;
 
-class CT_Error;
-static CT_Error * spco_This;     // singleton
-
 class CT_Error
 {
 private:
-    vector<wstring> vec_Log_;
+    
+    static vector<wstring> vec_Log_;
 
     CT_Error() {};
 
-    void v_HandleError (const wstring& str_briefDescription,
-                        const wstring& str_location,
-		                const wstring& str_detailedDescription,
-                        int i_errCode,
-                        bool b_writeLog) 
+public:
+    static void v_HandleError (const wstring& str_briefDescription,
+                               const wstring& str_location,
+		                       const wstring& str_detailedDescription = L"",
+                               int i_errCode = -1,
+                               bool b_writeLog = true) 
     {
         wstring str_formattedMsg = str_Format_ (str_briefDescription, 
                                                 str_location, 
@@ -40,35 +39,7 @@ private:
 public:
     virtual ~CT_Error() {};
 
-    static CT_Error * pco_CreateInstance()
-    {
-        if (!spco_This)
-        {
-            spco_This = new CT_Error();
-        }
-
-        return spco_This;
-    }
-
-    static void CreateInstance  (const wstring& str_briefDescription,
-                                 const wstring& str_location,
-		                         const wstring& str_detailedDescription = L"",
-                                 int i_errCode = -1,
-                                 bool b_writeLog = true) 
-    {
-        if (!spco_This)
-        {
-            spco_This = new CT_Error();
-        }
-
-        spco_This->v_HandleError (str_briefDescription,
-                                  str_location,
-		                          str_detailedDescription,
-                                  i_errCode,
-                                  b_writeLog);
-    }
-
-    wstring str_GetLastError()
+    static wstring str_GetLastError()
     {
         if (vec_Log_.size() > 0)
         {
@@ -140,7 +111,7 @@ private:
 	
     }	//  str_Format_ (...)
 
-    bool b_WriteLog (const wstring& str_msg)
+    static bool b_WriteLog (const wstring& str_msg)
     {
         LPTSTR sz_name = _T("\\\\.\\pipe\\ZalConversionLog"); 
   
