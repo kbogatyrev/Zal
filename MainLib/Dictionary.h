@@ -76,6 +76,7 @@ END_COM_MAP()
 
 	void FinalRelease()
 	{
+        m_coll.clear();
         delete pco_Db;
 	}
 
