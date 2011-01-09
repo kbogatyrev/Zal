@@ -19,6 +19,7 @@
 #define S_BOTH MAKE_HRESULT (SEVERITY_SUCCESS, FACILITY_ITF, 10002)
 #define S_MORE MAKE_HRESULT (SEVERITY_SUCCESS, FACILITY_ITF, 10003)
 
+
 //
 // ATL
 //
@@ -56,9 +57,13 @@ using namespace std::tr1;
 // CRT
 #include <io.h>
 
+
 //
 // Zal
 //
+#include "Error.h"
+
+/*
 #define ERROR_LOG(str_Msg) wstringstream io__; \
         io__ << __LINE__; \
         CT_Error::CreateInstance (str_Msg, \
@@ -70,16 +75,29 @@ using namespace std::tr1;
                   std::wstring (_T("")),  \
                   -1, \
                   false);
+*/
+
+#define ERROR_LOG(str_Msg) wstringstream io__; \
+        io__ << __LINE__; \
+        CT_Error::v_HandleError (str_Msg, \
+                                 std::wstring (_T(__FILE__)) + \
+                                 std::wstring (_T("\t")) + \
+                                 io__.str() + \
+                                 std::wstring (_T("\t")) + \
+                                 std::wstring (_T(__FUNCTION__)));
 
 #define CYRILLIC
 
-#include "Error.h"
 #include "Exception.h"
 #include "ExtString.h"
-#include "SqliteWrapper.h"
 #include "Globals.h"
 #include "GenericHash.h"
 #include "Callbacks.h"
 #include "ErrorComWrapper.h"
+
+#include "SqliteWrapper.h"
+
+#include <stdlib.h>
+#include <crtdbg.h>
 
 using namespace std;
