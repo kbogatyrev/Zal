@@ -11,6 +11,7 @@ public:
     __int64 ll_lexeme_id;
     int i_endings_link;
     int i_stress_pos;
+    wstring str_lemma;
 };
 
 class CT_EndingsTable

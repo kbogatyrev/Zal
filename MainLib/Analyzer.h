@@ -118,7 +118,7 @@ private:
     int i_LastID(wstring str_TableName);
     void v_LongStemsBySubtable(int i_subtable, int i_min_len, vector<wstring>& vec_stems);
     void v_InsertCommonSfx(wstring **parr_str_sfx, int i_sfx, int i_subtable);
-    void v_InsertStemsAndLinks(wstring **parr_str_stems, int *arr_i_subtable_id, int i_stems, __int64 ll_lexeme_id);
+    void v_InsertStemsAndLinks(wstring **parr_str_stems, wstring str_lemma, int *arr_i_subtable_id, int i_stems, __int64 ll_lexeme_id);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CT_Analyzer)

@@ -24,7 +24,7 @@ CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEG
 
 CREATE TABLE endings_meta (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, entries_count INTEGER);
 
-CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, stem TEXT, stress_pos INTEGER, endings_link INTEGER);
+CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, stem TEXT, stress_pos INTEGER, endings_link INTEGER, lemma TEXT);
 
 CREATE TABLE common_deviation (id INTEGER PRIMARY KEY ASC, inflection_id INTEGER, deviation_type INTEGER, is_optional BOOLEAN);
 
