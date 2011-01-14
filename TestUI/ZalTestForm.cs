@@ -27,6 +27,7 @@ namespace TestUI
     {
         private MainLib.IDictionary m_Dictionary;
         private MainLib.ZalStoredLexemeData m_TestData;
+        private MainLib.ILexPreprocessor m_LexPreprocessor;
         private MainLib.IAnalyzer m_Analyzer;
         private TextAnalyzer m_TextAnalyzer;
         private List<MainLib.IWordForm> m_listWordForms;

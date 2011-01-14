@@ -99,6 +99,7 @@ END
 
 IDR_MAINLIB             REGISTRY                "MainLib.rgs"
 IDR_DICTIONARY          REGISTRY                "ZalDictionary.rgs"
+IDR_LEXPREPROCESSOR     REGISTRY                "ZalLexPreprocessor.rgs"
 IDR_ANALYZER            REGISTRY                "ZalAnalyzer.rgs"
 IDR_TESTDATA            REGISTRY                "ZalTestData.rgs"
 IDR_VERIFIER            REGISTRY                "ZalVerifier.rgs"

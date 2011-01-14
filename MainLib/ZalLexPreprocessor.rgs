@@ -1,0 +1,26 @@
+HKCR
+{
+	MainLib.ZalLexPreprocessor.1 = s 'ZalLexPreprocessor Class'
+	{
+		CLSID = s '{507A2051-9390-4453-8607-387BAB90633C}'
+	}
+	MainLib.ZalLexPreprocessor = s 'ZalLexPreprocessor Class'
+	{
+		CLSID = s '{507A2051-9390-4453-8607-387BAB90633C}'
+		CurVer = s 'MainLib.ZalLexPreprocessor.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {507A2051-9390-4453-8607-387BAB90633C} = s 'ZalLexPreprocessor Class'
+		{
+			ProgID = s 'MainLib.ZalLexPreprocessor.1'
+			VersionIndependentProgID = s 'MainLib.ZalLexPreprocessor'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
+		}
+	}
+}

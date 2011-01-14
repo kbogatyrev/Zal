@@ -336,10 +336,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\AnalyzerQueries.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Dictionary.cpp"
 				>
 			</File>
@@ -419,6 +415,14 @@
 			</File>
 			<File
 				RelativePath=".\Lexeme.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LexPreprocessor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LexPreprocessorQueries.cpp"
 				>
 			</File>
 			<File
@@ -580,6 +584,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LexPreprocessor.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MainLib_i.h"
 				>
 			</File>
@@ -647,6 +655,10 @@
 			</File>
 			<File
 				RelativePath=".\ZalLexeme.rgs"
+				>
+			</File>
+			<File
+				RelativePath=".\ZalLexPreprocessor.rgs"
 				>
 			</File>
 			<File

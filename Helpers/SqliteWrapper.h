@@ -1066,4 +1066,23 @@ public:
 
     }   // Import (...)
 
+    int i_LastID(wstring str_TableName)     // returns the ID of the last entry in the table
+    {
+        int i_last_id = 0;
+        wstring str_query = L"Select * from " + str_TableName 
+            + L" as a0 where not exists (select * from " + str_TableName 
+            + L" as a1 where a1.id > a0.id)";
+        v_PrepareForSelect(str_query);
+        if (b_GetRow())
+        {
+            v_GetData(0, i_last_id);
+        }
+        else
+        {
+            i_last_id = -1;
+        }
+        v_Finalize();
+        return i_last_id;
+    }   // i_LastID (...)
+
 };  //  class CT_Sqlite

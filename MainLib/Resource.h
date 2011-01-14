@@ -6,9 +6,10 @@
 #define IDR_MAINLIB                     101
 #define IDR_DICTIONARY                  102
 #define IDR_LEXEME                      103
-#define IDR_ANALYZER                    104
-#define IDR_TESTDATA                    105
-#define IDR_VERIFIER                    106
+#define IDR_LEXPREPROCESSOR             104
+#define IDR_ANALYZER                    105
+#define IDR_TESTDATA                    106
+#define IDR_VERIFIER                    107
 #define IDR_WORDFORM                    108
 #define IDR_SQLITEWRAPPER               109
 #define IDR_ERROR                       110

@@ -25,6 +25,7 @@ namespace TestUI
             m_lexemeToTabs = new Dictionary<MainLib.ILexeme, ArrayList>();
 
             m_Dictionary = new MainLib.ZalDictionary();
+            m_LexPreprocessor = new MainLib.ZalLexPreprocessor();
             m_Analyzer = new MainLib.ZalAnalyzer();
             m_TextAnalyzer = new TextAnalyzer(m_Analyzer);
             m_hashLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
@@ -91,6 +92,7 @@ namespace TestUI
                     m_sDbPath = fd.FileName;
                     m_Dictionary.DbPath = m_sDbPath;
                     m_Analyzer.DbPath = m_sDbPath;
+                    m_LexPreprocessor.DbPath = m_sDbPath;
                     toolStripStatusLabel.Text = m_sDbPath;
 
 // TODO path validation
@@ -783,12 +785,12 @@ namespace TestUI
                 string[] arr_Range = Regex.Split (sSearchString, (string)"([0-9]*)\\-([0-9]*)");
                 long l_start_id = long.Parse(arr_Range[1]);
                 long l_end_id = long.Parse(arr_Range[2]);
-                m_Analyzer.PrepareLexemes (l_start_id, l_end_id, i_Stress);
+                m_LexPreprocessor.PrepareLexemes (l_start_id, l_end_id, i_Stress);
             }
             else
             {
                 long l_lexeme_id = long.Parse (sSearchString);
-                m_Analyzer.PrepareLexeme(l_lexeme_id, i_Stress);
+                m_LexPreprocessor.PrepareLexeme(l_lexeme_id, i_Stress);
             }
 
         }   //  Preprocess (...)

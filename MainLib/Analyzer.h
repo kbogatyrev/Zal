@@ -58,7 +58,6 @@ public:
 	HRESULT FinalConstruct()
 	{
         pco_db = NULL;
-        sp_dict = NULL;
         arr_freq_endings = NULL;
 		return S_OK;
 	}
@@ -76,8 +75,6 @@ public:
 
 //  IAnalyze
     STDMETHOD (put_DbPath) (BSTR bstr_Path);
-    STDMETHOD (PrepareLexeme) (__int64 ll_Lexeme_id, BOOL b_Stress);
-    STDMETHOD (PrepareLexemes) (__int64 ll_First_Lexeme_id, __int64 ll_Last_Lexeme_id, BOOL b_Stress);
     STDMETHOD (Analyze) (BSTR bstr_Wordform);
 //
 
@@ -92,12 +89,10 @@ public:
                        wstring str_left,
                        wstring str_right,
                        int i_StressPosEnding);
-    int i_ClassifyStems();
     HRESULT h_AddClassifyingCategories(CT_Hasher* pco_wf);
 
 private:
     CT_Sqlite* pco_db;
-    CComPtr<IDictionary> sp_dict;
     
     map<wstring, ET_MainSymbol> map_MainSymbol;
     
@@ -105,20 +100,10 @@ private:
     CT_EndingsTable* arr_freq_endings;
     
     void v_Init();
-    wstring str_InsertStress(int i_letter, wstring str_);
-    int i_DeleteStress(wstring& str_);
     void v_DeleteRepeats(vector<wstring>& vec_strings);
     HRESULT h_Hasher2Wordform (const wstring& str_wordform,
-                                CT_Hasher co_from,
-                                CComObject<CT_WordForm> *& pco_to);
-    int i_LCP(wstring* str_words, wstring** str_pfx, int i_words, int i_pfx);
-
-    // Helper functions for common DB queries
-    // (Stored in AnalyzerQueries.cpp)
-    int i_LastID(wstring str_TableName);
-    void v_LongStemsBySubtable(int i_subtable, int i_min_len, vector<wstring>& vec_stems);
-    void v_InsertCommonSfx(wstring **parr_str_sfx, int i_sfx, int i_subtable);
-    void v_InsertStemsAndLinks(wstring **parr_str_stems, wstring str_lemma, int *arr_i_subtable_id, int i_stems, __int64 ll_lexeme_id);
+                               CT_Hasher co_from,
+                               CComObject<CT_WordForm> *& pco_to);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CT_Analyzer)
