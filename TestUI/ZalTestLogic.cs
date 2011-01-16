@@ -50,6 +50,7 @@ namespace TestUI
             m_hashCase.Add(MainLib.ET_Case.CASE_LOC, "L");
             m_hashCase.Add(MainLib.ET_Case.CASE_DAT, "D");
             m_hashCase.Add(MainLib.ET_Case.CASE_INST, "I");
+            m_hashCase.Add(MainLib.ET_Case.CASE_PREP, "P");
 
             m_hashPerson = new Dictionary<MainLib.ET_Person, string>();
             m_hashPerson.Add(MainLib.ET_Person.PERSON_UNDEFINED, "Undefined");
