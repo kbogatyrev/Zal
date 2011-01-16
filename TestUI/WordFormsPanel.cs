@@ -31,56 +31,67 @@ namespace TestUI
 
         public void SetForm (string sKey, string sText, MainLib.ET_Status eStatus)
         {
-            switch (eStatus)
+            try
             {
-                case MainLib.ET_Status.STATUS_COMMON:
+                switch (eStatus)
                 {
-                    break;
+                    case MainLib.ET_Status.STATUS_COMMON:
+                    {
+                        break;
+                    }
+                    case MainLib.ET_Status.STATUS_INCORRECT:
+                    {
+                        sText += "*" + sText;
+                        break;
+                    }
+                    case MainLib.ET_Status.STATUS_OBSOLETE:
+                    {
+                        sText += " (Obsolete)";
+                        break;
+                    }
+                    case MainLib.ET_Status.STATUS_QUESTIONABLE:
+                    {
+                        sText += "?" + sText;
+                        break;
+                    }
+                    case MainLib.ET_Status.STATUS_RARE:
+                    {
+                        sText += " (Rare)";
+                        break;
+                    }
                 }
-                case MainLib.ET_Status.STATUS_INCORRECT:
-                {
-                    sText += "*" + sText;
-                    break;
-                }
-                case MainLib.ET_Status.STATUS_OBSOLETE:
-                {
-                    sText += " (Obsolete)";
-                    break;
-                }
-                case MainLib.ET_Status.STATUS_QUESTIONABLE:
-                {
-                    sText += "?" + sText;
-                    break;
-                }
-                case MainLib.ET_Status.STATUS_RARE:
-                {
-                    sText += " (Rare)";
-                    break;
-                }
-            }
 
-            if (m_dictForms[sKey].m_SetContents.Contains(sText))
+                if (m_dictForms[sKey].m_SetContents.Contains(sText))
+                {
+                    return;
+                }
+
+                m_dictForms[sKey].m_SetContents.Add(sText);
+
+                if (m_dictForms[sKey].m_TextboxTarget.Text.Length > 0)
+                {
+                    m_dictForms[sKey].m_TextboxTarget.Text += "\r\n";
+                }
+                m_dictForms[sKey].m_TextboxTarget.Text += sText;
+
+                if (m_dictForms[sKey].m_TextboxTarget.Lines.Length > 1)
+                {
+                    m_dictForms[sKey].m_TextboxTarget.ScrollBars = ScrollBars.Vertical;
+                }
+                else
+                {
+                    m_dictForms[sKey].m_TextboxTarget.ScrollBars = ScrollBars.None;
+                }
+
+            }
+            catch (Exception ex)
             {
+                MainLib.ZalError err = new MainLib.ZalError();
+                string sMsg = "SetForm: ";
+                sMsg += err.LastError;
+                MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
-
-            m_dictForms[sKey].m_SetContents.Add(sText);
-
-            if (m_dictForms[sKey].m_TextboxTarget.Text.Length > 0)
-            {
-                m_dictForms[sKey].m_TextboxTarget.Text += "\r\n";
-            }
-            m_dictForms[sKey].m_TextboxTarget.Text += sText;
-
-            if (m_dictForms[sKey].m_TextboxTarget.Lines.Length > 1)
-            {
-                m_dictForms[sKey].m_TextboxTarget.ScrollBars = ScrollBars.Vertical;
-            }
-            else
-            {
-                m_dictForms[sKey].m_TextboxTarget.ScrollBars = ScrollBars.None;
-            }
-
         }   //  SetForm (...)
 
     }   //  public class WordFormsPanel 
