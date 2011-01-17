@@ -33,21 +33,21 @@ namespace TestUI
             m_dictForms.Add("MASgInanim", new StCell (textBoxMASgInanim));
             m_dictForms.Add("MASgAnim", new StCell (textBoxMASgAnim));
             m_dictForms.Add("MGSg", new StCell (textBoxMGSg));
-            m_dictForms.Add("MLSg", new StCell (textBoxMLSg));
+            m_dictForms.Add("MPSg", new StCell (textBoxMLSg));
             m_dictForms.Add("MDSg", new StCell (textBoxMDSg));
             m_dictForms.Add("MISg", new StCell (textBoxMISg));
 
             m_dictForms.Add("FNSg", new StCell (textBoxFNSg));
             m_dictForms.Add("FASg", new StCell (textBoxFASg));
             m_dictForms.Add("FGSg", new StCell (textBoxFGSg));
-            m_dictForms.Add("FLSg", new StCell (textBoxFLSg));
+            m_dictForms.Add("FPSg", new StCell (textBoxFLSg));
             m_dictForms.Add("FDSg", new StCell (textBoxFDSg));
             m_dictForms.Add("FISg", new StCell (textBoxFISg));
 
             m_dictForms.Add("NNSg", new StCell (textBoxNNSg));
             m_dictForms.Add("NASg", new StCell (textBoxNASg));
             m_dictForms.Add("NGSg", new StCell (textBoxNGSg));
-            m_dictForms.Add("NLSg", new StCell (textBoxNLSg));
+            m_dictForms.Add("NPSg", new StCell (textBoxNLSg));
             m_dictForms.Add("NDSg", new StCell (textBoxNDSg));
             m_dictForms.Add("NISg", new StCell (textBoxNISg));
 
@@ -55,7 +55,7 @@ namespace TestUI
             m_dictForms.Add("APlInanim", new StCell (textBoxAPlInanim));
             m_dictForms.Add("APlAnim", new StCell (textBoxAPlAnim));
             m_dictForms.Add("GPl", new StCell (textBoxGPl));
-            m_dictForms.Add("LPl", new StCell (textBoxLPl));
+            m_dictForms.Add("PPl", new StCell (textBoxLPl));
             m_dictForms.Add("DPl", new StCell (textBoxDPl));
             m_dictForms.Add("IPl", new StCell (textBoxIPl));
 
