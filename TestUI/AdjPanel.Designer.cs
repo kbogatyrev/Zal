@@ -146,7 +146,7 @@
             this.textBoxLabelLSg.Size = new System.Drawing.Size(62, 24);
             this.textBoxLabelLSg.TabIndex = 40;
             this.textBoxLabelLSg.TabStop = false;
-            this.textBoxLabelLSg.Text = "L";
+            this.textBoxLabelLSg.Text = "P";
             this.textBoxLabelLSg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxLabelGSg
@@ -310,7 +310,7 @@
             this.textBox5.Size = new System.Drawing.Size(62, 24);
             this.textBox5.TabIndex = 75;
             this.textBox5.TabStop = false;
-            this.textBox5.Text = "L";
+            this.textBox5.Text = "P";
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox6
@@ -448,7 +448,7 @@
             this.textBox17.Size = new System.Drawing.Size(62, 24);
             this.textBox17.TabIndex = 66;
             this.textBox17.TabStop = false;
-            this.textBox17.Text = "L";
+            this.textBox17.Text = "P";
             this.textBox17.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox18
@@ -599,7 +599,7 @@
             this.textBox43.Size = new System.Drawing.Size(62, 24);
             this.textBox43.TabIndex = 93;
             this.textBox43.TabStop = false;
-            this.textBox43.Text = "L";
+            this.textBox43.Text = "P";
             this.textBox43.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox44
