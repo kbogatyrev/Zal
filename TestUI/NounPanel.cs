@@ -32,14 +32,14 @@ namespace TestUI
             m_dictForms.Add ("NSg", new StCell (textBoxNSg));
             m_dictForms.Add ("ASg", new StCell (textBoxASg));
             m_dictForms.Add ("GSg", new StCell (textBoxGSg));
-            m_dictForms.Add ("LSg", new StCell (textBoxLSg));
+            m_dictForms.Add ("PSg", new StCell (textBoxLSg));
             m_dictForms.Add ("DSg", new StCell (textBoxDSg));
             m_dictForms.Add ("ISg", new StCell (textBoxISg));
 
             m_dictForms.Add ("NPl", new StCell (textBoxNPl));
             m_dictForms.Add ("APl", new StCell (textBoxAPl));
             m_dictForms.Add ("GPl", new StCell (textBoxGPl));
-            m_dictForms.Add ("LPl", new StCell (textBoxLPl));
+            m_dictForms.Add ("PPl", new StCell (textBoxLPl));
             m_dictForms.Add ("DPl", new StCell (textBoxDPl));
             m_dictForms.Add ("IPl", new StCell (textBoxIPl));
 
