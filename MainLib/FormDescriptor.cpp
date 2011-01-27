@@ -84,11 +84,11 @@ HRESULT CT_FormDescriptor::put_Reflexivity (ET_Reflexive eo_reflexivity)
 //    return S_OK;
 //}
 
-//HRESULT CT_FormDescriptor::put_Aspect (ET_Aspect eo_aspect)
-//{
-//    co_Hasher.eo_Aspect = eo_aspect;
-//    return S_OK;
-//}
+HRESULT CT_FormDescriptor::put_Aspect (ET_Aspect eo_aspect)
+{
+    co_Hasher.eo_Aspect = eo_aspect;
+    return S_OK;
+}
 
 void CT_FormDescriptor::v_FormsFromHash()
 {
