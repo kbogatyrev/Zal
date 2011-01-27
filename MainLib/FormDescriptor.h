@@ -104,7 +104,7 @@ public:
     STDMETHOD (put_Animacy) (ET_Animacy);
     STDMETHOD (put_Reflexivity) (ET_Reflexive);
 //    STDMETHOD (put_Voice) (ET_Voice);
-//    STDMETHOD (put_Aspect) (ET_Aspect);
+    STDMETHOD (put_Aspect) (ET_Aspect);
 
 protected:
     void v_FormsFromHash();
