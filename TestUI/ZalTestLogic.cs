@@ -635,6 +635,7 @@ namespace TestUI
             fd.Case = MainLib.ET_Case.CASE_NOM;
             fd.Gender = MainLib.ET_Gender.GENDER_M;
             fd.Animacy = MainLib.ET_Animacy.ANIM_NO;
+            fd.Aspect = lexeme.Aspect;
             fd.Reflexivity = lexeme.IsReflexive;
             fd.FindForms();
             if (fd.Count > 0)
