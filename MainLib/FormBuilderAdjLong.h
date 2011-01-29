@@ -13,13 +13,15 @@ public:
                            ET_AccentType eo_accentType, 
                            ET_Subparadigm eo_subparadigm,
                            int i_stemStressPos = -1,
-                           ET_Status eo_status = STATUS_COMMON) 
+                           ET_Status eo_status = STATUS_COMMON,
+                           bool b_irregular = false) 
         : CT_FormBuilderBaseDecl (pco_lexeme, SUBPARADIGM_LONG_ADJ),
           str_Lemma (str_lemma),
           eo_AccentType (eo_accentType),
           eo_Subparadigm (eo_subparadigm),
           i_StemStressPos (i_stemStressPos),
-          eo_Status (eo_status)
+          eo_Status (eo_status),
+          b_Irregular (b_irregular)
     {
         pco_Endings = new CT_AdjLongEndings();
     }
@@ -55,4 +57,5 @@ private:
     ET_Subparadigm eo_Subparadigm;
     int i_StemStressPos;        // participles only
     ET_Status eo_Status;
+    bool b_Irregular;
 };
