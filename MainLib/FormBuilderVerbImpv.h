@@ -23,8 +23,9 @@ public:
                                   wstring& str_ending,
                                   ET_Number eo_number,
                                   CComObject<CT_WordForm> *& pco_wordForm);
-
     HRESULT h_HandleCommonDeviations (CT_WordForm * pco_wordForm);
+    HRESULT h_CheckForIrregularForms (bool& b_isVariant); // check if irregular forms were built and
+                                                          // regular processing must be skipped
 
     HRESULT h_Build();
     HRESULT h_BuildIrregularForms();
