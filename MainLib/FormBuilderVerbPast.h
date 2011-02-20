@@ -46,6 +46,6 @@ public:
 
     HRESULT h_Build();
 
-    HRESULT h_BuildIrregular();
+    HRESULT h_BuildIrregular (bool&);
 
 };
