@@ -84,7 +84,10 @@ using namespace std::tr1;
                                  std::wstring (_T("\t")) + \
                                  io__.str() + \
                                  std::wstring (_T("\t")) + \
-                                 std::wstring (_T(__FUNCTION__)));
+                                 std::wstring (_T(__FUNCTION__)), \
+                                 std::wstring (_T("")), \
+                                 -1, \
+                                 false);
 
 #define CYRILLIC
 
