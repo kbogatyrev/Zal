@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{482CE096-64CB-4C09-8704-29D1CD9868F2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -120,12 +120,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AdjPanel.resx">
       <DependentUpon>AdjPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AnalysisPanel.resx">
       <DependentUpon>AnalysisPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="EnterDataDlg.resx">
       <DependentUpon>EnterDataDlg.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GridViewControl.resx">
       <DependentUpon>GridViewControl.cs</DependentUpon>
@@ -133,12 +136,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LexemeDataPanel.resx">
       <DependentUpon>LexemeDataPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NounPanel.resx">
       <DependentUpon>NounPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -147,9 +153,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VerbPanel.resx">
       <DependentUpon>VerbPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ZalTestForm.resx">
       <DependentUpon>ZalTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
