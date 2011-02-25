@@ -109,6 +109,8 @@ public:
 
     HRESULT h_HandleDeviations (CT_WordForm *);
 
+    HRESULT h_CheckIrregularForms (ET_Gender eo_gender, ET_Number eo_number, bool& b_handled);
+
     HRESULT h_Build();
 
 private:
