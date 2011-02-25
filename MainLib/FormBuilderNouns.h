@@ -47,6 +47,8 @@ protected:
                         int i_stressPos, 
                         const wstring& str_ending);
 
+    HRESULT h_CheckIrregularForms (ET_Gender, ET_Animacy, ET_Case, ET_Number, bool& b_handled);
+
 public:
     HRESULT h_Build();
 
