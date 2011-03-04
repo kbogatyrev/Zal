@@ -31,6 +31,8 @@ protected:
                     ET_Number eo_num, ET_Gender eo_gender, ET_Animacy eo_animacy, 
                     ET_Reflexive eo_refl);
 
+    int i_GramHashNSgMLong();
+
     HRESULT h_GetEndings();
 
     HRESULT h_GetStressPositions (const wstring&,
