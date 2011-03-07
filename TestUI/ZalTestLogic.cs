@@ -185,7 +185,9 @@ namespace TestUI
 
             string grSt = lexeme.GraphicStem;
 
-            if (MainLib.ET_PartOfSpeech.POS_NOUN == lexeme.PartOfSpeech)
+            if ((MainLib.ET_PartOfSpeech.POS_NOUN == lexeme.PartOfSpeech) ||
+                (MainLib.ET_PartOfSpeech.POS_PRONOUN == lexeme.PartOfSpeech) ||
+                (MainLib.ET_PartOfSpeech.POS_NUM == lexeme.PartOfSpeech))
             {
                 NounPanel np = new NounPanel();
                 tabPageDetails.Controls.Add(np);
@@ -216,7 +218,9 @@ namespace TestUI
                 }   // foreach
             }
 
-            if (MainLib.ET_PartOfSpeech.POS_ADJ == lexeme.PartOfSpeech)
+            if ((MainLib.ET_PartOfSpeech.POS_ADJ == lexeme.PartOfSpeech) ||
+                (MainLib.ET_PartOfSpeech.POS_PRONOUN_ADJ == lexeme.PartOfSpeech) ||
+                (MainLib.ET_PartOfSpeech.POS_NUM_ADJ == lexeme.PartOfSpeech))
             {
                 AdjPanel ap = new AdjPanel();
                 tabPageDetails.Controls.Add(ap);
