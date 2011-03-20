@@ -827,6 +827,7 @@ namespace TestUI
                     iWordform = 0;
                     iPreviousID = wf.LexemeId;
                     TabPage tab_Lexeme = new TabPage(wf.Lemma);
+                    tab_Lexeme.AutoScroll = true;
                     tab_Lexeme.Controls.Add(ap);
                     tabControl.TabPages.Add(tab_Lexeme);
                     tab_Lexeme.Show();

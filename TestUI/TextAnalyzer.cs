@@ -61,12 +61,37 @@ namespace TestUI
                     string str_left = m.Groups[1].Value;
                     string str_wf = m.Groups[2].Value;
                     string str_right = m.Groups[3].Value;
+
+                    if (Regex.IsMatch(str_wf, "[1234567890]"))
+                    {
+                      sw_out.WriteLine(str_left + "<w><ana lex=\"" + str_wf +
+                        "\" gr=\"NUM,ciph\"></ana>" + str_wf + "</w>" + str_right);
+                      ++i_wf;
+                      continue;
+                    }
+                    if (Regex.IsMatch(str_wf, "[a-zA-Z]"))
+                    {
+                      sw_out.WriteLine(str_left + "<w><ana lex=\"" + str_wf +
+                        "\" gr=\"NONLEX\"></ana>" + str_wf + "</w>" + str_right);
+                      ++i_wf;
+                      continue;
+                    }
+                    if (str_wf.Length <= 0)
+                    {
+                      if (str_left.Length > 0 || str_right.Length > 0)
+                      {
+                        sw_out.WriteLine(str_left + str_right);
+                      }
+                      continue;
+                    }
+
                     try
                     {
                         Analyzer.Analyze(str_wf.ToLower());
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine("Error while analyzing: " + str_wf);
                         sw_out.WriteLine(m.Groups[0].Value);
                         continue;
                     }
@@ -941,6 +966,10 @@ namespace TestUI
                 {
                     strb_ana.Append(",inf");
                 }
+            }
+            if (wf.LexemeId <= 0)
+            {
+                strb_ana.Append(",bastard");
             }
 
             strb_ana.Append("\"></ana>");
