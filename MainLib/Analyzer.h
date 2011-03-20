@@ -97,6 +97,7 @@ private:
     map<wstring, ET_MainSymbol> map_MainSymbol;
     
     unordered_multimap<wstring, struct_stem_links> umap_freq_stems;
+    unordered_multimap<wstring, int> umap_endings2subtbl;
     CT_EndingsTable* arr_freq_endings;
     
     void v_Init();
@@ -104,6 +105,10 @@ private:
     HRESULT h_Hasher2Wordform (const wstring& str_wordform,
                                CT_Hasher co_from,
                                CComObject<CT_WordForm> *& pco_to);
+    bool b_IsValidLemma(wstring str_wf);
+    bool b_ContainsPlausibleVariants(vector<CT_Hasher>* pvec_possible_wordforms);
+    int i_Plausibility(CT_Hasher co_wf);
+    void v_LeaveMostPlausible(vector<CT_Hasher>* pvec_possible_wordforms);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CT_Analyzer)

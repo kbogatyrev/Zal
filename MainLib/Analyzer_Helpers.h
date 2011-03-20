@@ -21,6 +21,9 @@ public:
     vector<int> vec_Gram;
     vector<int> vec_Stress;
 
+    int i_lexemes_count, i_cut_right;
+    wstring str_stem_ending, str_lemma_ending;
+
     CT_EndingsTable();
     ~CT_EndingsTable();
     void Clear();
