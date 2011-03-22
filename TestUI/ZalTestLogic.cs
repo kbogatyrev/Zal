@@ -78,38 +78,50 @@ namespace TestUI
 
         private void GetDbPath()
         {
-            FileDialog fd = new OpenFileDialog();
-            fd.CheckFileExists = false;
-            fd.CheckPathExists = true;
-            fd.FileName = m_sDbPath;
-            fd.Filter = "SQLite3 Files (*.db3)|*.db3|SQLite Files (*.db)|*.db|All Files (*.*)|*.*";
-            m_bDBOpen = false;
-            DialogResult dr = fd.ShowDialog();
-            if (DialogResult.OK == dr)
+            try
             {
-                if (File.Exists (fd.FileName))
+                FileDialog fd = new OpenFileDialog();
+                fd.CheckFileExists = false;
+                fd.CheckPathExists = true;
+                fd.FileName = m_sDbPath;
+                fd.Filter = "SQLite3 Files (*.db3)|*.db3|SQLite Files (*.db)|*.db|All Files (*.*)|*.*";
+                m_bDBOpen = false;
+                DialogResult dr = fd.ShowDialog();
+                if (DialogResult.OK == dr)
                 {
-                    m_bDBOpen = true;
-                    m_sDbPath = fd.FileName;
-                    m_Dictionary.DbPath = m_sDbPath;
-                    m_Analyzer.DbPath = m_sDbPath;
-                    m_LexPreprocessor.DbPath = m_sDbPath;
-                    toolStripStatusLabel.Text = m_sDbPath;
+                    if (File.Exists(fd.FileName))
+                    {
+                        m_bDBOpen = true;
+                        m_sDbPath = fd.FileName;
+                        m_Dictionary.DbPath = m_sDbPath;
+                        m_Analyzer.DbPath = m_sDbPath;
+                        m_LexPreprocessor.DbPath = m_sDbPath;
+                        toolStripStatusLabel.Text = m_sDbPath;
 
-// TODO path validation
+                        // TODO path validation
 
-                    synthesizeToolStripMenuItem.Enabled = true;
-                    analyzeToolStripMenuItem.Enabled = true;
-                    testToolStripMenuItem.Enabled = true;
-                }
-                else
-                {
-                    MessageBox.Show ("File Does not exist",
-                                     "Zal Test Error",
-                                     MessageBoxButtons.OK,
-                                     MessageBoxIcon.Exclamation);
+                        synthesizeToolStripMenuItem.Enabled = true;
+                        analyzeToolStripMenuItem.Enabled = true;
+                        testToolStripMenuItem.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("File Does not exist",
+                                         "Zal Test Error",
+                                         MessageBoxButtons.OK,
+                                         MessageBoxIcon.Exclamation);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                string sMsg = "GetDbPath: ";
+                MainLib.ZalError err = new MainLib.ZalError();
+                sMsg += err.LastError;
+                MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
+                return;
+            }
+
         }       //  GetDbPath()
 
         private void ShowLexemes()
