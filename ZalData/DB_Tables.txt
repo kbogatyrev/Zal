@@ -24,8 +24,6 @@ CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEG
 
 CREATE TABLE endings_meta (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, entries_count INTEGER);
 
-CREATE TABLE endings_for_heuristics (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash INTEGER, freq INTEGER, cut_right INTEGER, lemma_ending TEXT);
-
 CREATE TABLE subtables_for_heuristics (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, lexemes_count INTEGER, root_end TEXT, cut_right INTEGER, lemma_ending TEXT);
 
 CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, stem TEXT, stress_pos INTEGER, endings_link INTEGER, lemma TEXT);

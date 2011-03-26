@@ -14,3 +14,7 @@ DELETE FROM test_data_stress;
 DELETE FROM lexeme_hash_to_descriptor;
 DELETE FROM aspect_pair;
 DELETE FROM nonexistent_forms;
+DELETE FROM stems_for_analysis;
+DELETE FROM endings_for_analysis;
+DELETE FROM endings_meta;
+DELETE FROM subtables_for_heuristics;
