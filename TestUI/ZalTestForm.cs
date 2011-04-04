@@ -118,6 +118,24 @@ namespace TestUI
             GetDbPath();
         }
 
+
+        private void FreqWFListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+          string str_FreqWfFilePath = "";
+          OpenFileDialog fDialog = new OpenFileDialog();
+          fDialog.Title = "Open frequent wordforms list";
+          fDialog.Filter = "Файлы txt|*.txt|Все|*";
+          if (fDialog.ShowDialog() == DialogResult.OK)
+          {
+            str_FreqWfFilePath = fDialog.FileName.ToString();
+          }
+          else
+          {
+            return;
+          }
+          m_TextAnalyzer.LoadFrequent(str_FreqWfFilePath);
+        }
+
         private void byEntryFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try

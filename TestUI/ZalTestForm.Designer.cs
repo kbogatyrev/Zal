@@ -46,6 +46,7 @@
           this.statusStrip = new System.Windows.Forms.StatusStrip();
           this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
           this.tabControl = new System.Windows.Forms.TabControl();
+          this.FreqWFListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip.SuspendLayout();
           this.statusStrip.SuspendLayout();
           this.SuspendLayout();
@@ -66,7 +67,8 @@
           // fileToolStripMenuItem
           // 
           this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dBPathToolStripMenuItem});
+            this.dBPathToolStripMenuItem,
+            this.FreqWFListToolStripMenuItem});
           this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
           this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
           this.fileToolStripMenuItem.Text = "File";
@@ -74,7 +76,7 @@
           // dBPathToolStripMenuItem
           // 
           this.dBPathToolStripMenuItem.Name = "dBPathToolStripMenuItem";
-          this.dBPathToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+          this.dBPathToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
           this.dBPathToolStripMenuItem.Text = "Open Dictionary";
           this.dBPathToolStripMenuItem.Click += new System.EventHandler(this.dBPathToolStripMenuItem_Click);
           // 
@@ -198,6 +200,13 @@
           this.tabControl.Size = new System.Drawing.Size(660, 738);
           this.tabControl.TabIndex = 0;
           // 
+          // FreqWFListToolStripMenuItem
+          // 
+          this.FreqWFListToolStripMenuItem.Name = "FreqWFListToolStripMenuItem";
+          this.FreqWFListToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+          this.FreqWFListToolStripMenuItem.Text = "Open frequent wordforms list";
+          this.FreqWFListToolStripMenuItem.Click += new System.EventHandler(this.FreqWFListToolStripMenuItem_Click);
+          // 
           // TestApplet
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -245,6 +254,7 @@
         private System.Windows.Forms.ToolStripMenuItem exportTestDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importTestDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem parseTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FreqWFListToolStripMenuItem;
     }
 }
 

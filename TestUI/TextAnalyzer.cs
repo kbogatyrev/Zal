@@ -12,6 +12,7 @@ namespace TestUI
     class TextAnalyzer
     {
         private IAnalyzer Analyzer;
+        private Dictionary<string, string> DictFrequentWordforms = new Dictionary<string, string>();
 
         public TextAnalyzer()
         {
@@ -21,6 +22,32 @@ namespace TestUI
         public TextAnalyzer(IAnalyzer _Analyzer)
         {
             Analyzer = _Analyzer;
+        }
+
+        public void LoadFrequent(string str_FilePath)
+        {
+          StreamReader sr_freq_list;
+          try
+          {
+            sr_freq_list = new StreamReader(str_FilePath, Encoding.UTF8);
+          }
+          catch (Exception ex)
+          {
+            MessageBox.Show("An error occurred when opening the frequent wordforms list: " + ex.Message);
+            return;
+          }
+          string str_line = "";
+          while (!sr_freq_list.EndOfStream)
+          {
+            str_line = sr_freq_list.ReadLine();
+            if (str_line.Length <= 5)
+            {
+              continue;
+            }
+            string[] arr_str_match = Regex.Split(str_line, "^(.*?):\\s*(.*)$");
+            DictFrequentWordforms[arr_str_match[1]] = arr_str_match[2];
+          }
+          sr_freq_list.Close();
         }
 
         public int i_AnalyzeText(string str_FilePath)
@@ -60,6 +87,7 @@ namespace TestUI
                 {
                     string str_left = m.Groups[1].Value;
                     string str_wf = m.Groups[2].Value;
+                  string str_wf_lc = str_wf.ToLower();
                     string str_right = m.Groups[3].Value;
 
                     if (Regex.IsMatch(str_wf, "[1234567890]"))
@@ -84,10 +112,16 @@ namespace TestUI
                       }
                       continue;
                     }
+                    if (DictFrequentWordforms.ContainsKey(str_wf_lc))
+                    {
+                      sw_out.WriteLine(str_left + DictFrequentWordforms[str_wf_lc] + str_wf + "</w>" + str_right);
+                      ++i_wf;
+                      continue;
+                    }
 
                     try
                     {
-                        Analyzer.Analyze(str_wf.ToLower());
+                        Analyzer.Analyze(str_wf_lc);
                     }
                     catch (Exception ex)
                     {
