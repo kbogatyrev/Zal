@@ -79,7 +79,7 @@ public:
             if (iDeviation != 2)
             {
                 ATLASSERT(0);
-                CESttring sMsg (L"Unexpected common deviation in short participle.");
+                CEString sMsg (L"Unexpected common deviation in short participle.");
                 ERROR_LOG (sMsg);
                 throw CException (E_INVALIDARG, sMsg);
             }
@@ -120,5 +120,5 @@ private:
     ET_AccentType m_eAccentType1, m_eAccentType2;
     bool m_bFleetingVowel;
     map<int, bool> m_mapCommonDeviations;
-    ET_Status m_eoStatus;
+    ET_Status m_eStatus;
 };
