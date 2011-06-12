@@ -14,7 +14,7 @@ public:
     wstring str_lemma;
 };
 
-class CT_EndingsTable
+class CEndingsTable
 {
 public:
     vector<wstring> vec_Endings;
@@ -24,12 +24,12 @@ public:
     int i_lexemes_count, i_cut_right;
     wstring str_stem_ending, str_lemma_ending;
 
-    CT_EndingsTable();
-    ~CT_EndingsTable();
+    CEndingsTable();
+    ~CEndingsTable();
     void Clear();
     int i_AddEnding(int i_Hash, wstring str_Ending, int i_StressPos);
     int i_AddEnding(long l_Hash, wstring str_Ending, int i_StressPos);
     vector<int> vec_Find(wstring str_ending, int i_stress_pos = -2);
-    vector<int> vec_db_id(CT_Sqlite* pco_dbHandle); // Tries to find the table in the db, returns -1 if there's no such table
-    int i_db_Write(CT_Sqlite* pco_dbHandle); // Write the whole table to the db, return subtable_id
+    vector<int> vec_db_id(CSqlite* pco_dbHandle); // Tries to find the table in the db, returns -1 if there's no such table
+    int i_db_Write(CSqlite* pco_dbHandle); // Write the whole table to the db, return subtable_id
 };

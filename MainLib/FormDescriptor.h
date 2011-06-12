@@ -66,7 +66,7 @@ class ATL_NO_VTABLE CT_FormDescriptor :
     public CComCoClass<CT_FormDescriptor, &CLSID_ZalFormDescriptor>,
     public IDispatchImpl<VectorCollection, &IID_IFormFinder, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
-friend class CT_Lexeme;
+friend class CLexeme;
 
 public:
 	CT_FormDescriptor()
@@ -110,8 +110,8 @@ protected:
     void v_FormsFromHash();
 
 private:
-    CT_GramHasher co_Hasher;
-    CT_Lexeme * pco_Lexeme;
+    CGramHasher Hasher;
+    CLexeme * pLexeme;
 
 };
 

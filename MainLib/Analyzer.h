@@ -31,14 +31,14 @@ typedef VCUE::ICollectionOnSTLCopyImpl <IAnalyzer,
                                                           std::vector<CComVariant>::value_type>,
                                         EnumeratorType> WordFormCollection;
 
-class ATL_NO_VTABLE CT_Analyzer :
+class ATL_NO_VTABLE CAnalyzer :
 	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CT_Analyzer, &CLSID_ZalAnalyzer>,
+	public CComCoClass<CAnalyzer, &CLSID_ZalAnalyzer>,
 //    public WordFormCollection,
     public IDispatchImpl<WordFormCollection, &IID_IAnalyzer, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-	CT_Analyzer()
+	CAnalyzer()
 	{
         v_Init();
 	}
@@ -47,7 +47,7 @@ public:
     //DECLARE_NO_REGISTRY()
 
 
-    BEGIN_COM_MAP(CT_Analyzer)
+    BEGIN_COM_MAP(CAnalyzer)
 	    COM_INTERFACE_ENTRY(IAnalyzer)
 //	    COM_INTERFACE_ENTRY(IError)
         COM_INTERFACE_ENTRY(IDispatch)
@@ -92,23 +92,23 @@ public:
     HRESULT h_AddClassifyingCategories(CT_Hasher* pco_wf);
 
 private:
-    CT_Sqlite* pco_db;
+    CSqlite* pco_db;
     
     map<wstring, ET_MainSymbol> map_MainSymbol;
     
     unordered_multimap<wstring, struct_stem_links> umap_freq_stems;
     unordered_multimap<wstring, int> umap_endings2subtbl;
-    CT_EndingsTable* arr_freq_endings;
+    CEndingsTable* arr_freq_endings;
     
     void v_Init();
     void v_DeleteRepeats(vector<wstring>& vec_strings);
     HRESULT h_Hasher2Wordform (const wstring& str_wordform,
                                CT_Hasher co_from,
-                               CComObject<CT_WordForm> *& pco_to);
+                               CComObject<CWordForm> *& pco_to);
     bool b_IsValidLemma(wstring str_wf);
     bool b_ContainsPlausibleVariants(vector<CT_Hasher>* pvec_possible_wordforms);
     int i_Plausibility(CT_Hasher co_wf);
     void v_LeaveMostPlausible(vector<CT_Hasher>* pvec_possible_wordforms);
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CT_Analyzer)
+OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CAnalyzer)

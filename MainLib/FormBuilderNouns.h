@@ -7,13 +7,13 @@
 using namespace std;
 using namespace std::tr1;
 
-class CT_FormBuilderNouns : public CT_FormBuilderBaseDecl
+class CFormBuilderNouns : public CFormBuilderBaseDecl
 {
 public:
-    CT_FormBuilderNouns (CT_Lexeme * pco_lexeme) : 
-        CT_FormBuilderBaseDecl (pco_lexeme, SUBPARADIGM_NOUN)
+    CFormBuilderNouns (CLexeme * pco_lexeme) : 
+        CFormBuilderBaseDecl (pco_lexeme, SUBPARADIGM_NOUN)
     {
-        pco_Endings = new CT_NounEndings();
+        pco_Endings = new CNounEndings();
     }
 
 protected:
@@ -22,7 +22,7 @@ protected:
                     ET_Case eo_case,
                     ET_Number eo_number);
 
-    HRESULT h_GetEndings();
+    HRESULT hGetEndings();
 
     HRESULT h_HandleStemAugment (wstring& str_lemma, ET_Number, ET_Case);
 
@@ -40,9 +40,9 @@ protected:
     HRESULT h_CreateFormTemplate (ET_Number eo_number, 
                                   ET_Case eo_case, 
                                   const wstring& str_lemma, 
-                                  CComObject<CT_WordForm> *&);
+                                  CComObject<CWordForm> *&);
 
-    HRESULT h_Assemble (CT_WordForm *, 
+    HRESULT h_Assemble (CWordForm *, 
                         ET_StressLocation,
                         int i_stressPos, 
                         const wstring& str_ending);

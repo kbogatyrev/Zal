@@ -1,327 +1,327 @@
 #include "StdAfx.h"
 #include "Endings.h"
 
-int CT_NounEndings::i_Hash (const ST_EndingDescriptor& st_d)
+int CNounEndings::iHash (const StEndingDescriptor& stD)
 {
-    ATLASSERT (st_d.eo_Animacy == ANIM_UNDEFINED && st_d.eo_Gender == GENDER_UNDEFINED);
+    ATLASSERT (stD.eAnimacy == ANIM_UNDEFINED && stD.eGender == GENDER_UNDEFINED);
 
-    int i_key = st_d.eo_Number * CASE_COUNT * STRESS_LOCATION_COUNT +
-                st_d.eo_Case * STRESS_LOCATION_COUNT +
-                st_d.eo_Stress;
+    int iKey = stD.eNumber * CASE_COUNT * STRESS_LOCATION_COUNT +
+                stD.eCase * STRESS_LOCATION_COUNT +
+                stD.eStress;
 
-    return i_key;
+    return iKey;
 }
 
-HRESULT CT_NounEndings::h_AddEnding (const wstring& str_ending, 
-                                     const ST_EndingDescriptor& st_descriptor)
+HRESULT CNounEndings::hAddEnding (const CEString& sEnding, 
+                                    const StEndingDescriptor& stDescriptor)
 {
-    std::vector<ET_Number> vec_number;
-    if (NUM_UNDEFINED == st_descriptor.eo_Number)
+    std::vector<ET_Number> vecNumber;
+    if (NUM_UNDEFINED == stDescriptor.eNumber)
     {
-        for (int i_num = (int)NUM_UNDEFINED; i_num < (int)NUM_COUNT; ++i_num)
+        for (int iNum = (int)NUM_UNDEFINED; iNum < (int)NUM_COUNT; ++iNum)
         {
-            vec_number.push_back ((ET_Number)i_num);
+            vecNumber.push_back ((ET_Number)iNum);
         }
     }
     else
     {
-        vec_number.push_back (st_descriptor.eo_Number);
+        vecNumber.push_back (stDescriptor.eNumber);
     }
 
     //
     // Case must be defined for nouns
     //
-    if (CASE_UNDEFINED == st_descriptor.eo_Case)
+    if (CASE_UNDEFINED == stDescriptor.eCase)
     {
-        wstring str_msg (L"Undefined case in noun ending.");
-        ERROR_LOG (str_msg);
-        throw CT_Exception (E_INVALIDARG, str_msg);
+        CEString sMsg (L"Undefined case in noun ending.");
+        ERROR_LOG (sMsg);
+        throw CException (E_INVALIDARG, sMsg);
     }
 
-    std::vector<ET_StressLocation> vec_stress;
-    if (STRESS_LOCATION_UNDEFINED == st_descriptor.eo_Stress)
+    std::vector<ET_StressLocation> vecStress;
+    if (STRESS_LOCATION_UNDEFINED == stDescriptor.eStress)
     {
-        for (int i_stress = STRESS_LOCATION_UNDEFINED; 
-             i_stress < (int)STRESS_LOCATION_COUNT; 
-             ++i_stress)
+        for (int iStress = STRESS_LOCATION_UNDEFINED; 
+             iStress < (int)STRESS_LOCATION_COUNT; 
+             ++iStress)
         {
-            vec_stress.push_back ((ET_StressLocation)i_stress);
+            vecStress.push_back ((ET_StressLocation)iStress);
         }
     }
     else
     {
-        vec_stress.push_back (st_descriptor.eo_Stress);
+        vecStress.push_back (stDescriptor.eStress);
     }
 
-    for (int i_n = 0; i_n < (int)vec_number.size(); ++i_n)
-        for (int i_s = 0; i_s < (int)vec_stress.size(); ++i_s)
+    for (int iN = 0; iN < (int)vecNumber.size(); ++iN)
+        for (int iS = 0; iS < (int)vecStress.size(); ++iS)
         {
-            ST_EndingDescriptor st_d (vec_number[i_n], st_descriptor.eo_Case, vec_stress[i_s]);
-            int i_key = i_Hash (st_d);
-            mmap_Endings.insert (std::pair<int, wstring> (i_key, str_ending));
+            StEndingDescriptor stD (vecNumber[iN], stDescriptor.eCase, vecStress[iS]);
+            int iKey = iHash (stD);
+            m_mmEndings.insert (std::pair<int, CEString> (iKey, sEnding));
         }
 
     return S_OK;
 
-}   // CT_NounEndings::h_AddEnding (...)
+}   // CNounEndings::hAddEnding (...)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-int CT_AdjLongEndings::i_Hash (const ST_EndingDescriptor& st_d)
+int CAdjLongEndings::iHash (const StEndingDescriptor& stD)
 {
-    int i_key = st_d.eo_Gender * NUM_COUNT * CASE_COUNT * ANIM_COUNT * STRESS_LOCATION_COUNT +
-                st_d.eo_Number * CASE_COUNT * ANIM_COUNT * STRESS_LOCATION_COUNT +
-                st_d.eo_Case * ANIM_COUNT * STRESS_LOCATION_COUNT +
-                st_d.eo_Animacy * STRESS_LOCATION_COUNT +
-                st_d.eo_Stress;
+    int iKey = stD.eGender * NUM_COUNT * CASE_COUNT * ANIM_COUNT * STRESS_LOCATION_COUNT +
+               stD.eNumber * CASE_COUNT * ANIM_COUNT * STRESS_LOCATION_COUNT +
+               stD.eCase * ANIM_COUNT * STRESS_LOCATION_COUNT +
+               stD.eAnimacy * STRESS_LOCATION_COUNT +
+               stD.eStress;
 
-    return i_key;
+    return iKey;
 }
 
-HRESULT CT_AdjLongEndings::h_AddEnding (const wstring& str_ending, 
-                                        const ST_EndingDescriptor& st_descriptor)
+HRESULT CAdjLongEndings::hAddEnding (const CEString& sEnding, 
+                                       const StEndingDescriptor& stDescriptor)
 {
     //
     // Gender
     //
-    std::vector<ET_Gender> vec_gender;
-    if (GENDER_UNDEFINED == st_descriptor.eo_Gender)
+    std::vector<ET_Gender> vecGender;
+    if (GENDER_UNDEFINED == stDescriptor.eGender)
     {
-        for (int i_gen = (int)GENDER_UNDEFINED; i_gen < GENDER_COUNT; ++i_gen)
+        for (int iGen = (int)GENDER_UNDEFINED; iGen < GENDER_COUNT; ++iGen)
         {
-            vec_gender.push_back ((ET_Gender)i_gen);
+            vecGender.push_back ((ET_Gender)iGen);
         }
     }
     else
     {
-        vec_gender.push_back (st_descriptor.eo_Gender);
+        vecGender.push_back (stDescriptor.eGender);
     }
 
     //
     // Number
     //
-    std::vector<ET_Number> vec_number;
-    if (NUM_UNDEFINED == st_descriptor.eo_Number)
+    std::vector<ET_Number> vecNumber;
+    if (NUM_UNDEFINED == stDescriptor.eNumber)
     {
-        for (int i_num = (int)NUM_UNDEFINED; i_num < (int)NUM_COUNT; ++i_num)
+        for (int iNum = (int)NUM_UNDEFINED; iNum < (int)NUM_COUNT; ++iNum)
         {
-            vec_number.push_back ((ET_Number)i_num);
+            vecNumber.push_back ((ET_Number)iNum);
         }
     }
     else
     {
-        vec_number.push_back (st_descriptor.eo_Number);
+        vecNumber.push_back (stDescriptor.eNumber);
     }
 
     //
     // Animacy
     //
-    std::vector<ET_Animacy> vec_animacy;
-    if (ANIM_UNDEFINED == st_descriptor.eo_Animacy)
+    std::vector<ET_Animacy> vecAnimacy;
+    if (ANIM_UNDEFINED == stDescriptor.eAnimacy)
     {
-        for (int i_anim = ANIM_UNDEFINED; i_anim < (int)ANIM_COUNT; ++i_anim)
+        for (int iAnim = ANIM_UNDEFINED; iAnim < (int)ANIM_COUNT; ++iAnim)
         {
-            vec_animacy.push_back ((ET_Animacy)i_anim);
+            vecAnimacy.push_back ((ET_Animacy)iAnim);
         }
     }
     else
     {
-        vec_animacy.push_back (st_descriptor.eo_Animacy);
+        vecAnimacy.push_back (stDescriptor.eAnimacy);
     }
 
     //
     // Ending stressed/unstressed
     //
-    std::vector<ET_StressLocation> vec_stress;
-    if (STRESS_LOCATION_UNDEFINED == st_descriptor.eo_Stress)
+    std::vector<ET_StressLocation> vecStress;
+    if (STRESS_LOCATION_UNDEFINED == stDescriptor.eStress)
     {
-        for (int i_stress = STRESS_LOCATION_UNDEFINED; 
-             i_stress < (int)STRESS_LOCATION_COUNT; 
-             ++i_stress)
+        for (int iStress = STRESS_LOCATION_UNDEFINED; 
+             iStress < (int)STRESS_LOCATION_COUNT; 
+             ++iStress)
         {
-            vec_stress.push_back ((ET_StressLocation)i_stress);
+            vecStress.push_back ((ET_StressLocation)iStress);
         }
     }
     else
     {
-        vec_stress.push_back (st_descriptor.eo_Stress);
+        vecStress.push_back (stDescriptor.eStress);
     }
 
-    for (int i_g = 0; i_g < (int)vec_gender.size(); ++i_g)
-        for (int i_n = 0; i_n < (int)vec_number.size(); ++i_n)
-            for (int i_a = 0; i_a < (int)vec_animacy.size(); ++i_a)
-                for (int i_s = 0; i_s < (int)vec_stress.size(); ++i_s)
+    for (int iG = 0; iG < (int)vecGender.size(); ++iG)
+        for (int iN = 0; iN < (int)vecNumber.size(); ++iN)
+            for (int iA = 0; iA < (int)vecAnimacy.size(); ++iA)
+                for (int iS = 0; iS < (int)vecStress.size(); ++iS)
                 {
-                    ST_EndingDescriptor st_d (vec_gender[i_g], 
-                                              vec_number[i_n], 
-                                              st_descriptor.eo_Case, 
-                                              vec_animacy[i_a], 
-                                              vec_stress[i_s]);
-                    int i_key = i_Hash (st_d);
-                    mmap_Endings.insert (std::pair<int, wstring> (i_key, str_ending));
+                    StEndingDescriptor stD (vecGender[iG], 
+                                            vecNumber[iN], 
+                                            stDescriptor.eCase, 
+                                            vecAnimacy[iA], 
+                                            vecStress[iS]);
+                    int iKey = iHash (stD);
+                    m_mmEndings.insert (std::pair<int, CEString> (iKey, sEnding));
                 }
 
     return S_OK;
 
-}   //  CT_AdjLongEndings::h_AddEnding (...)
+}   //  CAdjLongEndings::hAddEnding (...)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-int CT_AdjShortEndings::i_Hash (const ST_EndingDescriptor& st_d)
+int CAdjShortEndings::iHash (const StEndingDescriptor& stD)
 {
-    int i_key = st_d.eo_Gender * NUM_COUNT * STRESS_LOCATION_COUNT +
-                st_d.eo_Number * STRESS_LOCATION_COUNT +
-                st_d.eo_Stress;
-    return i_key;
+    int iKey = stD.eGender * NUM_COUNT * STRESS_LOCATION_COUNT +
+               stD.eNumber * STRESS_LOCATION_COUNT +
+               stD.eStress;
+    return iKey;
 }
 
-HRESULT CT_AdjShortEndings::h_AddEnding (const wstring& str_ending, 
-                                         const ST_EndingDescriptor& st_descriptor)
+HRESULT CAdjShortEndings::hAddEnding (const CEString& sEnding, 
+                                      const StEndingDescriptor& stDescriptor)
 {
     //
     // Gender
     //
-    std::vector<ET_Gender> vec_gender;
-    if (GENDER_UNDEFINED == st_descriptor.eo_Gender)
+    std::vector<ET_Gender> vecGender;
+    if (GENDER_UNDEFINED == stDescriptor.eGender)
     {
-        for (int i_gen = (int)GENDER_UNDEFINED; i_gen < GENDER_COUNT; ++i_gen)
+        for (int iGen = (int)GENDER_UNDEFINED; iGen < GENDER_COUNT; ++iGen)
         {
-            vec_gender.push_back ((ET_Gender)i_gen);
+            vecGender.push_back ((ET_Gender)iGen);
         }
     }
     else
     {
-        vec_gender.push_back (st_descriptor.eo_Gender);
+        vecGender.push_back (stDescriptor.eGender);
     }
 
     //
     // Number
     //
-    if (NUM_UNDEFINED == st_descriptor.eo_Number)
+    if (NUM_UNDEFINED == stDescriptor.eNumber)
     {
-        wstring str_msg (L"Undefined number in short form ending.");
-        ERROR_LOG (str_msg);
-        throw CT_Exception (E_INVALIDARG, str_msg);
+        CEString sMsg (L"Undefined number in short form ending.");
+        ERROR_LOG (sMsg);
+        throw CException (E_INVALIDARG, sMsg);
     }
 
     //
     // Ending stressed/unstressed
     //
-    std::vector<ET_StressLocation> vec_stress;
-    if (STRESS_LOCATION_UNDEFINED == st_descriptor.eo_Stress)
+    std::vector<ET_StressLocation> vecStress;
+    if (STRESS_LOCATION_UNDEFINED == stDescriptor.eStress)
     {
-        for (int i_stress = STRESS_LOCATION_UNDEFINED; 
-             i_stress < (int)STRESS_LOCATION_COUNT; 
-             ++i_stress)
+        for (int iStress = STRESS_LOCATION_UNDEFINED; 
+             iStress < (int)STRESS_LOCATION_COUNT; 
+             ++iStress)
         {
-            vec_stress.push_back ((ET_StressLocation)i_stress);
+            vecStress.push_back ((ET_StressLocation)iStress);
         }
     }
     else
     {
-        vec_stress.push_back (st_descriptor.eo_Stress);
+        vecStress.push_back (stDescriptor.eStress);
     }
 
-    for (int i_g = 0; i_g < (int)vec_gender.size(); ++i_g)
-        for (int i_s = 0; i_s < (int)vec_stress.size(); ++i_s)
+    for (int iG = 0; iG < (int)vecGender.size(); ++iG)
+        for (int iS = 0; iS < (int)vecStress.size(); ++iS)
         {
-            ST_EndingDescriptor st_d (vec_gender[i_g], st_descriptor.eo_Number, vec_stress[i_s]);
-            int i_key = i_Hash (st_d);
-            mmap_Endings.insert (std::pair<int, wstring> (i_key, str_ending));
+            StEndingDescriptor stD (vecGender[iG], stDescriptor.eNumber, vecStress[iS]);
+            int iKey = iHash (stD);
+            m_mmEndings.insert (std::pair<int, CEString> (iKey, sEnding));
         }
 
     return S_OK;
 
-}   //  CT_AdjShortEndings::h_AddEnding (...)
+}   //  CAdjShortEndings::hAddEnding (...)
 
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-int CT_PersonalEndings::i_Hash (const ST_EndingDescriptor& st_d)
+int CPersonalEndings::iHash (const StEndingDescriptor& stD)
 {
-    int i_key = st_d.i_InflectionType * PERSON_COUNT * NUM_COUNT * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
-                st_d.eo_Person * NUM_COUNT * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
-                st_d.eo_Number * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
-                st_d.eo_Stress * STEM_AUSLAUT_COUNT + st_d.eo_StemAuslaut;
-    return i_key;
+    int iKey = stD.iInflectionType * PERSON_COUNT * NUM_COUNT * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
+               stD.ePerson * NUM_COUNT * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
+               stD.eNumber * STRESS_LOCATION_COUNT * STEM_AUSLAUT_COUNT +
+               stD.eStress * STEM_AUSLAUT_COUNT + stD.eStemAuslaut;
+    return iKey;
 }
 
-HRESULT CT_PersonalEndings::h_AddEnding (const wstring& str_ending, 
-                                         const ST_EndingDescriptor& st_descriptor)
+HRESULT CPersonalEndings::hAddEnding (const CEString& sEnding, 
+                                      const StEndingDescriptor& stDescriptor)
 {
     //
     // Person
     //
-    std::vector<ET_Person> vec_person;
-    if (PERSON_UNDEFINED == st_descriptor.eo_Person)
+    std::vector<ET_Person> vecPerson;
+    if (PERSON_UNDEFINED == stDescriptor.ePerson)
     {
-        wstring str_msg (L"Undefined person.");
-        ERROR_LOG (str_msg);
-        throw CT_Exception (E_INVALIDARG, str_msg);
+        CEString sMsg (L"Undefined person.");
+        ERROR_LOG (sMsg);
+        throw CException (E_INVALIDARG, sMsg);
     }
     else
     {
-        vec_person.push_back (st_descriptor.eo_Person);
+        vecPerson.push_back (stDescriptor.ePerson);
     }
 
     //
     // Number
     //
-    if (NUM_UNDEFINED == st_descriptor.eo_Number)
+    if (NUM_UNDEFINED == stDescriptor.eNumber)
     {
-        wstring str_msg (L"Undefined number in personal ending.");
-        ERROR_LOG (str_msg);
-        throw CT_Exception (E_INVALIDARG, str_msg);
+        CEString sMsg (L"Undefined number in personal ending.");
+        ERROR_LOG (sMsg);
+        throw CException (E_INVALIDARG, sMsg);
     }
 
     //
     // Ending stressed/unstressed
     //
-    std::vector<ET_StressLocation> vec_stress;
-    if (STRESS_LOCATION_UNDEFINED == st_descriptor.eo_Stress)
+    std::vector<ET_StressLocation> vecStress;
+    if (STRESS_LOCATION_UNDEFINED == stDescriptor.eStress)
     {
-        for (int i_stress = STRESS_LOCATION_UNDEFINED; 
-             i_stress < (int)STRESS_LOCATION_COUNT; 
-             ++i_stress)
+        for (int iStress = STRESS_LOCATION_UNDEFINED; 
+             iStress < (int)STRESS_LOCATION_COUNT; 
+             ++iStress)
         {
-            vec_stress.push_back ((ET_StressLocation)i_stress);
+            vecStress.push_back ((ET_StressLocation)iStress);
         }
     }
     else
     {
-        vec_stress.push_back (st_descriptor.eo_Stress);
+        vecStress.push_back (stDescriptor.eStress);
     }
 
     //
     // Ending after sh/not after sh
     //
-    std::vector<ET_StemAuslaut> vec_stemAuslaut;
-    if (STEM_AUSLAUT_UNDEFINED == st_descriptor.eo_StemAuslaut)
+    std::vector<ET_StemAuslaut> vecStemAuslaut;
+    if (STEM_AUSLAUT_UNDEFINED == stDescriptor.eStemAuslaut)
     {
-        for (int i_stemAuslaut = STEM_AUSLAUT_UNDEFINED; 
-             i_stemAuslaut < (int)STEM_AUSLAUT_COUNT; 
-             ++i_stemAuslaut)
+        for (int iStemAuslaut = STEM_AUSLAUT_UNDEFINED; 
+             iStemAuslaut < (int)STEM_AUSLAUT_COUNT; 
+             ++iStemAuslaut)
         {
-            vec_stemAuslaut.push_back ((ET_StemAuslaut)i_stemAuslaut);
+            vecStemAuslaut.push_back ((ET_StemAuslaut)iStemAuslaut);
         }
     }
     else
     {
-        vec_stemAuslaut.push_back (st_descriptor.eo_StemAuslaut);
+        vecStemAuslaut.push_back (stDescriptor.eStemAuslaut);
     }
 
-    for (int i_s = 0; i_s < (int)vec_stress.size(); ++i_s)
-        for (int i_sa = 0; i_sa < (int)vec_stemAuslaut.size(); ++i_sa)
+    for (int iS = 0; iS < (int)vecStress.size(); ++iS)
+        for (int iSa = 0; iSa < (int)vecStemAuslaut.size(); ++iSa)
         {
-            ST_EndingDescriptor st_d (st_descriptor.i_InflectionType,
-                                      st_descriptor.eo_Person, 
-                                      st_descriptor.eo_Number, 
-                                      vec_stress[i_s], 
-                                      vec_stemAuslaut[i_sa]);
-            int i_key = i_Hash (st_d);
-            mmap_Endings.insert (std::pair<int, wstring> (i_key, str_ending));
+            StEndingDescriptor stD (stDescriptor.iInflectionType,
+                                    stDescriptor.ePerson, 
+                                    stDescriptor.eNumber, 
+                                    vecStress[iS], 
+                                    vecStemAuslaut[iSa]);
+            int iKey = iHash (stD);
+            m_mmEndings.insert (std::pair<int, CEString> (iKey, sEnding));
         }
 
     return S_OK;
 
-}   //  CT_PersonalEndings::h_AddEnding (...)
+}   //  CPersonalEndings::hAddEnding (...)

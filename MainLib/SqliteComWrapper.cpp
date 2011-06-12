@@ -2,46 +2,46 @@
 #include "SqliteWrapper.h"
 #include "SqliteComWrapper.h"
 
-int CT_StatusUpdate::operator()(int i_percentDone) const
+int CStatusUpdate::operator()(int iPercentDone) const
 {
-    pco_Parent->StatusUpdate (i_percentDone);
-    return i_percentDone; 
+    pParent->StatusUpdate (iPercentDone);
+    return iPercentDone; 
 }
 
-HRESULT CT_SqliteComWrapper::StatusUpdate (int i_progress)
+HRESULT CSqliteComWrapper::StatusUpdate (int iProgress)
 {
-    HRESULT h_r = S_OK;
+    HRESULT hr = S_OK;
 
-    int i_nConnections = m_vec.GetSize();
-    for (int i_c = 0; i_c < i_nConnections; ++i_c)
+    int iNConnections = m_vec.GetSize();
+    for (int iC = 0; iC < iNConnections; ++iC)
     {
         Lock();
-        CComPtr<IUnknown> sp_unkConnection = m_vec.GetAt (i_c);
-        CComQIPtr<IZalNotification> sp_qiConnection = sp_unkConnection;
+        CComPtr<IUnknown> spUnkConnection = m_vec.GetAt (iC);
+        CComQIPtr<IZalNotification> spQiConnection = spUnkConnection;
         Unlock();
-        if (sp_qiConnection)
+        if (spQiConnection)
         {
-            h_r = sp_qiConnection->ProgressNotification (i_progress);
+            hr = spQiConnection->ProgressNotification (iProgress);
         }
     }
 
-    return h_r;
+    return hr;
 
 }   //  StatusUpdate (...)
 
-HRESULT CT_SqliteComWrapper::put_DbPath (BSTR bstr_dbPath)
+HRESULT CSqliteComWrapper::put_DbPath (BSTR bstrDbPath)
 {
     USES_CONVERSION;
 
-    str_DbPath = OLE2W (bstr_dbPath);
+    sDbPath = OLE2W (bstrDbPath);
 
-    if (pco_Db)
+    if (pDb)
     {
-        delete pco_Db;
+        delete pDb;
     }
 
-    pco_Db = new CT_Sqlite (str_DbPath);
-    if (!pco_Db)
+    pDb = new CSqlite (sDbPath);
+    if (!pDb)
     {
         return E_FAIL;
     }
@@ -50,13 +50,13 @@ HRESULT CT_SqliteComWrapper::put_DbPath (BSTR bstr_dbPath)
 
 }   //  put_DbPath (...)
 
-HRESULT CT_SqliteComWrapper::TableExists (BSTR bstr_table, BOOL * b_exists)
+HRESULT CSqliteComWrapper::TableExists (BSTR bstrTable, BOOL * bExists)
 {
     USES_CONVERSION;
 
-    HRESULT h_r = S_OK;
+    HRESULT hr = S_OK;
 
-    if (NULL == pco_Db)
+    if (NULL == pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
@@ -65,26 +65,26 @@ HRESULT CT_SqliteComWrapper::TableExists (BSTR bstr_table, BOOL * b_exists)
 
     try
     {
-        *b_exists = pco_Db->b_TableExists (OLE2W (bstr_table));
+        *bExists = pDb->bTableExists (OLE2W (bstrTable));
     }
     catch (...)
     {
-        wstring str_msg;
+        CEString sMsg;
         try
         {
-            wstring str_error;
-            pco_Db->v_GetLastError (str_error);
-            str_msg = L"DB error %d: ";
-            str_msg += str_error;
+            CEString sError;
+            pDb->GetLastError (sError);
+            sMsg = L"DB error %d: ";
+            sMsg += sError;
         }
         catch (...)
         {
-            str_msg = L"Apparent DB error ";
+            sMsg = L"Apparent DB error ";
         }
     
-        CString cs_msg;
-        cs_msg.Format (str_msg.c_str(), pco_Db->i_GetLastError());
-        ERROR_LOG ((LPCTSTR)cs_msg);
+        CString csMsg;
+        csMsg.Format (sMsg, pDb->iGetLastError());
+        ERROR_LOG ((LPCTSTR)csMsg);
  
         return E_FAIL;
     }
@@ -93,78 +93,78 @@ HRESULT CT_SqliteComWrapper::TableExists (BSTR bstr_table, BOOL * b_exists)
 
 }   //  TableExists (...)
 
-HRESULT CT_SqliteComWrapper::Export (BSTR bstr_path, SAFEARRAY * sarr_names)
+HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
 {
     USES_CONVERSION;
 
-    HRESULT h_r = S_OK;
+    HRESULT hr = S_OK;
 
-    if (NULL == pco_Db)
+    if (NULL == pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
         return E_POINTER;
     }
 
-    CComVariant sp_varName;
-    vector<wstring> vec_tableNames;
+//    CComVariant spVarName;
+    vector<CEString> vecTableNames;
     
-    long l_uBound = 0;
-    long l_lBound = 0;
-    h_r = SafeArrayGetUBound (sarr_names, 1, &l_uBound);
-    if (S_OK != h_r)
+    long lUBound = 0;
+    long lLBound = 0;
+    hr = SafeArrayGetUBound (sarrNames, 1, &lUBound);
+    if (S_OK != hr)
     {
         ATLASSERT(0);
         ERROR_LOG (L"Error getting safearray's lower bound.");
         return E_FAIL;
     }
 
-    h_r = SafeArrayGetLBound (sarr_names, 1, &l_lBound);
-    if (S_OK != h_r)
+    hr = SafeArrayGetLBound (sarrNames, 1, &lLBound);
+    if (S_OK != hr)
     {
         ATLASSERT(0);
         ERROR_LOG (L"Error getting safearray's upper bound.");
         return E_FAIL;
     }
 
-    unsigned int i_arrSize = l_uBound - l_lBound + 1;
-    for (unsigned int ui_at = 0; ui_at < i_arrSize; ++ui_at)
+    unsigned int iArrSize = lUBound - lLBound + 1;
+    for (unsigned int uiAt = 0; uiAt < iArrSize; ++uiAt)
     {
-        CComBSTR bstr_name;
-        h_r = SafeArrayGetElement (sarr_names, (long *)&ui_at, &bstr_name);
-        if (S_OK != h_r)
+        CComBSTR bstrName;
+        hr = SafeArrayGetElement (sarrNames, (long *)&uiAt, &bstrName);
+        if (S_OK != hr)
         {
             ATLASSERT(0);
             ERROR_LOG (L"Error extracting table name from safearray.");
             return E_FAIL;
         }
-        vec_tableNames.push_back (OLE2W (bstr_name));
+        vecTableNames.push_back (OLE2W (bstrName));
     }
 
     try
     {
-        CT_StatusUpdate co_progress;
-        co_progress.pco_Parent = this;
-        bool b_ret = pco_Db->b_ExportTables  (OLE2W (bstr_path), vec_tableNames, co_progress);
+        CStatusUpdate progress;
+        progress.pParent = this;
+        bool bRet = pDb->bExportTables  (OLE2W (bstrPath), vecTableNames, progress);
     }
     catch (...)
     {
-        wstring str_msg;
+        CEString sMsg;
         try
         {
-            wstring str_error;
-            pco_Db->v_GetLastError (str_error);
-            str_msg = L"DB error %d: ";
-            str_msg += str_error;
+            CEString sError;
+            pDb->GetLastError (sError);
+            sMsg = L"DB error %d: ";
+            sMsg += sError;
         }
         catch (...)
         {
-            str_msg = L"Apparent DB error ";
+            sMsg = L"Apparent DB error ";
         }
     
-        CString cs_msg;
-        cs_msg.Format (str_msg.c_str(), pco_Db->i_GetLastError());
-        ERROR_LOG ((LPCTSTR)cs_msg);
+        CString csMsg;
+        csMsg.Format (sMsg, pDb->iGetLastError());
+        ERROR_LOG ((LPCTSTR)csMsg);
  
         return E_FAIL;
     }
@@ -173,13 +173,13 @@ HRESULT CT_SqliteComWrapper::Export (BSTR bstr_path, SAFEARRAY * sarr_names)
 
 }   //  Export (...)
 
-HRESULT CT_SqliteComWrapper::Import (BSTR bstr_path)
+HRESULT CSqliteComWrapper::Import (BSTR bstrPath)
 {
     USES_CONVERSION;
 
-    HRESULT h_r = S_OK;
+    HRESULT hr = S_OK;
 
-    if (NULL == pco_Db)
+    if (NULL == pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
@@ -188,9 +188,9 @@ HRESULT CT_SqliteComWrapper::Import (BSTR bstr_path)
 
     try
     {
-        CT_StatusUpdate co_progress;
-        co_progress.pco_Parent = this;
-        bool b_ret = pco_Db->b_ImportTables (OLE2W (bstr_path), co_progress);
+        CStatusUpdate progress;
+        progress.pParent = this;
+        bool b_ret = pDb->bImportTables (OLE2W (bstrPath), progress);
         if (!b_ret)
         {
             return E_FAIL;
@@ -198,22 +198,22 @@ HRESULT CT_SqliteComWrapper::Import (BSTR bstr_path)
     }
     catch (...)
     {
-        wstring str_msg;
+        CEString sMsg;
         try
         {
-            wstring str_error;
-            pco_Db->v_GetLastError (str_error);
-            str_msg = L"DB error %d: ";
-            str_msg += str_error;
+            CEString sError;
+            pDb->GetLastError (sError);
+            sMsg = L"DB error %d: ";
+            sMsg += sError;
         }
         catch (...)
         {
-            str_msg = L"Apparent DB error ";
+            sMsg = L"Apparent DB error ";
         }
     
-        CString cs_msg;
-        cs_msg.Format (str_msg.c_str(), pco_Db->i_GetLastError());
-        ERROR_LOG ((LPCTSTR)cs_msg);
+        CString csMsg;
+        csMsg.Format (sMsg, pDb->iGetLastError());
+        ERROR_LOG ((LPCTSTR)csMsg);
  
         return E_FAIL;
     }

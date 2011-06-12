@@ -4,198 +4,198 @@
 
 using namespace std;
 
-struct ST_EndingDescriptor
+struct StEndingDescriptor
 {
-    int i_InflectionType;
-    ET_Gender eo_Gender;
-    ET_Number eo_Number;
-    ET_Case eo_Case;
-    ET_Animacy eo_Animacy;
-    ET_Person eo_Person;
-    ET_StressLocation eo_Stress;
-    ET_StemAuslaut eo_StemAuslaut;
+    int iInflectionType;
+    ET_Gender eGender;
+    ET_Number eNumber;
+    ET_Case eCase;
+    ET_Animacy eAnimacy;
+    ET_Person ePerson;
+    ET_StressLocation eStress;
+    ET_StemAuslaut eStemAuslaut;
 
-    ST_EndingDescriptor() : i_InflectionType (INFLECTION_TYPE_UNDEFINED),
-                            eo_Gender (GENDER_UNDEFINED), 
-                            eo_Number (NUM_UNDEFINED), 
-                            eo_Case (CASE_UNDEFINED), 
-                            eo_Animacy (ANIM_UNDEFINED), 
-                            eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (STRESS_LOCATION_UNDEFINED),
-                            eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
+    StEndingDescriptor() : iInflectionType (INFLECTION_TYPE_UNDEFINED),
+                           eGender (GENDER_UNDEFINED), 
+                           eNumber (NUM_UNDEFINED), 
+                           eCase (CASE_UNDEFINED), 
+                           eAnimacy (ANIM_UNDEFINED), 
+                           ePerson (PERSON_UNDEFINED),
+                           eStress (STRESS_LOCATION_UNDEFINED),
+                           eStemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for nouns
-    ST_EndingDescriptor (ET_Number eo_n, 
-                         ET_Case eo_c, 
-                         ET_StressLocation eo_s) :
-                            i_InflectionType (INFLECTION_TYPE_UNDEFINED),
-                            eo_Gender (GENDER_UNDEFINED), 
-                            eo_Number (eo_n),
-                            eo_Case (eo_c), 
-                            eo_Animacy (ANIM_UNDEFINED), 
-                            eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (eo_s),
-                            eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
+    StEndingDescriptor (ET_Number eN, 
+                         ET_Case eC, 
+                         ET_StressLocation eS) :
+                            iInflectionType (INFLECTION_TYPE_UNDEFINED),
+                            eGender (GENDER_UNDEFINED), 
+                            eNumber (eN),
+                            eCase (eC), 
+                            eAnimacy (ANIM_UNDEFINED), 
+                            ePerson (PERSON_UNDEFINED),
+                            eStress (eS),
+                            eStemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for long adjectves
-    ST_EndingDescriptor (ET_Gender eo_g,
-                         ET_Number eo_n, 
-                         ET_Case eo_c,
-                         ET_Animacy eo_a,
-                         ET_StressLocation eo_s) :
-                            i_InflectionType (INFLECTION_TYPE_UNDEFINED),
-                            eo_Gender (eo_g), 
-                            eo_Number (eo_n),
-                            eo_Case (eo_c),
-                            eo_Animacy (eo_a),
-                            eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (eo_s),
-                            eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
+    StEndingDescriptor (ET_Gender eG,
+                         ET_Number eN, 
+                         ET_Case eC,
+                         ET_Animacy eA,
+                         ET_StressLocation eS) :
+                            iInflectionType (INFLECTION_TYPE_UNDEFINED),
+                            eGender (eG), 
+                            eNumber (eN),
+                            eCase (eC),
+                            eAnimacy (eA),
+                            ePerson (PERSON_UNDEFINED),
+                            eStress (eS),
+                            eStemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for short adjectives
-    ST_EndingDescriptor (ET_Gender eo_g,
-                         ET_Number eo_n,
-                         ET_StressLocation eo_s) :
-                            i_InflectionType (INFLECTION_TYPE_UNDEFINED),
-                            eo_Gender (eo_g), 
-                            eo_Number (eo_n),
-                            eo_Case (CASE_UNDEFINED), 
-                            eo_Animacy (ANIM_UNDEFINED), 
-                            eo_Person (PERSON_UNDEFINED),
-                            eo_Stress (eo_s),
-                            eo_StemAuslaut (STEM_AUSLAUT_UNDEFINED)
+    StEndingDescriptor (ET_Gender eG,
+                         ET_Number eN,
+                         ET_StressLocation eS) :
+                            iInflectionType (INFLECTION_TYPE_UNDEFINED),
+                            eGender (eG), 
+                            eNumber (eN),
+                            eCase (CASE_UNDEFINED), 
+                            eAnimacy (ANIM_UNDEFINED), 
+                            ePerson (PERSON_UNDEFINED),
+                            eStress (eS),
+                            eStemAuslaut (STEM_AUSLAUT_UNDEFINED)
     {}
 
     // Overload for personal forms
-    ST_EndingDescriptor (int i_inflectionType,
-                         ET_Person eo_p,
-                         ET_Number eo_n,
-                         ET_StressLocation eo_s,
-                         ET_StemAuslaut eo_sa) :
-                            i_InflectionType (i_inflectionType),
-                            eo_Gender (GENDER_UNDEFINED),
-                            eo_Number (eo_n),
-                            eo_Case (CASE_UNDEFINED),
-                            eo_Animacy (ANIM_UNDEFINED),
-                            eo_Person (eo_p), 
-                            eo_Stress (eo_s),
-                            eo_StemAuslaut (eo_sa)
+    StEndingDescriptor (int iInflectionType,
+                         ET_Person eP,
+                         ET_Number eN,
+                         ET_StressLocation eS,
+                         ET_StemAuslaut eSa) :
+                            iInflectionType (iInflectionType),
+                            eGender (GENDER_UNDEFINED),
+                            eNumber (eN),
+                            eCase (CASE_UNDEFINED),
+                            eAnimacy (ANIM_UNDEFINED),
+                            ePerson (eP), 
+                            eStress (eS),
+                            eStemAuslaut (eSa)
     {}
 
-    wstring str_ToString() const
+    CEString sToString() const
     {
-        wstring str_ (L"Inflection type = ");
-        str_ += CT_ExtString::str_ToString (i_InflectionType);
-        str_ += L"; Gender = ";
-        str_ += CT_ExtString::str_ToString (eo_Gender);
-        str_ += L"; Number = ";
-        str_ += CT_ExtString::str_ToString (eo_Number);
-        str_ += L"; Case = ";
-        str_ += CT_ExtString::str_ToString (eo_Case);
-        str_ += L"; Animacy = ";
-        str_ += CT_ExtString::str_ToString (eo_Animacy);
-        str_ += L"; Person = ";
-        str_ += CT_ExtString::str_ToString (eo_Person);
-        str_ += L"; Stress = ";
-        str_ += CT_ExtString::str_ToString (eo_Stress);
-        str_ += L"; StemAuslaut = ";
-        str_ += CT_ExtString::str_ToString (eo_StemAuslaut);
+        CEString s_ (L"Inflection type = ");
+        s_ += CEString::sToString (iInflectionType);
+        s_ += L"; Gender = ";
+        s_ += CEString::sToString (eGender);
+        s_ += L"; Number = ";
+        s_ += CEString::sToString (eNumber);
+        s_ += L"; Case = ";
+        s_ += CEString::sToString (eCase);
+        s_ += L"; Animacy = ";
+        s_ += CEString::sToString (eAnimacy);
+        s_ += L"; Person = ";
+        s_ += CEString::sToString (ePerson);
+        s_ += L"; Stress = ";
+        s_ += CEString::sToString (eStress);
+        s_ += L"; StemAuslaut = ";
+        s_ += CEString::sToString (eStemAuslaut);
 
-        return str_;
+        return s_;
     }
 
 };
 
-class CT_Endings
+class CEndings
 {
 protected:
-    typedef std::multimap<int, wstring> EndingsMultiMap;
+    typedef std::multimap<int, CEString> EndingsMultiMap;
     typedef pair<EndingsMultiMap::const_iterator, EndingsMultiMap::const_iterator> ItPair;
 
 public:
-    CT_Endings()
+    CEndings()
     {}
 
-    virtual ~CT_Endings()
+    virtual ~CEndings()
     {}
 
     virtual void v_Reset()
     {
-        mmap_Endings.clear();
+        m_mmEndings.clear();
     }
 
-    virtual int i_Hash (const ST_EndingDescriptor&) = 0;
+    virtual int iHash (const StEndingDescriptor&) = 0;
 
-    int i_Count (const ST_EndingDescriptor& st_d)
+    int iCount (const StEndingDescriptor& stD)
     {
-        int i_h = i_Hash (st_d);
-        return mmap_Endings.count (i_h);
+        int iH = iHash (stD);
+        return m_mmEndings.count (iH);
     }
 
-    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&) = 0;
+    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&) = 0;
 
-    HRESULT h_GetEnding (const ST_EndingDescriptor& st_descriptor, int i_seqNum, wstring& str_ending)
+    HRESULT hGetEnding (const StEndingDescriptor& stDescriptor, int iSeqNum, CEString& sEnding)
     {
-        int i_key = i_Hash (st_descriptor);
+        int iKey = iHash (stDescriptor);
 
-        ItPair pair_Range = mmap_Endings.equal_range (i_key);
-        for (int i_item = 0; i_item < i_seqNum; ++i_item)
+        ItPair pair_Range = m_mmEndings.equal_range (iKey);
+        for (int iItem = 0; iItem < iSeqNum; ++iItem)
         {
             if (++pair_Range.first == pair_Range.second)
             {
-                wstring str_msg (L"Error getting ending from hash for: ");
-                str_msg += st_descriptor.str_ToString();
-                ERROR_LOG (str_msg);
-                throw CT_Exception (E_FAIL, str_msg);
+                CEString sMsg (L"Error getting ending from hash for: ");
+                sMsg += stDescriptor.sToString();
+                ERROR_LOG (sMsg);
+                throw CException (E_FAIL, sMsg);
             }
         }
 
-        str_ending = (*pair_Range.first).second;
+        sEnding = (*pair_Range.first).second;
 
         return S_OK;
     }
 
-    HRESULT h_GetEnding (const ST_EndingDescriptor& st_d, wstring& str_)
+    HRESULT hGetEnding (const StEndingDescriptor& stD, CEString& s_)
     {
-        return h_GetEnding (st_d, 0, str_);
+        return hGetEnding (stD, 0, s_);
     }
 
 protected:
-    std::multimap<int, wstring> mmap_Endings;
+    std::multimap<int, CEString> m_mmEndings;
 
 };
 
-class CT_NounEndings : public CT_Endings
+class CNounEndings : public CEndings
 {
-    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
+    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
-    virtual int i_Hash (const ST_EndingDescriptor&);
+    virtual int iHash (const StEndingDescriptor&);
 };
 
-class CT_AdjLongEndings : public CT_Endings
+class CAdjLongEndings : public CEndings
 {
-    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
+    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
-    virtual int i_Hash (const ST_EndingDescriptor&);
+    virtual int iHash (const StEndingDescriptor&);
 };
 
-class CT_AdjShortEndings : public CT_Endings
+class CAdjShortEndings : public CEndings
 {
-    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
+    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
-    virtual int i_Hash (const ST_EndingDescriptor&);
+    virtual int iHash (const StEndingDescriptor&);
 };
 
-class CT_PersonalEndings : public CT_Endings
+class CPersonalEndings : public CEndings
 {
-    virtual HRESULT h_AddEnding (const wstring&, const ST_EndingDescriptor&);
+    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
-    virtual int i_Hash (const ST_EndingDescriptor&);
+    virtual int iHash (const StEndingDescriptor&);
 };

@@ -4,17 +4,17 @@
 using namespace std;
 using namespace std::tr1;
 
-class CT_FormBuilderPersonal : public CT_FormBuilderBaseConj
+class CFormBuilderPersonal : public CFormBuilderBaseConj
 {
 public:
-    CT_FormBuilderPersonal (CT_Lexeme * pco_lexeme) : 
-        CT_FormBuilderBaseConj (pco_lexeme, SUBPARADIGM_PRESENT_TENSE)
+    CFormBuilderPersonal (CLexeme * pco_lexeme) : 
+        CFormBuilderBaseConj (pco_lexeme, SUBPARADIGM_PRESENT_TENSE)
     {
-        pco_Endings = new CT_PersonalEndings();
+        pco_Endings = new CPersonalEndings();
     }
 
 public:
-    HRESULT h_GetEndings();
+    HRESULT hGetEndings();
     HRESULT h_GetStressType (ET_Number, ET_Person,  ET_StressLocation&);
     HRESULT h_GetAuslautType (ET_Number, ET_Person, ET_StemAuslaut&);
     HRESULT h_GetLemma (ET_Number, ET_Person, wstring&);
@@ -25,9 +25,9 @@ public:
 //    HRESULT h_FleetingVowelCheck (wstring& str_verbForm);
     HRESULT h_CreateFormTemplate (ET_Number eo_number, 
                                   ET_Person eo_person,
-                                  CComObject<CT_WordForm> *& pco_wordForm);
+                                  CComObject<CWordForm> *& pco_wordForm);
     HRESULT h_Build();
     HRESULT h_BuildIrregular();
-    HRESULT h_BuildIrregularForm (ET_Number, ET_Person, ST_IrregularForm& it_if);
+    HRESULT h_BuildIrregularForm (ET_Number, ET_Person, StIrregularForm& it_if);
 
 };

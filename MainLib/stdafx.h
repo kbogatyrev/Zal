@@ -61,7 +61,7 @@ using namespace std::tr1;
 //
 // Zal
 //
-#include "Error.h"
+#include "ErrorHandlers.h"
 
 /*
 #define ERROR_LOG(str_Msg) wstringstream io__; \
@@ -76,7 +76,7 @@ using namespace std::tr1;
                   -1, \
                   false);
 */
-
+/*
 #define ERROR_LOG(str_Msg) wstringstream io__; \
         io__ << __LINE__; \
         CT_Error::v_HandleError (str_Msg, \
@@ -88,11 +88,13 @@ using namespace std::tr1;
                                  std::wstring (_T("")), \
                                  -1, \
                                  false);
+*/
 
 #define CYRILLIC
 
 #include "Exception.h"
-#include "ExtString.h"
+//#include "ExtString.h"
+#include "EString.h"
 #include "Globals.h"
 #include "GenericHash.h"
 #include "Callbacks.h"

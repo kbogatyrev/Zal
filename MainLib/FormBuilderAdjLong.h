@@ -5,59 +5,59 @@
 using namespace std;
 using namespace std::tr1;
 
-class CT_FormBuilderLongAdj : public CT_FormBuilderBaseDecl
+class CFormBuilderLongAdj : public CFormBuilderBaseDecl
 {
 public:
-    CT_FormBuilderLongAdj (CT_Lexeme * pco_lexeme, 
-                           const wstring& str_lemma,
-                           ET_AccentType eo_accentType, 
-                           ET_Subparadigm eo_subparadigm,
-                           int i_stemStressPos = -1,
-                           ET_Status eo_status = STATUS_COMMON,
-                           bool b_irregular = false) 
-        : CT_FormBuilderBaseDecl (pco_lexeme, SUBPARADIGM_LONG_ADJ),
-          str_Lemma (str_lemma),
-          eo_AccentType (eo_accentType),
-          eo_Subparadigm (eo_subparadigm),
-          i_StemStressPos (i_stemStressPos),
-          eo_Status (eo_status),
-          b_Irregular (b_irregular)
+    CFormBuilderLongAdj (CLexeme * pLexeme, 
+                         const CEString& sLemma,
+                         ET_AccentType eAccentType, 
+                         ET_Subparadigm eSubparadigm,
+                         int iStemStressPos = -1,
+                         ET_Status eStatus = STATUS_COMMON,
+                         bool bIrregular = false) 
+        : CFormBuilderBaseDecl (pLexeme, SUBPARADIGM_LONG_ADJ),
+          m_sLemma (sLemma),
+          m_eAccentType (eAccentType),
+          m_eSubparadigm (eSubparadigm),
+          m_iStemStressPos (iStemStressPos),
+          m_eStatus (eStatus),
+          m_bIrregular (bIrregular)
     {
-        pco_Endings = new CT_AdjLongEndings();
+        m_pEndings = new CAdjLongEndings();
     }
 
 protected:
-    int i_GramHash (ET_PartOfSpeech eo_pos, ET_Subparadigm eo_subparadigm, ET_Case eo_case, 
-                    ET_Number eo_num, ET_Gender eo_gender, ET_Animacy eo_animacy, 
-                    ET_Reflexive eo_refl);
+    int iGramHash (ET_PartOfSpeech ePos, ET_Subparadigm eSubparadigm, ET_Case eCase, 
+                    ET_Number eNum, ET_Gender eGender, ET_Animacy eAnimacy, 
+                    ET_Reflexive eRefl);
 
-    int i_GramHashNSgMLong();
+    int iGramHashNSgMLong();
 
-    HRESULT h_GetEndings();
+    HRESULT hGetEndings();
 
-    HRESULT h_GetStressPositions (const wstring&,
-                                  ET_StressLocation,
-                                  vector<int>& vec_iStressPos);
+    HRESULT hGetStressPositions (const CEString&,
+                                 ET_StressLocation,
+                                 vector<int>& vecStressPos);
 
-    HRESULT h_CreateFormTemplate (ET_Gender, 
-                                  ET_Number, 
-                                  ET_Case, 
-                                  ET_Animacy, 
-                                  const wstring& str_ending,
-                                  CComObject<CT_WordForm> *&); 
+    HRESULT hCreateFormTemplate (ET_Gender, 
+                                 ET_Number, 
+                                 ET_Case, 
+                                 ET_Animacy, 
+                                 const CEString& sEnding,
+                                 CComObject<CWordForm> *&); 
 
-    HRESULT h_HandleCommonDeviations (CT_WordForm *);
+    HRESULT hHandleCommonDeviations (CWordForm *);
 
 public:
-    HRESULT h_Build();
+    HRESULT hBuild();
 
-    HRESULT h_BuildParticiple();
+    HRESULT hBuildParticiple();
 
 private:
-    wstring str_Lemma;
-    ET_AccentType eo_AccentType;
-    ET_Subparadigm eo_Subparadigm;
-    int i_StemStressPos;        // participles only
-    ET_Status eo_Status;
-    bool b_Irregular;
+    CEString m_sLemma;
+    ET_AccentType m_eAccentType;
+    ET_Subparadigm m_eSubparadigm;
+    int m_iStemStressPos;        // participles only
+    ET_Status m_eStatus;
+    bool m_bIrregular;
 };

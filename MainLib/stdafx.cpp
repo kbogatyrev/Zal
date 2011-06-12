@@ -4,6 +4,6 @@
 
 #include "stdafx.h"
 
-vector<wstring> CT_Error::vec_Log_;
-sqlite3 * CT_Sqlite::spo_Db = NULL;
-int CT_Sqlite::si_Refcount = 0;
+//vector<wstring> CT_Error::vec_Log_;
+//sqlite3 * CSqlite::spo_Db = NULL;
+//int CSqlite::si_Refcount = 0;

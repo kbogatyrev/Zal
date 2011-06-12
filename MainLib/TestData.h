@@ -86,7 +86,7 @@ private:
 
 private:
     wstring str_DbPath;
-    CT_Sqlite * pco_Db;
+    CSqlite * pco_Db;
 
 };
 

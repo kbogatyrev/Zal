@@ -46,22 +46,22 @@ typedef VCUE::ICollectionOnSTLCopyImpl <IDictionary,
 
 using namespace LexemeVector;
 
-class ATL_NO_VTABLE CT_Dictionary :
+class ATL_NO_VTABLE CDictionary :
 	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CT_Dictionary, &CLSID_ZalDictionary>,
+	public CComCoClass<CDictionary, &CLSID_ZalDictionary>,
     public IDispatchImpl<LexemeCollection, &IID_IDictionary, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 friend class CT_Verifier;
 
 public:
-	CT_Dictionary()
+	CDictionary()
 	{
 	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_DICTIONARY)
 
 
-BEGIN_COM_MAP(CT_Dictionary)
+BEGIN_COM_MAP(CDictionary)
 	COM_INTERFACE_ENTRY(IDictionary)
     COM_INTERFACE_ENTRY(IDispatch)
 END_COM_MAP()
@@ -70,31 +70,31 @@ END_COM_MAP()
 
 	HRESULT FinalConstruct()
 	{
-        pco_Db = NULL;
+        m_pDb = NULL;
 		return S_OK;
 	}
 
 	void FinalRelease()
 	{
         m_coll.clear();
-        delete pco_Db;
+        delete m_pDb;
 	}
 
 public:
-    STDMETHOD (put_DbPath) (BSTR bstr_dbPath);
-    STDMETHOD (GetLexeme) (LONG Id, ILexeme ** pp_lexeme);
-    STDMETHOD (GetLexemeByHash) (ULONG ul_LexemeHash, ILexeme ** pp_lexeme);
-    STDMETHOD (GetLexemesByGraphicStem) (BSTR bstr_key);
-    STDMETHOD (GetLexemesByInitialForm) (BSTR bstr_key);
+    STDMETHOD (put_DbPath) (BSTR bsDbPath);
+    STDMETHOD (GetLexeme) (LONG Id, ILexeme ** ppLexeme);
+    STDMETHOD (GetLexemeByHash) (ULONG ulLexemeHash, ILexeme ** ppLexeme);
+    STDMETHOD (GetLexemesByGraphicStem) (BSTR bsKey);
+    STDMETHOD (GetLexemesByInitialForm) (BSTR bsKey);
     STDMETHOD (Clear) ();
 
 private:
-    wstring str_DbPath;
-    CT_Sqlite * pco_Db;
+    CEString m_sDbPath;
+    CSqlite * m_pDb;
 
-    HRESULT h_GetData (const wstring& str_select);
-    HRESULT h_ReadFromDb (__int64 ll_lexemeId);
-    HRESULT h_ReadFromDb (const CT_ExtString& str_stem);
+    HRESULT hGetData (const CEString& sSelect);
+    HRESULT hReadFromDb (__int64 llLexemeId);
+    HRESULT hReadFromDb (const CEString& sStem);
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(ZalDictionary), CT_Dictionary)
+OBJECT_ENTRY_AUTO(__uuidof(ZalDictionary), CDictionary)

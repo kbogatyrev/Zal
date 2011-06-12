@@ -4,7 +4,7 @@
 using namespace std;
 using namespace std::tr1;
 
-class CT_FormBuilderPast : public CT_FormBuilderBaseConj
+class CFormBuilderPast : public CFormBuilderBaseConj
 {
     struct st_StressData
     {
@@ -17,12 +17,12 @@ class CT_FormBuilderPast : public CT_FormBuilderBaseConj
     };
 
 public:
-    CT_FormBuilderPast (CT_Lexeme * pco_lexeme) : 
-        CT_FormBuilderBaseConj (pco_lexeme, SUBPARADIGM_PAST_TENSE)
+    CFormBuilderPast (CLexeme * pco_lexeme) : 
+        CFormBuilderBaseConj (pco_lexeme, SUBPARADIGM_PAST_TENSE)
     {}
 
 public:
-    HRESULT h_GetEnding (wstring& str_lemma,  
+    HRESULT hGetEnding (wstring& str_lemma,  
                          ET_Number eo_number, 
                          ET_Gender eo_gender, 
                          wstring& str_ending);
@@ -37,9 +37,9 @@ public:
                                   const wstring& str_ending,
                                   ET_Number eo_number, 
                                   ET_Gender eo_gender, 
-                                  CComObject<CT_WordForm> *& pco_wordForm);
+                                  CComObject<CWordForm> *& pco_wordForm);
 
-    HRESULT h_Assemble (CT_WordForm * pco_wordForm, 
+    HRESULT h_Assemble (CWordForm * pco_wordForm, 
                         int i_stressPos, 
                         wstring& str_lemma, 
                         wstring& str_ending);

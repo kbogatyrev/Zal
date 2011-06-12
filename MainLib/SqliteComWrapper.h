@@ -9,38 +9,38 @@ using namespace std;
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
 #endif
 
-class CT_StatusUpdate : public CT_ProgressCallback
+class CStatusUpdate : public CProgressCallback
 {
-    friend class CT_SqliteComWrapper;
+    friend class CSqliteComWrapper;
 
-    virtual int operator()(int i_percentDone) const;
+    virtual int operator()(int iPercentDone) const;
 
 private:
-    CT_SqliteComWrapper * pco_Parent;
+    CSqliteComWrapper * pParent;
 };
 
-class ATL_NO_VTABLE CT_SqliteComWrapper :
-    public IConnectionPointContainerImpl<CT_SqliteComWrapper>,
-    public IConnectionPointImpl<CT_SqliteComWrapper, &IID_IZalNotification, CComDynamicUnkArray>,
+class ATL_NO_VTABLE CSqliteComWrapper :
+    public IConnectionPointContainerImpl<CSqliteComWrapper>,
+    public IConnectionPointImpl<CSqliteComWrapper, &IID_IZalNotification, CComDynamicUnkArray>,
     public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CT_SqliteComWrapper, &CLSID_ZalSqliteWrapper>,
+	public CComCoClass<CSqliteComWrapper, &CLSID_ZalSqliteWrapper>,
     public IDispatchImpl<ISqliteWrapper, &IID_ISqliteWrapper, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 
 public:
-    CT_SqliteComWrapper()
+    CSqliteComWrapper()
 	{
 	}
 
     DECLARE_REGISTRY_RESOURCEID(IDR_SQLITEWRAPPER)
 
-    BEGIN_COM_MAP(CT_SqliteComWrapper)
+    BEGIN_COM_MAP(CSqliteComWrapper)
         COM_INTERFACE_ENTRY(ISqliteWrapper)
         COM_INTERFACE_ENTRY(IDispatch)
         COM_INTERFACE_ENTRY(IConnectionPointContainer)
     END_COM_MAP()
 
-    BEGIN_CONNECTION_POINT_MAP(CT_SqliteComWrapper)
+    BEGIN_CONNECTION_POINT_MAP(CSqliteComWrapper)
         CONNECTION_POINT_ENTRY (IID_IZalNotification)
     END_CONNECTION_POINT_MAP()
 
@@ -48,7 +48,7 @@ public:
 
 	HRESULT FinalConstruct()
 	{
-        pco_Db = NULL;
+        pDb = NULL;
         return S_OK;
 	}
 
@@ -64,11 +64,11 @@ public:
     STDMETHOD (StatusUpdate) (int i_progress);
 
 private:
-    wstring str_DbPath;
-    CT_Sqlite * pco_Db;
+    CEString sDbPath;
+    CSqlite * pDb;
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(ZalSqliteWrapper), CT_SqliteComWrapper)
+OBJECT_ENTRY_AUTO(__uuidof(ZalSqliteWrapper), CSqliteComWrapper)
 
 
 

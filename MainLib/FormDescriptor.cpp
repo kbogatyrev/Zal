@@ -93,7 +93,7 @@ HRESULT CT_FormDescriptor::put_Aspect (ET_Aspect eo_aspect)
 void CT_FormDescriptor::v_FormsFromHash()
 {
     pair<multimap<int, CComVariant>::iterator, multimap<int, CComVariant>::iterator> pair_range;
-    pair_range = pco_Lexeme->m_coll.equal_range (co_Hasher.i_GramHash());
+    pair_range = pLexeme->m_coll.equal_range (co_Hasher.i_GramHash());
 
     multimap<int, CComVariant>::iterator it_wf (pair_range.first);
     for (; it_wf != pair_range.second; ++it_wf)
