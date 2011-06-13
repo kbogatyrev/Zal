@@ -9,25 +9,25 @@ using namespace std::tr1;
 class CFormBuilderImperative : public CFormBuilderBaseConj
 {
 public:
-    CFormBuilderImperative (CLexeme * pco_lexeme) : 
-        CFormBuilderBaseConj (pco_lexeme, SUBPARADIGM_IMPERATIVE)
+    CFormBuilderImperative (CLexeme * pLexeme) : 
+        CFormBuilderBaseConj (pLexeme, SUBPARADIGM_IMPERATIVE)
     {}
 
 public:
-    HRESULT h_GetLemma (wstring& str_lemma);
-    HRESULT hGetEnding (const wstring& str_lemma, wstring& str_ending);
-    HRESULT h_GetStressPositions (wstring& str_lemma, 
-                                  wstring& str_ending,
-                                  vector<int>& vec_stressPositions);
-    HRESULT h_CreateFormTemplate (const wstring& str_lemma,
-                                  wstring& str_ending,
-                                  ET_Number eo_number,
-                                  CComObject<CWordForm> *& pco_wordForm);
-    HRESULT h_HandleCommonDeviations (CWordForm * pco_wordForm);
-    HRESULT h_CheckForIrregularForms (bool& b_isVariant); // check if irregular forms were built and
-                                                          // regular processing must be skipped
+    HRESULT hGetLemma (CEString& sLemma);
+    HRESULT hGetEnding (const CEString& sLemma, CEString& sEnding);
+    HRESULT hGetStressPositions (CEString& sLemma, 
+                                  CEString& sEnding,
+                                  vector<int>& vecStressPositions);
+    HRESULT hCreateFormTemplate (const CEString& sLemma,
+                                  CEString& sEnding,
+                                  ET_Number eNumber,
+                                  CComObject<CWordForm> *& pWordForm);
+    HRESULT hHandleCommonDeviations (CWordForm * pWordForm);
+    HRESULT hCheckForIrregularForms (bool& bIsVariant); // check if irregular forms were built and
+                                                        // regular processing must be skipped
 
-    HRESULT h_Build();
-    HRESULT h_BuildIrregularForms();
+    HRESULT hBuild();
+    HRESULT hBuildIrregularForms();
 
 };

@@ -10,46 +10,45 @@ using namespace std::tr1;
 class CFormBuilderNouns : public CFormBuilderBaseDecl
 {
 public:
-    CFormBuilderNouns (CLexeme * pco_lexeme) : 
-        CFormBuilderBaseDecl (pco_lexeme, SUBPARADIGM_NOUN)
+    CFormBuilderNouns (CLexeme * pLexeme) : CFormBuilderBaseDecl (pLexeme, SUBPARADIGM_NOUN)
     {
-        pco_Endings = new CNounEndings();
+        m_pEndings = new CNounEndings();
     }
 
 protected:
-    int i_GramHash (ET_Gender eo_gender,
-                    ET_Animacy eo_animacy,
-                    ET_Case eo_case,
-                    ET_Number eo_number);
+    int i_GramHash (ET_Gender eGender,
+                    ET_Animacy eAnimacy,
+                    ET_Case eCase,
+                    ET_Number eNumber);
 
     HRESULT hGetEndings();
 
-    HRESULT h_HandleStemAugment (wstring& str_lemma, ET_Number, ET_Case);
+    HRESULT hHandleStemAugment (CEString& sLemma, ET_Number, ET_Case);
 
-    HRESULT h_GetStressType (ET_Number eo_number,                 // in
-                             ET_Case eo_case,                     // in
-                             ET_StressLocation& eo_stressType);   // out
+    HRESULT hGetStressType (ET_Number eNumber,                 // in
+                            ET_Case eCase,                     // in
+                            ET_StressLocation& eStressType);   // out
 
-    HRESULT h_HandleAccEnding (ET_Number, ET_Case&);
+    HRESULT hHandleAccEnding (ET_Number, ET_Case&);
 
-    HRESULT h_GetStressPositions (const wstring& str_lemma, 
-                                  const wstring& str_ending,
-                                  ET_StressLocation eo_stressType,
-                                  vector<int>& vec_iStressPos);
+    HRESULT hGetStressPositions (const CEString& sLemma, 
+                                 const CEString& sEnding,
+                                 ET_StressLocation eStressType,
+                                 vector<int>& vecStressPos);
 
-    HRESULT h_CreateFormTemplate (ET_Number eo_number, 
-                                  ET_Case eo_case, 
-                                  const wstring& str_lemma, 
-                                  CComObject<CWordForm> *&);
+    HRESULT hCreateFormTemplate (ET_Number eNumber, 
+                                 ET_Case eCase, 
+                                 const CEString& sLemma, 
+                                 CComObject<CWordForm> *&);
 
-    HRESULT h_Assemble (CWordForm *, 
-                        ET_StressLocation,
-                        int i_stressPos, 
-                        const wstring& str_ending);
+    HRESULT hAssemble (CWordForm *, 
+                       ET_StressLocation,
+                       int iStressPos, 
+                       const CEString& sEnding);
 
-    HRESULT h_CheckIrregularForms (ET_Gender, ET_Animacy, ET_Case, ET_Number, bool& b_handled);
+    HRESULT hCheckIrregularForms (ET_Gender, ET_Animacy, ET_Case, ET_Number, bool& bHandled);
 
 public:
-    HRESULT h_Build();
+    HRESULT hBuild();
 
 };
