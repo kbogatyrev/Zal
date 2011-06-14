@@ -6,46 +6,42 @@ using namespace std::tr1;
 
 class CFormBuilderPast : public CFormBuilderBaseConj
 {
-    struct st_StressData
+    struct stStressData
     {
-        ET_StressLocation eo_Type;
-        int i_Position;
+        ET_StressLocation eType;
+        int iPosition;
 
-        st_StressData (ET_StressLocation eo_type, int i_pos)
-            : eo_Type (eo_type), i_Position (i_pos)
+        stStressData (ET_StressLocation eType, int iPos) : eType (eType), iPosition (iPos)
         {}
     };
 
 public:
-    CFormBuilderPast (CLexeme * pco_lexeme) : 
-        CFormBuilderBaseConj (pco_lexeme, SUBPARADIGM_PAST_TENSE)
+    CFormBuilderPast (CLexeme * pLexeme) : 
+        CFormBuilderBaseConj (pLexeme, SUBPARADIGM_PAST_TENSE)
     {}
 
 public:
-    HRESULT hGetEnding (wstring& str_lemma,  
-                         ET_Number eo_number, 
-                         ET_Gender eo_gender, 
-                         wstring& str_ending);
+    HRESULT hGetEnding (CEString& sLemma, ET_Number eNumber, ET_Gender eGender, CEString& sEnding);
 
-    HRESULT h_GetStressPositions (const wstring& str_lemma,
-                                  const wstring& str_ending,
-                                  ET_Number eo_number, 
-                                  ET_Gender eo_gender, 
-                                  vector<int>& vec_iStressPositions);
+    HRESULT hGetStressPositions (const CEString& sLemma,
+                                 const CEString& sEnding,
+                                 ET_Number eNumber, 
+                                 ET_Gender eGender, 
+                                 vector<int>& vecStressPositions);
 
-    HRESULT h_CreateFormTemplate (const wstring& str_lemma,
-                                  const wstring& str_ending,
-                                  ET_Number eo_number, 
-                                  ET_Gender eo_gender, 
-                                  CComObject<CWordForm> *& pco_wordForm);
+    HRESULT hCreateFormTemplate (const CEString& sLemma,
+                                 const CEString& sEnding,
+                                 ET_Number eNumber, 
+                                 ET_Gender eGender, 
+                                 CComObject<CWordForm> *& pWordForm);
 
-    HRESULT h_Assemble (CWordForm * pco_wordForm, 
-                        int i_stressPos, 
-                        wstring& str_lemma, 
-                        wstring& str_ending);
+    HRESULT hAssemble (CWordForm * pWordForm, 
+                       int iStressPos, 
+                       CEString& sLemma, 
+                       CEString& sEnding);
 
-    HRESULT h_Build();
+    HRESULT hBuild();
 
-    HRESULT h_BuildIrregular (bool&);
+    HRESULT hBuildIrregular (bool&);
 
 };
