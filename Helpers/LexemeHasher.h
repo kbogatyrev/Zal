@@ -4,85 +4,85 @@
 #include "SqliteWrapper.h"
 #include "MD5.h"
 
-struct ST_LexemeHasher
+struct StLexemeHasher
 {
-    map<int, ET_StressType> map_Stress;
-    wstring str_SourceForm;
-    wstring str_MainSymbol;
-    int i_InflectionType;
-    int i_AccentType1;
-    int i_AccentType2;
-    wstring str_Comment;
+    map<int, ET_StressType> mapStress;
+    CEString sSourceForm;
+    CEString sMainSymbol;
+    int iInflectionType;
+    int iAccentType1;
+    int iAccentType2;
+    CEString sComment;
 
-    wstring str_Hash()
+    CEString sHash()
     {
-        wstring str_text (str_SourceForm);
+        CEString sText (sSourceForm);
 
-        map<int, ET_StressType>::iterator it_stress = map_Stress.begin();
-        for (; it_stress != map_Stress.end(); ++ it_stress)
+        map<int, ET_StressType>::iterator itStress = mapStress.begin();
+        for (; itStress != mapStress.end(); ++ itStress)
         {
-            unsigned char * pchr_stress = (unsigned char *)&(*it_stress).first;
-            str_text += 32 + pchr_stress[0];
-            pchr_stress = (unsigned char *)&(*it_stress).second;
-            str_text += 32 + pchr_stress[0];
+            unsigned char * pchrStress = (unsigned char *)&(*itStress).first;
+            sText += 32 + pchrStress[0];
+            pchrStress = (unsigned char *)&(*itStress).second;
+            sText += 32 + pchrStress[0];
         }
 
-        str_text += str_MainSymbol;
+        sText += sMainSymbol;
 
-        unsigned char * pchr_at = (unsigned char *)&i_InflectionType;
-        str_text += 32 + pchr_at[0];
+        unsigned char * pchrAt = (unsigned char *)&iInflectionType;
+        sText += 32 + pchrAt[0];
 
-        pchr_at = (unsigned char *)&i_AccentType1;
-        str_text += 32 + pchr_at[0];
+        pchrAt = (unsigned char *)&iAccentType1;
+        sText += 32 + pchrAt[0];
 
-        pchr_at = (unsigned char *)&i_AccentType2;
-        str_text += 32 + pchr_at[0];
+        pchrAt = (unsigned char *)&iAccentType2;
+        sText += 32 + pchrAt[0];
 
-        str_text += str_Comment;
+        sText += sComment;
 
-//        unsigned int ui_hash = GenericHash::ui_hash ((unsigned char *)str_text.c_str(), 
-//                                                     str_text.length()*sizeof (wchar_t), 
+//        unsigned int ui_hash = GenericHash::ui_hash ((unsigned char *)sText.c_str(), 
+//                                                     sText.length()*sizeof (wchar_t), 
 //                                                     0);
-        CT_MD5 co_md5;
-        return co_md5.str_Hash (str_text);
+        CMD5 md5;
+        return md5.sHash (sText);
 
-    }   // unsigned int str_Hash()
+    }   // unsigned int sHash()
 
-    bool b_SaveToDb (CT_Sqlite * pco_dbHandle, __int64 ll_descriptorId)
+    bool bSaveToDb (CSqlite * pDbHandle, __int64 llDescriptorId)
     {
         try
         {
-            pco_dbHandle->v_PrepareForInsert (L"lexeme_hash_to_descriptor", 2);
-            pco_dbHandle->v_Bind (1, str_Hash());
-            pco_dbHandle->v_Bind (2, ll_descriptorId);
-            pco_dbHandle->v_InsertRow();
-            pco_dbHandle->v_Finalize();
+            pDbHandle->PrepareForInsert (L"lexeme_hash_to_descriptor", 2);
+            pDbHandle->Bind (1, sHash());
+            pDbHandle->Bind (2, llDescriptorId);
+            pDbHandle->InsertRow();
+            pDbHandle->Finalize();
         }
-        catch (CT_Exception& co_exc)
+        catch (CException& exc)
         {
-            wstring str_msg (co_exc.str_GetDescription());
-            wstring str_error;
+            CEString sMsg (exc.szGetDescription());
+            CEString sError;
             try
             {
-                pco_dbHandle->v_GetLastError (str_error);
-                str_msg += wstring (L", error %d: ");
-                str_msg += str_error;
+                pDbHandle->GetLastError (sError);
+                sMsg += CEString (L", error %d: ");
+                sMsg += sError;
             }
             catch (...)
             {
-                str_msg = L"Apparent DB error ";
+                sMsg = L"Apparent DB error ";
             }
         
-            CString cs_msg;
-            cs_msg.Format (str_msg.c_str(), pco_dbHandle->i_GetLastError());
-            ERROR_LOG ((LPCTSTR)cs_msg);
+            CString csMsg;
+            csMsg.Format (sMsg, pDbHandle->iGetLastError());
+            ERROR_LOG ((LPCTSTR)csMsg);
 
             return false;
         }
 
         return true;
 
-    }   //  bool b_SaveToDb (...)
+    }   //  bool bSaveToDb (...)
 
 
-};  //  struct ST_LexemeHasher
+};  //  struct StLexemeHasher
