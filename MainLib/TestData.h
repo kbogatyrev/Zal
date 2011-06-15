@@ -47,19 +47,19 @@ typedef VCUE::ICollectionOnSTLCopyImpl <ILexemeCollection,
 
 using namespace TestDataVector;
 
-class ATL_NO_VTABLE CT_TestData :
+class ATL_NO_VTABLE CTestData :
 	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CT_TestData, &CLSID_ZalStoredLexemeData>,
+	public CComCoClass<CTestData, &CLSID_ZalStoredLexemeData>,
     public IDispatchImpl<TestDataCollection, &IID_ILexemeCollection, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-    CT_TestData()
+    CTestData()
 	{
 	}
 
     DECLARE_REGISTRY_RESOURCEID(IDR_TESTDATA)
 
-    BEGIN_COM_MAP(CT_TestData)
+    BEGIN_COM_MAP(CTestData)
         COM_INTERFACE_ENTRY(ILexemeCollection)
 	    COM_INTERFACE_ENTRY(IDispatch)
     END_COM_MAP()
@@ -68,7 +68,7 @@ public:
 
 	HRESULT FinalConstruct()
 	{
-        pco_Db = NULL;
+        m_pDb = NULL;
 		return S_OK;
 	}
 
@@ -82,12 +82,12 @@ public:
     STDMETHOD (LoadStoredLexemes) ();
 
 private:
-    HRESULT h_GetStoredLexemeData (const wstring& str_select);
+    HRESULT hGetStoredLexemeData (const CEString& sSelect);
 
 private:
-    wstring str_DbPath;
-    CSqlite * pco_Db;
+    CEString m_sDbPath;
+    CSqlite * m_pDb;
 
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(ZalStoredLexemeData), CT_TestData)
+OBJECT_ENTRY_AUTO(__uuidof(ZalStoredLexemeData), CTestData)

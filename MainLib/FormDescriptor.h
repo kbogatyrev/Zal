@@ -61,22 +61,22 @@ typedef VCUE::ICollectionOnSTLCopyImpl <IFormFinder,
 
 using namespace WordFormVector;
 
-class ATL_NO_VTABLE CT_FormDescriptor :
+class ATL_NO_VTABLE CFormDescriptor :
 	public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CT_FormDescriptor, &CLSID_ZalFormDescriptor>,
+    public CComCoClass<CFormDescriptor, &CLSID_ZalFormDescriptor>,
     public IDispatchImpl<VectorCollection, &IID_IFormFinder, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 friend class CLexeme;
 
 public:
-	CT_FormDescriptor()
+	CFormDescriptor()
 	{
 	}
 
 //DECLARE_REGISTRY_RESOURCEID(IDR_LEXEME)
     DECLARE_NO_REGISTRY()
 
-    BEGIN_COM_MAP(CT_FormDescriptor)
+    BEGIN_COM_MAP(CFormDescriptor)
 	    COM_INTERFACE_ENTRY(IFormFinder)
 //        COM_INTERFACE_ENTRY(IError)
         COM_INTERFACE_ENTRY(IDispatch)
@@ -107,12 +107,12 @@ public:
     STDMETHOD (put_Aspect) (ET_Aspect);
 
 protected:
-    void v_FormsFromHash();
+    void FormsFromHash();
 
 private:
-    CGramHasher Hasher;
-    CLexeme * pLexeme;
+    CGramHasher m_Hasher;
+    CLexeme * m_pLexeme;
 
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(ZalFormDescriptor), CT_FormDescriptor)
+OBJECT_ENTRY_AUTO(__uuidof(ZalFormDescriptor), CFormDescriptor)

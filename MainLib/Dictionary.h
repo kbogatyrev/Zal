@@ -51,7 +51,7 @@ class ATL_NO_VTABLE CDictionary :
 	public CComCoClass<CDictionary, &CLSID_ZalDictionary>,
     public IDispatchImpl<LexemeCollection, &IID_IDictionary, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
-friend class CT_Verifier;
+friend class CVerifier;
 
 public:
 	CDictionary()

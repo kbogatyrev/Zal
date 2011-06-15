@@ -6,116 +6,116 @@
 // IFormFinder
 //
 
-HRESULT CT_FormDescriptor::FindForms()
+HRESULT CFormDescriptor::FindForms()
 {
     try
     {
         m_coll.clear();
-        v_FormsFromHash();
+        FormsFromHash();
     }
-    catch (CT_Exception co_ex)
+    catch (CException ex)
     {
-        wstring str_msg (L"Exception in v_FormsFromHash(): ");
-        str_msg += co_ex.str_GetDescription();
-        ERROR_LOG (str_msg);
+        CEString sMsg (L"Exception in v_FormsFromHash(): ");
+        sMsg += ex.szGetDescription();
+        ERROR_LOG (sMsg);
         return E_FAIL;  // logging should be always done by callee
     }
 
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_PartOfSpeech (ET_PartOfSpeech eo_pos)
+HRESULT CFormDescriptor::put_PartOfSpeech (ET_PartOfSpeech ePos)
 {
-    co_Hasher.eo_POS = eo_pos;
+    m_Hasher.m_ePos = ePos;
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_Subparadigm (ET_Subparadigm eo_sp)
+HRESULT CFormDescriptor::put_Subparadigm (ET_Subparadigm eSp)
 {
-    co_Hasher.eo_Subparadigm = eo_sp;
+    m_Hasher.m_eSubparadigm = eSp;
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_Case (ET_Case eo_case)
+HRESULT CFormDescriptor::put_Case (ET_Case eCase)
 {
-    co_Hasher.eo_Case = eo_case;
+    m_Hasher.m_eCase = eCase;
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_Number (ET_Number eo_number)
+HRESULT CFormDescriptor::put_Number (ET_Number eNumber)
 {
-    co_Hasher.eo_Number = eo_number;
+    m_Hasher.m_eNumber = eNumber;
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_Gender (ET_Gender eo_gender)
+HRESULT CFormDescriptor::put_Gender (ET_Gender eGender)
 {
-    co_Hasher.eo_Gender = eo_gender;
+    m_Hasher.m_eGender = eGender;
     return S_OK;
 }
 
-//HRESULT CT_FormDescriptor::put_Tense (ET_Tense eo_tense)
+//HRESULT CFormDescriptor::put_Tense (ET_Tense eo_tense)
 //{
-//    co_Hasher.eo_Tense = eo_tense;
+//    m_Hasher.eo_Tense = eo_tense;
 //    return S_OK;
 //}
 
-HRESULT CT_FormDescriptor::put_Person (ET_Person eo_person)
+HRESULT CFormDescriptor::put_Person (ET_Person ePerson)
 {
-    co_Hasher.eo_Person = eo_person;
+    m_Hasher.m_ePerson = ePerson;
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_Animacy (ET_Animacy eo_animacy)
+HRESULT CFormDescriptor::put_Animacy (ET_Animacy eAnimacy)
 {
-    co_Hasher.eo_Animacy = eo_animacy;
+    m_Hasher.m_eAnimacy = eAnimacy;
     return S_OK;
 }
 
-HRESULT CT_FormDescriptor::put_Reflexivity (ET_Reflexive eo_reflexivity)
+HRESULT CFormDescriptor::put_Reflexivity (ET_Reflexive eReflexivity)
 {
-    co_Hasher.eo_Reflexive = eo_reflexivity;
+    m_Hasher.m_eReflexive = eReflexivity;
     return S_OK;
 }
 
-//HRESULT CT_FormDescriptor::put_Voice (ET_Voice eo_voice)
+//HRESULT CFormDescriptor::put_Voice (ET_Voice eo_voice)
 //{
-//    co_Hasher.eo_Voice = eo_voice;
+//    m_Hasher.eo_Voice = eo_voice;
 //    return S_OK;
 //}
 
-HRESULT CT_FormDescriptor::put_Aspect (ET_Aspect eo_aspect)
+HRESULT CFormDescriptor::put_Aspect (ET_Aspect eAspect)
 {
-    co_Hasher.eo_Aspect = eo_aspect;
+    m_Hasher.m_eAspect = eAspect;
     return S_OK;
 }
 
-void CT_FormDescriptor::v_FormsFromHash()
+void CFormDescriptor::FormsFromHash()
 {
-    pair<multimap<int, CComVariant>::iterator, multimap<int, CComVariant>::iterator> pair_range;
-    pair_range = pLexeme->m_coll.equal_range (co_Hasher.i_GramHash());
+    pair<multimap<int, CComVariant>::iterator, multimap<int, CComVariant>::iterator> pairRange;
+    pairRange = m_pLexeme->m_coll.equal_range (m_Hasher.iGramHash());
 
-    multimap<int, CComVariant>::iterator it_wf (pair_range.first);
-    for (; it_wf != pair_range.second; ++it_wf)
+    multimap<int, CComVariant>::iterator itWf (pairRange.first);
+    for (; itWf != pairRange.second; ++itWf)
     {
-        if ((*it_wf).first != co_Hasher.i_GramHash())
+        if ((*itWf).first != m_Hasher.iGramHash())
         {
             ATLASSERT(0);
-            wstring str_msg (L"Error extracting map element.");
-            ERROR_LOG (str_msg);
-            throw CT_Exception (E_INVALIDARG, str_msg);
+            CEString sMsg (L"Error extracting map element.");
+            ERROR_LOG (sMsg);
+            throw CException (E_INVALIDARG, sMsg);
         }
 
-        CComQIPtr<IWordForm> sp_wf = (*it_wf).second.pdispVal;
-        if (NULL == sp_wf)
+        CComQIPtr<IWordForm> spWf = (*itWf).second.pdispVal;
+        if (NULL == spWf)
         {
             ATLASSERT(0);
-            wstring str_msg (L"QI for IWordForm failed.");
-            ERROR_LOG (str_msg);
-            throw CT_Exception (E_POINTER, str_msg);
+            CEString sMsg (L"QI for IWordForm failed.");
+            ERROR_LOG (sMsg);
+            throw CException (E_POINTER, sMsg);
         }
 
-        m_coll.push_back ((*it_wf).second.pdispVal);
+        m_coll.push_back ((*itWf).second.pdispVal);
     }
 
-}   //  v_FormsFromHash()
+}   //  FormsFromHash()
