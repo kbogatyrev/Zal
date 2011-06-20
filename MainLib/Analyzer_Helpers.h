@@ -4,32 +4,32 @@
 using namespace std;
 using namespace std::tr1;
 
-struct struct_stem_links
+struct stStemLinks
 {
 public:
-    int i_stem_id;
-    __int64 ll_lexeme_id;
-    int i_endings_link;
-    int i_stress_pos;
-    wstring str_lemma;
+    int iStemId;
+    __int64 llLexemeId;
+    int iEndingsLink;
+    int iStressPos;
+    CEString sLemma;
 };
 
 class CEndingsTable
 {
 public:
-    vector<wstring> vec_Endings;
-    vector<int> vec_Gram;
-    vector<int> vec_Stress;
+    vector<CEString> m_vecEndings;
+    vector<int> m_vecGram;
+    vector<int> m_vecStress;
 
-    int i_lexemes_count, i_cut_right;
-    wstring str_stem_ending, str_lemma_ending;
+    int m_iLexemeCount, m_iCutRight;
+    CEString m_sStemFinal, m_sLemmaFinal;
+    vector<int> m_vecFind (CEString sEnding, int iStressPos = -2);
+    vector<int> vecDbId (CSqlite* pDbHandle); // Tries to find the table in the db, returns -1 if there's no such table
 
     CEndingsTable();
     ~CEndingsTable();
     void Clear();
-    int i_AddEnding(int i_Hash, wstring str_Ending, int i_StressPos);
-    int i_AddEnding(long l_Hash, wstring str_Ending, int i_StressPos);
-    vector<int> vec_Find(wstring str_ending, int i_stress_pos = -2);
-    vector<int> vec_db_id(CSqlite* pco_dbHandle); // Tries to find the table in the db, returns -1 if there's no such table
-    int i_db_Write(CSqlite* pco_dbHandle); // Write the whole table to the db, return subtable_id
+    int iAddEnding (int iHash, CEString sEnding, int iStressPos);
+    int iAddEnding (long lHash, CEString sEnding, int iStressPos);
+    int iDbWrite (CSqlite* pDbHandle); // Write the whole table to the db, return subtable_id
 };

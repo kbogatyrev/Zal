@@ -39,9 +39,7 @@ class ATL_NO_VTABLE CAnalyzer :
 {
 public:
 	CAnalyzer()
-	{
-        v_Init();
-	}
+	{}
 
     DECLARE_REGISTRY_RESOURCEID(IDR_ANALYZER)
     //DECLARE_NO_REGISTRY()
@@ -57,14 +55,15 @@ public:
 
 	HRESULT FinalConstruct()
 	{
-        pco_db = NULL;
+        Init();
+        m_pDb = NULL;
         arr_freq_endings = NULL;
 		return S_OK;
 	}
 
 	void FinalRelease()
 	{
-        delete pco_db;
+        delete m_pDb;
         if (arr_freq_endings != NULL)
         {
             delete[] arr_freq_endings;
@@ -78,37 +77,37 @@ public:
     STDMETHOD (Analyze) (BSTR bstr_Wordform);
 //
 
-    wstring str_DbPath;
+    CEString m_sDbPath;
 
-    int i_Analyze(wstring str_wordform, vector<CT_Hasher>* pvec_possible_wordforms, BOOL b_guess);
-    int i_LookUpStems(vector<struct_stem_links>* pvec_stems,
-                      wstring str_left,
+    int iAnalyze (CEString str_wordform, vector<CHasher>& vecPossibleWordforms, BOOL bGuess);
+    int iLookUpStems(vector<stStemLinks>& vec_stems,
+                      CEString str_left,
                       int i_StressPosStem);
-    int i_CheckEndings(vector<CT_Hasher>* pvec_possible_wordforms,
-                       vector<struct_stem_links>* pvec_stems,
-                       wstring str_left,
-                       wstring str_right,
+    int iCheckEndings(vector<CHasher>& vec_possible_wordforms,
+                       vector<stStemLinks>& vec_stems,
+                       CEString str_left,
+                       CEString str_right,
                        int i_StressPosEnding);
-    HRESULT h_AddClassifyingCategories(CT_Hasher* pco_wf);
+    HRESULT hAddClassifyingCategories(CHasher* pco_wf);
 
 private:
-    CSqlite* pco_db;
+    CSqlite* m_pDb;
     
-    map<wstring, ET_MainSymbol> map_MainSymbol;
+    map<CEString, ET_MainSymbol> m_mapMainSymbol;
     
-    unordered_multimap<wstring, struct_stem_links> umap_freq_stems;
-    unordered_multimap<wstring, int> umap_endings2subtbl;
-    CEndingsTable* arr_freq_endings;
+    unordered_multimap<CEString, stStemLinks> umap_freq_stems;
+    unordered_multimap<CEString, int> umap_endings2subtbl;
+    CEndingsTable * arr_freq_endings;
     
-    void v_Init();
-    void v_DeleteRepeats(vector<wstring>& vec_strings);
-    HRESULT h_Hasher2Wordform (const wstring& str_wordform,
-                               CT_Hasher co_from,
+    void Init();
+    void DeleteRepeats(vector<CEString>& vec_strings);
+    HRESULT hHasher2Wordform (const CEString& str_wordform,
+                               CHasher co_from,
                                CComObject<CWordForm> *& pco_to);
-    bool b_IsValidLemma(wstring str_wf);
-    bool b_ContainsPlausibleVariants(vector<CT_Hasher>* pvec_possible_wordforms);
-    int i_Plausibility(CT_Hasher co_wf);
-    void v_LeaveMostPlausible(vector<CT_Hasher>* pvec_possible_wordforms);
+    bool bIsValidLemma(CEString str_wf);
+    bool bContainsPlausibleVariants(vector<CHasher>& pvec_possible_wordforms);
+    int iPlausibility(CHasher co_wf);
+    void LeaveMostPlausible(vector<CHasher>& pvec_possible_wordforms);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalAnalyzer), CAnalyzer)

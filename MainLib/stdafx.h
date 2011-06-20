@@ -96,7 +96,7 @@ using namespace std::tr1;
 //#include "ExtString.h"
 #include "EString.h"
 #include "Globals.h"
-#include "GenericHash.h"
+//#include "GenericHash.h"
 #include "Callbacks.h"
 #include "ErrorComWrapper.h"
 
