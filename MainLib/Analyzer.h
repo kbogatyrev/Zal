@@ -95,8 +95,10 @@ private:
     
     map<CEString, ET_MainSymbol> m_mapMainSymbol;
     
-    unordered_multimap<CEString, stStemLinks> umap_freq_stems;
-    unordered_multimap<CEString, int> umap_endings2subtbl;
+//    unordered_multimap<CEString, stStemLinks> umap_freq_stems;
+    multimap<CEString, stStemLinks> umap_freq_stems;
+//    unordered_multimap<CEString, int> umap_endings2subtbl;
+    multimap<CEString, int> umap_endings2subtbl;
     CEndingsTable * arr_freq_endings;
     
     void Init();
