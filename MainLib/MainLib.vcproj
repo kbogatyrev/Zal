@@ -137,7 +137,7 @@
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="true"
+				GenerateStublessProxies="false"
 				TypeLibraryName="$(IntDir)/MainLib.tlb"
 				HeaderFileName="MainLib_i.h"
 				DLLDataFileName=""
@@ -148,7 +148,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="..\Sqlite; ..\..\..\trunk\HLib"
+				AdditionalIncludeDirectories="..\Sqlite; ..\..\..\HLib\trunk"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
