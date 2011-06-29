@@ -161,6 +161,10 @@
 		<Filter
 			Name="Source Files"
 			>
+			<File
+				RelativePath=".\MainLibPS.def"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
@@ -179,10 +183,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\MainLibps.def"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
