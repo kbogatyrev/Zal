@@ -1,0 +1,9 @@
+; MainLibPS.def : Declares the module parameters.
+
+LIBRARY      "MainLibPS.DLL"
+
+EXPORTS
+	DllGetClassObject		PRIVATE
+	DllCanUnloadNow			PRIVATE
+	DllRegisterServer		PRIVATE
+	DllUnregisterServer		PRIVATE
