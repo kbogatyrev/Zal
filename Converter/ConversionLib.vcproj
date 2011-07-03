@@ -56,12 +56,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Helpers;..\Sqlite;..\MainLib"
+				AdditionalIncludeDirectories="..\Sqlite;..\MainLib;..\..\..\HLib\trunk"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -146,7 +146,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="..\Helpers;..\Sqlite;..\MainLib"
+				AdditionalIncludeDirectories="..\Sqlite;..\MainLib;..\..\..\HLib\trunk"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -410,10 +410,6 @@
 			</File>
 			<File
 				RelativePath=".\EndingsParser.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ErrorComWrapper.h"
 				>
 			</File>
 			<File

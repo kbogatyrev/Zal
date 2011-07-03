@@ -2,27 +2,27 @@
 #include "resource.h"
 #include "ConversionLib_i.h"
 
-class ATL_NO_VTABLE CT_ZalSourceReader :
-    public IConnectionPointContainerImpl<CT_ZalSourceReader>,
-    public IConnectionPointImpl<CT_ZalSourceReader, &IID_IZalNotification2, CComDynamicUnkArray>,
+class ATL_NO_VTABLE CZalSourceReader :
+    public IConnectionPointContainerImpl<CZalSourceReader>,
+    public IConnectionPointImpl<CZalSourceReader, &IID_IZalNotification2, CComDynamicUnkArray>,
 	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CT_ZalSourceReader, &CLSID_ZalSourceReader>,
+	public CComCoClass<CZalSourceReader, &CLSID_ZalSourceReader>,
     public IZalSourceReader
 {
 public:
-	CT_ZalSourceReader()
+	CZalSourceReader()
 	{
 	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_ZALSOURCEREADER)
 
 
-BEGIN_COM_MAP(CT_ZalSourceReader)
+BEGIN_COM_MAP(CZalSourceReader)
     COM_INTERFACE_ENTRY(IZalSourceReader)
     COM_INTERFACE_ENTRY(IConnectionPointContainer)
 END_COM_MAP()
 
-BEGIN_CONNECTION_POINT_MAP(CT_ZalSourceReader)
+BEGIN_CONNECTION_POINT_MAP(CZalSourceReader)
     CONNECTION_POINT_ENTRY(IID_IZalNotification2)
 END_CONNECTION_POINT_MAP()
 
@@ -32,28 +32,28 @@ END_CONNECTION_POINT_MAP()
 	void FinalRelease();
 
 protected:
-    HRESULT StatusUpdate (int i_progress);
-    HRESULT ShowCurrentWord (BSTR bstr_word);
-    HRESULT StatusCheck (BOOL& b_cancel);
+    HRESULT StatusUpdate (int iProgress);
+    HRESULT ShowCurrentWord (BSTR bstrWord);
+    HRESULT StatusCheck (BOOL& bCancel);
 
-    bool b_CheckSemicolons (wstring& str_source, bool& b_suspiciousEntry);
-    bool b_CheckSquareBrackets (const wstring& str_source, bool& b_suspiciousEntry);
-    bool b_Show (const wstring& str_msg);
+    bool bCheckSemicolons (CEString& sSource, bool& bSuspiciousEntry);
+    bool bCheckSquareBrackets (const CEString& sSource, bool& bSuspiciousEntry);
+    bool bShow (const CEString& sMsg);
 
 private:
-    wstring str_TempFile;
-    set<wstring> set_MainSymbols;
+    CEString m_sTempFile;
+    set<CEString> m_setMainSymbols;
 
 public:
-    STDMETHOD (ConvertSourceFile) (BSTR bstr_sourcePath,
-                                   BSTR bstr_dbPath,
-                                   BSTR bstr_unprocessedPath,
-                                   int i_maxEntries,
-                                   BOOL b_endings);
-    STDMETHOD (PreprocessSourceFile) (BSTR bstr_sourcePath, BSTR bstr_outputDir);
-    STDMETHOD (SearchSourceFile) (BSTR bstr_sourcePath, BSTR bstr_searchString, BOOL b_regexSearch);
-    STDMETHOD (SaveOutput) (BSTR bstr_path);
+    STDMETHOD (ConvertSourceFile) (BSTR bstrSourcePath,
+                                   BSTR bstrDbPath,
+                                   BSTR bstrUnprocessedPath,
+                                   int iMaxEntries,
+                                   BOOL bEndings);
+    STDMETHOD (PreprocessSourceFile) (BSTR bstrSourcePath, BSTR bstrOutputDir);
+    STDMETHOD (SearchSourceFile) (BSTR bstrSourcePath, BSTR bstrSearchString, BOOL bRegexSearch);
+    STDMETHOD (SaveOutput) (BSTR bstrPath);
 
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(ZalSourceReader), CT_ZalSourceReader)
+OBJECT_ENTRY_AUTO(__uuidof(ZalSourceReader), CZalSourceReader)
