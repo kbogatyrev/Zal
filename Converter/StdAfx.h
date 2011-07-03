@@ -49,7 +49,8 @@ using namespace ATL;
 //
 // Zal
 //
-#include "Error.h"
+#include "EString.h"
+#include "ErrorHandlers.h"
 #include "Exception.h"
 //#include "GenericHash.h"
 #include "MD5.h"
@@ -69,7 +70,7 @@ using namespace ATL;
                                   std::wstring (_T("\t")) + \
                                   std::wstring (_T(__FUNCTION__)));
 */
-
+/*
 #define ERROR_LOG(str_Msg) wstringstream io__; \
         io__ << __LINE__; \
         CT_Error::v_HandleError (str_Msg, \
@@ -78,6 +79,7 @@ using namespace ATL;
                                  io__.str() + \
                                  std::wstring (_T("\t")) + \
                                  std::wstring (_T(__FUNCTION__)));
+*/
 
 #include "SqliteWrapper.h"
-#include "ErrorComWrapper.h"
+//#include "ErrorComWrapper.h"
