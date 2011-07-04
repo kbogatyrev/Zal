@@ -790,6 +790,8 @@ namespace Converter
             {
                 string sMsg = "Error in WorkerThread: ";
                 ZalConversionLib.ZalError err = new ZalConversionLib.ZalError();
+                sMsg += ex.Message;
+                sMsg += "\r\n";
                 sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
