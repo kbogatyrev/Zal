@@ -72,6 +72,8 @@ namespace TestUI
                 return -1;
             }
 
+            bool b_HasParagraphs = false;
+            sw_out.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<html>\n<body>");
             while (!sr_in.EndOfStream)
             {
                 Application.DoEvents(); // to be replaced by introducing a separater thread
@@ -81,7 +83,15 @@ namespace TestUI
                     sw_out.WriteLine(str_line);
                     continue;
                 }
-                sw_out.WriteLine("<p>");
+                if (b_HasParagraphs)
+                {
+                  sw_out.WriteLine("</p><p>");
+                }
+                else
+                {
+                  sw_out.WriteLine("<p>");
+                  b_HasParagraphs = true;
+                }
                 MatchCollection coll_Matches = Regex.Matches(str_line, "\\s*([^\\w\\d]*)([\\w\\d]*)([^\\w\\d]*$|[\\.,\\?\\!\\)\\]\\}»]+|[:;\\-—\\\"]|[^\\w\\d\\s]*\\s)");
                 foreach (Match m in coll_Matches)
                 {
@@ -149,6 +159,11 @@ namespace TestUI
                     ++i_wf;
                 }
             }
+            if (b_HasParagraphs)
+            {
+              sw_out.WriteLine("</p>");
+            }
+            sw_out.WriteLine("</body>\n</html>");
 
             sr_in.Close();
             sw_out.Close();
