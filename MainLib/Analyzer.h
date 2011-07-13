@@ -73,21 +73,21 @@ public:
 public:
 
 //  IAnalyze
-    STDMETHOD (put_DbPath) (BSTR bstr_Path);
-    STDMETHOD (Analyze) (BSTR bstr_Wordform);
+    STDMETHOD (LoadDb) (BSTR bstrPath);
+    STDMETHOD (Analyze) (BSTR bstrWordform);
 //
 
     CEString m_sDbPath;
 
-    int iAnalyze (CEString str_wordform, vector<CHasher>& vecPossibleWordforms, BOOL bGuess);
+    int iAnalyze(CEString str_wordform, vector<CHasher>& vecPossibleWordforms, BOOL bGuess);
     int iLookUpStems(vector<stStemLinks>& vec_stems,
-                      CEString str_left,
-                      int i_StressPosStem);
+                     CEString str_left,
+                     int i_StressPosStem);
     int iCheckEndings(vector<CHasher>& vec_possible_wordforms,
-                       vector<stStemLinks>& vec_stems,
-                       CEString str_left,
-                       CEString str_right,
-                       int i_StressPosEnding);
+                      vector<stStemLinks>& vec_stems,
+                      CEString str_left,
+                      CEString str_right,
+                      int i_StressPosEnding);
     HRESULT hAddClassifyingCategories(CHasher* pco_wf);
 
 private:
@@ -99,13 +99,13 @@ private:
     multimap<CEString, stStemLinks> umap_freq_stems;
 //    unordered_multimap<CEString, int> umap_endings2subtbl;
     multimap<CEString, int> umap_endings2subtbl;
-    CEndingsTable * arr_freq_endings;
+    CEndingsTable* arr_freq_endings;
     
     void Init();
     void DeleteRepeats(vector<CEString>& vec_strings);
     HRESULT hHasher2Wordform (const CEString& str_wordform,
-                               CHasher co_from,
-                               CComObject<CWordForm> *& pco_to);
+                              CHasher co_from,
+                              CComObject<CWordForm> *& pco_to);
     bool bIsValidLemma(CEString str_wf);
     bool bContainsPlausibleVariants(vector<CHasher>& pvec_possible_wordforms);
     int iPlausibility(CHasher co_wf);

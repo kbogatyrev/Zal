@@ -94,8 +94,8 @@ namespace TestUI
                         m_bDBOpen = true;
                         m_sDbPath = fd.FileName;
                         m_Dictionary.DbPath = m_sDbPath;
-                        m_Analyzer.DbPath = m_sDbPath;
-                        m_LexPreprocessor.DbPath = m_sDbPath;
+                        m_Analyzer.LoadDb(m_sDbPath);
+                        m_LexPreprocessor.LoadDb(m_sDbPath);
                         toolStripStatusLabel.Text = m_sDbPath;
 
                         // TODO path validation
