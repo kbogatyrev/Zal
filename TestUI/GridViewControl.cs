@@ -44,11 +44,11 @@ namespace TestUI
             return (bool)cbCheckBox.Value;
         }
 
-        public uint ulLexemeHash (int iRow)
+        public string sLexemeHash (int iRow)
         {
             DataGridViewCell cell = dataGridView[1, iRow];
             DataGridViewTextBoxCell textBoxCell = (DataGridViewTextBoxCell)cell;
-            return (uint)textBoxCell.Value;
+            return (string)textBoxCell.Value;
         }
 
         public MainLib.IVerifier Verifier(int iRow)
@@ -69,7 +69,7 @@ namespace TestUI
             DataGridViewRow r = new DataGridViewRow();
             r.CreateCells(dataGridView);
             r.Cells[0].Value = true;
-            r.Cells[1].Value = (uint)v.LexemeId;
+            r.Cells[1].Value = v.LexemeId;
 //            r.Cells[1].Tag = v;
             r.Cells[2].Value = v.Headword;
             dataGridView.Rows.Add(r);
@@ -227,11 +227,11 @@ namespace TestUI
                         continue;
                     }
 
-                    uint uiLexemeHash = (uint)m_Caller.ulLexemeHash(iAt);
+                    string sLexemeHash = m_Caller.sLexemeHash(iAt);
                     v = new MainLib.ZalVerifier();
                     v.DbPath = m_Caller.m_sDbPath;
 
-                    MainLib.ET_TestResult eResult = v.Verify (uiLexemeHash);
+                    MainLib.ET_TestResult eResult = v.Verify (sLexemeHash);
                     switch (eResult)
                     {
                         case MainLib.ET_TestResult.TEST_RESULT_OK:
