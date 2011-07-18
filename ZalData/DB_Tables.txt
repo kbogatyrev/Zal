@@ -32,11 +32,11 @@ CREATE TABLE common_deviation (id INTEGER PRIMARY KEY ASC, inflection_id INTEGER
 
 CREATE TABLE aspect_pair (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, aspect_pair_type INTEGER, aspect_pair_comment TEXT);
 
-CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id INTEGER, hash INTEGER, wordform TEXT);
+CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id TEXT, hash INTEGER, wordform TEXT);
 
 CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, form_id INTEGER, position INTEGER, is_primary BOOLEAN);
 
-CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash INTEGER, descriptor_id INTEGER);
+CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER);
 
 CREATE INDEX idx_common_deviation_id ON common_deviation (id, inflection_id);
 CREATE INDEX idx_descriptor_id ON descriptor (id, word_id);
