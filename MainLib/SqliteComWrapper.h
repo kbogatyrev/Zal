@@ -48,7 +48,7 @@ public:
 
 	HRESULT FinalConstruct()
 	{
-        pDb = NULL;
+        m_pDb = NULL;
         return S_OK;
 	}
 
@@ -64,8 +64,8 @@ public:
     STDMETHOD (StatusUpdate) (int i_progress);
 
 private:
-    CEString sDbPath;
-    CSqlite * pDb;
+    CEString m_sDbPath;
+    CSqlite * m_pDb;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalSqliteWrapper), CSqliteComWrapper)

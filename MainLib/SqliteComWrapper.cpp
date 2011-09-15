@@ -33,15 +33,15 @@ HRESULT CSqliteComWrapper::put_DbPath (BSTR bstrDbPath)
 {
     USES_CONVERSION;
 
-    sDbPath = OLE2W (bstrDbPath);
+    m_sDbPath = OLE2W (bstrDbPath);
 
-    if (pDb)
+    if (m_pDb)
     {
-        delete pDb;
+        delete m_pDb;
     }
 
-    pDb = new CSqlite (sDbPath);
-    if (!pDb)
+    m_pDb = new CSqlite (m_sDbPath);
+    if (!m_pDb)
     {
         return E_FAIL;
     }
@@ -56,7 +56,7 @@ HRESULT CSqliteComWrapper::TableExists (BSTR bstrTable, BOOL * bExists)
 
     HRESULT hr = S_OK;
 
-    if (NULL == pDb)
+    if (NULL == m_pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
@@ -65,7 +65,7 @@ HRESULT CSqliteComWrapper::TableExists (BSTR bstrTable, BOOL * bExists)
 
     try
     {
-        *bExists = pDb->bTableExists (OLE2W (bstrTable));
+        *bExists = m_pDb->bTableExists (OLE2W (bstrTable));
     }
     catch (...)
     {
@@ -73,7 +73,7 @@ HRESULT CSqliteComWrapper::TableExists (BSTR bstrTable, BOOL * bExists)
         try
         {
             CEString sError;
-            pDb->GetLastError (sError);
+            m_pDb->GetLastError (sError);
             sMsg = L"DB error %d: ";
             sMsg += sError;
         }
@@ -83,7 +83,7 @@ HRESULT CSqliteComWrapper::TableExists (BSTR bstrTable, BOOL * bExists)
         }
     
         CString csMsg;
-        csMsg.Format (sMsg, pDb->iGetLastError());
+        csMsg.Format (sMsg, m_pDb->iGetLastError());
         ERROR_LOG ((LPCTSTR)csMsg);
  
         return E_FAIL;
@@ -99,7 +99,7 @@ HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
 
     HRESULT hr = S_OK;
 
-    if (NULL == pDb)
+    if (NULL == m_pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
@@ -145,7 +145,7 @@ HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
     {
         CStatusUpdate progress;
         progress.pParent = this;
-        bool bRet = pDb->bExportTables  (OLE2W (bstrPath), vecTableNames, progress);
+        bool bRet = m_pDb->bExportTables  (OLE2W (bstrPath), vecTableNames, progress);
     }
     catch (...)
     {
@@ -153,7 +153,7 @@ HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
         try
         {
             CEString sError;
-            pDb->GetLastError (sError);
+            m_pDb->GetLastError (sError);
             sMsg = L"DB error %d: ";
             sMsg += sError;
         }
@@ -163,7 +163,7 @@ HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
         }
     
         CString csMsg;
-        csMsg.Format (sMsg, pDb->iGetLastError());
+        csMsg.Format (sMsg, m_pDb->iGetLastError());
         ERROR_LOG ((LPCTSTR)csMsg);
  
         return E_FAIL;
@@ -179,7 +179,7 @@ HRESULT CSqliteComWrapper::Import (BSTR bstrPath)
 
     HRESULT hr = S_OK;
 
-    if (NULL == pDb)
+    if (NULL == m_pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
@@ -190,7 +190,7 @@ HRESULT CSqliteComWrapper::Import (BSTR bstrPath)
     {
         CStatusUpdate progress;
         progress.pParent = this;
-        bool b_ret = pDb->bImportTables (OLE2W (bstrPath), progress);
+        bool b_ret = m_pDb->bImportTables (OLE2W (bstrPath), progress);
         if (!b_ret)
         {
             return E_FAIL;
@@ -202,7 +202,7 @@ HRESULT CSqliteComWrapper::Import (BSTR bstrPath)
         try
         {
             CEString sError;
-            pDb->GetLastError (sError);
+            m_pDb->GetLastError (sError);
             sMsg = L"DB error %d: ";
             sMsg += sError;
         }
@@ -212,7 +212,7 @@ HRESULT CSqliteComWrapper::Import (BSTR bstrPath)
         }
     
         CString csMsg;
-        csMsg.Format (sMsg, pDb->iGetLastError());
+        csMsg.Format (sMsg, m_pDb->iGetLastError());
         ERROR_LOG ((LPCTSTR)csMsg);
  
         return E_FAIL;
