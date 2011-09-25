@@ -80,6 +80,7 @@ public:
     // ILexemeCollection
     STDMETHOD (put_DbPath) (BSTR bstr_path);
     STDMETHOD (LoadStoredLexemes) ();
+    STDMETHOD (DeleteStoredLexeme) (BSTR bstrLexeme);
 
 private:
     HRESULT hGetStoredLexemeData (const CEString& sSelect);
