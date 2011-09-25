@@ -31,10 +31,14 @@ namespace TestUI
             }
         }
 
-        public void SetResult (int iRow, string sText)
+        public void SetResult (int iRow, string sText, bool bHightLight)
         {
             DataGridViewCell cell = dataGridView[3, iRow];
             cell.Value = sText;
+            if (bHightLight)
+            {
+                cell.Style.ForeColor = Color.Red;
+            }
         }
 
         public bool bRowChecked(int iRow)
@@ -117,6 +121,41 @@ namespace TestUI
             ta.SaveTestResults();
 
             ((Button)sender).Enabled = false;
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            List<DataGridViewRow> rowsToRemove = new List<DataGridViewRow>();
+            foreach (DataGridViewRow r in dataGridView.Rows)
+            {
+                if (!bRowChecked(r.Index))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    MainLib.ZalStoredLexemeData testData = new MainLib.ZalStoredLexemeData();
+                    testData.DbPath = m_sDbPath;
+                    testData.DeleteStoredLexeme(sLexemeHash(r.Index));
+                    rowsToRemove.Add(r);
+                }
+                catch (Exception ex)
+                {
+                    MainLib.ZalError err = new MainLib.ZalError();
+                    string sMsg = ex.Message;
+                    sMsg += "\n";
+                    sMsg += err.LastError;
+                    MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
+                    return;
+                }
+            }   // foreach ...
+
+            foreach (DataGridViewRow r in rowsToRemove)
+            {
+                dataGridView.Rows.Remove(r);
+            }
+            dataGridView.Update();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -217,7 +256,7 @@ namespace TestUI
                     {
                         for (int iRow = iAt; iRow < m_Caller.iRows; ++iRow)
                         {
-                            m_Caller.SetResult (iRow, "Cancelled");
+                            m_Caller.SetResult (iRow, "Cancelled", false);
                         }
                         break;
                     }
@@ -236,17 +275,17 @@ namespace TestUI
                     {
                         case MainLib.ET_TestResult.TEST_RESULT_OK:
                         {
-                            m_Caller.SetResult (iAt, "Pass");
+                            m_Caller.SetResult (iAt, "Pass", false);
                             break;
                         }
                         case MainLib.ET_TestResult.TEST_RESULT_FAIL:
                         {
-                            m_Caller.SetResult (iAt, "Fail");
+                            m_Caller.SetResult (iAt, "Fail", true);
                             break;
                         }
                         case MainLib.ET_TestResult.TEST_RESULT_INCOMPLETE:
                         {
-                            m_Caller.SetResult (iAt, "Missing forms");
+                            m_Caller.SetResult (iAt, "Missing forms", true);
                             break;
                         }
                         default:
