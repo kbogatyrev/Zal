@@ -14,7 +14,7 @@ namespace TestUI
     {
         Thread m_WorkerThread;
         public string m_sDbPath;
-        public bool bCancelTest = false;
+        public bool m_bCancelTest = false;
 
         public GridViewUserControl(string sDbPath)
         {
@@ -160,7 +160,7 @@ namespace TestUI
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            bCancelTest = true;
+            m_bCancelTest = true;
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
@@ -252,7 +252,7 @@ namespace TestUI
             {
                 for (int iAt = 0; iAt < m_Caller.iRows; ++iAt)
                 {
-                    if (m_Caller.bCancelTest)
+                    if (m_Caller.m_bCancelTest)
                     {
                         for (int iRow = iAt; iRow < m_Caller.iRows; ++iRow)
                         {
