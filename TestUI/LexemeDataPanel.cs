@@ -17,6 +17,21 @@ namespace TestUI
         public delegate void Save (LexemeDataPanel ldp);
         public event Save SaveEvent;
 
+        int m_iInflectionId;
+
+        public int iInflectionId
+        {
+            get
+            {
+                return m_iInflectionId;
+            }
+
+            set
+            {
+                m_iInflectionId = value;
+            }
+        }
+
         public string sInitialForm
         {
             get
