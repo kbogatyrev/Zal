@@ -85,13 +85,12 @@ namespace TestUI
                 fd.CheckPathExists = true;
                 fd.FileName = m_sDbPath;
                 fd.Filter = "SQLite3 Files (*.db3)|*.db3|SQLite Files (*.db)|*.db|All Files (*.*)|*.*";
-                m_bDBOpen = false;
+//                m_bDBOpen = false;
                 DialogResult dr = fd.ShowDialog();
                 if (DialogResult.OK == dr)
                 {
                     if (File.Exists(fd.FileName))
                     {
-                        m_bDBOpen = true;
                         m_sDbPath = fd.FileName;
                         m_Dictionary.DbPath = m_sDbPath;
                         m_Analyzer.LoadDb(m_sDbPath);
@@ -103,6 +102,7 @@ namespace TestUI
                         synthesizeToolStripMenuItem.Enabled = true;
                         analyzeToolStripMenuItem.Enabled = true;
                         testToolStripMenuItem.Enabled = true;
+                        m_bDBOpen = true;
                     }
                     else
                     {
@@ -146,6 +146,7 @@ namespace TestUI
                 ldp.Location = new System.Drawing.Point(0, iLexeme * ldp.Size.Height + 4);
                 ldp.sInitialForm = lex.InitialForm;
                 ldp.sGraphicStem = lex.GraphicStem;
+                ldp.iInflectionId = lex.InflectionId;
                 ldp.sMainSymbol = lex.MainSymbol;
                 ldp.sType = lex.Type.ToString();
                 ldp.sStressType = m_hashAccent[lex.AccentType1];
