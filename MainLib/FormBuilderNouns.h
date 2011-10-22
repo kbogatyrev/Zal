@@ -31,6 +31,9 @@ protected:
 
     HRESULT hHandleAccEnding (ET_Number, ET_Case&);
 
+    HRESULT hHandleGen2 (const CWordForm *);
+    HRESULT hHandleLoc2 (const CWordForm *);
+
     HRESULT hGetStressPositions (const CEString& sLemma, 
                                  const CEString& sEnding,
                                  ET_StressLocation eStressType,

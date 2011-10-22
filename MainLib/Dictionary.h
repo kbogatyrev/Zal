@@ -46,6 +46,8 @@ typedef VCUE::ICollectionOnSTLCopyImpl <IDictionary,
 
 using namespace LexemeVector;
 
+class CLexeme;
+
 class ATL_NO_VTABLE CDictionary :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<CDictionary, &CLSID_ZalDictionary>,
@@ -95,6 +97,9 @@ private:
     HRESULT hGetData (const CEString& sSelect);
     HRESULT hReadFromDb (__int64 llLexemeId);
     HRESULT hReadFromDb (const CEString& sStem);
+
+    // Helpers:
+    HRESULT hGetL2Data (__int64 llLexemeId, CLexeme& Lexeme);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ZalDictionary), CDictionary)

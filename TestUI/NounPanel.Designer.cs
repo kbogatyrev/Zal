@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBoxLableL2 = new System.Windows.Forms.TextBox();
+            this.textBoxL2 = new System.Windows.Forms.TextBox();
+            this.textBoxLableG2 = new System.Windows.Forms.TextBox();
+            this.textBoxG2 = new System.Windows.Forms.TextBox();
             this.textBoxLabelPl = new System.Windows.Forms.TextBox();
             this.textBoxLabelSg = new System.Windows.Forms.TextBox();
             this.textBoxILabelPl = new System.Windows.Forms.TextBox();
@@ -61,6 +65,10 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.textBoxLableL2);
+            this.panel1.Controls.Add(this.textBoxL2);
+            this.panel1.Controls.Add(this.textBoxLableG2);
+            this.panel1.Controls.Add(this.textBoxG2);
             this.panel1.Controls.Add(this.textBoxLabelPl);
             this.panel1.Controls.Add(this.textBoxLabelSg);
             this.panel1.Controls.Add(this.textBoxILabelPl);
@@ -90,8 +98,54 @@
             this.panel1.Controls.Add(this.textBoxLexName);
             this.panel1.Location = new System.Drawing.Point(0, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(611, 282);
+            this.panel1.Size = new System.Drawing.Size(611, 334);
             this.panel1.TabIndex = 0;
+            // 
+            // textBoxLableL2
+            // 
+            this.textBoxLableL2.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxLableL2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxLableL2.Location = new System.Drawing.Point(329, 292);
+            this.textBoxLableL2.Multiline = true;
+            this.textBoxLableL2.Name = "textBoxLableL2";
+            this.textBoxLableL2.Size = new System.Drawing.Size(29, 24);
+            this.textBoxLableL2.TabIndex = 30;
+            this.textBoxLableL2.TabStop = false;
+            this.textBoxLableL2.Text = "L2";
+            this.textBoxLableL2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxL2
+            // 
+            this.textBoxL2.Location = new System.Drawing.Point(369, 292);
+            this.textBoxL2.Multiline = true;
+            this.textBoxL2.Name = "textBoxL2";
+            this.textBoxL2.ReadOnly = true;
+            this.textBoxL2.Size = new System.Drawing.Size(204, 24);
+            this.textBoxL2.TabIndex = 29;
+            this.textBoxL2.TabStop = false;
+            // 
+            // textBoxLableG2
+            // 
+            this.textBoxLableG2.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxLableG2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxLableG2.Location = new System.Drawing.Point(46, 294);
+            this.textBoxLableG2.Multiline = true;
+            this.textBoxLableG2.Name = "textBoxLableG2";
+            this.textBoxLableG2.Size = new System.Drawing.Size(29, 24);
+            this.textBoxLableG2.TabIndex = 28;
+            this.textBoxLableG2.TabStop = false;
+            this.textBoxLableG2.Text = "G2";
+            this.textBoxLableG2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxG2
+            // 
+            this.textBoxG2.Location = new System.Drawing.Point(87, 294);
+            this.textBoxG2.Multiline = true;
+            this.textBoxG2.Name = "textBoxG2";
+            this.textBoxG2.ReadOnly = true;
+            this.textBoxG2.Size = new System.Drawing.Size(204, 24);
+            this.textBoxG2.TabIndex = 27;
+            this.textBoxG2.TabStop = false;
             // 
             // textBoxLabelPl
             // 
@@ -337,7 +391,7 @@
             // 
             // textBoxISg
             // 
-            this.textBoxISg.Location = new System.Drawing.Point(86, 232);
+            this.textBoxISg.Location = new System.Drawing.Point(87, 232);
             this.textBoxISg.Multiline = true;
             this.textBoxISg.Name = "textBoxISg";
             this.textBoxISg.ReadOnly = true;
@@ -347,7 +401,7 @@
             // 
             // textBoxDSg
             // 
-            this.textBoxDSg.Location = new System.Drawing.Point(86, 203);
+            this.textBoxDSg.Location = new System.Drawing.Point(87, 203);
             this.textBoxDSg.Multiline = true;
             this.textBoxDSg.Name = "textBoxDSg";
             this.textBoxDSg.ReadOnly = true;
@@ -357,7 +411,7 @@
             // 
             // textBoxLSg
             // 
-            this.textBoxLSg.Location = new System.Drawing.Point(86, 174);
+            this.textBoxLSg.Location = new System.Drawing.Point(87, 174);
             this.textBoxLSg.Multiline = true;
             this.textBoxLSg.Name = "textBoxLSg";
             this.textBoxLSg.ReadOnly = true;
@@ -367,7 +421,7 @@
             // 
             // textBoxGSg
             // 
-            this.textBoxGSg.Location = new System.Drawing.Point(86, 145);
+            this.textBoxGSg.Location = new System.Drawing.Point(87, 145);
             this.textBoxGSg.Multiline = true;
             this.textBoxGSg.Name = "textBoxGSg";
             this.textBoxGSg.ReadOnly = true;
@@ -377,7 +431,7 @@
             // 
             // textBoxASg
             // 
-            this.textBoxASg.Location = new System.Drawing.Point(86, 116);
+            this.textBoxASg.Location = new System.Drawing.Point(87, 116);
             this.textBoxASg.Multiline = true;
             this.textBoxASg.Name = "textBoxASg";
             this.textBoxASg.ReadOnly = true;
@@ -387,7 +441,7 @@
             // 
             // textBoxNSg
             // 
-            this.textBoxNSg.Location = new System.Drawing.Point(86, 87);
+            this.textBoxNSg.Location = new System.Drawing.Point(87, 87);
             this.textBoxNSg.Multiline = true;
             this.textBoxNSg.Name = "textBoxNSg";
             this.textBoxNSg.ReadOnly = true;
@@ -412,7 +466,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.Name = "NounPanel";
-            this.Size = new System.Drawing.Size(616, 290);
+            this.Size = new System.Drawing.Size(616, 340);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -449,5 +503,9 @@
         private System.Windows.Forms.TextBox textBoxLexName;
         private System.Windows.Forms.TextBox textBoxLabelPl;
         private System.Windows.Forms.TextBox textBoxLabelSg;
+        private System.Windows.Forms.TextBox textBoxLableG2;
+        private System.Windows.Forms.TextBox textBoxG2;
+        private System.Windows.Forms.TextBox textBoxLableL2;
+        private System.Windows.Forms.TextBox textBoxL2;
     }
 }
