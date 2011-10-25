@@ -47,7 +47,8 @@ namespace TestUI
             m_hashCase.Add(MainLib.ET_Case.CASE_NOM, "N");
             m_hashCase.Add(MainLib.ET_Case.CASE_ACC, "A");
             m_hashCase.Add(MainLib.ET_Case.CASE_GEN, "G");
-            m_hashCase.Add(MainLib.ET_Case.CASE_LOC, "L");
+            m_hashCase.Add(MainLib.ET_Case.CASE_PART, "G2");
+            m_hashCase.Add(MainLib.ET_Case.CASE_LOC, "P2");
             m_hashCase.Add(MainLib.ET_Case.CASE_DAT, "D");
             m_hashCase.Add(MainLib.ET_Case.CASE_INST, "I");
             m_hashCase.Add(MainLib.ET_Case.CASE_PREP, "P");
