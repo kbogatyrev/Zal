@@ -46,7 +46,12 @@ protected:
                        int iStressPos, 
                        const CEString& sEnding);
 
-    HRESULT hCheckIrregularForms (ET_Gender, ET_Animacy, ET_Case, ET_Number, bool& bHandled);
+    HRESULT hCheckIrregularForms (ET_Gender eGender, 
+                                  ET_Animacy eAnimacy, 
+                                  ET_Case eCase,
+                                  ET_Case eEndingsCase,
+                                  ET_Number eNumber, 
+                                  bool& bHandled);
 
 public:
     HRESULT hBuild();
