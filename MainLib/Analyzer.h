@@ -1,7 +1,7 @@
 #include "Analyzer_Helpers.h"
 #include "Lexeme.h"
 #include "WordForm.h"
-#include <unordered_map>
+//#include <unordered_map>
 
 using namespace std;
 using namespace std::tr1;
