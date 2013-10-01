@@ -29,19 +29,18 @@ public:
                                  ET_Gender eGender, 
                                  vector<int>& vecStressPositions);
 
-    HRESULT hCreateFormTemplate (const CEString& sLemma,
-                                 const CEString& sEnding,
-                                 ET_Number eNumber, 
-                                 ET_Gender eGender, 
-                                 CComObject<CWordForm> *& pWordForm);
+    void CreateFormTemplate (const CEString& sLemma,
+                             const CEString& sEnding,
+                             ET_Number eNumber, 
+                             ET_Gender eGender, 
+                             CWordForm *& pWordForm);
 
-    HRESULT hAssemble (CWordForm * pWordForm, 
-                       int iStressPos, 
-                       CEString& sLemma, 
-                       CEString& sEnding);
+    void Assemble (CWordForm * pWordForm, int iStressPos, CEString& sLemma, CEString& sEnding);
 
     HRESULT hBuild();
 
     HRESULT hBuildIrregular (bool&);
+
+    void RetractStressToPreverb (CWordForm *, bool bIsOptional);
 
 };

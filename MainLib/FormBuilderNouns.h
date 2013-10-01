@@ -16,12 +16,12 @@ public:
     }
 
 protected:
-    int i_GramHash (ET_Gender eGender,
-                    ET_Animacy eAnimacy,
-                    ET_Case eCase,
-                    ET_Number eNumber);
+    int iGramHash (ET_Gender eGender,
+                   ET_Animacy eAnimacy,
+                   ET_Case eCase,
+                   ET_Number eNumber);
 
-    HRESULT hGetEndings();
+    void GetEndings();
 
     HRESULT hHandleStemAugment (CEString& sLemma, ET_Number, ET_Case);
 
@@ -31,20 +31,12 @@ protected:
 
     HRESULT hHandleAccEnding (ET_Number, ET_Case&);
 
-    HRESULT hGetStressPositions (const CEString& sLemma, 
-                                 const CEString& sEnding,
-                                 ET_StressLocation eStressType,
-                                 vector<int>& vecStressPos);
+    void GetStressPositions (const CEString& sLemma, 
+                             const CEString& sEnding,
+                             ET_StressLocation eStressType,
+                             vector<int>& vecStressPos);
 
-    HRESULT hCreateFormTemplate (ET_Number eNumber, 
-                                 ET_Case eCase, 
-                                 const CEString& sLemma, 
-                                 CComObject<CWordForm> *&);
-
-    HRESULT hAssemble (CWordForm *, 
-                       ET_StressLocation,
-                       int iStressPos, 
-                       const CEString& sEnding);
+    void CreateFormTemplate (ET_Number eNumber, ET_Case eCase, const CEString& sLemma, CWordForm *&);
 
     HRESULT hCheckIrregularForms (ET_Gender eGender, 
                                   ET_Animacy eAnimacy, 

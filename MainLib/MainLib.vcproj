@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="MainLib"
 	ProjectGUID="{7F1639E5-0207-454D-B9D8-A4912CC81513}"
 	RootNamespace="MainLib"
@@ -57,7 +57,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Sqlite; ..\..\..\HLib\trunk"
+				AdditionalIncludeDirectories="..\Sqlite; ..\..\HLib-Windows"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -88,62 +88,6 @@
 				SubSystem="2"
 				TargetMachine="1"
 				CLRThreadAttribute="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug|x64"
-			ConfigurationType="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -204,7 +148,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="..\Sqlite; ..\..\..\HLib\trunk"
+				AdditionalIncludeDirectories="..\Sqlite; ..\..\HLib-Windows"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -236,6 +180,62 @@
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
 				Profile="true"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug|x64"
+			ConfigurationType="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -422,7 +422,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LexemeComWrapper.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LexPreprocessor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LexPreprocessor2.cpp"
 				>
 			</File>
 			<File
@@ -503,6 +511,10 @@
 			</File>
 			<File
 				RelativePath=".\WordForm.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WordFormComWrapper.cpp"
 				>
 			</File>
 		</Filter>
@@ -592,7 +604,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LexemeComWrapper.h"
+				>
+			</File>
+			<File
 				RelativePath=".\LexPreprocessor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LexPreprocessor2.h"
 				>
 			</File>
 			<File
@@ -633,6 +653,10 @@
 			</File>
 			<File
 				RelativePath=".\WordForm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WordFormComWrapper.h"
 				>
 			</File>
 		</Filter>

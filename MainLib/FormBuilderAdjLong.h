@@ -33,18 +33,13 @@ protected:
 
     int iGramHashNSgMLong();
 
-    HRESULT hGetEndings();
+    void GetEndings();
 
     HRESULT hGetStressPositions (const CEString&,
                                  ET_StressLocation,
                                  vector<int>& vecStressPos);
 
-    HRESULT hCreateFormTemplate (ET_Gender, 
-                                 ET_Number, 
-                                 ET_Case, 
-                                 ET_Animacy, 
-                                 const CEString& sEnding,
-                                 CComObject<CWordForm> *&); 
+    void CreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, const CEString& sEnding, CWordForm *&); 
 
     HRESULT hHandleCommonDeviations (CWordForm *);
 

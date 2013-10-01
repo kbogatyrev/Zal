@@ -87,7 +87,7 @@ public:
         }
     }
 
-    HRESULT hGetEndings();
+    void GetEndings();
 
     HRESULT hStressOnEnding (ET_Number eNumber, ET_Gender eGender);
 
@@ -95,21 +95,19 @@ public:
                              ET_Gender eGender, 
                              vector<ET_StressLocation>& vecStressType);
 
-    HRESULT hCreateFormTemplate (const CEString& sLemma,
-                                 const CEString& sEnding,
-                                 ET_Gender eGender,
-                                 ET_Number eNumber,
-                                 CComObject<CWordForm> *& pWordForm);
+    void CreateFormTemplate (const CEString& sLemma,
+                             const CEString& sEnding,
+                             ET_Gender eGender,
+                             ET_Number eNumber,
+                             CWordForm *& pWordForm);
 
-    HRESULT hCreateWordForm (ET_Number eNumber, 
+    HRESULT CreateWordForm (ET_Number eNumber, 
                              ET_Gender eGender, 
                              ET_StressLocation eStressType,
                              const CEString& sEnding,
                              CEString& sLemma);
 
     HRESULT hHandleDeviations (CWordForm *);
-
-    HRESULT hCheckIrregularForms (ET_Gender eGender, ET_Number eNumber, bool& bHandled);
 
     HRESULT hBuild();
 

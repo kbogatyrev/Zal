@@ -14,7 +14,7 @@ public:
     }
 
 public:
-    HRESULT hGetEndings();
+    void GetEndings();
     HRESULT hGetStressType (ET_Number, ET_Person,  ET_StressLocation&);
     HRESULT hGetAuslautType (ET_Number, ET_Person, ET_StemAuslaut&);
     HRESULT hGetLemma (ET_Number, ET_Person, CEString&);

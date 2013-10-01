@@ -19,10 +19,10 @@ public:
     HRESULT hGetStressPositions (CEString& sLemma, 
                                   CEString& sEnding,
                                   vector<int>& vecStressPositions);
-    HRESULT hCreateFormTemplate (const CEString& sLemma,
-                                  CEString& sEnding,
-                                  ET_Number eNumber,
-                                  CComObject<CWordForm> *& pWordForm);
+    HRESULT CreateFormTemplate (const CEString& sLemma,
+                                CEString& sEnding,
+                                ET_Number eNumber,
+                                CWordForm *& pWordForm);
     HRESULT hHandleCommonDeviations (CWordForm * pWordForm);
     HRESULT hCheckForIrregularForms (bool& bIsVariant); // check if irregular forms were built and
                                                         // regular processing must be skipped
