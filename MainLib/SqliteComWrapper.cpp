@@ -8,9 +8,9 @@ int CStatusUpdate::operator()(int iPercentDone) const
     return iPercentDone; 
 }
 
-HRESULT CSqliteComWrapper::StatusUpdate (int iProgress)
+ET_ReturnCode CSqliteComWrapper::StatusUpdate (int iProgress)
 {
-    HRESULT hr = S_OK;
+    ET_ReturnCode hr = H_NO_ERROR;
 
     int iNConnections = m_vec.GetSize();
     for (int iC = 0; iC < iNConnections; ++iC)
@@ -29,7 +29,7 @@ HRESULT CSqliteComWrapper::StatusUpdate (int iProgress)
 
 }   //  StatusUpdate (...)
 
-HRESULT CSqliteComWrapper::put_DbPath (BSTR bstrDbPath)
+ET_ReturnCode CSqliteComWrapper::put_DbPath (BSTR bstrDbPath)
 {
     USES_CONVERSION;
 
@@ -46,21 +46,21 @@ HRESULT CSqliteComWrapper::put_DbPath (BSTR bstrDbPath)
         return E_FAIL;
     }
 
-    return S_OK;
+    return H_NO_ERROR;
 
 }   //  put_DbPath (...)
 
-HRESULT CSqliteComWrapper::TableExists (BSTR bstrTable, BOOL * bExists)
+ET_ReturnCode CSqliteComWrapper::TableExists (BSTR bstrTable, BOOL * bExists)
 {
     USES_CONVERSION;
 
-    HRESULT hr = S_OK;
+    ET_ReturnCode hr = H_NO_ERROR;
 
     if (NULL == m_pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
-        return E_POINTER;
+        return H_ERROR_POINTER;
     }
 
     try
@@ -89,21 +89,21 @@ HRESULT CSqliteComWrapper::TableExists (BSTR bstrTable, BOOL * bExists)
         return E_FAIL;
     }
     
-    return S_OK;
+    return H_NO_ERROR;
 
 }   //  TableExists (...)
 
-HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
+ET_ReturnCode CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
 {
     USES_CONVERSION;
 
-    HRESULT hr = S_OK;
+    ET_ReturnCode hr = H_NO_ERROR;
 
     if (NULL == m_pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
-        return E_POINTER;
+        return H_ERROR_POINTER;
     }
 
 //    CComVariant spVarName;
@@ -112,7 +112,7 @@ HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
     long lUBound = 0;
     long lLBound = 0;
     hr = SafeArrayGetUBound (sarrNames, 1, &lUBound);
-    if (S_OK != hr)
+    if (H_NO_ERROR != hr)
     {
         ATLASSERT(0);
         ERROR_LOG (L"Error getting safearray's lower bound.");
@@ -120,7 +120,7 @@ HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
     }
 
     hr = SafeArrayGetLBound (sarrNames, 1, &lLBound);
-    if (S_OK != hr)
+    if (H_NO_ERROR != hr)
     {
         ATLASSERT(0);
         ERROR_LOG (L"Error getting safearray's upper bound.");
@@ -132,7 +132,7 @@ HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
     {
         CComBSTR bstrName;
         hr = SafeArrayGetElement (sarrNames, (long *)&uiAt, &bstrName);
-        if (S_OK != hr)
+        if (H_NO_ERROR != hr)
         {
             ATLASSERT(0);
             ERROR_LOG (L"Error extracting table name from safearray.");
@@ -169,21 +169,21 @@ HRESULT CSqliteComWrapper::Export (BSTR bstrPath, SAFEARRAY * sarrNames)
         return E_FAIL;
     }
 
-    return S_OK;
+    return H_NO_ERROR;
 
 }   //  Export (...)
 
-HRESULT CSqliteComWrapper::Import (BSTR bstrPath)
+ET_ReturnCode CSqliteComWrapper::Import (BSTR bstrPath)
 {
     USES_CONVERSION;
 
-    HRESULT hr = S_OK;
+    ET_ReturnCode hr = H_NO_ERROR;
 
     if (NULL == m_pDb)
     {
         ATLASSERT(0);
         ERROR_LOG (L"DB pointer is NULL.");
-        return E_POINTER;
+        return H_ERROR_POINTER;
     }
 
     try
@@ -218,6 +218,6 @@ HRESULT CSqliteComWrapper::Import (BSTR bstrPath)
         return E_FAIL;
     }
 
-    return S_OK;
+    return H_NO_ERROR;
 
 }   //  Import (...)

@@ -1,6 +1,6 @@
 #pragma once
 #include "resource.h"       // main symbols
-#include "MainLib_i.h"
+//#include "MainLib_i.h"
 
 #include "VCUE_Collection.h"
 #include "VCUE_Copy.h"

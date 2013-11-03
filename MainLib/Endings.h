@@ -1,6 +1,6 @@
 #pragma once
 #include "resource.h"       // main symbols
-#include "MainLib_i.h"
+//#include "MainLib_i.h"
 
 using namespace std;
 
@@ -122,7 +122,7 @@ public:
     virtual ~CEndings()
     {}
 
-    virtual void v_Reset()
+    virtual void Reset()
     {
         m_mmEndings.clear();
     }
@@ -135,9 +135,9 @@ public:
         return m_mmEndings.count (iH);
     }
 
-    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&) = 0;
+    virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&) = 0;
 
-    HRESULT hGetEnding (const StEndingDescriptor& stDescriptor, int iSeqNum, CEString& sEnding)
+    ET_ReturnCode eGetEnding (const StEndingDescriptor& stDescriptor, int iSeqNum, CEString& sEnding)
     {
         int iKey = iHash (stDescriptor);
 
@@ -149,18 +149,18 @@ public:
                 CEString sMsg (L"Error getting ending from hash for: ");
                 sMsg += stDescriptor.sToString();
                 ERROR_LOG (sMsg);
-                throw CException (E_FAIL, sMsg);
+                return H_ERROR_GENERAL;
             }
         }
 
         sEnding = (*pair_Range.first).second;
 
-        return S_OK;
+        return H_NO_ERROR;
     }
 
-    HRESULT hGetEnding (const StEndingDescriptor& stD, CEString& s_)
+    ET_ReturnCode eGetEnding (const StEndingDescriptor& stD, CEString& s_)
     {
-        return hGetEnding (stD, 0, s_);
+        return eGetEnding (stD, 0, s_);
     }
 
 protected:
@@ -170,7 +170,7 @@ protected:
 
 class CNounEndings : public CEndings
 {
-    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&);
+    virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
     virtual int iHash (const StEndingDescriptor&);
@@ -178,7 +178,7 @@ private:
 
 class CAdjLongEndings : public CEndings
 {
-    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&);
+    virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
     virtual int iHash (const StEndingDescriptor&);
@@ -186,7 +186,7 @@ private:
 
 class CAdjShortEndings : public CEndings
 {
-    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&);
+    virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
     virtual int iHash (const StEndingDescriptor&);
@@ -194,7 +194,7 @@ private:
 
 class CPersonalEndings : public CEndings
 {
-    virtual HRESULT hAddEnding (const CEString&, const StEndingDescriptor&);
+    virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
     virtual int iHash (const StEndingDescriptor&);

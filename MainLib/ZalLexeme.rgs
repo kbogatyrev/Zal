@@ -1,26 +1,26 @@
 HKCR
 {
-	MainLib.Lexeme.1 = s 'Lexeme Class'
-	{
-		CLSID = s '{FF82FB16-1A1C-400C-B3D9-79CB7808CCD1}'
-	}
-	MainLib.Lexeme = s 'Lexeme Class'
-	{
-		CLSID = s '{FF82FB16-1A1C-400C-B3D9-79CB7808CCD1}'
-		CurVer = s 'MainLib.Lexeme.1'
-	}
-	NoRemove CLSID
-	{
-		ForceRemove {FF82FB16-1A1C-400C-B3D9-79CB7808CCD1} = s 'Lexeme Class'
-		{
-			ProgID = s 'MainLib.Lexeme.1'
-			VersionIndependentProgID = s 'MainLib.Lexeme'
-			ForceRemove 'Programmable'
-			InprocServer32 = s '%MODULE%'
-			{
-				val ThreadingModel = s 'Both'
-			}
-			'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
-		}
-	}
+    MainLib.Lexeme.1 = s 'Lexeme Class'
+    {
+        CLSID = s '{FF82FB16-1A1C-400C-B3D9-79CB7808CCD1}'
+    }
+    MainLib.Lexeme = s 'Lexeme Class'
+    {
+        CLSID = s '{FF82FB16-1A1C-400C-B3D9-79CB7808CCD1}'
+        CurVer = s 'MainLib.Lexeme.1'
+    }
+    NoRemove CLSID
+    {
+        ForceRemove {FF82FB16-1A1C-400C-B3D9-79CB7808CCD1} = s 'Lexeme Class'
+        {
+            ProgID = s 'MainLib.Lexeme.1'
+            VersionIndependentProgID = s 'MainLib.Lexeme'
+            ForceRemove 'Programmable'
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Both'
+            }
+            'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
+        }
+    }
 }

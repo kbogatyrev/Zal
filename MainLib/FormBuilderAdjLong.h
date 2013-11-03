@@ -33,20 +33,18 @@ protected:
 
     int iGramHashNSgMLong();
 
-    void GetEndings();
+    ET_ReturnCode eGetEndings();
 
-    HRESULT hGetStressPositions (const CEString&,
-                                 ET_StressLocation,
-                                 vector<int>& vecStressPos);
+    ET_ReturnCode eGetStressPositions (const CEString&, ET_StressLocation, vector<int>& vecStressPos);
 
-    void CreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, const CEString& sEnding, CWordForm *&); 
+    ET_ReturnCode eCreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, const CEString& sEnding, CWordForm *&); 
 
-    HRESULT hHandleCommonDeviations (CWordForm *);
+    ET_ReturnCode eHandleCommonDeviations (CWordForm *);
 
 public:
-    HRESULT hBuild();
+    ET_ReturnCode eBuild();
 
-    HRESULT hBuildParticiple();
+    ET_ReturnCode eBuildParticiple();
 
 private:
     CEString m_sLemma;

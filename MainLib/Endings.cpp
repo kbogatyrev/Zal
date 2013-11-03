@@ -12,8 +12,7 @@ int CNounEndings::iHash (const StEndingDescriptor& stD)
     return iKey;
 }
 
-HRESULT CNounEndings::hAddEnding (const CEString& sEnding, 
-                                    const StEndingDescriptor& stDescriptor)
+ET_ReturnCode CNounEndings::eAddEnding (const CEString& sEnding, const StEndingDescriptor& stDescriptor)
 {
     std::vector<ET_Number> vecNumber;
     if (NUM_UNDEFINED == stDescriptor.eNumber)
@@ -33,9 +32,8 @@ HRESULT CNounEndings::hAddEnding (const CEString& sEnding,
     //
     if (CASE_UNDEFINED == stDescriptor.eCase)
     {
-        CEString sMsg (L"Undefined case in noun ending.");
-        ERROR_LOG (sMsg);
-        throw CException (E_INVALIDARG, sMsg);
+        ERROR_LOG (L"Undefined case in noun ending.");
+        return H_ERROR_INVALID_ARG;
     }
 
     std::vector<ET_StressLocation> vecStress;
@@ -61,9 +59,9 @@ HRESULT CNounEndings::hAddEnding (const CEString& sEnding,
             m_mmEndings.insert (std::pair<int, CEString> (iKey, sEnding));
         }
 
-    return S_OK;
+    return H_NO_ERROR;
 
-}   // CNounEndings::hAddEnding (...)
+}   // CNounEndings::eAddEnding (...)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -78,8 +76,7 @@ int CAdjLongEndings::iHash (const StEndingDescriptor& stD)
     return iKey;
 }
 
-HRESULT CAdjLongEndings::hAddEnding (const CEString& sEnding, 
-                                       const StEndingDescriptor& stDescriptor)
+ET_ReturnCode CAdjLongEndings::eAddEnding (const CEString& sEnding, const StEndingDescriptor& stDescriptor)
 {
     //
     // Gender
@@ -161,9 +158,9 @@ HRESULT CAdjLongEndings::hAddEnding (const CEString& sEnding,
                     m_mmEndings.insert (std::pair<int, CEString> (iKey, sEnding));
                 }
 
-    return S_OK;
+    return H_NO_ERROR;
 
-}   //  CAdjLongEndings::hAddEnding (...)
+}   //  CAdjLongEndings::eAddEnding (...)
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -175,8 +172,7 @@ int CAdjShortEndings::iHash (const StEndingDescriptor& stD)
     return iKey;
 }
 
-HRESULT CAdjShortEndings::hAddEnding (const CEString& sEnding, 
-                                      const StEndingDescriptor& stDescriptor)
+ET_ReturnCode CAdjShortEndings::eAddEnding (const CEString& sEnding, const StEndingDescriptor& stDescriptor)
 {
     //
     // Gender
@@ -199,9 +195,8 @@ HRESULT CAdjShortEndings::hAddEnding (const CEString& sEnding,
     //
     if (NUM_UNDEFINED == stDescriptor.eNumber)
     {
-        CEString sMsg (L"Undefined number in short form ending.");
-        ERROR_LOG (sMsg);
-        throw CException (E_INVALIDARG, sMsg);
+        ERROR_LOG (L"Undefined number in short form ending.");
+        return H_ERROR_INVALID_ARG;
     }
 
     //
@@ -230,7 +225,7 @@ HRESULT CAdjShortEndings::hAddEnding (const CEString& sEnding,
             m_mmEndings.insert (std::pair<int, CEString> (iKey, sEnding));
         }
 
-    return S_OK;
+    return H_NO_ERROR;
 
 }   //  CAdjShortEndings::hAddEnding (...)
 
@@ -246,8 +241,7 @@ int CPersonalEndings::iHash (const StEndingDescriptor& stD)
     return iKey;
 }
 
-HRESULT CPersonalEndings::hAddEnding (const CEString& sEnding, 
-                                      const StEndingDescriptor& stDescriptor)
+ET_ReturnCode CPersonalEndings::eAddEnding (const CEString& sEnding, const StEndingDescriptor& stDescriptor)
 {
     //
     // Person
@@ -255,9 +249,8 @@ HRESULT CPersonalEndings::hAddEnding (const CEString& sEnding,
     std::vector<ET_Person> vecPerson;
     if (PERSON_UNDEFINED == stDescriptor.ePerson)
     {
-        CEString sMsg (L"Undefined person.");
-        ERROR_LOG (sMsg);
-        throw CException (E_INVALIDARG, sMsg);
+        ERROR_LOG (L"Undefined person.");
+        return H_ERROR_INVALID_ARG;
     }
     else
     {
@@ -269,9 +262,8 @@ HRESULT CPersonalEndings::hAddEnding (const CEString& sEnding,
     //
     if (NUM_UNDEFINED == stDescriptor.eNumber)
     {
-        CEString sMsg (L"Undefined number in personal ending.");
-        ERROR_LOG (sMsg);
-        throw CException (E_INVALIDARG, sMsg);
+        ERROR_LOG (L"Undefined number in personal ending.");
+        return H_ERROR_INVALID_ARG;
     }
 
     //
@@ -322,6 +314,6 @@ HRESULT CPersonalEndings::hAddEnding (const CEString& sEnding,
             m_mmEndings.insert (std::pair<int, CEString> (iKey, sEnding));
         }
 
-    return S_OK;
+    return H_NO_ERROR;
 
-}   //  CPersonalEndings::hAddEnding (...)
+}   //  CPersonalEndings::eAddEnding (...)

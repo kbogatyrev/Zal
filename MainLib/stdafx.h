@@ -17,11 +17,11 @@
 #define _ATL_APARTMENT_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS    // some CString constructors will be explicit
 
-#define S_TRUE MAKE_HRESULT (SEVERITY_SUCCESS, FACILITY_ITF, 10001)
-#define S_BOTH MAKE_HRESULT (SEVERITY_SUCCESS, FACILITY_ITF, 10002)
-#define S_MORE MAKE_HRESULT (SEVERITY_SUCCESS, FACILITY_ITF, 10003)
+#define S_TRUE MAKE_ET_ReturnCode (SEVERITY_SUCCESS, FACILITY_ITF, 10001)
+#define S_BOTH MAKE_ET_ReturnCode (SEVERITY_SUCCESS, FACILITY_ITF, 10002)
+#define S_MORE MAKE_ET_ReturnCode (SEVERITY_SUCCESS, FACILITY_ITF, 10003)
 
 
 //
@@ -96,13 +96,15 @@ using namespace std::tr1;
 
 #define CYRILLIC
 
+#include "Enums.h"
 #include "Exception.h"
 //#include "ExtString.h"
 #include "EString.h"
 #include "Globals.h"
 //#include "GenericHash.h"
 #include "Callbacks.h"
-#include "ErrorComWrapper.h"
+//#include "ErrorComWrapper.h"
+#include "GramHasher.h"
 
 #include "SqliteWrapper.h"
 

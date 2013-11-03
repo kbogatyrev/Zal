@@ -1,27 +1,27 @@
 HKCR
 {
-	MainLib.ZalStoredLexemeData.1 = s 'ZalStoredLexemeData Class'
-	{
-		CLSID = s '{A26AFF1C-7FB8-480b-89CE-C882AE46CBCC}'
-	}
-	MainLib.ZalStoredLexemeData = s 'ZalStoredLexemeData Class'
-	{
-		CLSID = s '{A26AFF1C-7FB8-480b-89CE-C882AE46CBCC}'
-		CurVer = s 'MainLib.ZalStoredLexemeData.1'
-	}	
-	NoRemove CLSID
-	{
-		ForceRemove {A26AFF1C-7FB8-480b-89CE-C882AE46CBCC} = s 'ZalStoredLexemeData Class'
-		{
-			ProgID = s 'MainLib.ZalStoredLexemeData.1'
-			VersionIndependentProgID = s 'MainLib.ZalStoredLexemeData'
-			ForceRemove 'Programmable'
-			InprocServer32 = s '%MODULE%'
-			{
-				val ThreadingModel = s 'Apartment'
-			}
-			
-			'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
-		}
-	}
+    MainLib.ZalStoredLexemeData.1 = s 'ZalStoredLexemeData Class'
+    {
+        CLSID = s '{A26AFF1C-7FB8-480b-89CE-C882AE46CBCC}'
+    }
+    MainLib.ZalStoredLexemeData = s 'ZalStoredLexemeData Class'
+    {
+        CLSID = s '{A26AFF1C-7FB8-480b-89CE-C882AE46CBCC}'
+        CurVer = s 'MainLib.ZalStoredLexemeData.1'
+    }    
+    NoRemove CLSID
+    {
+        ForceRemove {A26AFF1C-7FB8-480b-89CE-C882AE46CBCC} = s 'ZalStoredLexemeData Class'
+        {
+            ProgID = s 'MainLib.ZalStoredLexemeData.1'
+            VersionIndependentProgID = s 'MainLib.ZalStoredLexemeData'
+            ForceRemove 'Programmable'
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Apartment'
+            }
+            
+            'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
+        }
+    }
 }

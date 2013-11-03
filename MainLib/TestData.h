@@ -3,7 +3,7 @@
 #pragma once
 
 #include "resource.h"       // main symbols
-#include "MainLib_i.h"
+//#include "MainLib_i.h"
 
 #include "VCUE_Collection.h"
 #include "VCUE_Copy.h"
@@ -16,7 +16,7 @@ namespace TestDataVector
 {
 // We always need to provide the following information
 //typedef std::vector<CComVariant> ContainerType;
-//typedef VARIANT	ExposedType;
+//typedef VARIANT    ExposedType;
 //typedef IEnumVARIANT EnumeratorInterface;
 //typedef IZalCollection CollectionInterface;
 //typedef IDictionary DCollectionInterface;
@@ -25,9 +25,9 @@ namespace TestDataVector
 //typedef VCUE::GenericCopy<ExposedType, ContainerType::value_type> CopyType;
 
 // However, we may want to use a different class, as in this case:
-// typedef VCUE::MapCopy<ContainerType, ExposedType>				CopyType;
-	// (The advantage of MapCopy is that we don't need to provide implementations 
-	//  of GenericCopy for all the different pairs of key and value types)
+// typedef VCUE::MapCopy<ContainerType, ExposedType>                CopyType;
+    // (The advantage of MapCopy is that we don't need to provide implementations 
+    //  of GenericCopy for all the different pairs of key and value types)
 
 // Now we have all the information we need to fill in the template arguments on the implementation classes
 typedef CComEnumOnSTL <IEnumVARIANT, 
@@ -48,33 +48,33 @@ typedef VCUE::ICollectionOnSTLCopyImpl <ILexemeCollection,
 using namespace TestDataVector;
 
 class ATL_NO_VTABLE CTestData :
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CTestData, &CLSID_ZalStoredLexemeData>,
+    public CComObjectRootEx<CComSingleThreadModel>,
+    public CComCoClass<CTestData, &CLSID_ZalStoredLexemeData>,
     public IDispatchImpl<TestDataCollection, &IID_ILexemeCollection, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
     CTestData()
-	{
-	}
+    {
+    }
 
     DECLARE_REGISTRY_RESOURCEID(IDR_TESTDATA)
 
     BEGIN_COM_MAP(CTestData)
         COM_INTERFACE_ENTRY(ILexemeCollection)
-	    COM_INTERFACE_ENTRY(IDispatch)
+        COM_INTERFACE_ENTRY(IDispatch)
     END_COM_MAP()
 
     DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct()
-	{
+    ET_ReturnCode FinalConstruct()
+    {
         m_pDb = NULL;
-		return S_OK;
-	}
+        return H_NO_ERROR;
+    }
 
-	void FinalRelease()
-	{
-	}
+    void FinalRelease()
+    {
+    }
 
 public:
     // ILexemeCollection
@@ -83,7 +83,7 @@ public:
     STDMETHOD (DeleteStoredLexeme) (BSTR bstrLexeme);
 
 private:
-    HRESULT hGetStoredLexemeData (const CEString& sSelect);
+    ET_ReturnCode hGetStoredLexemeData (const CEString& sSelect);
 
 private:
     CEString m_sDbPath;

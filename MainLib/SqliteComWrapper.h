@@ -1,6 +1,6 @@
 #pragma once
 #include "resource.h"       // main symbols
-#include "MainLib_i.h"
+//#include "MainLib_i.h"
 
 using namespace std;
 //using namespace std::tr1;
@@ -23,14 +23,14 @@ class ATL_NO_VTABLE CSqliteComWrapper :
     public IConnectionPointContainerImpl<CSqliteComWrapper>,
     public IConnectionPointImpl<CSqliteComWrapper, &IID_IZalNotification, CComDynamicUnkArray>,
     public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CSqliteComWrapper, &CLSID_ZalSqliteWrapper>,
+    public CComCoClass<CSqliteComWrapper, &CLSID_ZalSqliteWrapper>,
     public IDispatchImpl<ISqliteWrapper, &IID_ISqliteWrapper, &LIBID_MainLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 
 public:
     CSqliteComWrapper()
-	{
-	}
+    {
+    }
 
     DECLARE_REGISTRY_RESOURCEID(IDR_SQLITEWRAPPER)
 
@@ -44,15 +44,15 @@ public:
         CONNECTION_POINT_ENTRY (IID_IZalNotification)
     END_CONNECTION_POINT_MAP()
 
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct()
-	{
+    ET_ReturnCode FinalConstruct()
+    {
         m_pDb = NULL;
-        return S_OK;
-	}
+        return H_NO_ERROR;
+    }
 
-	void FinalRelease()
+    void FinalRelease()
     {}
 
 public:

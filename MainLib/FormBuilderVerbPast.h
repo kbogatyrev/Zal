@@ -16,31 +16,30 @@ class CFormBuilderPast : public CFormBuilderBaseConj
     };
 
 public:
-    CFormBuilderPast (CLexeme * pLexeme) : 
-        CFormBuilderBaseConj (pLexeme, SUBPARADIGM_PAST_TENSE)
+    CFormBuilderPast (CLexeme * pLexeme) : CFormBuilderBaseConj (pLexeme, SUBPARADIGM_PAST_TENSE)
     {}
 
 public:
-    HRESULT hGetEnding (CEString& sLemma, ET_Number eNumber, ET_Gender eGender, CEString& sEnding);
+    ET_ReturnCode eGetEnding (CEString& sLemma, ET_Number eNumber, ET_Gender eGender, CEString& sEnding);
 
-    HRESULT hGetStressPositions (const CEString& sLemma,
-                                 const CEString& sEnding,
-                                 ET_Number eNumber, 
-                                 ET_Gender eGender, 
-                                 vector<int>& vecStressPositions);
+    ET_ReturnCode eGetStressPositions (const CEString& sLemma,
+                                       const CEString& sEnding,
+                                       ET_Number eNumber, 
+                                       ET_Gender eGender, 
+                                       vector<int>& vecStressPositions);
 
-    void CreateFormTemplate (const CEString& sLemma,
-                             const CEString& sEnding,
-                             ET_Number eNumber, 
-                             ET_Gender eGender, 
-                             CWordForm *& pWordForm);
+    ET_ReturnCode eCreateFormTemplate (const CEString& sLemma,
+                                       const CEString& sEnding,
+                                       ET_Number eNumber, 
+                                       ET_Gender eGender, 
+                                       CWordForm *& pWordForm);
 
-    void Assemble (CWordForm * pWordForm, int iStressPos, CEString& sLemma, CEString& sEnding);
+    ET_ReturnCode eAssemble (CWordForm * pWordForm, int iStressPos, CEString& sLemma, CEString& sEnding);
 
-    HRESULT hBuild();
+    ET_ReturnCode eBuild();
 
-    HRESULT hBuildIrregular (bool&);
+    ET_ReturnCode eBuildIrregular (bool&);
 
-    void RetractStressToPreverb (CWordForm *, bool bIsOptional);
+    ET_ReturnCode eRetractStressToPreverb (CWordForm *, bool bIsOptional);
 
 };

@@ -35,137 +35,137 @@ namespace VCUE
 // This class is used (by default) by ICollectionOnSTLCopyImpl::get__NewEnum to provide data
 // to be shared between an enumerator and its clones.
 
-	template < class DataType, class ThreadModel = CComObjectThreadModel >
-	class ATL_NO_VTABLE CGenericDataHolder :
-		public IUnknown,
-		public CComObjectRootEx< ThreadModel >
-	{
-	public:
-		typedef CGenericDataHolder< DataType, ThreadModel > thisClass;
+    template < class DataType, class ThreadModel = CComObjectThreadModel >
+    class ATL_NO_VTABLE CGenericDataHolder :
+        public IUnknown,
+        public CComObjectRootEx< ThreadModel >
+    {
+    public:
+        typedef CGenericDataHolder< DataType, ThreadModel > thisClass;
 
-		BEGIN_COM_MAP(thisClass)
-			COM_INTERFACE_ENTRY(IUnknown)
-		END_COM_MAP()
+        BEGIN_COM_MAP(thisClass)
+            COM_INTERFACE_ENTRY(IUnknown)
+        END_COM_MAP()
 
-		template < class SourceType >
-		HRESULT Copy(const SourceType& c)
-		{
-			m_Data = c;
-			return S_OK;
+        template < class SourceType >
+        ET_ReturnCode Copy(const SourceType& c)
+        {
+            m_Data = c;
+            return H_NO_ERROR;
 
-		} // HRESULT Copy(const SourceType& c)
+        } // ET_ReturnCode Copy(const SourceType& c)
 
-		DataType m_Data;
+        DataType m_Data;
 
-	}; // class ATL_NO_VTABLE CGenericDataHolder
+    }; // class ATL_NO_VTABLE CGenericDataHolder
 
 // CreateSTLEnumerator wraps the necessary creation, initialization 
 // and error handling code for the the creation of a CComEnumOnSTL-style enumerator
-	
+    
 // *** EXAMPLE : Using CreateSTLEnumerator to implement get__NewEnum ***
-//		typedef CComEnumOnSTL<IEnumVARIANT, &IID_IEnumVARIANT, VARIANT,
-//	                     _Copy<VARIANT>, std::vector<CComVariant> > VarVarEnum;
-//		std::vector<CComVariant> m_vec;
-//		STDMETHOD(get__NewEnum)(IUnknown** ppUnk)
-//		{
-//			return CreateSTLEnumerator<VarVarEnum>(ppUnk, this, m_vec);
-//		}
+//        typedef CComEnumOnSTL<IEnumVARIANT, &IID_IEnumVARIANT, VARIANT,
+//                         _Copy<VARIANT>, std::vector<CComVariant> > VarVarEnum;
+//        std::vector<CComVariant> m_vec;
+//        STDMETHOD(get__NewEnum)(IUnknown** ppUnk)
+//        {
+//            return CreateSTLEnumerator<VarVarEnum>(ppUnk, this, m_vec);
+//        }
 
-	template <class EnumType, class CollType>
-	HRESULT CreateSTLEnumerator(IUnknown** ppUnk, IUnknown* pUnkForRelease, CollType& collection)
-	{
-		if (ppUnk == NULL)
-			return E_POINTER;
-		*ppUnk = NULL;
+    template <class EnumType, class CollType>
+    ET_ReturnCode CreateSTLEnumerator(IUnknown** ppUnk, IUnknown* pUnkForRelease, CollType& collection)
+    {
+        if (ppUnk == NULL)
+            return H_ERROR_POINTER;
+        *ppUnk = NULL;
 
-		CComObject<EnumType>* pEnum = NULL;
-		HRESULT hr = CComObject<EnumType>::CreateInstance(&pEnum);
+        CComObject<EnumType>* pEnum = NULL;
+        ET_ReturnCode hr = CComObject<EnumType>::CreateInstance(&pEnum);
 
-		if (FAILED(hr))
-			return hr;
+        if (FAILED(hr))
+            return hr;
 
-		hr = pEnum->Init(pUnkForRelease, collection);
+        hr = pEnum->Init(pUnkForRelease, collection);
 
-		if (SUCCEEDED(hr))
-			hr = pEnum->QueryInterface(ppUnk);
+        if (SUCCEEDED(hr))
+            hr = pEnum->QueryInterface(ppUnk);
 
-		if (FAILED(hr))
-			delete pEnum;
+        if (FAILED(hr))
+            delete pEnum;
 
-		return hr;
+        return hr;
 
-	} // HRESULT CreateSTLEnumerator(IUnknown** ppUnk, IUnknown* pUnkForRelease, CollType& collection)
+    } // ET_ReturnCode CreateSTLEnumerator(IUnknown** ppUnk, IUnknown* pUnkForRelease, CollType& collection)
 
 // CreateEnumerator wraps the necessary creation, initialization 
 // and error handling code for the the creation of a CComEnum-style enumerator
 
-	template <class EnumType, class ElementType>
-	HRESULT CreateEnumerator(IUnknown** ppUnk,
-							 ElementType* begin, ElementType* end,
-							 IUnknown* pUnk,
-							 CComEnumFlags flags)
-	{
-		if (ppUnk == NULL)
-			return E_POINTER;
-		*ppUnk = NULL;
+    template <class EnumType, class ElementType>
+    ET_ReturnCode CreateEnumerator(IUnknown** ppUnk,
+                             ElementType* begin, ElementType* end,
+                             IUnknown* pUnk,
+                             CComEnumFlags flags)
+    {
+        if (ppUnk == NULL)
+            return H_ERROR_POINTER;
+        *ppUnk = NULL;
 
-		CComObject<EnumType>* pEnum = NULL;
-		HRESULT hr = CComObject<EnumType>::CreateInstance(&pEnum);
+        CComObject<EnumType>* pEnum = NULL;
+        ET_ReturnCode hr = CComObject<EnumType>::CreateInstance(&pEnum);
 
-		if (FAILED(hr))
-			return hr;
+        if (FAILED(hr))
+            return hr;
 
-		hr = pEnum->Init(begin, end, pUnk, flags);
+        hr = pEnum->Init(begin, end, pUnk, flags);
 
-		if (SUCCEEDED(hr))
-			hr = pEnum->QueryInterface(ppUnk);
+        if (SUCCEEDED(hr))
+            hr = pEnum->QueryInterface(ppUnk);
 
-		if (FAILED(hr))
-			delete pEnum;
+        if (FAILED(hr))
+            delete pEnum;
 
-		return hr;
+        return hr;
 
-	} // CreateEnumerator
+    } // CreateEnumerator
 
 
 // ICollectionOnSTLCopyImpl derives from ICollectionOnSTLImpl and overrides get__NewEnum
 // The new implementation provides each enumerator with its own copy of the collection data.
 // (Note that this only applies to enumerators returned directly by get__NewEnum.
 //  Cloned enumerators use their parent's data as before.
-//	This is OK because the enumerator never changes the data)
+//    This is OK because the enumerator never changes the data)
 
 // Use this class when:
-//		The collection can change while there are outstanding enumerators
-// And	You don't want to invalidate those enumerators when that happens
-// And	You are sure that the performance hit is worth it
-// And	You are sure that the way items are copied between containers works correctly
-//			(You can adjust this by passing a different class as the Holder parameter)
+//        The collection can change while there are outstanding enumerators
+// And    You don't want to invalidate those enumerators when that happens
+// And    You are sure that the performance hit is worth it
+// And    You are sure that the way items are copied between containers works correctly
+//            (You can adjust this by passing a different class as the Holder parameter)
 
 // Mostly you can use this class in exactly the same 
 // way that you would use ICollectionOnSTLImpl.
 
-	template <class T, class CollType, class ItemType, class CopyItem, class EnumType, class Holder = CGenericDataHolder< CollType > >
-	class ICollectionOnSTLCopyImpl :
-		public ICollectionOnSTLImpl<T, CollType, ItemType, CopyItem, EnumType>
-	{
-	public :
-		STDMETHOD(get__NewEnum)(IUnknown** ppUnk)
-		{
-			typedef CComObject< Holder > HolderObject;
-			HolderObject* p = NULL;
-			HRESULT hr = HolderObject::CreateInstance(&p);
-			if (FAILED(hr))
-				return hr;
+    template <class T, class CollType, class ItemType, class CopyItem, class EnumType, class Holder = CGenericDataHolder< CollType > >
+    class ICollectionOnSTLCopyImpl :
+        public ICollectionOnSTLImpl<T, CollType, ItemType, CopyItem, EnumType>
+    {
+    public :
+        STDMETHOD(get__NewEnum)(IUnknown** ppUnk)
+        {
+            typedef CComObject< Holder > HolderObject;
+            HolderObject* p = NULL;
+            ET_ReturnCode hr = HolderObject::CreateInstance(&p);
+            if (FAILED(hr))
+                return hr;
 
-			hr = p->Copy(m_coll);
-			if (FAILED(hr))
-				return hr;
+            hr = p->Copy(m_coll);
+            if (FAILED(hr))
+                return hr;
 
-			return CreateSTLEnumerator<EnumType>(ppUnk, p, p->m_Data);
-		
-		} // STDMETHOD(get__NewEnum)(IUnknown** ppUnk)
+            return CreateSTLEnumerator<EnumType>(ppUnk, p, p->m_Data);
+        
+        } // STDMETHOD(get__NewEnum)(IUnknown** ppUnk)
 
-	}; // class ICollectionOnSTLCopyImpl
+    }; // class ICollectionOnSTLCopyImpl
 
 }; // namespace VCUE
 

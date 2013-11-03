@@ -1,26 +1,26 @@
 HKCR
 {
-	MainLib.ZalVerifier.1 = s 'ZalVerifier Class'
-	{
-		CLSID = s '{E836314A-AB24-43e4-A79F-181CFCFBE2AA}'
-	}
-	MainLib.ZalVerifier = s 'ZalVerifier Class'
-	{
-		CLSID = s '{E836314A-AB24-43e4-A79F-181CFCFBE2AA}'
-		CurVer = s 'MainLib.ZalVerifier.1'
-	}	
-	NoRemove CLSID
-	{
-		ForceRemove {E836314A-AB24-43e4-A79F-181CFCFBE2AA} = s 'ZalVerifier Class'
-		{
-			ProgID = s 'MainLib.ZalVerifier.1'
-			VersionIndependentProgID = s 'MainLib.ZalVerifier'
-			ForceRemove 'Programmable'
-			InprocServer32 = s '%MODULE%'
-			{
-				val ThreadingModel = s 'Apartment'
-			}
-			'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
-		}
-	}
+    MainLib.ZalVerifier.1 = s 'ZalVerifier Class'
+    {
+        CLSID = s '{E836314A-AB24-43e4-A79F-181CFCFBE2AA}'
+    }
+    MainLib.ZalVerifier = s 'ZalVerifier Class'
+    {
+        CLSID = s '{E836314A-AB24-43e4-A79F-181CFCFBE2AA}'
+        CurVer = s 'MainLib.ZalVerifier.1'
+    }    
+    NoRemove CLSID
+    {
+        ForceRemove {E836314A-AB24-43e4-A79F-181CFCFBE2AA} = s 'ZalVerifier Class'
+        {
+            ProgID = s 'MainLib.ZalVerifier.1'
+            VersionIndependentProgID = s 'MainLib.ZalVerifier'
+            ForceRemove 'Programmable'
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Apartment'
+            }
+            'TypeLib' = s '{7D779CC0-7005-4082-87D1-0468ED94EDF4}'
+        }
+    }
 }

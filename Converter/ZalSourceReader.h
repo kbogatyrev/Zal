@@ -5,14 +5,14 @@
 class ATL_NO_VTABLE CZalSourceReader :
     public IConnectionPointContainerImpl<CZalSourceReader>,
     public IConnectionPointImpl<CZalSourceReader, &IID_IZalNotification2, CComDynamicUnkArray>,
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CZalSourceReader, &CLSID_ZalSourceReader>,
+    public CComObjectRootEx<CComSingleThreadModel>,
+    public CComCoClass<CZalSourceReader, &CLSID_ZalSourceReader>,
     public IZalSourceReader
 {
 public:
-	CZalSourceReader()
-	{
-	}
+    CZalSourceReader()
+    {
+    }
 
 DECLARE_REGISTRY_RESOURCEID(IDR_ZALSOURCEREADER)
 
@@ -26,10 +26,10 @@ BEGIN_CONNECTION_POINT_MAP(CZalSourceReader)
     CONNECTION_POINT_ENTRY(IID_IZalNotification2)
 END_CONNECTION_POINT_MAP()
 
-	DECLARE_PROTECT_FINAL_CONSTRUCT()
+    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct();
-	void FinalRelease();
+    HRESULT FinalConstruct();
+    void FinalRelease();
 
 protected:
     HRESULT StatusUpdate (int iProgress);

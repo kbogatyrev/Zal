@@ -14,20 +14,20 @@ public:
     {}
 
 public:
-    HRESULT hGetLemma (CEString& sLemma);
-    HRESULT hGetEnding (const CEString& sLemma, CEString& sEnding);
-    HRESULT hGetStressPositions (CEString& sLemma, 
-                                  CEString& sEnding,
-                                  vector<int>& vecStressPositions);
-    HRESULT CreateFormTemplate (const CEString& sLemma,
-                                CEString& sEnding,
-                                ET_Number eNumber,
-                                CWordForm *& pWordForm);
-    HRESULT hHandleCommonDeviations (CWordForm * pWordForm);
-    HRESULT hCheckForIrregularForms (bool& bIsVariant); // check if irregular forms were built and
+    ET_ReturnCode eGetLemma (CEString& sLemma);
+    ET_ReturnCode eGetEnding (const CEString& sLemma, CEString& sEnding);
+    ET_ReturnCode eGetStressPositions (CEString& sLemma, 
+                                       CEString& sEnding,
+                                       vector<int>& vecStressPositions);
+    ET_ReturnCode eCreateFormTemplate (const CEString& sLemma,
+                                       CEString& sEnding,
+                                       ET_Number eNumber,
+                                       CWordForm *& pWordForm);
+    ET_ReturnCode eHandleCommonDeviations (CWordForm * pWordForm);
+    ET_ReturnCode eCheckForIrregularForms (bool& bIsVariant); // check if irregular forms were built and
                                                         // regular processing must be skipped
 
-    HRESULT hBuild();
-    HRESULT hBuildIrregularForms();
+    ET_ReturnCode eBuild();
+    ET_ReturnCode eBuildIrregularForms();
 
 };

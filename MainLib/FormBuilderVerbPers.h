@@ -14,20 +14,18 @@ public:
     }
 
 public:
-    void GetEndings();
-    HRESULT hGetStressType (ET_Number, ET_Person,  ET_StressLocation&);
-    HRESULT hGetAuslautType (ET_Number, ET_Person, ET_StemAuslaut&);
-    HRESULT hGetLemma (ET_Number, ET_Person, CEString&);
-    HRESULT hGetStressPositions (const CEString& sLemma,
+    ET_ReturnCode eGetEndings();
+    ET_ReturnCode eGetStressType (ET_Number, ET_Person,  ET_StressLocation&);
+    ET_ReturnCode eGetAuslautType (ET_Number, ET_Person, ET_StemAuslaut&);
+    ET_ReturnCode eGetLemma (ET_Number, ET_Person, CEString&);
+    ET_ReturnCode eGetStressPositions (const CEString& sLemma,
                                  const CEString& sEnding,
                                  ET_StressLocation eStressType,
                                  vector<int>& vecStressPositions);
-//    HRESULT h_FleetingVowelCheck (wstring& str_verbForm);
-    HRESULT hCreateFormTemplate (ET_Number eNumber, 
-                                 ET_Person ePerson,
-                                 CComObject<CWordForm> *& pWordForm);
-    HRESULT hBuild();
-    HRESULT hBuildIrregular();
-    HRESULT hBuildIrregularForm (ET_Number, ET_Person, StIrregularForm& itIf);
+//    ET_ReturnCode h_FleetingVowelCheck (wstring& str_verbForm);
+    ET_ReturnCode eCreateFormTemplate (ET_Number, ET_Person, CWordForm *& pWordForm);
+    ET_ReturnCode eBuild();
+    ET_ReturnCode eHandleIrregularForms(); // get from the dictionary or generate if abbreviated paradigm was used
+    ET_ReturnCode eBuildIrregularForms (ET_Number, ET_Person); // ... when the dictionary only provides base forms
 
 };

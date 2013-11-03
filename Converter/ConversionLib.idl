@@ -27,10 +27,10 @@ interface IError : IDispatch
 // GDRL Conversion
 //
 [
-	object,
-	uuid(33D63849-08AD-4261-B09D-1A60217ED40A),
-	helpstring("IZalSourceReader Interface"),
-	pointer_default(unique)
+    object,
+    uuid(33D63849-08AD-4261-B09D-1A60217ED40A),
+    helpstring("IZalSourceReader Interface"),
+    pointer_default(unique)
 ]
 interface IZalSourceReader : IUnknown
 {
@@ -60,10 +60,10 @@ interface IZalSourceReader : IUnknown
 // Event source
 //
 [
-	object,
-	uuid(DD2CCF34-A642-495d-9DA9-7B9666AC8D90),
-	helpstring("IZalNotification2 Interface"),
-	pointer_default(unique)
+    object,
+    uuid(DD2CCF34-A642-495d-9DA9-7B9666AC8D90),
+    helpstring("IZalNotification2 Interface"),
+    pointer_default(unique)
 ]
 interface IZalNotification2 : IUnknown
 {
@@ -78,13 +78,13 @@ interface IZalNotification2 : IUnknown
 // ---------------------------------------------------------------------------
 
 [
-	uuid(2E2F302A-6766-4600-8D95-CF182429EE6E),
-	version(1.0),
-	helpstring("ZalConversionLib 1.0 Type Library")
+    uuid(2E2F302A-6766-4600-8D95-CF182429EE6E),
+    version(1.0),
+    helpstring("ZalConversionLib 1.0 Type Library")
 ]
 library ZalConversionLib
 {
-	importlib("stdole2.tlb");
+    importlib("stdole2.tlb");
 
     [
         uuid(0BB9FE60-72F9-43ab-AABA-970D1C0F79B5),

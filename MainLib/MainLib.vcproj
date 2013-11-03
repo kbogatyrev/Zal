@@ -57,7 +57,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Sqlite; ..\..\HLib-Windows"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\..\HLib-Windows\&quot;;&quot;$(SolutionDir)\..\ThirdPartyLibs-Windows\Sqlite&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -148,7 +148,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="..\Sqlite; ..\..\HLib-Windows"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\..\HLib-Windows\&quot;;&quot;$(SolutionDir)\..\ThirdPartyLibs-Windows\Sqlite&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -328,14 +328,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Analyzer.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Analyzer_Helpers.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Dictionary.cpp"
 				>
 			</File>
@@ -414,10 +406,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FormDescriptor.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Lexeme.cpp"
 				>
 			</File>
@@ -440,22 +428,6 @@
 			<File
 				RelativePath=".\MainLib.cpp"
 				>
-			</File>
-			<File
-				RelativePath=".\MainLib.def"
-				>
-			</File>
-			<File
-				RelativePath=".\MainLib.idl"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						GenerateStublessProxies="true"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\Sqlite\sqlite3.c"
@@ -524,14 +496,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\Analyzer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Analyzer_Helpers.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Dictionary.h"
 				>
 			</File>
@@ -541,10 +505,6 @@
 			</File>
 			<File
 				RelativePath=".\Endings.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ErrorComWrapper.h"
 				>
 			</File>
 			<File
@@ -596,10 +556,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FormDescriptor.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Lexeme.h"
 				>
 			</File>
@@ -613,10 +569,6 @@
 			</File>
 			<File
 				RelativePath=".\LexPreprocessor2.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MainLib_i.h"
 				>
 			</File>
 			<File
