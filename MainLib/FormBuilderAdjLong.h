@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FORMBUILDERADJLONG_H_INCLUDED
+#define FORMBUILDERADJLONG_H_INCLUDED
+
 #include "WordForm.h"
 #include "FormBuilderBaseDecl.h"
 
@@ -54,3 +56,5 @@ private:
     ET_Status m_eStatus;
     bool m_bIrregular;
 };
+
+#endif  //  FORMBUILDERADJLONG_H_INCLUDED

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ENDINGS_H_INCLUDED
+#define ENDINGS_H_INCLUDED
+
 #include "resource.h"       // main symbols
 //#include "MainLib_i.h"
 
@@ -199,3 +201,5 @@ class CPersonalEndings : public CEndings
 private:
     virtual int iHash (const StEndingDescriptor&);
 };
+
+#endif // ENDINGS_H_INCLUDED

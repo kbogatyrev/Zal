@@ -564,6 +564,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LexemeProperties.h"
+				>
+			</File>
+			<File
 				RelativePath=".\LexPreprocessor.h"
 				>
 			</File>

@@ -1,6 +1,8 @@
 #ifndef CDICTIONARY_H_INCLUDED
 #define CDICTIONARY_H_INCLUDED
 
+#include "LexemeProperties.h"
+
 class CLexeme;
 
 class CDictionary
@@ -12,15 +14,11 @@ public:
     CDictionary() : m_pDb(NULL)
     {}
 
-    ~CDictionary()
-    {
-        // ??? WHO DELETES CLexeme objects?
-        delete m_pDb;
-    }
+    ~CDictionary();
 
 public:
     ET_ReturnCode eSetDbPath (const CEString& sDbPath);
-    ET_ReturnCode eGetLexemeById (long Id, CLexeme *& pLexeme);
+    ET_ReturnCode eGetLexemeById (long Id);
     ET_ReturnCode eGetLexemesByMd5 (const CEString& sMd5);
     ET_ReturnCode eGetLexemesByGraphicStem (const CEString&);
     ET_ReturnCode eGetLexemesByInitialForm (const CEString&);
@@ -36,12 +34,12 @@ private:
 
     // Execute DB query and retrieve results
     ET_ReturnCode eQueryDb (const CEString& sSelect);
-    ET_ReturnCode eGetSingleRow (CLexeme *& pLexeme);    // enumeraror; lexeme ptr must be deleted by caller
+    ET_ReturnCode eGetSingleRow (StLexemeProperties&);
 
     ET_ReturnCode eReadFromDb (__int64 llLexemeId);
     ET_ReturnCode eReadFromDb (const CEString& sStem);
 
-    ET_ReturnCode eGetL2Data (__int64 llLexemeId, CLexeme& Lexeme);
+    ET_ReturnCode eGetL2Data (__int64 llLexemeId, StLexemeProperties& properties);
 
     void HandleDbException (CException&);
 };
