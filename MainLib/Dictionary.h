@@ -1,14 +1,13 @@
-#ifndef CDICTIONARY_H_INCLUDED
-#define CDICTIONARY_H_INCLUDED
+#ifndef C_DICTIONARY_H_INCLUDED
+#define C_DICTIONARY_H_INCLUDED
 
+#include "IDictionary.h"
 #include "LexemeProperties.h"
 
 class CLexeme;
 
-class CDictionary
+class CDictionary : public IDictionary
 {
-
-friend class CVerifier;
 
 public:
     CDictionary() : m_pDb(NULL)
@@ -44,4 +43,4 @@ private:
     void HandleDbException (CException&);
 };
 
-#endif // CDICTIONARY_H_INCLUDED
+#endif // C_DICTIONARY_H_INCLUDED

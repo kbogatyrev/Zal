@@ -24,7 +24,7 @@
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfATL="2"
+			UseOfATL="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
 			>
@@ -83,7 +83,7 @@
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
-				ModuleDefinitionFile=".\MainLib.def"
+				ModuleDefinitionFile="MainLib.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -116,7 +116,7 @@
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfATL="2"
+			UseOfATL="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
 			>
@@ -173,7 +173,7 @@
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
-				ModuleDefinitionFile=".\MainLib.def"
+				ModuleDefinitionFile="MainLib.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -410,23 +410,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\LexemeComWrapper.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\LexPreprocessor.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\LexPreprocessor2.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\LexPreprocessorQueries.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\MainLib.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MainLib.def"
 				>
 			</File>
 			<File
@@ -448,10 +436,6 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\SqliteComWrapper.cpp"
-				>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp"
@@ -483,10 +467,6 @@
 			</File>
 			<File
 				RelativePath=".\WordForm.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WordFormComWrapper.cpp"
 				>
 			</File>
 		</Filter>
@@ -556,11 +536,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Lexeme.h"
+				RelativePath=".\IDictionary.h"
 				>
 			</File>
 			<File
-				RelativePath=".\LexemeComWrapper.h"
+				RelativePath=".\ILexeme.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IWordForm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lexeme.h"
 				>
 			</File>
 			<File
@@ -568,19 +556,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\LexPreprocessor.h"
-				>
-			</File>
-			<File
-				RelativePath=".\LexPreprocessor2.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Resource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\SqliteComWrapper.h"
 				>
 			</File>
 			<File
@@ -596,105 +572,12 @@
 				>
 			</File>
 			<File
-				RelativePath=".\VCUE_Collection.h"
-				>
-			</File>
-			<File
-				RelativePath=".\VCUE_Copy.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Verifier.h"
 				>
 			</File>
 			<File
 				RelativePath=".\WordForm.h"
 				>
-			</File>
-			<File
-				RelativePath=".\WordFormComWrapper.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
-			<File
-				RelativePath=".\MainLib.rc"
-				>
-			</File>
-			<File
-				RelativePath=".\MainLib.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalAnalyzer.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalDictionary.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalError.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalLexeme.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalLexPreprocessor.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalMarshaler.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalSqliteComWrapper.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalTestData.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalVerifier.rgs"
-				>
-			</File>
-			<File
-				RelativePath=".\ZalWordForm.rgs"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Generated Files"
-			SourceControlFiles="false"
-			>
-			<File
-				RelativePath=".\MainLib_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<File

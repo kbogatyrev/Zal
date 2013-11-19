@@ -1,8 +1,12 @@
-#pragma once
+#ifndef FORMBUILDERADJCOMPARATIVE_H_INCLUDED
+#define FORMBUILDERADJCOMPARATIVE_H_INCLUDED
+
 #include "FormBuilderBaseDecl.h"
 
 using namespace std;
 using namespace std::tr1;
+
+class CLexeme;
 
 class CFormBuilderComparative : public CFormBuilderBaseDecl
 {
@@ -17,3 +21,5 @@ public:
     ET_ReturnCode eBuild();
 
 };
+
+#endif
