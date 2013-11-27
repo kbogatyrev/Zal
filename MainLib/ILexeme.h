@@ -19,7 +19,7 @@ struct ILexeme
     virtual bool bHasYoAlternation() = 0;
     virtual bool bHasOAlternation() = 0;
     virtual CEString sSourceForm() = 0;
-    virtual CSqlite * pGetDb() = 0;
+//    virtual CSqlite * pGetDb() = 0;
     virtual CEString sHeadwordComment() = 0;
     virtual bool bIsUnstressed() = 0;
     virtual bool IsVariant() = 0;
@@ -79,6 +79,8 @@ struct ILexeme
     virtual ET_ReturnCode eWordFormFromHash (int iHash, unsigned int uiAt, IWordForm *& pWf) = 0;
     virtual bool bHasIrregularForm (int iGramHash) = 0;
     virtual bool bNoRegularForms (int iGramHash) = 0;
+    virtual ET_ReturnCode eGetFirstWordForm (IWordForm *& pWf) = 0;
+    virtual ET_ReturnCode eGetNextWordForm (IWordForm *& pWf) = 0;
     virtual ET_ReturnCode eGetFirstIrregularForm (int iHash, IWordForm *&, bool& bIsOptional) = 0;
     virtual ET_ReturnCode eGetNextIrregularForm (IWordForm *&, bool& bIsOptional) = 0;
     virtual unsigned int uiFormCount (int iHash) = 0;

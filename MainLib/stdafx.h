@@ -23,17 +23,17 @@
 #define S_BOTH MAKE_ET_ReturnCode (SEVERITY_SUCCESS, FACILITY_ITF, 10002)
 #define S_MORE MAKE_ET_ReturnCode (SEVERITY_SUCCESS, FACILITY_ITF, 10003)
 
-
 //
 // ATL
 //
-#include "resource.h"
+//#include "resource.h"
 #include <atlbase.h>
-#include <atlcom.h>
-#include <atlctl.h>
-#include <atlstr.h>
+//#include <atlcom.h>
+//#include <atlctl.h>
+//#include <atlstr.h>
 
 using namespace ATL;
+
 
 //
 // STL

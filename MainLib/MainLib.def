@@ -3,8 +3,4 @@
 LIBRARY      "MainLib.DLL"
 
 EXPORTS
-	DllCanUnloadNow		PRIVATE
-	DllGetClassObject	PRIVATE
-	DllRegisterServer	PRIVATE
-	DllUnregisterServer	PRIVATE
-	DllInstall		PRIVATE
+	GetDictionary	@1

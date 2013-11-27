@@ -11,17 +11,13 @@ class CFormBuilderNouns : public CFormBuilderBaseDecl
 {
 public:
     CFormBuilderNouns (CLexeme * pLexeme) : CFormBuilderBaseDecl (pLexeme, SUBPARADIGM_NOUN)
-    {
-        m_pEndings = new CNounEndings();
-    }
+    {}
 
 protected:
     int iGramHash (ET_Gender eGender,
                    ET_Animacy eAnimacy,
                    ET_Case eCase,
                    ET_Number eNumber);
-
-    ET_ReturnCode eGetEndings();
 
     ET_ReturnCode eHandleStemAugment (CEString& sLemma, ET_Number, ET_Case);
 

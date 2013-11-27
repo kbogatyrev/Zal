@@ -10,7 +10,7 @@ using namespace std::tr1;
 class CFormBuilderLongAdj : public CFormBuilderBaseDecl
 {
 public:
-    CFormBuilderLongAdj (CLexeme * pLexeme, 
+    CFormBuilderLongAdj (CLexeme * pLexeme,
                          const CEString& sLemma,
                          ET_AccentType eAccentType, 
                          ET_Subparadigm eSubparadigm,
@@ -24,9 +24,7 @@ public:
           m_iStemStressPos (iStemStressPos),
           m_eStatus (eStatus),
           m_bIrregular (bIrregular)
-    {
-        m_pEndings = new CAdjLongEndings();
-    }
+    {}
 
 protected:
     int iGramHash (ET_PartOfSpeech ePos, ET_Subparadigm eSubparadigm, ET_Case eCase, 
@@ -34,18 +32,12 @@ protected:
                     ET_Reflexive eRefl);
 
     int iGramHashNSgMLong();
-
-    ET_ReturnCode eGetEndings();
-
     ET_ReturnCode eGetStressPositions (const CEString&, ET_StressLocation, vector<int>& vecStressPos);
-
     ET_ReturnCode eCreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, const CEString& sEnding, CWordForm *&); 
-
     ET_ReturnCode eHandleCommonDeviations (CWordForm *);
 
 public:
     ET_ReturnCode eBuild();
-
     ET_ReturnCode eBuildParticiple();
 
 private:

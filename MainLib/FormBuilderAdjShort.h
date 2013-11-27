@@ -23,8 +23,6 @@ public:
                           int iDeviation = -1,
                           ET_Status eStatus = STATUS_COMMON);
 
-    ET_ReturnCode eGetEndings();
-
     ET_ReturnCode eStressOnEnding (ET_Number eNumber, ET_Gender eGender);
 
     ET_ReturnCode eGetStressTypes (ET_Number eNumber, 

@@ -1,10 +1,9 @@
 #ifndef ENDINGS_H_INCLUDED
 #define ENDINGS_H_INCLUDED
 
-#include "resource.h"       // main symbols
-//#include "MainLib_i.h"
-
 using namespace std;
+
+class CLexeme;
 
 struct StEndingDescriptor
 {
@@ -113,12 +112,8 @@ struct StEndingDescriptor
 
 class CEndings
 {
-protected:
-    typedef std::multimap<int, CEString> EndingsMultiMap;
-    typedef pair<EndingsMultiMap::const_iterator, EndingsMultiMap::const_iterator> ItPair;
-
 public:
-    CEndings()
+    CEndings(CLexeme * pLexeme) : m_pLexeme(pLexeme)
     {}
 
     virtual ~CEndings()
@@ -137,6 +132,7 @@ public:
         return m_mmEndings.count (iH);
     }
 
+    virtual ET_ReturnCode eLoad() = 0;
     virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&) = 0;
 
     ET_ReturnCode eGetEnding (const StEndingDescriptor& stDescriptor, int iSeqNum, CEString& sEnding)
@@ -166,12 +162,21 @@ public:
     }
 
 protected:
+    void ReportDbError();
     std::multimap<int, CEString> m_mmEndings;
 
+    typedef std::multimap<int, CEString> EndingsMultiMap;
+    typedef pair<EndingsMultiMap::const_iterator, EndingsMultiMap::const_iterator> ItPair;
+
+    CLexeme * m_pLexeme;
 };
 
 class CNounEndings : public CEndings
 {
+public:
+    CNounEndings(CLexeme *);
+
+    virtual ET_ReturnCode eLoad();
     virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
@@ -180,14 +185,24 @@ private:
 
 class CAdjLongEndings : public CEndings
 {
+public:
+    CAdjLongEndings(CLexeme *, ET_Subparadigm);
+
+    virtual ET_ReturnCode eLoad();
     virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
     virtual int iHash (const StEndingDescriptor&);
+
+    ET_Subparadigm m_eSubparadigm;
 };
 
 class CAdjShortEndings : public CEndings
 {
+public:
+    CAdjShortEndings(CLexeme * pLexeme);
+
+    virtual ET_ReturnCode eLoad();
     virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:
@@ -196,6 +211,10 @@ private:
 
 class CPersonalEndings : public CEndings
 {
+public:
+    CPersonalEndings(CLexeme * pLexeme);
+
+    virtual ET_ReturnCode eLoad();
     virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
 private:

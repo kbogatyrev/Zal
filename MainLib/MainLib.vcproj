@@ -21,7 +21,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfATL="0"
@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
+				RegisterOutput="false"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				ModuleDefinitionFile="MainLib.def"
@@ -113,7 +113,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfATL="0"
@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
+				RegisterOutput="false"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				ModuleDefinitionFile="MainLib.def"
@@ -458,14 +458,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\TestData.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Verifier.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\WordForm.cpp"
 				>
 			</File>
@@ -561,18 +553,6 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\targetver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TestData.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Verifier.h"
 				>
 			</File>
 			<File
