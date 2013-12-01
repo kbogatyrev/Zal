@@ -41,8 +41,8 @@ private:
     vector<CLexeme *>::iterator m_itCurrentLexeme;
 
     // Execute DB query and retrieve results
-    ET_ReturnCode eQueryDb (const CEString& sSelect);
-    ET_ReturnCode eGetSingleRow (StLexemeProperties&);
+    ET_ReturnCode eQueryDb (const CEString& sSelect, unsigned int& uiQuertHandle);
+    ET_ReturnCode eGetSingleRow (StLexemeProperties&, unsigned int uiQuertHandle);
 
     ET_ReturnCode eReadFromDb (__int64 llLexemeId);
     ET_ReturnCode eReadFromDb (const CEString& sStem);
