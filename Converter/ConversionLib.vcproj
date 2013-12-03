@@ -56,7 +56,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Sqlite;..\MainLib;..\..\HLib-Windows"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\..\HLib-Windows\&quot;;&quot;$(SolutionDir)\..\ThirdPartyLibs-Windows\Sqlite&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -146,7 +146,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="..\Sqlite;..\MainLib;..\..\HLib-Windows"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\..\HLib-Windows\&quot;;&quot;$(SolutionDir)\..\ThirdPartyLibs-Windows\Sqlite&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"

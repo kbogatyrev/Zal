@@ -60,7 +60,7 @@ using namespace ATL;
 //
 // Zal (MainLib)
 //
-#include "MainLib_i.h"
+//#include "MainLib_i.h"
 
 /*
 #define ERROR_LOG(str_Msg) wstringstream io__; \

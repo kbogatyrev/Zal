@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "ConversionLib_i.h"
-//#include "dllmain.h"
+#include "dllmain.h"
 
 CConversionLibModule _AtlModule;
 
