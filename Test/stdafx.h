@@ -38,7 +38,7 @@ using namespace std::tr1;
 // CRT
 #include <io.h>
 
-#include <atlbase.h>
+//#include <atlbase.h>
 
 //
 // Zal

@@ -27,12 +27,12 @@
 // ATL
 //
 //#include "resource.h"
-#include <atlbase.h>
+//#include <atlbase.h>
 //#include <atlcom.h>
 //#include <atlctl.h>
 //#include <atlstr.h>
 
-using namespace ATL;
+//using namespace ATL;
 
 
 //
