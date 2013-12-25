@@ -32,6 +32,9 @@ END_CONNECTION_POINT_MAP()
     void FinalRelease();
 
 protected:
+    HRESULT hConvertStems();
+    HRESULT hConvertEndings();
+
     HRESULT StatusUpdate (int iProgress);
     HRESULT ShowCurrentWord (BSTR bstrWord);
     HRESULT StatusCheck (BOOL& bCancel);
@@ -43,6 +46,11 @@ protected:
 private:
     CEString m_sTempFile;
     set<CEString> m_setMainSymbols;
+
+    FILE * m_pInFile;
+    FILE * m_pOutFile;
+    CSqlite * m_pDb;
+    int m_iMaxEntries;
 
 public:
     STDMETHOD (ConvertSourceFile) (BSTR bstrSourcePath,
