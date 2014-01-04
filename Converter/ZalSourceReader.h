@@ -31,6 +31,8 @@ END_CONNECTION_POINT_MAP()
     HRESULT FinalConstruct();
     void FinalRelease();
 
+typedef multimap<StHeadword *, StDescriptor>::iterator ItDictionary;
+
 protected:
     HRESULT hConvertStems();
     HRESULT hConvertEndings();
@@ -43,10 +45,18 @@ protected:
     bool bCheckSquareBrackets (const CEString& sSource, bool& bSuspiciousEntry);
     bool bShow (const CEString& sMsg);
 
+    bool bSaveToDb();
+    bool bResolveReferences();
+    bool bUpdateReferences();
+
+    // Find all headwords whose raw source value equals sKey
+    bool bFindReferences(const CEString& sKey, vector<StHeadword *>& vecResults);
+
 private:
     CEString m_sTempFile;
     set<CEString> m_setMainSymbols;
-
+    multimap<StHeadword *, StDescriptor> m_mmapDictionary;
+    map<CEString, StHeadword *> m_mapReferences;
     FILE * m_pInFile;
     FILE * m_pOutFile;
     CSqlite * m_pDb;
