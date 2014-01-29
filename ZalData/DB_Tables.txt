@@ -18,7 +18,15 @@ CREATE TABLE difficulties (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gr
 
 CREATE TABLE nonexistent_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash INTEGER, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
-CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending TEXT, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, stem_auslaut INTEGER);
+CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending TEXT);
+
+CREATE TABLE ending_data (id INTEGER PRIMARY KEY ASC, ending_id INTEGER, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, stem_auslaut INTEGER, FOREIGN KEY (ending_id) REFERENCES endings (id));
+
+CREATE TABLE stems (id INTEGER PRIMARY KEY ASC, stem_string TEXT);
+
+CREATE TABLE stem_data (id INTEGER PRIMARY KEY ASC, stem_id INTEGER, gram_hash INTEGER, FOREIGN KEY (stem_id) REFERENCES stems (id));
+
+CREATE TABLE wordforms (id INTEGER PRIMARY KEY ASC, stem_data_id INTEGER, ending_data_id INTEGER, FOREIGN KEY (stem_data_id) REFERENCES stem_data (id), FOREIGN KEY (ending_data_id) REFERENCES ending_data (id));
 
 CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash INTEGER, stress_pos INTEGER);
 
