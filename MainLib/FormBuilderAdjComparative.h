@@ -6,7 +6,10 @@
 using namespace std;
 using namespace std::tr1;
 
-class CLexeme;
+namespace Hlib
+{
+
+    class CLexeme;
 
 class CFormBuilderComparative : public CFormBuilderBaseDecl
 {
@@ -21,5 +24,7 @@ public:
     ET_ReturnCode eBuild();
 
 };
+
+}   // namespace Hlib
 
 #endif

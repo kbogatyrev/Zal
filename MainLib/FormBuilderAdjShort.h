@@ -1,8 +1,13 @@
-#pragma once
+#ifndef FORMBUILDERADJSHORT_H_INCLUDED
+#define FORMBUILDERADJSHORT_H_INCLUDED
+
 #include "FormBuilderBaseDecl.h"
 
 using namespace std;
 using namespace std::tr1;
+
+namespace Hlib
+{
 
 class CFormBuilderShortAdj : public CFormBuilderBaseDecl
 {
@@ -54,3 +59,7 @@ private:
     map<int, bool> m_mapCommonDeviations;
     ET_Status m_eStatus;
 };
+
+}   // Namespace Hlib
+
+#endif  //  FORMBUILDERADJSHORT_H_INCLUDED

@@ -1,10 +1,15 @@
-#pragma once
+#ifndef FORMBUILDERVERBIMPV_H_INCLUDED
+#define FORMBUILDERVERBIMPV_H_INCLUDED
+
 #include "WordForm.h"
 #include "SqliteWrapper.h"
 #include "FormBuilderBaseConj.h"
 
 using namespace std;
 using namespace std::tr1;
+
+namespace Hlib
+{
 
 class CFormBuilderImperative : public CFormBuilderBaseConj
 {
@@ -31,3 +36,7 @@ public:
     ET_ReturnCode eBuildIrregularForms();
 
 };
+
+}
+
+#endif      //  FORMBUILDERVERBIMPV_H_INCLUDED

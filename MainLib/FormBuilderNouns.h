@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FORMBUILDERNOUNS_H_INCLUDED
+#define FORMBUILDERNOUNS_H_INCLUDED
+
 #include "WordForm.h"
 #include "SqliteWrapper.h"
 #include "Endings.h"
@@ -6,6 +8,9 @@
 
 using namespace std;
 using namespace std::tr1;
+
+namespace Hlib
+{
 
 class CFormBuilderNouns : public CFormBuilderBaseDecl
 {
@@ -45,3 +50,7 @@ public:
     ET_ReturnCode eBuild();
 
 };
+
+}   //  namespace Hlib
+
+#endif  //  FORMBUILDERNOUNS_H_INCLUDED

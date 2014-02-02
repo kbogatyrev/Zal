@@ -2,8 +2,9 @@
 #include "stdafx.h"
 
 #include "Enums.h"
-
 #include "Dictionary.h"
+
+using namespace Hlib;
 
 extern "C"
 {

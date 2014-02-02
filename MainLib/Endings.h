@@ -3,10 +3,14 @@
 
 using namespace std;
 
+namespace Hlib
+{
+
 class CLexeme;
 
 struct StEndingDescriptor
 {
+    __int64 llDbKey;
     int iInflectionType;
     ET_Gender eGender;
     ET_Number eNumber;
@@ -16,7 +20,8 @@ struct StEndingDescriptor
     ET_StressLocation eStress;
     ET_StemAuslaut eStemAuslaut;
 
-    StEndingDescriptor() : iInflectionType (INFLECTION_TYPE_UNDEFINED),
+    StEndingDescriptor() : llDbKey(-1),
+                           iInflectionType (INFLECTION_TYPE_UNDEFINED),
                            eGender (GENDER_UNDEFINED), 
                            eNumber (NUM_UNDEFINED), 
                            eCase (CASE_UNDEFINED), 
@@ -28,8 +33,9 @@ struct StEndingDescriptor
 
     // Overload for nouns
     StEndingDescriptor (ET_Number eN, 
-                         ET_Case eC, 
-                         ET_StressLocation eS) :
+                        ET_Case eC, 
+                        ET_StressLocation eS) :
+                            llDbKey(-1),
                             iInflectionType (INFLECTION_TYPE_UNDEFINED),
                             eGender (GENDER_UNDEFINED), 
                             eNumber (eN),
@@ -42,10 +48,11 @@ struct StEndingDescriptor
 
     // Overload for long adjectves
     StEndingDescriptor (ET_Gender eG,
-                         ET_Number eN, 
-                         ET_Case eC,
-                         ET_Animacy eA,
-                         ET_StressLocation eS) :
+                        ET_Number eN, 
+                        ET_Case eC,
+                        ET_Animacy eA,
+                        ET_StressLocation eS) :
+                            llDbKey(-1),
                             iInflectionType (INFLECTION_TYPE_UNDEFINED),
                             eGender (eG), 
                             eNumber (eN),
@@ -58,8 +65,9 @@ struct StEndingDescriptor
 
     // Overload for short adjectives
     StEndingDescriptor (ET_Gender eG,
-                         ET_Number eN,
-                         ET_StressLocation eS) :
+                        ET_Number eN,
+                        ET_StressLocation eS) :
+                            llDbKey(-1),
                             iInflectionType (INFLECTION_TYPE_UNDEFINED),
                             eGender (eG), 
                             eNumber (eN),
@@ -72,10 +80,11 @@ struct StEndingDescriptor
 
     // Overload for personal forms
     StEndingDescriptor (int iInflectionType,
-                         ET_Person eP,
-                         ET_Number eN,
-                         ET_StressLocation eS,
-                         ET_StemAuslaut eSa) :
+                        ET_Person eP,
+                        ET_Number eN,
+                        ET_StressLocation eS,
+                        ET_StemAuslaut eSa) :
+                            llDbKey(-1),
                             iInflectionType (iInflectionType),
                             eGender (GENDER_UNDEFINED),
                             eNumber (eN),
@@ -220,5 +229,7 @@ public:
 private:
     virtual int iHash (const StEndingDescriptor&);
 };
+
+} // namespace Hlib
 
 #endif // ENDINGS_H_INCLUDED

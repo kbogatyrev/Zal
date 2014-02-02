@@ -7,6 +7,9 @@
 using namespace std;
 using namespace std::tr1;
 
+namespace Hlib
+{
+
 class CFormBuilderLongAdj : public CFormBuilderBaseDecl
 {
 public:
@@ -48,5 +51,7 @@ private:
     ET_Status m_eStatus;
     bool m_bIrregular;
 };
+
+}   // namespace Hlib
 
 #endif  //  FORMBUILDERADJLONG_H_INCLUDED

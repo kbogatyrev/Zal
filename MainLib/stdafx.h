@@ -66,47 +66,15 @@ using namespace std::tr1;
 //
 // Zal
 //
-#include "ErrorHandlers.h"
-
-/*
-#define ERROR_LOG(str_Msg) wstringstream io__; \
-        io__ << __LINE__; \
-        CT_Error::CreateInstance (str_Msg, \
-                  std::wstring (_T(__FILE__)) + \
-                  std::wstring (_T("\t")) + \
-                  io__.str() + \
-                  std::wstring (_T("\t")) + \
-                  std::wstring (_T(__FUNCTION__)), \
-                  std::wstring (_T("")),  \
-                  -1, \
-                  false);
-*/
-/*
-#define ERROR_LOG(str_Msg) wstringstream io__; \
-        io__ << __LINE__; \
-        CT_Error::v_HandleError (str_Msg, \
-                                 std::wstring (_T(__FILE__)) + \
-                                 std::wstring (_T("\t")) + \
-                                 io__.str() + \
-                                 std::wstring (_T("\t")) + \
-                                 std::wstring (_T(__FUNCTION__)), \
-                                 std::wstring (_T("")), \
-                                 -1, \
-                                 false);
-*/
+#include "Logging.h"
 
 #define CYRILLIC
 
 #include "Enums.h"
 #include "Exception.h"
-//#include "ExtString.h"
 #include "EString.h"
-#include "Globals.h"
-//#include "GenericHash.h"
 #include "Callbacks.h"
-//#include "ErrorComWrapper.h"
 #include "GramHasher.h"
-
 #include "SqliteWrapper.h"
 
 #include <stdlib.h>
