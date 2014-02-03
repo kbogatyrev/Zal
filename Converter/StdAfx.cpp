@@ -5,5 +5,5 @@
 #include "stdafx.h"
 
 //vector<wstring> CT_Error::vec_Log_;
-sqlite3 * CSqlite::m_spDb_ = NULL;
-int CSqlite::m_iRefcount_ = 0;
+sqlite3 * Hlib::CSqlite::m_spDb_ = NULL;
+int Hlib::CSqlite::m_iRefcount_ = 0;

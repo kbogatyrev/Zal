@@ -52,7 +52,7 @@ using namespace ATL;
 // Zal
 //
 #include "EString.h"
-#include "ErrorHandlers.h"
+#include "Logging.h"
 #include "Exception.h"
 //#include "GenericHash.h"
 #include "MD5.h"
