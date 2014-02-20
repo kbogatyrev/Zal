@@ -94,6 +94,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetNextStemStressPos(int& iPos) = 0;
         virtual ET_ReturnCode SetDb(const CEString& sDbPath) = 0;
         virtual ET_ReturnCode eGenerateParadigm() = 0;
+        virtual bool bSaveToDb() = 0;
 
     };      //  struct ILexeme
 

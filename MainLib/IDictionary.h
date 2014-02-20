@@ -7,7 +7,6 @@
 
 namespace Hlib
 {
-
     struct IDictionary
     {
         virtual ET_ReturnCode eSetDbPath (const CEString& sDbPath) = 0;
