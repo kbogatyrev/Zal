@@ -36,6 +36,7 @@ public:
 
     ET_ReturnCode eCreateFormTemplate (const CEString& sLemma, 
                                        const CEString& sEnding,
+                                       __int64 llEndingKey,
                                        ET_Gender eGender,
                                        ET_Number eNumber,
                                        CWordForm *& pWordForm);

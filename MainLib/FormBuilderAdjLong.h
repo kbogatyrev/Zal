@@ -36,7 +36,7 @@ protected:
 
     int iGramHashNSgMLong();
     ET_ReturnCode eGetStressPositions (const CEString&, ET_StressLocation, vector<int>& vecStressPos);
-    ET_ReturnCode eCreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, const CEString& sEnding, CWordForm *&); 
+    ET_ReturnCode eCreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, const CEString& sEnding, __int64 llEndingKey, CWordForm *&); 
     ET_ReturnCode eHandleCommonDeviations (CWordForm *);
 
 public:

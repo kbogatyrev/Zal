@@ -144,7 +144,7 @@ public:
     virtual ET_ReturnCode eLoad() = 0;
     virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&) = 0;
 
-    ET_ReturnCode eGetEnding (const StEndingDescriptor& stDescriptor, int iSeqNum, CEString& sEnding)
+    ET_ReturnCode eGetEnding (const StEndingDescriptor& stDescriptor, int iSeqNum, CEString& sEnding, __int64& llEndingKey)
     {
         int iKey = iHash (stDescriptor);
 
@@ -160,21 +160,23 @@ public:
             }
         }
 
-        sEnding = (*pair_Range.first).second;
+        pair<CEString, __int64> pairEndingData = (*pair_Range.first).second;
+        sEnding = pairEndingData.first;
+        llEndingKey = pairEndingData.second;
 
         return H_NO_ERROR;
     }
 
-    ET_ReturnCode eGetEnding (const StEndingDescriptor& stD, CEString& s_)
+    ET_ReturnCode eGetEnding (const StEndingDescriptor& stD, CEString& s_, __int64& llKey)
     {
-        return eGetEnding (stD, 0, s_);
+        return eGetEnding (stD, 0, s_, llKey);
     }
 
 protected:
     void ReportDbError();
-    std::multimap<int, CEString> m_mmEndings;
+    std::multimap<int, pair<CEString, __int64> > m_mmEndings;       // ending hash to ending data
 
-    typedef std::multimap<int, CEString> EndingsMultiMap;
+    typedef std::multimap<int, pair<CEString, __int64> > EndingsMultiMap;
     typedef pair<EndingsMultiMap::const_iterator, EndingsMultiMap::const_iterator> ItPair;
 
     CLexeme * m_pLexeme;
