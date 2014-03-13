@@ -2,6 +2,8 @@
 #define I_DICTIONARY_H_INCLUDED
 
 #include "Enums.h"
+#include "EString.h"
+#include "Callbacks.h"
 #include "ILexeme.h"
 #include "LexemeProperties.h"
 
