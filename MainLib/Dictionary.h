@@ -31,6 +31,8 @@ public:
     virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexeme);
     virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexeme);
 
+    virtual ET_ReturnCode eAnalyze(const CEString& sText);
+
     virtual void Clear();
 
     // Not part ot interface:

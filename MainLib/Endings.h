@@ -1,6 +1,11 @@
 #ifndef ENDINGS_H_INCLUDED
 #define ENDINGS_H_INCLUDED
 
+#include <vector>
+#include "SqliteWrapper.h"
+#include "Enums.h"
+#include "EString.h"
+
 using namespace std;
 
 namespace Hlib
@@ -117,6 +122,82 @@ struct StEndingDescriptor
         return s_;
     }
 
+};      //  struct StEndingDescriptor
+
+//
+// Endings parser node
+//
+struct StNode
+{
+    wchar_t cLetter;
+    StNode * pPrevious;
+    vector<StNode *> vecNext;
+};
+
+struct StReverseComparisonFunctor
+{
+    bool operator() (const CEString& sLeft, const CEString& sRight)
+    {
+        int iLeftLength = sLeft.uiLength();
+        int iRightLength = sRight.uiLength();
+        if (iLeftLength < 1 && iRightLength < 1)
+        {
+            return false;
+        }
+        if (iLeftLength < 1)
+        {
+            return true;
+        }
+        if (iRightLength < 1)
+        {
+            return false;
+        }
+
+        if (iLeftLength > 10 || iRightLength > 10)
+        {
+            throw CException(H_ERROR_INVALID_ARG, L"Ending too long.");
+        }
+
+        int iLeftOffset = iLeftLength - 1;
+        int iRightOffset = iRightLength - 1;
+        for (; iLeftOffset >= 0 && iRightOffset >= 0; --iLeftOffset, --iRightOffset)
+        {
+            if (sLeft[iLeftOffset] < sRight[iRightOffset])
+            {
+                return true;
+            }
+            else if (sLeft[iLeftOffset] > sRight[iRightOffset])
+            {
+                return false;
+            }
+        }
+
+        return false;
+
+    }   //  bool operator() (const CEString& sLeft, const CEString& sRight)
+};  //  struct StReverseComparisonFunctor
+
+//
+// Endings parser tree
+//
+class CParsingTree
+{
+public:
+    ET_ReturnCode eGetFirstMatch(StEndingDescriptor& stEnding);
+    ET_ReturnCode eGetNextMatch(StEndingDescriptor& stEnding);
+
+private:
+    typedef map<CEString, StEndingDescriptor, StReverseComparisonFunctor> MapEndingToDescriptor;
+    MapEndingToDescriptor m_mapSortedEndingsList;
+//    MapEndingToDescriptor::iterator itEnding;
+
+    vector<StNode *> m_vecFinales;
+    vector<StEndingDescriptor> m_vecMatches;
+
+public:
+    ET_ReturnCode Load(CSqlite * pDb);
+    void AddLevel(int iPos, MapEndingToDescriptor::iterator itFirst, MapEndingToDescriptor::iterator itEnd);
+
 };
 
 class CEndings
@@ -180,7 +261,8 @@ protected:
     typedef pair<EndingsMultiMap::const_iterator, EndingsMultiMap::const_iterator> ItPair;
 
     CLexeme * m_pLexeme;
-};
+
+};      // class CEndings
 
 class CNounEndings : public CEndings
 {
