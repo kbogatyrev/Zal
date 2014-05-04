@@ -43,7 +43,7 @@ using namespace std::tr1;
 //
 // Zal
 //
-#include "ErrorHandlers.h"
+#include "Logging.h"
 
 /*
 #define ERROR_LOG(str_Msg) wstringstream io__; \
