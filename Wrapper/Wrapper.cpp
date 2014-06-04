@@ -16,6 +16,10 @@
 using namespace boost::python;
 using namespace Hlib;
 using namespace std;
+extern "C"
+{
+	ET_ReturnCode GetDictionary(IDictionary *& d);
+}
 
 struct ILexemeWrap : ILexeme, wrapper<ILexeme>
 {
@@ -380,9 +384,9 @@ struct IDictionaryWrap : IDictionary, wrapper<IDictionary>
 	{
 		return this->get_override("eGetLexemesByInitialForm")();
 	}
-	ET_ReturnCode eGenerateAllForms(CProgressCallback& progress)
+	ET_ReturnCode eGenerateAllForms()
 	{
-		return this->get_override("eGenerateAllForms")(progress);
+		return this->get_override("eGenerateAllForms")();
 	}
 	ET_ReturnCode eCountLexemes(int& iLexemes)
 	{
@@ -398,6 +402,10 @@ struct IDictionaryWrap : IDictionary, wrapper<IDictionary>
 	}
 	void Clear(){
 		this->get_override("Clear")();
+	}
+	ET_ReturnCode eAnalyze(const CEString& sText)
+	{
+		return this->get_override("eAnalyze")(sText);
 	}
 
 };
@@ -471,33 +479,16 @@ struct IWordFormWrap : IWordForm, wrapper<IWordForm>
 		return this->get_override("eInitFromHash")(iHash);
 	}
 };
-class WFP
+wstring StrFromCES(CEString CES)
 {
-public:
-	WFP() : pWF(NULL)
-	{}
-	~WFP()
-	{
-		delete pWF;
-	}
-	IWordForm * get()
-	{
-		return pWF;
-	}
-	IWordForm * pWF;
-};
-list eGetNextIrregularFormWrapped(ILexeme* pL, WFP& w)
-{
-	bool b;
-	ET_ReturnCode rc = pL->eGetNextIrregularForm(w.pWF, b);
-	list res;
-	res.append(rc);
-	res.append(b);
-	return res;
+	wstring pWF = CES;
+	return pWF;
 }
-extern "C"
+CEString StrToCES(const wstring wStr)
 {
-	ET_ReturnCode GetDictionary(IDictionary *& d);
+	const wchar_t* wctStr = wStr.c_str();
+	CEString sDbPath(wctStr);
+	return sDbPath;
 }
 IDictionary* GetDictionaryWrap()
 {
@@ -505,22 +496,38 @@ IDictionary* GetDictionaryWrap()
 	GetDictionary(pD);
 	return pD;
 }
-CEString StrToCES(const wstring wDbPath)
+class WFP
 {
-	const wchar_t* wpDbPath = wDbPath.c_str();
-	CEString sDbPath(wpDbPath);
-	return sDbPath;
-}
-ILexeme* CreateNewLexeme()
+public:
+	WFP() : pWF(NULL)
+	{}
+	IWordForm * get()
+	{
+		return pWF;
+	}
+	IWordForm * pWF;
+};
+class LexP
 {
-	ILexeme * pL = NULL;
-	return pL;
-}
+public:
+	LexP() : pL(NULL)
+	{}
+	ILexeme * get()
+	{
+		return pL;
+	}
+	ILexeme * pL;
+};
+//START IDictionary functions 
 ET_ReturnCode eSetDbPathWrapped(IDictionary* pD, const wstring wDbPath)
 {
 	
 	ET_ReturnCode rc = pD->eSetDbPath(StrToCES(wDbPath));
 	return rc;
+}
+ET_ReturnCode eAnalyze(IDictionary* pD, const wstring wText)
+{
+	return pD->eAnalyze(StrToCES(wText));
 }
 list eCountLexemesWrapped(IDictionary* pD)
 {
@@ -536,64 +543,219 @@ ET_ReturnCode eGetLexemesByInitialFormWrapped(IDictionary* pD, const wstring wIF
 	ET_ReturnCode rc = pD->eGetLexemesByInitialForm(StrToCES(wIF));
 	return rc;
 }
-pair<ET_ReturnCode, ILexeme*> eGetFirstLexemeWrapped(IDictionary* pD)
+ET_ReturnCode eGetLexemesByGraphicStemWrapped(IDictionary* pD, const wstring wGS)
 {
-	ILexeme * pL = NULL;
-	ET_ReturnCode rc = pD->eGetFirstLexeme(pL);
-	pair< ET_ReturnCode, ILexeme*> res(rc, pL);
+	ET_ReturnCode rc = pD->eGetLexemesByGraphicStem(StrToCES(wGS));
+	return rc;
+}
+ET_ReturnCode eGetFirstLexemeWrapped(IDictionary* pD, LexP& l)
+{
+	return pD->eGetFirstLexeme(l.pL);
+}
+ET_ReturnCode eGetNextLexemeWrapped(IDictionary* pD, LexP& l)
+{
+	return pD->eGetNextLexeme(l.pL);
+}
+// END: IDictionary Functions
+
+// START: ILexeme Functions
+list eGetNextIrregularFormWrapped(ILexeme* pL, WFP& w)
+{
+	bool b;
+	ET_ReturnCode rc = pL->eGetNextIrregularForm(w.pWF, b);
+	list res;
+	res.append(rc);
+	res.append(b);
 	return res;
 }
-pair<ET_ReturnCode, ILexeme*> eGetNextLexemeWrapped(IDictionary* pD)
+list eGetFirstIrregularFormWrapped(ILexeme* pL, int iHash, WFP& w)
 {
-	ILexeme * pL = NULL;
-	ET_ReturnCode rc = pD->eGetNextLexeme(pL);
-	pair< ET_ReturnCode, ILexeme*> res(rc, pL);
+	bool b;
+	ET_ReturnCode rc = pL->eGetFirstIrregularForm(iHash, w.pWF, b);
+	list res;
+	res.append(rc);
+	res.append(b);
 	return res;
 }
-ILexeme* second_from_pair_IL(pair<ET_ReturnCode, ILexeme*> IL_pair)
+list eGetFirstStemStressPosWrapped(ILexeme* pL)
 {
-	ILexeme * pL = NULL;
-	pL = IL_pair.second;
-	return pL;
+	list res;
+	int iPos;
+	res.append(pL->eGetFirstStemStressPos(iPos));
+	res.append(iPos);
+	return res;
 }
-IWordForm* second_from_pair_WF(pair<ET_ReturnCode, IWordForm*> IW_pair)
+list eGetNextStemStressPosWrapped(ILexeme* pL)
 {
-	IWordForm * pW = NULL;
-	pW = IW_pair.second;
-	return pW;
+	list res;
+	int iPos;
+	res.append(pL->eGetNextStemStressPos(iPos));
+	res.append(iPos);
+	return res;
 }
+ET_ReturnCode eGetFirstWordFormWrapped(ILexeme* pL, WFP& w)
+{
+	return pL->eGetFirstWordForm(w.pWF);
+}
+ET_ReturnCode eGetNextWordFormWrapped(ILexeme* pL, WFP& w)
+{
+	return pL->eGetNextWordForm(w.pWF);
+}
+ET_ReturnCode SetDbWrapped(ILexeme* pL, wstring path)
+{
+	return pL->SetDb(StrToCES(path));
+}
+list bFindCommonDeviationWrapped(ILexeme* pL, int iNum)
+{
+	list res;
+	bool b;
+
+	res.append(pL->bFindCommonDeviation(iNum, b));
+	res.append(b);
+	return res;
+}
+list bFindStandardAlternationWrapped(ILexeme* pL, wstring Key)
+{
+	list res;
+	CEString sKey = StrToCES(Key);
+	CEString sValue;
+	res.append(pL->bFindStandardAlternation(sKey, sValue));
+	res.append(StrFromCES(sValue));
+	return res;
+}
+list eGetStemStressPositionsWrapped(ILexeme* pL, wstring Lemma)
+{
+	vector<int> vecPos;
+	CEString sLemma = StrToCES(Lemma);
+	list res;
+	res.append(pL->eGetStemStressPositions(sLemma, vecPos));
+	list lPos;
+	vector<int>::iterator it;
+	for (it = vecPos.begin(); it != vecPos.end(); ++it)
+	{
+		lPos.append(*it);
+	}
+	res.append(lPos);
+	return res;
+}
+list eGetAlternatingPreverbWrapped(ILexeme * pL, wstring wVerbForm)
+{
+	CEString sPreverb;
+	bool bVoicing;
+	list res;
+	res.append(pL->eGetAlternatingPreverb(StrToCES(wVerbForm), sPreverb, bVoicing));
+	res.append(StrFromCES(sPreverb));
+	res.append(bVoicing);
+	return res;
+}
+//ILexeme CEString functions
+wstring ILsGraphicStemWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sGraphicStem());
+}
+wstring ILsSourceFormWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sSourceForm());
+}
+wstring ILsHeadwordCommentWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sHeadwordComment());
+}
+wstring ILsMainSymbolWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sMainSymbol());
+}
+wstring ILsMainSymbolPluralOfWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sMainSymbolPluralOf());
+}
+wstring ILsAltMainSymbolWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sAltMainSymbol());
+}
+wstring ILsInflectionTypeWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sInflectionType());
+}
+wstring ILsCommentWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sComment());
+}
+wstring ILsAltMainSymbolCommentWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sAltMainSymbolComment());
+}
+wstring ILsAltInflectionCommentWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sAltInflectionComment());
+}
+wstring ILsVerbStemAlternationWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sVerbStemAlternation());
+}
+wstring ILsLoc2PrepositionWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sLoc2Preposition());
+}
+wstring ILsAspectPairCommentWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sAspectPairComment());
+}
+wstring ILsQuestionableFormsWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sQuestionableForms());
+}
+wstring ILsRestrictedFromsWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sRestrictedFroms());
+}
+wstring ILsContextsWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sContexts());
+}
+wstring ILsTrailingCommentWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sTrailingComment());
+}
+wstring ILs1SgStemWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->s1SgStem());
+}
+wstring ILs3SgStemWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->s3SgStem());
+}
+wstring ILsInfinitiveWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sInfinitive());
+}
+wstring ILsInfStemWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sInfStem());
+}
+wstring ILsHashWrapped(ILexeme * pL)
+{
+	return StrFromCES(pL->sHash());
+}
+// END: ILexeme functions
+
+//IWordForm function
 wstring sWordFormWrapped(IWordForm* pW)
 {
 	CEString sWF= pW->sWordForm();
 	wstring pWF = sWF;
 	return pWF;
 }
-wstring StrFromCES(CEString CES)
+wstring sLemmaWrapped(IWordForm* pW)
 {
-	wstring pWF = CES;
-	return pWF;
+	CEString CESLemma = pW->sLemma();
+	wstring wLemma = CESLemma;
+	return wLemma;
 }
-pair<ET_ReturnCode, IWordForm*> eGetFirstWordFormWrapped(ILexeme* pL)
-{
-	IWordForm * pW = NULL;
-	ET_ReturnCode rc = pL->eGetFirstWordForm(pW);
-	pair<ET_ReturnCode, IWordForm*> res(rc, pW);
-	return res;
-}
-pair<ET_ReturnCode, IWordForm*> eGetNextWordFormWrapped(ILexeme* pL)
-{
-	IWordForm * pW = NULL;
-	ET_ReturnCode rc = pL->eGetNextWordForm(pW);
-	pair<ET_ReturnCode, IWordForm*> res(rc, pW);
-	return res;
-}
-ET_ReturnCode  eGenerateAllFormsWrapped(IDictionary* pD)
-{
-	CProgressCallback progress;
-	ET_ReturnCode rc = pD->eGenerateAllForms(progress);
-	return rc;
-}
-list vecSecondaryStressPos_wrapped(StLexemeProperties stLP)
+//END: IWordForm fintion
+
+//START: StLexemeProperties Functions
+list vecSecondaryStressPosWrapped(StLexemeProperties stLP)
 {
 	list result;
 	vector<int> v = stLP.vecSecondaryStressPos;
@@ -603,7 +765,7 @@ list vecSecondaryStressPos_wrapped(StLexemeProperties stLP)
 	}
 	return result;
 }
-list vecSourceStressPos_wrapped(StLexemeProperties stLP)
+list vecSourceStressPosWrapped(StLexemeProperties stLP)
 {
 	list result;
 	vector<int> v = stLP.vecSourceStressPos;
@@ -613,7 +775,7 @@ list vecSourceStressPos_wrapped(StLexemeProperties stLP)
 	}
 	return result;
 }
-list vecHomonyms_wrapped(StLexemeProperties stLP)
+list vecHomonymsWrapped(StLexemeProperties stLP)
 {
 	list result;
 	vector<int> v = stLP.vecHomonyms;
@@ -633,7 +795,7 @@ dict mapCommonDeviationsWrapped(StLexemeProperties stLP)
 	}
 	return result;
 }
-
+//StLexemeProperties CEString functions
 wstring sSourceFormWrapped(StLexemeProperties stLP)
 {
 	return StrFromCES(stLP.sSourceForm);
@@ -718,10 +880,11 @@ wstring sInfinitiveWrapped(StLexemeProperties stLP)
 {
 	return StrFromCES(stLP.sInfinitive);
 }
-void  sInfinitiveWrapped_set(StLexemeProperties& stLP, wstring n)
+void sInfinitiveWrapped_set(StLexemeProperties& stLP, wstring n)
 {
 	stLP.sInfinitive = StrToCES(n);
 }
+//END: StLexemeProperties
 BOOST_PYTHON_MODULE(Wrapper)
 {
 	class_<ILexemeWrap, boost::noncopyable>("ILexeme")
@@ -729,29 +892,29 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def("stGetPropertiesForWriteAccess", pure_virtual(&ILexeme::stGetPropertiesForWriteAccess), return_value_policy<copy_non_const_reference>())
 		.def("eGender", pure_virtual(&ILexeme::eGender))
 		.def("eAnimacy", pure_virtual(&ILexeme::eAnimacy))
-		.def("sGraphicStem", pure_virtual(&ILexeme::sGraphicStem))
+		.def("sGraphicStem", ILsGraphicStemWrapped)
 		.def("bHasIrregularForms", pure_virtual(&ILexeme::bHasIrregularForms))
 		.def("bHasSecondaryStress", pure_virtual(&ILexeme::bHasSecondaryStress))
 		.def("bHasFleetingVowel", pure_virtual(&ILexeme::bHasFleetingVowel))
 		.def("bHasYoAlternation", pure_virtual(&ILexeme::bHasYoAlternation))
 		.def("bHasOAlternation", pure_virtual(&ILexeme::bHasOAlternation))
-		.def("sSourceForm", pure_virtual(&ILexeme::sSourceForm))
-		.def("sHeadwordComment", pure_virtual(&ILexeme::sHeadwordComment))
+		.def("sSourceForm", ILsSourceFormWrapped)
+		.def("sHeadwordComment", ILsHeadwordCommentWrapped)
 		.def("bIsUnstressed", pure_virtual(&ILexeme::bIsUnstressed))
 		.def("IsVariant", pure_virtual(&ILexeme::IsVariant))
-		.def("sMainSymbol", pure_virtual(&ILexeme::sMainSymbol))
+		.def("sMainSymbol", ILsMainSymbolWrapped)
 		.def("bIsPluralOf", pure_virtual(&ILexeme::bIsPluralOf))
 		.def("bTransitive", pure_virtual(&ILexeme::bTransitive))
 		.def("eIsReflexive", pure_virtual(&ILexeme::eIsReflexive))
-		.def("sMainSymbolPluralOf", pure_virtual(&ILexeme::sMainSymbolPluralOf))
-		.def("sAltMainSymbol", pure_virtual(&ILexeme::sAltMainSymbol))
+		.def("sMainSymbolPluralOf", ILsMainSymbolWrapped)
+		.def("sAltMainSymbol", ILsAltMainSymbolWrapped)
 		.def("eAspect", pure_virtual(&ILexeme::eAspect))
-		.def("sInflectionType", pure_virtual(&ILexeme::sInflectionType))
+		.def("sInflectionType", ILsInflectionTypeWrapped)
 		.def("ePartOfSpeech", pure_virtual(&ILexeme::ePartOfSpeech))
-		.def("sComment", pure_virtual(&ILexeme::sComment))
-		.def("sAltMainSymbolComment", pure_virtual(&ILexeme::sAltMainSymbolComment))
-		.def("sAltInflectionComment", pure_virtual(&ILexeme::sAltInflectionComment))
-		.def("sVerbStemAlternation", pure_virtual(&ILexeme::sVerbStemAlternation))
+		.def("sComment",ILsCommentWrapped)
+		.def("sAltMainSymbolComment", ILsAltMainSymbolCommentWrapped)
+		.def("sAltInflectionComment", ILsAltInflectionCommentWrapped)
+		.def("sVerbStemAlternation", ILsVerbStemAlternationWrapped)
 		.def("bPartPastPassZhd", pure_virtual(&ILexeme::bPartPastPassZhd))
 		.def("iSection", pure_virtual(&ILexeme::iSection))
 		.def("bNoComparative", pure_virtual(&ILexeme::bNoComparative))
@@ -761,16 +924,16 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def("bSecondGenitive", pure_virtual(&ILexeme::bSecondGenitive))
 		.def("bSecondLocative", pure_virtual(&ILexeme::bSecondLocative))
 		.def("bSecondLocativeOptional", pure_virtual(&ILexeme::bSecondLocativeOptional))
-		.def("sLoc2Preposition", pure_virtual(&ILexeme::sLoc2Preposition))
+		.def("sLoc2Preposition", ILsLoc2PrepositionWrapped)
 		.def("bHasAspectPair", pure_virtual(&ILexeme::bHasAspectPair))
 		.def("iAspectPairType", pure_virtual(&ILexeme::iAspectPairType))
-		.def("sAspectPairComment", pure_virtual(&ILexeme::sAspectPairComment))
-		.def("sQuestionableForms", pure_virtual(&ILexeme::sQuestionableForms))
+		.def("sAspectPairComment", ILsAspectPairCommentWrapped)
+		.def("sQuestionableForms", ILsQuestionableFormsWrapped)
 		.def("bHasIrregularVariants", pure_virtual(&ILexeme::bHasIrregularVariants))
 		.def("bHasDeficiencies", pure_virtual(&ILexeme::bHasDeficiencies))
-		.def("sRestrictedFroms", pure_virtual(&ILexeme::sRestrictedFroms))
-		.def("sContexts", pure_virtual(&ILexeme::sContexts))
-		.def("sTrailingComment", pure_virtual(&ILexeme::sTrailingComment))
+		.def("sRestrictedFroms", ILsRestrictedFromsWrapped)
+		.def("sContexts", ILsContextsWrapped)
+		.def("sTrailingComment", ILsTrailingCommentWrapped)
 		.def("iInflectionId", pure_virtual(&ILexeme::iInflectionId))
 		.def("bPrimaryInflectionGroup", pure_virtual(&ILexeme::bPrimaryInflectionGroup))
 		.def("iType", pure_virtual(&ILexeme::iType))
@@ -783,51 +946,49 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def("bNoPastParticiple", pure_virtual(&ILexeme::bNoPastParticiple))
 		.def("bFleetingVowel", pure_virtual(&ILexeme::bFleetingVowel))
 		.def("iStemAugment", pure_virtual(&ILexeme::iStemAugment))
-		.def("s1SgStem", pure_virtual(&ILexeme::s1SgStem))
-		.def("s3SgStem", pure_virtual(&ILexeme::s3SgStem))
-		.def("sInfinitive", pure_virtual(&ILexeme::sInfinitive))
-		.def("sInfStem", pure_virtual(&ILexeme::sInfStem))
-		.def("bFindCommonDeviation", pure_virtual(&ILexeme::bFindCommonDeviation))
-		.def("bFindStandardAlternation", pure_virtual(&ILexeme::bFindStandardAlternation))
+		.def("s1SgStem", ILs1SgStemWrapped)
+		.def("s3SgStem", ILs3SgStemWrapped)
+		.def("sInfinitive", ILsInfinitiveWrapped)
+		.def("sInfStem", ILsInfStemWrapped)
+		.def("bFindCommonDeviation", bFindCommonDeviationWrapped)
+		.def("bFindStandardAlternation", bFindStandardAlternationWrapped)
 		.def("eGetStemStressPositions", pure_virtual(&ILexeme::eGetStemStressPositions))
-		.def("eGetAlternatingPreverb", pure_virtual(&ILexeme::eGetAlternatingPreverb))
-		.def("sHash", pure_virtual(&ILexeme::sHash))
+		.def("eGetAlternatingPreverb", eGetAlternatingPreverbWrapped)
+		.def("sHash", ILsHashWrapped)
 		.def("eWordFormFromHash", pure_virtual(&ILexeme::eWordFormFromHash))
 		.def("bHasIrregularForm", pure_virtual(&ILexeme::bHasIrregularForm))
 		.def("bNoRegularForms", pure_virtual(&ILexeme::bNoRegularForms))
-		.def("eGetFirstIrregularForm", pure_virtual(&ILexeme::eGetFirstIrregularForm))
+		.def("eGetFirstIrregularForm", eGetFirstIrregularFormWrapped)
 		.def("eGetNextIrregularForm", eGetNextIrregularFormWrapped)
 		.def("uiFormCount", pure_virtual(&ILexeme::uiFormCount))
 		.def("bHasCommonDeviation", pure_virtual(&ILexeme::bHasCommonDeviation))
 		.def("bDeviationOptional", pure_virtual(&ILexeme::bDeviationOptional))
 		.def("bIsFormMissing", pure_virtual(&ILexeme::bIsFormMissing))
 		.def("bIsMultistressedCompound", pure_virtual(&ILexeme::bIsMultistressedCompound))
-		.def("eGetFirstStemStressPos", pure_virtual(&ILexeme::eGetFirstStemStressPos))
-		.def("eGetNextStemStressPos", pure_virtual(&ILexeme::eGetNextStemStressPos))
-		.def("SetDb", pure_virtual(&ILexeme::SetDb))
+		.def("eGetFirstStemStressPos", eGetFirstStemStressPosWrapped)
+		.def("eGetNextStemStressPos", eGetNextStemStressPosWrapped)
+		.def("SetDb", SetDbWrapped)
 		.def("eGenerateParadigm", pure_virtual(&ILexeme::eGenerateParadigm))
 		.def("bSaveToDb", pure_virtual(&ILexeme::bSaveToDb))
 		.def("eGetFirstWordForm", eGetFirstWordFormWrapped)
-	.def("eGetNextWordForm", eGetNextWordFormWrapped)
+		.def("eGetNextWordForm", eGetNextWordFormWrapped)
+		.def("eGetStemStressPositions", eGetStemStressPositionsWrapped)
 		;
 	class_<IDictionaryWrap, boost::noncopyable>("IDictionary")
 		.def("eSetDbPath", eSetDbPathWrapped)
 		.def("eCountLexemes", eCountLexemesWrapped)
 		.def("eGetLexemeById", pure_virtual(&IDictionary::eGetLexemeById))
 		.def("eGetLexemesByMd5", pure_virtual(&IDictionary::eGetLexemesByMd5))
-		.def("eGetLexemesByGraphicStem", pure_virtual(&IDictionary::eGetLexemesByGraphicStem))
+		.def("eGetLexemesByGraphicStem", eGetLexemesByGraphicStemWrapped)
 		.def("eGetLexemesByInitialForm", eGetLexemesByInitialFormWrapped)
 		.def("eGenerateAllForms", pure_virtual(&IDictionary::eGenerateAllForms))
 		.def("Clear", pure_virtual(&IDictionary::Clear))
 		.def("eGetFirstLexeme", eGetFirstLexemeWrapped)
 		.def("eGetNextLexeme", eGetNextLexemeWrapped)
 		;
-	class_<WFP>("WFP")
-		.def("get", &WFP::get, return_value_policy<manage_new_object>())
-		;
 	class_<IWordFormWrap, boost::noncopyable>("IWordForm")
 		.def("pLexeme", pure_virtual(&IWordForm::pLexeme), return_value_policy<manage_new_object>())
-		.def("sLemma", pure_virtual(&IWordForm::sLemma))
+		.def("sLemma", sLemmaWrapped)
 		.def("llLexemeId", pure_virtual(&IWordForm::llLexemeId))
 		.def("ePos", pure_virtual(&IWordForm::ePos))
 		.def("eCase", pure_virtual(&IWordForm::eCase))
@@ -857,10 +1018,10 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def_readonly("iDbKey", &StLexemeProperties::iDbKey)
 		.add_property("sSourceForm", sSourceFormWrapped)
 		.add_property("sHeadwordComment", sHeadwordCommentWrapped)
-		.add_property("vecSourceStressPos", vecSourceStressPos_wrapped)
-		.add_property("vecSecondaryStressPos", vecSecondaryStressPos_wrapped)
+		.add_property("vecSourceStressPos", vecSourceStressPosWrapped)
+		.add_property("vecSecondaryStressPos", vecSecondaryStressPosWrapped)
 		.def_readonly("bIsUnstressed", &StLexemeProperties::bIsUnstressed)
-		.add_property("vecHomonyms", vecHomonyms_wrapped)
+		.add_property("vecHomonyms", vecHomonymsWrapped)
 		.add_property("sGraphicStem", sGraphicStemWrapped)
 		.def_readonly("bIsVariant", &StLexemeProperties::bIsVariant)
 		.add_property("sMainSymbol", sMainSymbolWrapped)
@@ -1096,27 +1257,15 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.value("TEST_RESULT_INCOMPLETE", TEST_RESULT_INCOMPLETE)
 		.value("TEST_RESULT_COUNT", TEST_RESULT_COUNT)
 		;
-	class_<std::pair<ET_ReturnCode, int> >("Int_Pair")
-		.def(init<ET_ReturnCode, int>())
-		.def_readwrite("first", &std::pair<ET_ReturnCode, int>::first)
-		.def_readwrite("second", &std::pair<ET_ReturnCode, int>::second)
-		;
-	class_<std::pair<ET_ReturnCode, ILexeme*> >("ILexeme_Pair")
-		.def(init<ET_ReturnCode, ILexeme*>())
-		.def_readwrite("first", &std::pair<ET_ReturnCode, ILexeme*>::first)
-		.def_readwrite("second", &std::pair<ET_ReturnCode, ILexeme*>::second)
-		;
-	class_<std::pair<ET_ReturnCode, IWordForm*> >("IWordForm_Pair")
-		.def(init<ET_ReturnCode, IWordForm*>())
-		.def_readwrite("first", &std::pair<ET_ReturnCode, IWordForm*>::first)
-		.def_readwrite("second", &std::pair<ET_ReturnCode, IWordForm*>::second)
-		;
-	def("GetDictionary", GetDictionaryWrap, return_value_policy<manage_new_object>());
-	def("CreateNewLexeme", CreateNewLexeme, return_value_policy<manage_new_object>());
-	def("second_from_pair_IL", second_from_pair_IL, return_value_policy<manage_new_object>());
-	def("second_from_pair_WF", second_from_pair_WF, return_value_policy<manage_new_object>());
 	def("StrToCES", StrToCES);
 	def("StrFromCES", StrFromCES);
+	def("GetDictionary", GetDictionaryWrap, return_value_policy<manage_new_object>());
+	class_<WFP>("WFP")
+		.def("get", &WFP::get, return_value_policy<manage_new_object>())
+		;
+	class_<LexP>("LexP")
+		.def("get", &LexP::get, return_value_policy<manage_new_object>())
+		;
 }
 
 int main()
