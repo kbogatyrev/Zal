@@ -16,7 +16,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetLexemesByMd5 (const CEString& sMd5) = 0;
         virtual ET_ReturnCode eGetLexemesByGraphicStem (const CEString&) = 0;
         virtual ET_ReturnCode eGetLexemesByInitialForm (const CEString&) = 0;
-        virtual ET_ReturnCode eGenerateAllForms (CProgressCallback& progress) = 0;
+        virtual ET_ReturnCode eGenerateAllForms () = 0;
         virtual ET_ReturnCode eCountLexemes (int& iLexemes) = 0;
 
         virtual ET_ReturnCode eGetFirstLexeme (ILexeme *& pLexeme) = 0;

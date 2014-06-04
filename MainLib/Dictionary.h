@@ -25,7 +25,7 @@ public:
     virtual ET_ReturnCode eGetLexemesByMd5(const CEString& sMd5);
     virtual ET_ReturnCode eGetLexemesByGraphicStem(const CEString&);
     virtual ET_ReturnCode eGetLexemesByInitialForm(const CEString&);
-    virtual ET_ReturnCode eGenerateAllForms(CProgressCallback& progress);
+    virtual ET_ReturnCode eGenerateAllForms();
     virtual ET_ReturnCode eCountLexemes(int& iLexemes);
 
     virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexeme);
