@@ -2,6 +2,7 @@
 #define ENDINGS_H_INCLUDED
 
 #include <vector>
+#include <map>
 #include "SqliteWrapper.h"
 #include "Enums.h"
 #include "EString.h"
@@ -125,13 +126,23 @@ struct StEndingDescriptor
 };      //  struct StEndingDescriptor
 
 //
+// Possible wordform division
+//
+struct StSplit
+{
+    unsigned int uiEndingLength;
+    vector<StEndingDescriptor> vecDescriptors;
+};
+
+//
 // Endings parser node
 //
 struct StNode
 {
     wchar_t cLetter;
     StNode * pPrevious;
-    vector<StNode *> vecNext;
+    vector<StNode *> vecChildren;
+    vector<StEndingDescriptor> vecTerms;    // endings whose 1st (leftmost) character is cLetter
 };
 
 struct StReverseComparisonFunctor
@@ -172,33 +183,94 @@ struct StReverseComparisonFunctor
             }
         }
 
+        if (iLeftOffset >= 0)
+        {
+            return false;
+        }
+        else if (iRightOffset >= 0)
+        {
+            return true;;
+        }
+
         return false;
 
     }   //  bool operator() (const CEString& sLeft, const CEString& sRight)
+
 };  //  struct StReverseComparisonFunctor
 
 //
 // Endings parser tree
 //
+static int s_iLevel;
+
 class CParsingTree
 {
 public:
-    ET_ReturnCode eGetFirstMatch(StEndingDescriptor& stEnding);
-    ET_ReturnCode eGetNextMatch(StEndingDescriptor& stEnding);
+    ET_ReturnCode eParse(const CEString& sWord);
+    ET_ReturnCode eGetFirstMatch(StSplit& stSplit);
+    ET_ReturnCode eGetNextMatch(StSplit& stSplit);
 
 private:
-    typedef map<CEString, StEndingDescriptor, StReverseComparisonFunctor> MapEndingToDescriptor;
-    MapEndingToDescriptor m_mapSortedEndingsList;
-//    MapEndingToDescriptor::iterator itEnding;
+    typedef map<CEString, vector<StEndingDescriptor>, StReverseComparisonFunctor> MapEndingToDescriptors;
+    typedef vector<MapEndingToDescriptors::iterator> VecBucket;
 
-    vector<StNode *> m_vecFinales;
-    vector<StEndingDescriptor> m_vecMatches;
+    MapEndingToDescriptors m_mapSortedEndingsList;
+    StNode * m_pRoot;
+    vector<StSplit> m_vecMatches;
+    vector<StSplit>::iterator m_itCurrentMatch;
 
 public:
+    CParsingTree();
+    ~CParsingTree();
     ET_ReturnCode Load(CSqlite * pDb);
-    void AddLevel(int iPos, MapEndingToDescriptor::iterator itFirst, MapEndingToDescriptor::iterator itEnd);
 
-};
+protected:
+    void CParsingTree::AddLevel(unsigned int uiOffset, StNode * pParent, vector<VecBucket> vecBuckets);
+
+private:
+    /*
+    void ClearBuckets()
+    {
+        vector<VecBucket>::iterator it_ = m_BuildHelper.begin();
+        for (; it_ != m_BuildHelper.end(); ++it_)
+        {
+            (*it_).clear();
+        }
+    }
+    */
+
+    void Traverse(StNode * pRoot)     // testing
+    {
+        CEString sMsg(L" === ");
+        for (int i = 0; i < s_iLevel; ++i)
+        {
+            sMsg += L'\t';
+        }
+
+        sMsg += pRoot->cLetter;
+        CLogger::bWriteLog(wstring(sMsg));
+
+        vector<StNode *>::iterator it_ = pRoot->vecChildren.begin();
+        for (; it_ != pRoot->vecChildren.end(); ++it_)
+        {
+            Traverse(*it_);
+        }
+    }
+
+    void TraverseAndDelete(StNode * pRoot)
+    {
+        vector<StNode *>::iterator it_ = pRoot->vecChildren.begin();
+        for (; it_ != pRoot->vecChildren.end(); ++it_)
+        {
+            TraverseAndDelete(*it_);
+        }
+        delete pRoot;
+    }
+
+private:
+    
+
+};      // CParsingTree
 
 class CEndings
 {
@@ -280,7 +352,7 @@ class CAdjLongEndings : public CEndings
 {
 public:
     CAdjLongEndings(CLexeme *, ET_Subparadigm);
-
+    
     virtual ET_ReturnCode eLoad();
     virtual ET_ReturnCode eAddEnding (const CEString&, const StEndingDescriptor&);
 
