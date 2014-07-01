@@ -206,6 +206,11 @@ static int s_iLevel;
 class CParsingTree
 {
 public:
+    CParsingTree() {};
+    ~CParsingTree() {};
+    ET_ReturnCode Load(CSqlite * pDb);
+
+public:
     ET_ReturnCode eParse(const CEString& sWord);
     ET_ReturnCode eGetFirstMatch(StSplit& stSplit);
     ET_ReturnCode eGetNextMatch(StSplit& stSplit);
@@ -219,13 +224,8 @@ private:
     vector<StSplit> m_vecMatches;
     vector<StSplit>::iterator m_itCurrentMatch;
 
-public:
-    CParsingTree();
-    ~CParsingTree();
-    ET_ReturnCode Load(CSqlite * pDb);
-
 protected:
-    void CParsingTree::AddLevel(unsigned int uiOffset, StNode * pParent, vector<VecBucket> vecBuckets);
+    void CParsingTree::AddLevel(unsigned int uiOffset, StNode * pParent, VecBucket vecBucket);
 
 private:
     /*
