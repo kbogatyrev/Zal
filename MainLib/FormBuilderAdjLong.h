@@ -10,7 +10,7 @@ using namespace std::tr1;
 namespace Hlib
 {
 
-class CFormBuilderLongAdj : public CFormBuilderBaseDecl
+class CFormBuilderLongAdj : public CFormBuilderDecl
 {
 public:
     CFormBuilderLongAdj (CLexeme * pLexeme,
@@ -20,7 +20,7 @@ public:
                          int iStemStressPos = -1,
                          ET_Status eStatus = STATUS_COMMON,
                          bool bIrregular = false) 
-        : CFormBuilderBaseDecl (pLexeme, SUBPARADIGM_LONG_ADJ),
+        : CFormBuilderDecl (pLexeme, SUBPARADIGM_LONG_ADJ),
           m_sLemma (sLemma),
           m_eAccentType (eAccentType),
           m_eSubparadigm (eSubparadigm),

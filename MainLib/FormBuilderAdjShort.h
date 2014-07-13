@@ -9,7 +9,7 @@ using namespace std::tr1;
 namespace Hlib
 {
 
-class CFormBuilderShortAdj : public CFormBuilderBaseDecl
+class CFormBuilderShortAdj : public CFormBuilderDecl
 {
 public:
 

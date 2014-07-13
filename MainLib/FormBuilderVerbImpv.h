@@ -11,11 +11,11 @@ using namespace std::tr1;
 namespace Hlib
 {
 
-class CFormBuilderImperative : public CFormBuilderBaseConj
+class CFormBuilderImperative : public CFormBuilderConj
 {
 public:
     CFormBuilderImperative (CLexeme * pLexeme) : 
-        CFormBuilderBaseConj (pLexeme, SUBPARADIGM_IMPERATIVE)
+        CFormBuilderConj (pLexeme, SUBPARADIGM_IMPERATIVE)
     {}
 
 public:

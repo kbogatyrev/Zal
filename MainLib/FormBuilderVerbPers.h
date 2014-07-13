@@ -9,11 +9,11 @@ using namespace std::tr1;
 namespace Hlib
 {
 
-    class CFormBuilderPersonal : public CFormBuilderBaseConj
+    class CFormBuilderPersonal : public CFormBuilderConj
     {
     public:
         CFormBuilderPersonal (CLexeme * pLexeme) : 
-            CFormBuilderBaseConj (pLexeme, SUBPARADIGM_PRESENT_TENSE)
+            CFormBuilderConj (pLexeme, SUBPARADIGM_PRESENT_TENSE)
         {}
 
     public:

@@ -12,10 +12,10 @@ using namespace std::tr1;
 namespace Hlib
 {
 
-class CFormBuilderNouns : public CFormBuilderBaseDecl
+class CFormBuilderNouns : public CFormBuilderDecl
 {
 public:
-    CFormBuilderNouns (CLexeme * pLexeme) : CFormBuilderBaseDecl (pLexeme, SUBPARADIGM_NOUN)
+    CFormBuilderNouns (CLexeme * pLexeme) : CFormBuilderDecl (pLexeme, SUBPARADIGM_NOUN)
     {}
 
 protected:

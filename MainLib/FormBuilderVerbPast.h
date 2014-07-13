@@ -8,7 +8,7 @@ using namespace std::tr1;
 
 namespace Hlib
 {
-    class CFormBuilderPast : public CFormBuilderBaseConj
+    class CFormBuilderPast : public CFormBuilderConj
     {
         struct stStressData
         {
@@ -20,7 +20,7 @@ namespace Hlib
         };
 
     public:
-        CFormBuilderPast (CLexeme * pLexeme) : CFormBuilderBaseConj (pLexeme, SUBPARADIGM_PAST_TENSE)
+        CFormBuilderPast (CLexeme * pLexeme) : CFormBuilderConj (pLexeme, SUBPARADIGM_PAST_TENSE)
         {}
 
     public:

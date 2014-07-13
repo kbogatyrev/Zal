@@ -11,11 +11,11 @@ namespace Hlib
 
     class CLexeme;
 
-class CFormBuilderComparative : public CFormBuilderBaseDecl
+class CFormBuilderComparative : public CFormBuilderDecl
 {
 public:
     CFormBuilderComparative (CLexeme * pLexeme) 
-        : CFormBuilderBaseDecl (pLexeme, SUBPARADIGM_COMPARATIVE)
+        : CFormBuilderDecl (pLexeme, SUBPARADIGM_COMPARATIVE)
     {}
 
 public:

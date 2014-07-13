@@ -9,12 +9,13 @@ namespace Hlib
 
 class CLexeme;
 class CSqlite;
+class CParsingTree;
 
 class CDictionary : public IDictionary
 {
 
 public:
-    CDictionary() : m_pDb(NULL)
+    CDictionary() : m_pDb(NULL), m_pEndingsTree(NULL)
     {}
 
     ~CDictionary();
@@ -26,12 +27,13 @@ public:
     virtual ET_ReturnCode eGetLexemesByGraphicStem(const CEString&);
     virtual ET_ReturnCode eGetLexemesByInitialForm(const CEString&);
     virtual ET_ReturnCode eGenerateAllForms();
+    virtual ET_ReturnCode eGenerateFormsForSelectedLexemes();
     virtual ET_ReturnCode eCountLexemes(int& iLexemes);
 
     virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexeme);
     virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexeme);
 
-    virtual ET_ReturnCode eAnalyze(const CEString& sText);
+    virtual ET_ReturnCode eAnalyze(const CEString& sWord);
 
     virtual void Clear();
 
@@ -42,8 +44,11 @@ public:
 private:
     CEString m_sDbPath;
     CSqlite * m_pDb;
+    CParsingTree * m_pEndingsTree;
     vector<CLexeme *> m_vecLexemes;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
+
+
 
     // Execute DB query and retrieve results
     ET_ReturnCode eQueryDb(const CEString& sSelect, unsigned int& uiQuertHandle);
