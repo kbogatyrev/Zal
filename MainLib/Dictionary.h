@@ -48,7 +48,9 @@ private:
     vector<CLexeme *> m_vecLexemes;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
 
-
+    // Populate DB tables
+    ET_ReturnCode ePopulateStemsTable();
+    ET_ReturnCode ePopulateWordFormDataTables();
 
     // Execute DB query and retrieve results
     ET_ReturnCode eQueryDb(const CEString& sSelect, unsigned int& uiQuertHandle);
