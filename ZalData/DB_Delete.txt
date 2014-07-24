@@ -17,6 +17,7 @@ DELETE FROM aspect_pair;
 DELETE FROM nonexistent_forms;
 DELETE FROM stems;
 DELETE FROM stem_data;
+DELETE FROM stress_data;
 DELETE FROM wordforms;
 DELETE FROM stems_for_analysis;
 DELETE FROM endings_for_analysis;

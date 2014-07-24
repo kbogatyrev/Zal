@@ -26,6 +26,8 @@ CREATE TABLE stems (id INTEGER PRIMARY KEY ASC, stem_string TEXT UNIQUE);
 
 CREATE TABLE stem_data (id INTEGER PRIMARY KEY ASC, stem_id INTEGER, gram_hash INTEGER, lexeme_id INTEGER, FOREIGN KEY (stem_id) REFERENCES stems (id), FOREIGN KEY (lexeme_id) REFERENCES descriptor (id));
 
+CREATE TABLE stress_data (id INTEGER PRIMARY KEY, form_id INTEGER, position INTEGER, is_primary BOOLEAN);
+
 CREATE TABLE wordforms (id INTEGER PRIMARY KEY ASC, stem_data_id INTEGER, ending_data_id INTEGER, FOREIGN KEY (stem_data_id) REFERENCES stem_data (id), FOREIGN KEY (ending_data_id) REFERENCES ending_data (id));
 
 CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash INTEGER, stress_pos INTEGER);
@@ -46,6 +48,7 @@ CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, form_id INTEGER, position
 
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER);
 
+CREATE INDEX idx_stems_select ON stems (stem_string);
 CREATE INDEX idx_stem_data_select ON stem_data (lexeme_id, stem_id, gram_hash);
 CREATE INDEX idx_ending_data1 ON ending_data (number, case_value, stress);
 CREATE INDEX idx_ending_data2 ON ending_data (gender, number, case_value, animacy, stress);
