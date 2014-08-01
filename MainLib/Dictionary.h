@@ -50,6 +50,7 @@ private:
 
     // Populate DB tables
     ET_ReturnCode ePopulateStemsTable();
+    ET_ReturnCode eUpdateStemIds();
     ET_ReturnCode ePopulateWordFormDataTables();
 
     // Execute DB query and retrieve results
