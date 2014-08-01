@@ -49,7 +49,7 @@ CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, form_id INTEGER, position
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER);
 
 CREATE INDEX idx_stems_select ON stems (stem_string);
-CREATE INDEX idx_stem_data_select ON stem_data (lexeme_id, stem_id, gram_hash);
+-- CREATE INDEX idx_stem_data_select ON stem_data (lexeme_id, stem_id, gram_hash);
 CREATE INDEX idx_ending_data1 ON ending_data (number, case_value, stress);
 CREATE INDEX idx_ending_data2 ON ending_data (gender, number, case_value, animacy, stress);
 -- CREATE INDEX idx_ending_data3 ON ending_data (gender, number, stress);
@@ -70,10 +70,6 @@ CREATE INDEX idx_test_data_id ON test_data (id, lexeme_id);
 CREATE INDEX idx_test_data_stress ON test_data_stress (id, form_id);
 CREATE INDEX idx_lexeme_hash_to_descriptor ON lexeme_hash_to_descriptor (lexeme_hash);
 CREATE INDEX idx_stem_string ON stems (stem_string);
-
-CREATE INDEX idx_stem_data_lexeme_id ON stem_data (lexeme_id);
-CREATE INDEX idx_stem_data_stem_id ON stem_data (stem_id);
-CREATE INDEX idx_stem_data_gram_hash ON stem_data (gram_hash);
 
 CREATE INDEX idx_endings_ending_string ON endings (ending_string);
 
