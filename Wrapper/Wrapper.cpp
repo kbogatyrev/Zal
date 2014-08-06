@@ -388,6 +388,10 @@ struct IDictionaryWrap : IDictionary, wrapper<IDictionary>
 	{
 		return this->get_override("eGenerateAllForms")();
 	}
+	ET_ReturnCode eGenerateFormsForSelectedLexemes()
+	{
+		return this->get_override("eGenerateFormsForSelectedLexemes")();
+	}
 	ET_ReturnCode eCountLexemes(int& iLexemes)
 	{
 		return this->get_override("eCountLexemes")(iLexemes);
@@ -636,16 +640,6 @@ list eGetStemStressPositionsWrapped(ILexeme* pL, wstring Lemma)
 		lPos.append(*it);
 	}
 	res.append(lPos);
-	return res;
-}
-list eGetAlternatingPreverbWrapped(ILexeme * pL, wstring wVerbForm)
-{
-	CEString sPreverb;
-	bool bVoicing;
-	list res;
-	res.append(pL->eGetAlternatingPreverb(StrToCES(wVerbForm), sPreverb, bVoicing));
-	res.append(StrFromCES(sPreverb));
-	res.append(bVoicing);
 	return res;
 }
 //ILexeme CEString functions
@@ -953,7 +947,7 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def("bFindCommonDeviation", bFindCommonDeviationWrapped)
 		.def("bFindStandardAlternation", bFindStandardAlternationWrapped)
 		.def("eGetStemStressPositions", pure_virtual(&ILexeme::eGetStemStressPositions))
-		.def("eGetAlternatingPreverb", eGetAlternatingPreverbWrapped)
+		.def("eGetAlternatingPreverb", pure_virtual(&ILexeme::eGetAlternatingPreverb))
 		.def("sHash", ILsHashWrapped)
 		.def("eWordFormFromHash", pure_virtual(&ILexeme::eWordFormFromHash))
 		.def("bHasIrregularForm", pure_virtual(&ILexeme::bHasIrregularForm))
@@ -969,7 +963,7 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def("eGetNextStemStressPos", eGetNextStemStressPosWrapped)
 		.def("SetDb", SetDbWrapped)
 		.def("eGenerateParadigm", pure_virtual(&ILexeme::eGenerateParadigm))
-		.def("bSaveToDb", pure_virtual(&ILexeme::bSaveToDb))
+		//.def("bSaveToDb", pure_virtual(&ILexeme::bSaveToDb))
 		.def("eGetFirstWordForm", eGetFirstWordFormWrapped)
 		.def("eGetNextWordForm", eGetNextWordFormWrapped)
 		.def("eGetStemStressPositions", eGetStemStressPositionsWrapped)
@@ -982,6 +976,7 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def("eGetLexemesByGraphicStem", eGetLexemesByGraphicStemWrapped)
 		.def("eGetLexemesByInitialForm", eGetLexemesByInitialFormWrapped)
 		.def("eGenerateAllForms", pure_virtual(&IDictionary::eGenerateAllForms))
+		.def("eGenerateFormsForSelectedLexemes", pure_virtual(&IDictionary::eGenerateFormsForSelectedLexemes))
 		.def("Clear", pure_virtual(&IDictionary::Clear))
 		.def("eGetFirstLexeme", eGetFirstLexemeWrapped)
 		.def("eGetNextLexeme", eGetNextLexemeWrapped)
