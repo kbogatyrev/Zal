@@ -201,17 +201,14 @@ struct StReverseComparisonFunctor
 //
 // Endings parser tree
 //
-static int s_iLevel;
-
 class CParsingTree
 {
 public:
-    CParsingTree() {};
-    ~CParsingTree() {};
-    ET_ReturnCode Load(CSqlite * pDb);
+    CParsingTree(CSqlite * pDb);
+    ~CParsingTree();
 
 public:
-    ET_ReturnCode eParse(const CEString& sWord);
+    void eSplit(const CEString& sWord);
     ET_ReturnCode eGetFirstMatch(StSplit& stSplit);
     ET_ReturnCode eGetNextMatch(StSplit& stSplit);
 
@@ -225,7 +222,11 @@ private:
     vector<StSplit>::iterator m_itCurrentMatch;
 
 protected:
+    CParsingTree() {};
+    ET_ReturnCode eLoad(CSqlite * pDb);
     void CParsingTree::AddLevel(unsigned int uiOffset, StNode * pParent, VecBucket vecBucket);
+    void Traverse(StNode * pRoot, const CEString& sWord);
+    ET_ReturnCode eTraverseAndDelete(StNode * pRoot);
 
 private:
     /*
@@ -239,6 +240,7 @@ private:
     }
     */
 
+    /*
     void Traverse(StNode * pRoot)     // testing
     {
         CEString sMsg(L" === ");
@@ -256,20 +258,8 @@ private:
             Traverse(*it_);
         }
     }
-
-    void TraverseAndDelete(StNode * pRoot)
-    {
-        vector<StNode *>::iterator it_ = pRoot->vecChildren.begin();
-        for (; it_ != pRoot->vecChildren.end(); ++it_)
-        {
-            TraverseAndDelete(*it_);
-        }
-        delete pRoot;
-    }
-
-private:
+    */
     
-
 };      // CParsingTree
 
 class CEndings

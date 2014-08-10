@@ -9,6 +9,7 @@ namespace Hlib
 
 class CLexeme;
 class CSqlite;
+struct CWordForm;
 class CParsingTree;
 
 class CDictionary : public IDictionary
@@ -46,6 +47,7 @@ private:
     CSqlite * m_pDb;
     CParsingTree * m_pEndingsTree;
     vector<CLexeme *> m_vecLexemes;
+    vector<CWordForm *> m_vecWordForms;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
 
     // Populate DB tables
@@ -61,6 +63,9 @@ private:
     ET_ReturnCode eReadFromDb(const CEString& sStem);
 
     ET_ReturnCode eGetL2Data(__int64 llLexemeId, StLexemeProperties& properties);
+
+    ET_ReturnCode eIrregularFormLookup(const CEString&);
+    ET_ReturnCode eFormLookup(const CEString&);
 
     void HandleDbException(CException&);
 };
