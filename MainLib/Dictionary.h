@@ -23,8 +23,9 @@ public:
 
 public:
     virtual ET_ReturnCode eSetDbPath(const CEString& sDbPath);
+    virtual CEString sGetDbPath();
     virtual ET_ReturnCode eGetLexemeById(long Id);
-    virtual ET_ReturnCode eGetLexemesByMd5(const CEString& sMd5);
+    virtual ET_ReturnCode eGetLexemesByHash(const CEString& sMd5);
     virtual ET_ReturnCode eGetLexemesByGraphicStem(const CEString&);
     virtual ET_ReturnCode eGetLexemesByInitialForm(const CEString&);
     virtual ET_ReturnCode eGenerateAllForms();

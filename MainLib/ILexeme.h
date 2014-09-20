@@ -92,7 +92,7 @@ namespace Hlib
         virtual bool bIsMultistressedCompound() = 0;
         virtual ET_ReturnCode eGetFirstStemStressPos(int& iPos) = 0;
         virtual ET_ReturnCode eGetNextStemStressPos(int& iPos) = 0;
-        virtual ET_ReturnCode SetDb(const CEString& sDbPath) = 0;
+        virtual ET_ReturnCode eSetDb(const CEString& sDbPath) = 0;
         virtual ET_ReturnCode eGenerateParadigm() = 0;
 
     };      //  struct ILexeme
