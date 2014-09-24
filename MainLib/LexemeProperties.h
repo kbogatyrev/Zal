@@ -80,7 +80,7 @@ namespace Hlib
         bool bHasIrregularForms;
         bool bHasIrregularVariants;    // true if any of irreg. forms alternates with regular
         bool bHasDeficiencies;
-        CEString sRestrictedFroms;
+        CEString sRestrictedForms;
         CEString sContexts;
         CEString sTrailingComment;
 

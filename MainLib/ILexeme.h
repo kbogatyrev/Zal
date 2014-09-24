@@ -24,7 +24,7 @@ namespace Hlib
         //    virtual CSqlite * pGetDb() = 0;
         virtual CEString sHeadwordComment() = 0;
         virtual bool bIsUnstressed() = 0;
-        virtual bool IsVariant() = 0;
+        virtual bool bIsVariant() = 0;
         virtual CEString sMainSymbol() = 0;
         virtual bool bIsPluralOf() = 0;
         virtual bool bTransitive() = 0;
@@ -54,7 +54,7 @@ namespace Hlib
         virtual CEString sQuestionableForms() = 0;
         virtual bool bHasIrregularVariants() = 0;
         virtual bool bHasDeficiencies() = 0;
-        virtual CEString sRestrictedFroms() = 0;
+        virtual CEString sRestrictedForms() = 0;
         virtual CEString sContexts() = 0;
         virtual CEString sTrailingComment() = 0;
         virtual int iInflectionId() = 0;
