@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Windows.Forms;
-using MainLib;
+//using MainLib;
 
 namespace TestUI
 {

@@ -10,70 +10,72 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.IO;
 
+using MainLibManaged;
+
 namespace TestUI
 {
     public partial class TestApplet
     {
         protected void InitializeData()
         {
-            m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar(this.UpdateProgressBar);
+//            m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar(this.UpdateProgressBar);
 
             m_bDBOpen = false;
 
             m_sDbPath = Properties.Settings.Default.DbPath;
 
-            m_lexemeToTabs = new Dictionary<MainLib.ILexeme, ArrayList>();
+            m_lexemeToTabs = new Dictionary<CLexemeManaged, ArrayList>();
 
-            m_Dictionary = new MainLib.ZalDictionary();
-            m_LexPreprocessor = new MainLib.ZalLexPreprocessor();
-            m_Analyzer = new MainLib.ZalAnalyzer();
-            m_TextAnalyzer = new TextAnalyzer(m_Analyzer);
-            m_hashLexemes = new Dictionary<LexemeDataPanel, MainLib.ILexeme>();
-            m_listWordForms = new List<MainLib.IWordForm>();
+            m_Dictionary = new CDictionaryManaged();
+//            m_LexPreprocessor = new MainLib.ZalLexPreprocessor();
+//            m_Analyzer = new MainLib.ZalAnalyzer();
+//            m_TextAnalyzer = new TextAnalyzer(m_Analyzer);
+            m_hashLexemes = new Dictionary<LexemeDataPanel, CLexemeManaged>();
+            m_listWordForms = new List<CWordFormManaged>();
 
-            m_hashGender = new Dictionary<MainLib.ET_Gender, string>();
-            m_hashGender.Add(MainLib.ET_Gender.GENDER_UNDEFINED, "Undefined");
-            m_hashGender.Add(MainLib.ET_Gender.GENDER_M, "M");
-            m_hashGender.Add(MainLib.ET_Gender.GENDER_F, "F");
-            m_hashGender.Add(MainLib.ET_Gender.GENDER_N, "N");
+            m_hashGender = new Dictionary<EM_Gender, string>();
+            m_hashGender.Add(EM_Gender.GENDER_UNDEFINED, "Undefined");
+            m_hashGender.Add(EM_Gender.GENDER_M, "M");
+            m_hashGender.Add(EM_Gender.GENDER_F, "F");
+            m_hashGender.Add(EM_Gender.GENDER_N, "N");
 
-            m_hashNumber = new Dictionary<MainLib.ET_Number, string>();
-            m_hashNumber.Add(MainLib.ET_Number.NUM_UNDEFINED, "Undefined");
-            m_hashNumber.Add(MainLib.ET_Number.NUM_SG, "Sg");
-            m_hashNumber.Add(MainLib.ET_Number.NUM_PL, "Pl");
+            m_hashNumber = new Dictionary<EM_Number, string>();
+            m_hashNumber.Add(EM_Number.NUM_UNDEFINED, "Undefined");
+            m_hashNumber.Add(EM_Number.NUM_SG, "Sg");
+            m_hashNumber.Add(EM_Number.NUM_PL, "Pl");
 
-            m_hashCase = new Dictionary<MainLib.ET_Case, string>();
-            m_hashCase.Add(MainLib.ET_Case.CASE_UNDEFINED, "Undefined");
-            m_hashCase.Add(MainLib.ET_Case.CASE_NOM, "N");
-            m_hashCase.Add(MainLib.ET_Case.CASE_ACC, "A");
-            m_hashCase.Add(MainLib.ET_Case.CASE_GEN, "G");
-            m_hashCase.Add(MainLib.ET_Case.CASE_PART, "G2");
-            m_hashCase.Add(MainLib.ET_Case.CASE_LOC, "P2");
-            m_hashCase.Add(MainLib.ET_Case.CASE_DAT, "D");
-            m_hashCase.Add(MainLib.ET_Case.CASE_INST, "I");
-            m_hashCase.Add(MainLib.ET_Case.CASE_PREP, "P");
+            m_hashCase = new Dictionary<EM_Case, string>();
+            m_hashCase.Add(EM_Case.CASE_UNDEFINED, "Undefined");
+            m_hashCase.Add(EM_Case.CASE_NOM, "N");
+            m_hashCase.Add(EM_Case.CASE_ACC, "A");
+            m_hashCase.Add(EM_Case.CASE_GEN, "G");
+            m_hashCase.Add(EM_Case.CASE_PART, "G2");
+            m_hashCase.Add(EM_Case.CASE_LOC, "P2");
+            m_hashCase.Add(EM_Case.CASE_DAT, "D");
+            m_hashCase.Add(EM_Case.CASE_INST, "I");
+            m_hashCase.Add(EM_Case.CASE_PREP, "P");
 
-            m_hashPerson = new Dictionary<MainLib.ET_Person, string>();
-            m_hashPerson.Add(MainLib.ET_Person.PERSON_UNDEFINED, "Undefined");
-            m_hashPerson.Add(MainLib.ET_Person.PERSON_1, "1");
-            m_hashPerson.Add(MainLib.ET_Person.PERSON_2, "2");
-            m_hashPerson.Add(MainLib.ET_Person.PERSON_3, "3");
+            m_hashPerson = new Dictionary<EM_Person, string>();
+            m_hashPerson.Add(EM_Person.PERSON_UNDEFINED, "Undefined");
+            m_hashPerson.Add(EM_Person.PERSON_1, "1");
+            m_hashPerson.Add(EM_Person.PERSON_2, "2");
+            m_hashPerson.Add(EM_Person.PERSON_3, "3");
 
-            m_hashAccent = new Dictionary<MainLib.ET_AccentType, string>();
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_UNDEFINED, "Undefined");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_A, "a");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_A1, "a'");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_B, "b");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_B1, "b'");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_C, "c");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_C1, "c'");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_C2, "c''");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_D, "d");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_D1, "d'");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_E, "e");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_F, "f");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_F1, "f'");
-            m_hashAccent.Add(MainLib.ET_AccentType.AT_F2, "f''");
+            m_hashAccent = new Dictionary<EM_AccentType, string>();
+            m_hashAccent.Add(EM_AccentType.AT_UNDEFINED, "Undefined");
+            m_hashAccent.Add(EM_AccentType.AT_A, "a");
+            m_hashAccent.Add(EM_AccentType.AT_A1, "a'");
+            m_hashAccent.Add(EM_AccentType.AT_B, "b");
+            m_hashAccent.Add(EM_AccentType.AT_B1, "b'");
+            m_hashAccent.Add(EM_AccentType.AT_C, "c");
+            m_hashAccent.Add(EM_AccentType.AT_C1, "c'");
+            m_hashAccent.Add(EM_AccentType.AT_C2, "c''");
+            m_hashAccent.Add(EM_AccentType.AT_D, "d");
+            m_hashAccent.Add(EM_AccentType.AT_D1, "d'");
+            m_hashAccent.Add(EM_AccentType.AT_E, "e");
+            m_hashAccent.Add(EM_AccentType.AT_F, "f");
+            m_hashAccent.Add(EM_AccentType.AT_F1, "f'");
+            m_hashAccent.Add(EM_AccentType.AT_F2, "f''");
 
         }   //  InitializeData()
 
@@ -93,9 +95,9 @@ namespace TestUI
                     if (File.Exists(fd.FileName))
                     {
                         m_sDbPath = fd.FileName;
-                        m_Dictionary.DbPath = m_sDbPath;
-                        m_Analyzer.LoadDb(m_sDbPath);
-                        m_LexPreprocessor.LoadDb(m_sDbPath);
+//                        m_Dictionary.DbPath = m_sDbPath;
+//                        m_Analyzer.LoadDb(m_sDbPath);
+//                        m_LexPreprocessor.LoadDb(m_sDbPath);
                         toolStripStatusLabel.Text = m_sDbPath;
 
                         // TODO path validation
@@ -117,8 +119,8 @@ namespace TestUI
             catch (Exception ex)
             {
                 string sMsg = "GetDbPath: ";
-                MainLib.ZalError err = new MainLib.ZalError();
-                sMsg += err.LastError;
+//                MainLib.ZalError err = new MainLib.ZalError();
+//                sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
                 return;
             }
@@ -127,7 +129,8 @@ namespace TestUI
 
         private void ShowLexemes()
         {
-            if (m_Dictionary.Count < 1)
+            int iNumLexemes = 0;
+            if (m_Dictionary.eCountLexemes(ref iNumLexemes) != EM_ReturnCode.H_NO_ERROR)
             {
                 MessageBox.Show(this, "Not in the dictionary.", "Zal Synthesizer");
                 return;
@@ -139,21 +142,28 @@ namespace TestUI
             LexemeDataPanel ldpFocused = null;
 
             int iLexeme = 0;
-            foreach (MainLib.ILexeme lex in m_Dictionary)
+            CLexemeManaged lex = null;
+            EM_ReturnCode eRet = (EM_ReturnCode)m_Dictionary.eGetFirstLexeme(ref lex);
+            do
             {
+                if (CErrorCode.bError(eRet))
+                {
+                    continue;
+                }
+
                 LexemeDataPanel ldp = new LexemeDataPanel();
                 m_hashLexemes.Add(ldp, lex);
                 SubscribeToLexemeEvents(ldp);
                 ldp.Location = new System.Drawing.Point(0, iLexeme * ldp.Size.Height + 4);
-                ldp.sInitialForm = lex.InitialForm;
-                ldp.sGraphicStem = lex.GraphicStem;
-                ldp.iInflectionId = lex.InflectionId;
-                ldp.sMainSymbol = lex.MainSymbol;
-                ldp.sType = lex.Type.ToString();
-                ldp.sStressType = m_hashAccent[lex.AccentType1];
-                if (lex.AccentType2 != MainLib.ET_AccentType.AT_UNDEFINED)
+                ldp.sInitialForm = lex.sSourceForm();
+                ldp.sGraphicStem = lex.sGraphicStem();
+                ldp.iInflectionId = lex.iInflectionId();
+                ldp.sMainSymbol = lex.sMainSymbol();
+                ldp.sType = lex.iType().ToString();
+                ldp.sStressType = (m_hashAccent[lex.eAccentType1()].ToString());
+                if (lex.eAccentType2() != EM_AccentType.AT_UNDEFINED)
                 {
-                    ldp.sStressType += "/" + m_hashAccent[lex.AccentType2];
+                    ldp.sStressType += "/" + m_hashAccent[lex.eAccentType2()];
                 }
 
                 tabPageLexemes.Controls.Add(ldp);
@@ -165,10 +175,13 @@ namespace TestUI
                 }
 
                 ArrayList alTabs = new ArrayList();
-                m_lexemeToTabs.Add (lex, alTabs);
+                m_lexemeToTabs.Add(lex, alTabs);
 
                 ++iLexeme;
-            }
+
+                eRet = (EM_ReturnCode)m_Dictionary.eGetNextLexeme(ref lex);
+
+            } while (EM_ReturnCode.H_NO_ERROR == eRet);
 
             tabControl.Controls.Add (tabPageLexemes);
             tabControl.SelectTab (tabPageLexemes);
@@ -178,495 +191,299 @@ namespace TestUI
 
         protected void ShowLexemeDetails (LexemeDataPanel ldpSource)
         {
-            MainLib.ILexeme lexeme = m_hashLexemes[ldpSource];
+            CLexemeManaged lexeme = m_hashLexemes[ldpSource];
 
             try
             {
-                lexeme.GenerateWordForms();
+                lexeme.eGenerateParadigm();
             }
             catch (Exception ex)
             {
                 string sMsg = "ShowLexemeDetails: ";
-                MainLib.ZalError err = new MainLib.ZalError();
-                sMsg += err.LastError;
+//                MainLib.ZalError err = new MainLib.ZalError();
+//                sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
                 return;
             }
 
-            TabPage tabPageDetails = new TabPage(lexeme.InitialForm);
+            TabPage tabPageDetails = new TabPage(lexeme.sSourceForm());
             ArrayList al = m_lexemeToTabs[lexeme];
             al.Add (tabPageDetails);
 
-            string grSt = lexeme.GraphicStem;
+            string grSt = lexeme.sGraphicStem();
 
-            if ((MainLib.ET_PartOfSpeech.POS_NOUN == lexeme.PartOfSpeech) ||
-                (MainLib.ET_PartOfSpeech.POS_PRONOUN == lexeme.PartOfSpeech) ||
-                (MainLib.ET_PartOfSpeech.POS_NUM == lexeme.PartOfSpeech))
+            if ((EM_PartOfSpeech.POS_NOUN == lexeme.ePartOfSpeech()) ||
+                (EM_PartOfSpeech.POS_PRONOUN == lexeme.ePartOfSpeech()) ||
+                (EM_PartOfSpeech.POS_NUM == lexeme.ePartOfSpeech()))
             {
                 NounPanel np = new NounPanel();
                 tabPageDetails.Controls.Add(np);
                 np.sLexName = grSt;
 
-                foreach (MainLib.IWordForm wf in lexeme)
+                CWordFormManaged wf = null;
+                EM_ReturnCode eRet = (EM_ReturnCode)lexeme.eGetFirstWordForm(ref wf);
+                do
                 {
-                    string sKey = m_hashCase[wf.Case];
-                    sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-
-                    string strWordForm = wf.Wordform;
-                    if (wf.Stress >= 0)
+                    if (CErrorCode.bError(eRet))
                     {
-                        if (wf.Stress >= wf.Wordform.Length)
-                        {
-                            MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                            return;
-                        }
-                        if (strWordForm[wf.Stress] != 'ё')
-                        {
-                            string strStressMark = new string('\x301', 1);
-                            strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                        }
+                        continue;
                     }
+                    string sKey = m_hashCase[wf.eCase()];
+                    sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
 
-                    np.SetForm (sKey, strWordForm, wf.Status);
+                    string sWordForm = wf.sWordForm();
+                    MarkStress(ref sWordForm, wf);
+                    np.SetForm(sKey, sWordForm, wf.eStatus());
 
-                }   // foreach
+                    eRet = (EM_ReturnCode)lexeme.eGetNextWordForm(ref wf);
+
+                } while (EM_ReturnCode.H_NO_ERROR == eRet);
+
             }
 
-            if ((MainLib.ET_PartOfSpeech.POS_ADJ == lexeme.PartOfSpeech) ||
-                (MainLib.ET_PartOfSpeech.POS_PRONOUN_ADJ == lexeme.PartOfSpeech) ||
-                (MainLib.ET_PartOfSpeech.POS_NUM_ADJ == lexeme.PartOfSpeech))
+            if (EM_PartOfSpeech.POS_ADJ == lexeme.ePartOfSpeech() ||
+                EM_PartOfSpeech.POS_PRONOUN_ADJ == lexeme.ePartOfSpeech() ||
+                EM_PartOfSpeech.POS_NUM_ADJ == lexeme.ePartOfSpeech())
             {
                 AdjPanel ap = new AdjPanel();
                 tabPageDetails.Controls.Add(ap);
 
-                foreach (MainLib.IWordForm wf in lexeme)
+                CWordFormManaged wf = null;
+                EM_ReturnCode eRet = (EM_ReturnCode)lexeme.eGetFirstWordForm(ref wf);
+                do
                 {
-                    string sKey = "";
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_LONG_ADJ == wf.Subparadigm)
+                    if (CErrorCode.bError(eRet))
                     {
-                        if (MainLib.ET_Number.NUM_SG == wf.Number)
-                        {
-                            sKey = m_hashGender[wf.Gender];
-                        }
-                        sKey += m_hashCase[wf.Case];
-                        sKey += (MainLib.ET_Number.NUM_SG == wf.Number) ? "Sg" : "Pl";
-                        if (MainLib.ET_Case.CASE_ACC == wf.Case)
-                        {
-                            if ((MainLib.ET_Gender.GENDER_M == wf.Gender &&
-                                 MainLib.ET_Number.NUM_SG == wf.Number) ||
-                                 (MainLib.ET_Number.NUM_PL == wf.Number))
-                            {
-                                sKey += (MainLib.ET_Animacy.ANIM_YES == wf.Animacy) ? "Anim" : "Inanim";
-                            }
-                        }
-
-                        string strWordForm = wf.Wordform;
-                        if (wf.Stress >= 0)
-                        {
-                            if (strWordForm[wf.Stress] != 'ё')
-                            {
-                                string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                            }
-                        }
-
-                        ap.SetForm (sKey, strWordForm, wf.Status);
-
                         continue;
                     }
 
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_SHORT_ADJ == wf.Subparadigm)
+                    string sKey = "";
+                    if (EM_Subparadigm.SUBPARADIGM_LONG_ADJ == wf.eSubparadigm())
+                    {
+                        if (EM_Number.NUM_SG == wf.eNumber())
+                        {
+                            sKey = m_hashGender[wf.eGender()];
+                        }
+                        sKey += m_hashCase[wf.eCase()];
+                        sKey += (EM_Number.NUM_SG == wf.eNumber()) ? "Sg" : "Pl";
+                        if (EM_Case.CASE_ACC == wf.eCase())
+                        {
+                            if ((EM_Gender.GENDER_M == wf.eGender() &&
+                                 EM_Number.NUM_SG == wf.eNumber()) ||
+                                 (EM_Number.NUM_PL == wf.eNumber()))
+                            {
+                                sKey += (EM_Animacy.ANIM_YES == wf.eAnimacy()) ? "Anim" : "Inanim";
+                            }
+                        }
+
+                        string sWordForm = wf.sWordForm();
+                        MarkStress(ref sWordForm, wf);
+
+                        ap.SetForm(sKey, sWordForm, wf.eStatus());
+                    }
+
+                    if (EM_Subparadigm.SUBPARADIGM_SHORT_ADJ == wf.eSubparadigm())
                     {
                         sKey = "Short";
-                        if (MainLib.ET_Number.NUM_SG == wf.Number)
+                        if (EM_Number.NUM_SG == wf.eNumber())
                         {
-                            sKey += m_hashGender[wf.Gender];
+                            sKey += m_hashGender[wf.eGender()];
                         }
-                        sKey += m_hashNumber[wf.Number];
+                        sKey += m_hashNumber[wf.eNumber()];
 
-                        string strWordForm = wf.Wordform;
-                        if (wf.Stress >= 0)
-                        {
-                            if (strWordForm[wf.Stress] != 'ё')
-                            {
-                                string strStressMark = new string('\x301', 1);
-                                strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                            }
-                        }
+                        string sWordForm = wf.sWordForm();
+                        MarkStress(ref sWordForm, wf);
 
-                        ap.SetForm (sKey, strWordForm, wf.Status);
+                        ap.SetForm(sKey, sWordForm, wf.eStatus());
 
-                        continue;
                     }
 
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_COMPARATIVE == wf.Subparadigm)
+                    if (EM_Subparadigm.SUBPARADIGM_COMPARATIVE == wf.eSubparadigm())
                     {
                         sKey = "Comparative";
 
-                        string strWordForm = wf.Wordform;
+                        string sWordForm = wf.sWordForm();
+                        MarkStress(ref sWordForm, wf);
+                        ap.SetForm(sKey, sWordForm, wf.eStatus());
+                    }
 
-                        try
-                        {
-                            if (wf.Stress >= 0)
-                            {
-                                if (strWordForm[wf.Stress] != 'ё')
-                                {
-                                    string strStressMark = new string('\x301', 1);
-                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                            sMsg += ex.Message;
-                        }
+                    eRet = (EM_ReturnCode)lexeme.eGetNextWordForm(ref wf);
 
-                        ap.SetForm (sKey, strWordForm, wf.Status);
+                } while (EM_ReturnCode.H_NO_ERROR == eRet);
 
+            }   //  if (MainLib.EM_PartOfSpeech.POS_ADJ == lexeme.ePartOfSpeech())
+
+            if (EM_PartOfSpeech.POS_VERB == lexeme.ePartOfSpeech())
+            {
+                VerbPanel vp = new VerbPanel(lexeme);
+                SubscribeToVerbEvents(vp);
+                tabPageDetails.Controls.Add(vp);
+                vp.sLexName = grSt;
+
+                CWordFormManaged wf = null;
+                string sWordForm = wf.sWordForm();
+
+                EM_ReturnCode eRet = (EM_ReturnCode)lexeme.eGetFirstWordForm(ref wf);
+
+                do
+                {
+                    if (CErrorCode.bError(eRet))
+                    {
                         continue;
                     }
 
-                }   // foreach ...
-
-            }   //  if (MainLib.ET_PartOfSpeech.POS_ADJ == lexeme.PartOfSpeech)
-
-            if (MainLib.ET_PartOfSpeech.POS_VERB == lexeme.PartOfSpeech)
-            {
-                VerbPanel vp = new VerbPanel (lexeme);
-                SubscribeToVerbEvents (vp);
-                tabPageDetails.Controls.Add (vp);
-                vp.sLexName = grSt;
-
-                foreach (MainLib.IWordForm wf in lexeme)
-                {
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE == wf.Subparadigm)
+                    EM_Subparadigm eSubparadigm = wf.eSubparadigm();
+                    switch (eSubparadigm)
                     {
-                        string sKey = "Pres" + m_hashPerson[wf.Person];
-                        sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-
-                        string strWordForm = wf.Wordform;
-                        try
-                        {
-                            if (wf.Stress >= 0)
+                        case EM_Subparadigm.SUBPARADIGM_PRESENT_TENSE:
                             {
-                                if (wf.Stress >= wf.Wordform.Length)
-                                {
-                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                    return;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                            sMsg += ex.Message;
-                            MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                            continue;
-                        }
+                                string sKey = "Pres" + m_hashPerson[wf.ePerson()];
+                                sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
+                                MarkStress(ref sWordForm, wf);
 
-                        if (strWordForm[wf.Stress] != 'ё')
-                        {
-                            string strStressMark = new string('\x301', 1);
-                            strWordForm = strWordForm.Insert (wf.Stress + 1, strStressMark);
-                        }
-                        vp.SetForm (sKey, strWordForm, wf.Status);
-                    }
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PAST_TENSE == wf.Subparadigm)
-                    {
-                        string sKey = "Past";
-                        if (MainLib.ET_Number.NUM_SG == wf.Number)
-                        {
-                            sKey += m_hashGender[wf.Gender];
-                        }
-                        sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-
-                        string strWordForm = wf.Wordform;
-                        try
-                        {
-                            if (wf.Stress >= 0)
-                            {
-                                if (wf.Stress >= wf.Wordform.Length)
-                                {
-                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                    return;
-                                }
-                                if (strWordForm[wf.Stress] != 'ё')
-                                {
-                                    string strStressMark = new string('\x301', 1);
-                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                            sMsg += ex.Message;
-                        }
-
-                        vp.SetForm (sKey, strWordForm, wf.Status);
-                    }
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_IMPERATIVE == wf.Subparadigm)
-                    {
-                        string sKey = "Imperative";
-                        sKey += (wf.Number == MainLib.ET_Number.NUM_SG) ? "Sg" : "Pl";
-
-                        string strWordForm = wf.Wordform;
-                        try
-                        {
-                            if (wf.Stress >= 0)
-                            {
-                                if (wf.Stress >= wf.Wordform.Length)
-                                {
-                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                    return;
-                                }
-                                if (strWordForm[wf.Stress] != 'ё')
-                                {
-                                    string strStressMark = new string('\x301', 1);
-                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                            sMsg += ex.Message;
-                        }
-
-                        vp.SetForm (sKey, strWordForm, wf.Status);
-                    }
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT == wf.Subparadigm)
-                    {
-                        string sKey = "PartPresActive";
-                        if (wf.Number == MainLib.ET_Number.NUM_SG &&
-                            wf.Gender == MainLib.ET_Gender.GENDER_M &&
-                            wf.Case == MainLib.ET_Case.CASE_NOM)
-                        {
-                            string strWordForm = wf.Wordform;
-                            try
-                            {
-                                if (wf.Stress >= 0)
-                                {
-                                    if (wf.Stress >= wf.Wordform.Length)
-                                    {
-                                        MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                        return;
-                                    }
-                                    if (strWordForm[wf.Stress] != 'ё')
-                                    {
-                                        string strStressMark = new string('\x301', 1);
-                                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                                sMsg += ex.Message;
+                                break;
                             }
 
-                            vp.SetForm (sKey, strWordForm, wf.Status);
-                        }
-                    }
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT == wf.Subparadigm)
-                    {
-                        string sKey = "PartPastActive";
-                        if (wf.Number == MainLib.ET_Number.NUM_SG &&
-                            wf.Gender == MainLib.ET_Gender.GENDER_M &&
-                            wf.Case == MainLib.ET_Case.CASE_NOM)
-                        {
-                            string strWordForm = wf.Wordform;
-                            try
+                        case EM_Subparadigm.SUBPARADIGM_PAST_TENSE:
                             {
-                                if (wf.Stress >= 0)
+                                string sKey = "Past";
+                                if (EM_Number.NUM_SG == wf.eNumber())
                                 {
-                                    if (wf.Stress >= wf.Wordform.Length)
-                                    {
-                                        MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                        return;
-                                    }
-                                    if (strWordForm[wf.Stress] != 'ё')
-                                    {
-                                        string strStressMark = new string('\x301', 1);
-                                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                                    }
+                                    sKey += m_hashGender[wf.eGender()];
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                                sMsg += ex.Message;
+                                sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
+
+                                MarkStress(ref sWordForm, wf);
+                                vp.SetForm(sKey, sWordForm, wf.eStatus());
+
+                                break;
                             }
 
-                            vp.SetForm (sKey, strWordForm, wf.Status);
-                        }
-                    }
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_ADVERBIAL_PRESENT == wf.Subparadigm)
-                    {
-                        string strWordForm = wf.Wordform;
-                        try
-                        {
-                            if (wf.Stress >= 0)
+                        case EM_Subparadigm.SUBPARADIGM_IMPERATIVE:
                             {
-                                if (wf.Stress >= wf.Wordform.Length)
+                                string sKey = "Imperative";
+                                sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
+
+                                MarkStress(ref sWordForm, wf);
+                                vp.SetForm(sKey, sWordForm, wf.eStatus());
+
+                                break;
+                            }
+
+                        case EM_Subparadigm.SUBPARADIGM_PART_PRES_ACT:
+                            {
+                                string sKey = "PartPresActive";
+                                if (wf.eNumber() == EM_Number.NUM_SG &&
+                                    wf.eGender() == EM_Gender.GENDER_M &&
+                                    wf.eCase() == EM_Case.CASE_NOM)
                                 {
-                                    MessageBox.Show ("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                    return;
+                                    MarkStress(ref sWordForm, wf);
+                                    vp.SetForm(sKey, sWordForm, wf.eStatus());
                                 }
-                                if (strWordForm[wf.Stress] != 'ё')
-                                {
-                                    string strStressMark = new string ('\x301', 1);
-                                    strWordForm = strWordForm.Insert (wf.Stress + 1, strStressMark);
-                                }
+
+                                break;
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                            sMsg += ex.Message;
-                        }
 
-                        vp.SetForm ("PresAdverbial", strWordForm, wf.Status);
-                    }
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_ADVERBIAL_PAST == wf.Subparadigm)
-                    {
-                        string strWordForm = wf.Wordform;
-                        try
-                        {
-                            if (wf.Stress >= 0)
+                        case EM_Subparadigm.SUBPARADIGM_PART_PAST_ACT:
                             {
-                                if (wf.Stress >= wf.Wordform.Length)
+                                string sKey = "PartPastActive";
+                                if (wf.eNumber() == EM_Number.NUM_SG &&
+                                    wf.eGender() == EM_Gender.GENDER_M &&
+                                    wf.eCase() == EM_Case.CASE_NOM)
                                 {
-                                    MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                    return;
+                                    MarkStress(ref sWordForm, wf);
+                                    vp.SetForm(sKey, sWordForm, wf.eStatus());
                                 }
-                                if (strWordForm[wf.Stress] != 'ё')
+
+                                break;
+                            }
+
+                        case EM_Subparadigm.SUBPARADIGM_ADVERBIAL_PRESENT:
+                            {
+                                MarkStress(ref sWordForm, wf);
+                                vp.SetForm("PresAdverbial", sWordForm, wf.eStatus());
+
+                                break;
+                            }
+
+                        case EM_Subparadigm.SUBPARADIGM_ADVERBIAL_PAST:
+                            {
+                                MarkStress(ref sWordForm, wf);
+                                vp.SetForm("PastAdverbial", sWordForm, wf.eStatus());
+
+                                break;
+                            }
+
+                        case EM_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG:
+                            {
+                                string sKey = "PartPresPassive";
+                                if (wf.eNumber() == EM_Number.NUM_SG &&
+                                    wf.eGender() == EM_Gender.GENDER_M &&
+                                    wf.eCase() == EM_Case.CASE_NOM)
                                 {
-                                    string strStressMark = new string('\x301', 1);
-                                    strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
+                                    MarkStress(ref sWordForm, wf);
+                                    vp.SetForm(sKey, sWordForm, wf.eStatus());
                                 }
+
+                                break;
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                            sMsg += ex.Message;
-                        }
 
-                        vp.SetForm ("PastAdverbial", strWordForm, wf.Status);
-                    }
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG == wf.Subparadigm)
-                    {
-                        string sKey = "PartPresPassive";
-                        if (wf.Number == MainLib.ET_Number.NUM_SG &&
-                            wf.Gender == MainLib.ET_Gender.GENDER_M &&
-                            wf.Case == MainLib.ET_Case.CASE_NOM)
-                        {
-                            string strWordForm = wf.Wordform;
-                            try
+                        case EM_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG:
                             {
-                                if (wf.Stress >= 0)
+                                string sKey = "PartPastPassive";
+                                if (wf.eNumber() == EM_Number.NUM_SG &&
+                                    wf.eGender() == EM_Gender.GENDER_M &&
+                                    wf.eCase() == EM_Case.CASE_NOM)
                                 {
-                                    if (wf.Stress >= wf.Wordform.Length)
-                                    {
-                                        MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                        return;
-                                    }
-                                    if (strWordForm[wf.Stress] != 'ё')
-                                    {
-                                        string strStressMark = new string('\x301', 1);
-                                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                                    }
+                                    MarkStress(ref sWordForm, wf);
+                                    vp.SetForm(sKey, sWordForm, wf.eStatus());
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                                sMsg += ex.Message;
-                            }
 
-                            vp.SetForm (sKey, strWordForm, wf.Status);
-                        }
-                    }
-
-                    if (MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG == wf.Subparadigm)
-                    {
-                        string sKey = "PartPastPassive";
-                        if (wf.Number == MainLib.ET_Number.NUM_SG &&
-                            wf.Gender == MainLib.ET_Gender.GENDER_M &&
-                            wf.Case == MainLib.ET_Case.CASE_NOM)
-                        {
-                            string strWordForm = wf.Wordform;
-                            try
-                            {
-                                if (wf.Stress >= 0)
-                                {
-                                    if (wf.Stress >= wf.Wordform.Length)
-                                    {
-                                        MessageBox.Show("Bad stress position", "Zal Error", MessageBoxButtons.OK);
-                                        return;
-                                    }
-                                    if (strWordForm[wf.Stress] != 'ё')
-                                    {
-                                        string strStressMark = new string('\x301', 1);
-                                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                                    }
-                                }
+                                break;
                             }
-                            catch (Exception ex)
-                            {
-                                string sMsg = "LexemeDataPanel_ShowLexemeDetails: ";
-                                sMsg += ex.Message;
-                            }
+                    }   // switch...
 
-                            vp.SetForm (sKey, strWordForm, wf.Status);
-                        }
-                    }
+                    eRet = (EM_ReturnCode)lexeme.eGetNextWordForm(ref wf);
 
-                }   // foreach
-            }
+                } while (EM_ReturnCode.H_NO_ERROR == eRet);
+
+            }   //  if (EM_PartOfSpeech.POS_VERB == lexeme.ePartOfSpeech())
 
             tabControl.Controls.Add(tabPageDetails);
             tabControl.SelectedTab = tabPageDetails;
 
         }   //  ShowLexemeDetails (...)
 
-        protected void ShowParticipialForms (MainLib.ILexeme lexeme,
-                                             MainLib.ET_Subparadigm eoSpLong,
-                                             MainLib.ET_Subparadigm eoSpShort)
+        protected void ShowParticipialForms (CLexemeManaged lexeme,
+                                             EM_Subparadigm eoSpLong,
+                                             EM_Subparadigm eoSpShort)
         {
             // Expect word forms to be ready by now
 
-            MainLib.IFormFinder fd = lexeme.FormDescriptor;
-            fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
-            fd.Subparadigm = eoSpLong;
-            fd.Number = MainLib.ET_Number.NUM_SG;
-            fd.Case = MainLib.ET_Case.CASE_NOM;
-            fd.Gender = MainLib.ET_Gender.GENDER_M;
-            fd.Animacy = MainLib.ET_Animacy.ANIM_NO;
-            fd.Aspect = lexeme.Aspect;
-            fd.Reflexivity = lexeme.IsReflexive;
-            fd.FindForms();
-            if (fd.Count > 0)
+            CGramHasherManaged hasher = new CGramHasherManaged();
+
+            hasher.SetPartOfSpeech(EM_PartOfSpeech.POS_VERB);
+            hasher.SetSubparadigm(eoSpLong);
+            hasher.SetNumber(EM_Number.NUM_SG);
+            hasher.SetCase(EM_Case.CASE_NOM);
+            hasher.SetGender(EM_Gender.GENDER_M);
+            hasher.SetAnimacy(EM_Animacy.ANIM_NO);
+            hasher.SetAspect(lexeme.eAspect());
+            hasher.SetReflexivity(lexeme.eIsReflexive());
+
+            CWordFormManaged wf = null;
+            uint uiForms = lexeme.uiFormCount(hasher.iHash());
+            if (uiForms > 0)
             {
-                MainLib.IWordForm wf = (MainLib.IWordForm)fd[1];
+                lexeme.eWordFormFromHash(hasher.iHash(), 1, ref wf);
                 AdjPanel adjPanel = new AdjPanel();
-                TabPage tabPageDetails = new TabPage (wf.Wordform);
+                TabPage tabPageDetails = new TabPage (wf.sWordForm());
                 ArrayList al = m_lexemeToTabs[lexeme];
                 al.Add (tabPageDetails);
                 tabPageDetails.Controls.Add (adjPanel);
                 tabControl.Controls.Add (tabPageDetails);
                 ShowLongParticipialForms (adjPanel, lexeme, eoSpLong);
-                if (MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED != eoSpShort)
+                if (EM_Subparadigm.SUBPARADIGM_UNDEFINED != eoSpShort)
                 {
                     ShowShortParticipialForms (adjPanel, lexeme, eoSpShort);
                 }
@@ -678,117 +495,94 @@ namespace TestUI
             }
         }       //  ShowParticipialForms (...)
 
-        protected void ShowShortParticipialForms (AdjPanel ap, 
-                                                  MainLib.ILexeme lexeme, 
-                                                  MainLib.ET_Subparadigm eoSpShort)
+        protected void ShowShortParticipialForms (AdjPanel ap, CLexemeManaged lexeme, EM_Subparadigm eoSpShort)
         {
-            MainLib.IFormFinder fd = lexeme.FormDescriptor;
-            fd.PartOfSpeech = MainLib.ET_PartOfSpeech.POS_VERB;
-            fd.Subparadigm = eoSpShort;
-            fd.Reflexivity = lexeme.IsReflexive;
-            fd.Aspect = lexeme.Aspect;
-            fd.Number = MainLib.ET_Number.NUM_SG;
-            for (MainLib.ET_Gender eo_gender = MainLib.ET_Gender.GENDER_M;
-                 eo_gender < MainLib.ET_Gender.GENDER_COUNT;
-                 ++eo_gender)
+            CGramHasherManaged hasher = new CGramHasherManaged();
+            hasher.SetPartOfSpeech(EM_PartOfSpeech.POS_VERB);
+            hasher.SetSubparadigm(eoSpShort);
+            hasher.SetReflexivity(lexeme.eIsReflexive());
+            hasher.SetAspect(lexeme.eAspect());
+            hasher.SetNumber(EM_Number.NUM_SG);
+            for (EM_Gender eGender = EM_Gender.GENDER_M;
+                 eGender < EM_Gender.GENDER_COUNT;
+                 ++eGender)
             {
-                fd.Gender = eo_gender;
-                fd.FindForms();
-                for (int iForm = 1; iForm <= fd.Count; ++iForm)
+                hasher.SetGender(eGender);
+                uint uiForms = lexeme.uiFormCount(hasher.iHash());
+                for (uint uiForm = 1; uiForm <= uiForms; ++uiForm)
                 {
-                    MainLib.IWordForm wf = (MainLib.IWordForm)fd[iForm];
+                    CWordFormManaged wf = null;
+                    lexeme.eWordFormFromHash(hasher.iHash(), lexeme.uiFormCount(hasher.iHash()), ref wf);
                     string sKey = "Short";
-                    sKey += m_hashGender[wf.Gender];
-                    sKey += m_hashNumber[wf.Number];
-                    string strWordForm = wf.Wordform;
-                    if (wf.Stress >= 0)
-                    {
-                        if (strWordForm[wf.Stress] != 'ё')
-                        {
-                            string strStressMark = new string('\x301', 1);
-                            strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                        }
-                    }
-                    ap.SetForm (sKey, strWordForm, wf.Status);
+                    sKey += m_hashGender[wf.eGender()];
+                    sKey += m_hashNumber[wf.eNumber()];
+                    string sWordForm = wf.sWordForm();
+                    MarkStress(ref sWordForm, wf);
+                    ap.SetForm (sKey, sWordForm, wf.eStatus());
                 }
             }
-            fd.Number = MainLib.ET_Number.NUM_PL;
-            fd.Gender = MainLib.ET_Gender.GENDER_UNDEFINED;
-            fd.FindForms();
-            for (int iForm = 1; iForm <= fd.Count; ++iForm)
+
+            hasher.SetNumber(EM_Number.NUM_PL);
+            hasher.SetGender(EM_Gender.GENDER_UNDEFINED);
+            for (uint uiForm = 1; uiForm <= lexeme.uiFormCount(hasher.iHash()); ++uiForm)
             {
-                MainLib.IWordForm wf = (MainLib.IWordForm)fd[iForm];
+                CWordFormManaged wf = null;
+                lexeme.eWordFormFromHash(hasher.iHash(), uiForm, ref wf);
                 string sKey = "Short";
-                sKey += m_hashNumber[wf.Number];
-                string strWordForm = wf.Wordform;
-                if (wf.Stress >= 0)
-                {
-                    if (strWordForm[wf.Stress] != 'ё')
-                    {
-                        string strStressMark = new string('\x301', 1);
-                        strWordForm = strWordForm.Insert(wf.Stress + 1, strStressMark);
-                    }
-                }
-                ap.SetForm (sKey, strWordForm, wf.Status);
+                sKey += m_hashNumber[wf.eNumber()];
+                string sWordForm = wf.sWordForm();
+                MarkStress(ref sWordForm, wf);
+                ap.SetForm(sKey, sWordForm, wf.eStatus());
             }
 
         }   //  ShowShortParticipialForms (...)
 
-        protected void ShowLongParticipialForms (AdjPanel adjPanel, 
-                                                 MainLib.ILexeme lexeme, 
-                                                 MainLib.ET_Subparadigm eoSpLong)
+        protected void ShowLongParticipialForms (AdjPanel adjPanel, CLexemeManaged lexeme, EM_Subparadigm eoSpLong)
         {
-            foreach (MainLib.IWordForm wf in lexeme)
+            CWordFormManaged wf = null;
+            EM_ReturnCode eRet = (EM_ReturnCode)lexeme.eGetFirstWordForm(ref wf);
+            do
             {
-                string sKey = "";
-
-                if (eoSpLong != wf.Subparadigm)
+                if (CErrorCode.bError(eRet))
                 {
                     continue;
                 }
 
-                if (eoSpLong == wf.Subparadigm && MainLib.ET_Number.NUM_SG == wf.Number)
+                if (eoSpLong != wf.eSubparadigm())
                 {
-                    sKey = m_hashGender[wf.Gender];
+                    continue;
                 }
 
-                sKey += m_hashCase[wf.Case];
-                sKey += (MainLib.ET_Number.NUM_SG == wf.Number) ? "Sg" : "Pl";
-                if (MainLib.ET_Case.CASE_ACC == wf.Case)
+                string sKey = string.Empty;
+                if (eoSpLong == wf.eSubparadigm() && EM_Number.NUM_SG == wf.eNumber())
                 {
-                    if ((MainLib.ET_Gender.GENDER_M == wf.Gender &&
-                         MainLib.ET_Number.NUM_SG == wf.Number) ||
-                         (MainLib.ET_Number.NUM_PL == wf.Number))
+                    sKey = m_hashGender[wf.eGender()];
+                }
+
+                sKey += m_hashCase[wf.eCase()];
+                sKey += (EM_Number.NUM_SG == wf.eNumber()) ? "Sg" : "Pl";
+                if (EM_Case.CASE_ACC == wf.eCase())
+                {
+                    if ((EM_Gender.GENDER_M == wf.eGender() &&
+                         EM_Number.NUM_SG == wf.eNumber()) ||
+                         (EM_Number.NUM_PL == wf.eNumber()))
                     {
-                        sKey += (MainLib.ET_Animacy.ANIM_YES == wf.Animacy) ? "Anim" : "Inanim";
+                        sKey += (EM_Animacy.ANIM_YES == wf.eAnimacy()) ? "Anim" : "Inanim";
                     }
                 }
 
-                string strWordForm = wf.Wordform;
-                for (int iStressPos = 0; iStressPos < wf.StressCount; ++iStressPos)
-                {
-                    if (strWordForm[wf.Stress] != 'ё')
-                    {
-                        string sStressMark;
-                        if (0 != wf.get_IsPrimaryStress (wf.Stress))
-                        {
-                            sStressMark = new string('\x301', 1);
-                        }
-                        else
-                        {
-                            sStressMark = new string('\x300', 1);
+                string sWordForm = wf.sWordForm();
+                MarkStress(ref sWordForm, wf);
 
-                        }
-                        strWordForm = strWordForm.Insert(wf.Stress + 1, sStressMark);
-                    }
-                }
+                adjPanel.SetForm(sKey, sWordForm, wf.eStatus());
 
-                adjPanel.SetForm (sKey, strWordForm, wf.Status);
+                eRet = (EM_ReturnCode)lexeme.eGetNextWordForm(ref wf);
 
-            }   //  foreach (...)
+            } while (EM_ReturnCode.H_NO_ERROR == eRet);
 
         }   //  ShowLongParticipialForms (...)
 
+/*
         protected void Preprocess (string sSearchString)
         {
             int i_Stress = Convert.ToInt32(true); // It should've been bool
@@ -828,14 +622,14 @@ namespace TestUI
                 ap.sLemma = wf.Lemma;
                 ap.sWordform = wf.Wordform;
                 ap.sID = wf.LexemeId.ToString();
-                ap.eoPOS = wf.PartOfSpeech;
-                ap.eoAspect = wf.Aspect;
-                ap.eoGender = wf.Gender;
-                ap.eoCase = wf.Case;
-                ap.eoNumber = wf.Number;
-                ap.eoAnimacy = wf.Animacy;
-                ap.eoReflexiveness = wf.IsReflexive;
-                ap.eoSubparadigm = wf.Subparadigm;
+                ap.eoPOS = wf.ePartOfSpeech();
+                ap.eoAspect = wf.eAspect();
+                ap.eoGender = wf.eGender();
+                ap.eoCase = wf.eCase();
+                ap.eoNumber = wf.eNumber();
+                ap.eoAnimacy = wf.eAnimacy();
+                ap.eoReflexiveness = wf.eIsFerlexive();
+                ap.eoSubparadigm = wf.eSubparadigm();
                 if (wf.LexemeId != iPreviousID)
                 {
                     iWordform = 0;
@@ -876,11 +670,11 @@ namespace TestUI
                     swReport.WriteLine ("     ==== Test Report {0} ====\r\n", DateTime.Now);
                     foreach (MainLib.IVerifier v in m_TestData)
                     {
-                        if (v.Result != MainLib.ET_TestResult.TEST_RESULT_UNDEFINED)
+                        if (v.Result != MainLib.EM_TestResult.TEST_RESULT_UNDEFINED)
                         {
                             string sLine = v.Headword;
                             sLine += new string(' ', 40 - sLine.Length);
-                            sLine += (MainLib.ET_TestResult.TEST_RESULT_OK == v.Result) ?
+                            sLine += (MainLib.EM_TestResult.TEST_RESULT_OK == v.Result) ?
                                 "     Pass" : "***  Fail";
                             swReport.WriteLine(sLine);
                         }
@@ -898,7 +692,7 @@ namespace TestUI
                 }
             }
         }       //  SaveTestResults()
-
+*/
         public void CloseCurrentTab()
         {
             tabControl.TabPages.Remove (tabControl.SelectedTab);
@@ -918,6 +712,38 @@ namespace TestUI
             {
                 tabControl.TabPages.Remove(tpParent);
             }
+        }
+
+        public void MarkStress(ref string sWordForm, CWordFormManaged wf)
+        {
+            int iPos = -1;
+            EM_StressType eType = EM_StressType.STRESS_TYPE_UNDEFINED;
+            char chrMark = ' ';
+
+            EM_ReturnCode eRet = wf.eGetFirstStressPos(ref iPos, ref eType);
+            do
+            {
+                if (eRet != EM_ReturnCode.H_NO_ERROR && eRet != EM_ReturnCode.H_FALSE)
+                {
+                    continue;
+                }
+
+                if (EM_StressType.STRESS_PRIMARY == eType)
+                {
+                    if (sWordForm[iPos] != 'ё')
+                    {
+                        chrMark = '\x301';
+                        sWordForm = sWordForm.Insert(iPos+1, chrMark.ToString());
+                    }
+                }
+                else if (EM_StressType.STRESS_SECONDARY == eType)
+                {
+                    chrMark = '\x300';
+                }
+
+                eRet = wf.eGetNextStressPos(ref iPos, ref eType);
+            
+            }   while (EM_ReturnCode.H_NO_ERROR == eRet);
         }
 
     }   //  public partial class TestApplet

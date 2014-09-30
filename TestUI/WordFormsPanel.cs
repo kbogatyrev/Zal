@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainLibManaged;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -29,32 +30,32 @@ namespace TestUI
             }
         }
 
-        public void SetForm (string sKey, string sText, MainLib.ET_Status eStatus)
+        public void SetForm (string sKey, string sText, EM_Status eStatus)
         {
             try
             {
                 switch (eStatus)
                 {
-                    case MainLib.ET_Status.STATUS_COMMON:
+                    case EM_Status.STATUS_COMMON:
                     {
                         break;
                     }
-                    case MainLib.ET_Status.STATUS_INCORRECT:
+                    case EM_Status.STATUS_INCORRECT:
                     {
                         sText += "*" + sText;
                         break;
                     }
-                    case MainLib.ET_Status.STATUS_OBSOLETE:
+                    case EM_Status.STATUS_OBSOLETE:
                     {
                         sText += " (Obsolete)";
                         break;
                     }
-                    case MainLib.ET_Status.STATUS_QUESTIONABLE:
+                    case EM_Status.STATUS_QUESTIONABLE:
                     {
                         sText += "?" + sText;
                         break;
                     }
-                    case MainLib.ET_Status.STATUS_RARE:
+                    case EM_Status.STATUS_RARE:
                     {
                         sText += " (Rare)";
                         break;
@@ -86,10 +87,10 @@ namespace TestUI
             }
             catch (Exception ex)
             {
-                MainLib.ZalError err = new MainLib.ZalError();
-                string sMsg = "SetForm: ";
-                sMsg += err.LastError;
-                MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+//                MainLib.ZalError err = new MainLib.ZalError();
+//                string sMsg = "SetForm: ";
+//                sMsg += err.LastError;
+//                MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
         }   //  SetForm (...)

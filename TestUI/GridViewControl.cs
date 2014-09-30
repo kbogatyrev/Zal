@@ -55,12 +55,13 @@ namespace TestUI
             return (string)textBoxCell.Value;
         }
 
+/*
         public MainLib.IVerifier Verifier(int iRow)
         {
             DataGridViewCell cell = dataGridView[1, iRow];
             return (MainLib.IVerifier)cell.Tag;
         }
-
+*/
         public string sHeadword(int iRow)
         {
             DataGridViewCell cell = dataGridView[2, iRow];
@@ -68,6 +69,7 @@ namespace TestUI
             return (string)textBoxCell.Value;
         }
 
+/*
         public void AddLexeme (MainLib.IVerifier v)
         {
             DataGridViewRow r = new DataGridViewRow();
@@ -78,7 +80,7 @@ namespace TestUI
             r.Cells[2].Value = v.Headword;
             dataGridView.Rows.Add(r);
         }
-
+*/
         private void GridViewUserControl_VisibleChanged (object sender, EventArgs e)
         {
             this.Size = Parent.Size;
@@ -118,7 +120,7 @@ namespace TestUI
         private void buttonSave_Click(object sender, EventArgs e)
         {
             TestApplet ta = (TestApplet)Parent.Parent.Parent;
-            ta.SaveTestResults();
+            //ta.SaveTestResults();
 
             ((Button)sender).Enabled = false;
         }
@@ -135,17 +137,17 @@ namespace TestUI
 
                 try
                 {
-                    MainLib.ZalStoredLexemeData testData = new MainLib.ZalStoredLexemeData();
-                    testData.DbPath = m_sDbPath;
-                    testData.DeleteStoredLexeme(sLexemeHash(r.Index));
+//                    MainLib.ZalStoredLexemeData testData = new MainLib.ZalStoredLexemeData();
+//                    testData.DbPath = m_sDbPath;
+//                    testData.DeleteStoredLexeme(sLexemeHash(r.Index));
                     rowsToRemove.Add(r);
                 }
                 catch (Exception ex)
                 {
-                    MainLib.ZalError err = new MainLib.ZalError();
+//                    MainLib.ZalError err = new MainLib.ZalError();
                     string sMsg = ex.Message;
                     sMsg += "\n";
-                    sMsg += err.LastError;
+//                    sMsg += err.LastError;
                     MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
                     return;
                 }
@@ -247,7 +249,7 @@ namespace TestUI
 
         public void ThreadProc()
         {
-            MainLib.IVerifier v = null;
+//            MainLib.IVerifier v = null;
             try
             {
                 for (int iAt = 0; iAt < m_Caller.iRows; ++iAt)
@@ -267,10 +269,11 @@ namespace TestUI
                     }
 
                     string sLexemeHash = m_Caller.sLexemeHash(iAt);
-                    v = new MainLib.ZalVerifier();
-                    v.DbPath = m_Caller.m_sDbPath;
+//                    v = new MainLib.ZalVerifier();
+//                    v.DbPath = m_Caller.m_sDbPath;
 
-                    MainLib.ET_TestResult eResult = v.Verify (sLexemeHash);
+//                    MainLib.ET_TestResult eResult = v.Verify (sLexemeHash);
+/*
                     switch (eResult)
                     {
                         case MainLib.ET_TestResult.TEST_RESULT_OK:
@@ -298,15 +301,16 @@ namespace TestUI
                         }
 
                     }       //  switch ...
+ */ 
 
                 }   //  foreach (DataGridViewRow row in dataGridView.Rows)
             }
             catch (Exception ex)
             {
-                MainLib.ZalError err = new MainLib.ZalError();
+//                MainLib.ZalError err = new MainLib.ZalError();
                 string sMsg = ex.Message;
                 sMsg += "\n";
-                sMsg += err.LastError;
+//                sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
                 return;
             }

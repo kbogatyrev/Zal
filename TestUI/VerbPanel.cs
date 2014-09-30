@@ -7,17 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using MainLibManaged;
+
 namespace TestUI
 {
     public partial class VerbPanel : WordFormsPanel
     {
-        public delegate void ShowParticipialForms (MainLib.ILexeme lexeme, 
-                                                   MainLib.ET_Subparadigm eoSubparadigmLong,
-                                                   MainLib.ET_Subparadigm eoSubparadigmShort);
+        public delegate void ShowParticipialForms (CLexemeManaged lexeme, 
+                                                   ET_Subparadigm eoSubparadigmLong,
+                                                   ET_Subparadigm eoSubparadigmShort);
         public event ShowParticipialForms ShowParticipialFormsEvent;
 
         //int iLexemeId;
-        MainLib.ILexeme Lexeme;
+        CLexemeManaged Lexeme;
 
         public string sLexName
         {
@@ -32,7 +34,7 @@ namespace TestUI
             }
         }
 
-        public VerbPanel (MainLib.ILexeme lexeme)
+        public VerbPanel (CLexemeManaged lexeme)
         {
             InitializeComponent();
 
@@ -67,8 +69,8 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (Lexeme, 
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT,
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
+                                           ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT,
+                                           ET_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
         }
 
@@ -77,8 +79,8 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (Lexeme,
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT,
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_UNDEFINED);
+                                           ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT,
+                                           ET_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
         }
 
@@ -87,8 +89,8 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (Lexeme, 
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG,
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_SHORT);
+                                           ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG,
+                                           ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_SHORT);
             }
         }
 
@@ -97,8 +99,8 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (Lexeme, 
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG,
-                                           MainLib.ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_SHORT);
+                                           ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG,
+                                           ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_SHORT);
             }
         }
     }

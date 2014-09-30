@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 
+using MainLibManaged;
+
 namespace TestUI
 {
     public delegate void DelegateSetProgressBar (int iStart, int iRange);
@@ -25,20 +27,20 @@ namespace TestUI
 
     public partial class TestApplet : Form
     {
-        private MainLib.IDictionary m_Dictionary;
-        private MainLib.ZalStoredLexemeData m_TestData;
-        private MainLib.ILexPreprocessor m_LexPreprocessor;
-        private MainLib.IAnalyzer m_Analyzer;
-        private TextAnalyzer m_TextAnalyzer;
-        private List<MainLib.IWordForm> m_listWordForms;
-        private Dictionary<LexemeDataPanel, MainLib.ILexeme> m_hashLexemes;
-        private Dictionary<MainLib.ILexeme, ArrayList> m_lexemeToTabs;
+        private CDictionaryManaged m_Dictionary = new CDictionaryManaged();
+//        private ZalStoredLexemeData m_TestData;
+//        private MainLib.ILexPreprocessor m_LexPreprocessor;
+//        private MainLib.IAnalyzer m_Analyzer;
+//        private TextAnalyzer m_TextAnalyzer;
+        private List<CWordFormManaged> m_listWordForms;
+        private Dictionary<LexemeDataPanel, CLexemeManaged> m_hashLexemes;
+        private Dictionary<CLexemeManaged, ArrayList> m_lexemeToTabs;
 
-        private Dictionary<MainLib.ET_Gender, string> m_hashGender;
-        private Dictionary<MainLib.ET_Number, string> m_hashNumber;
-        private Dictionary<MainLib.ET_Case, string> m_hashCase;
-        private Dictionary<MainLib.ET_Person, string> m_hashPerson;
-        private Dictionary<MainLib.ET_AccentType, string> m_hashAccent;
+        private Dictionary<EM_Gender, string> m_hashGender;
+        private Dictionary<EM_Number, string> m_hashNumber;
+        private Dictionary<EM_Case, string> m_hashCase;
+        private Dictionary<EM_Person, string> m_hashPerson;
+        private Dictionary<EM_AccentType, string> m_hashAccent;
 
         ProgressDialog m_ProgressDlg;
         public DelegateUpdateProgressBar m_DelegateUpdateProgressBar;
@@ -69,12 +71,12 @@ namespace TestUI
 
         public void SubscribeToVerbEvents (VerbPanel vp)
         {
-            vp.ShowParticipialFormsEvent += new VerbPanel.ShowParticipialForms (VerbPanel_ShowParticipialForms);
+//            vp.ShowParticipialFormsEvent += new VerbPanel.ShowParticipialForms (VerbPanel_ShowParticipialForms);
         }
 
-        public void VerbPanel_ShowParticipialForms (MainLib.ILexeme lexeme, 
-                                                    MainLib.ET_Subparadigm eoSpLong, 
-                                                    MainLib.ET_Subparadigm eoSpShort)
+        public void VerbPanel_ShowParticipialForms (CLexemeManaged lexeme, 
+                                                    EM_Subparadigm eoSpLong, 
+                                                    EM_Subparadigm eoSpShort)
         {
             ShowParticipialForms (lexeme, eoSpLong, eoSpShort);
         }
@@ -88,17 +90,17 @@ namespace TestUI
         {
             try
             {
-                MainLib.ILexeme lexeme = m_hashLexemes[ldpSource];
-                lexeme.GenerateWordForms();
-                lexeme.SaveTestData();
+                CLexemeManaged lexeme = m_hashLexemes[ldpSource];
+                lexeme.eGenerateParadigm();
+//                lexeme.SaveTestData();
                 MessageBox.Show ("Forms saved in the database.", "Zal", MessageBoxButtons.OK);
             }
             catch (Exception ex)
             {
-                MainLib.ZalError err = new MainLib.ZalError();
-                string sMsg = "LexemeDataPanel_Save: ";
-                sMsg += err.LastError;
-                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+//                MainLib.ZalError err = new MainLib.ZalError();
+//                string sMsg = "LexemeDataPanel_Save: ";
+//               sMsg += err.LastError;
+//                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
         }
@@ -116,6 +118,7 @@ namespace TestUI
         private void dBPathToolStripMenuItem_Click (object sender, EventArgs e)
         {
             GetDbPath();
+            m_Dictionary.eSetDbPath(m_sDbPath);
         }
 
 
@@ -133,7 +136,7 @@ namespace TestUI
           {
             return;
           }
-          m_TextAnalyzer.LoadFrequent(str_FreqWfFilePath);
+//          m_TextAnalyzer.LoadFrequent(str_FreqWfFilePath);
         }
 
         private void byEntryFormToolStripMenuItem_Click(object sender, EventArgs e)
@@ -146,16 +149,16 @@ namespace TestUI
                 if (DialogResult.OK == dr)
                 {
                     m_sSearchString = enterDataDlg.sData;
-                    m_Dictionary.GetLexemesByInitialForm (m_sSearchString);
+                    m_Dictionary.eGetLexemesByInitialForm (m_sSearchString);
                     ShowLexemes();
                 }
             }
             catch (Exception ex)
             {
                 string sMsg = "byEntryFormToolStripMenuItem_Click \n";
-                MainLib.ZalError err = new MainLib.ZalError();
+//                MainLib.ZalError err = new MainLib.ZalError();
                 sMsg += "MainLib error: ";
-                sMsg += err.LastError;
+//                sMsg += err.LastError;
                 sMsg += "\n";
                 sMsg += ".Net client error: ";
                 sMsg += ex.Message;
@@ -174,15 +177,15 @@ namespace TestUI
                 DialogResult dr = dlg.ShowDialog();
                 if (DialogResult.OK == dr)
                 {
-                    m_Dictionary.GetLexemesByGraphicStem (dlg.sData);
+                    m_Dictionary.eGetLexemesByGraphicStem (dlg.sData);
                 }
             }
             catch (Exception ex)
             {
-                string sMsg = "Error: ";
-                MainLib.ZalError err = new MainLib.ZalError();
-                sMsg += err.LastError;
-                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+//                string sMsg = "Error: ";
+//                MainLib.ZalError err = new MainLib.ZalError();
+//                sMsg += err.LastError;
+//                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
 
@@ -197,7 +200,7 @@ namespace TestUI
                 DialogResult dr = dlg.ShowDialog();
                 if (DialogResult.OK == dr)
                 {
-                    Preprocess (dlg.sData);
+//                    Preprocess (dlg.sData);
                 }
             }
             catch (Exception ex)
@@ -210,6 +213,7 @@ namespace TestUI
 
         }   //  preprocessToolStripMenuItem_Click (...)
 
+/*
         private void parseWordFormToolStripMenuItem_Click (object sender, EventArgs e)
         {
             try
@@ -463,9 +467,11 @@ namespace TestUI
             m_ProgressDlg.SetProgressBarPos (iProgress);
             m_ProgressDlg.Refresh();
         }
+ */ 
 
     }   //  public partial class TestApplet : Form
 
+/*
     public class DbOperationThread
     {
         etDbOperation m_eOperationType;
@@ -541,5 +547,6 @@ namespace TestUI
         }
 
     }   // EventSink 
+    */
 
 }   //  namespace TestUI

@@ -120,21 +120,21 @@
           this.preprocessToolStripMenuItem.Name = "preprocessToolStripMenuItem";
           this.preprocessToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
           this.preprocessToolStripMenuItem.Text = "Preprocess";
-          this.preprocessToolStripMenuItem.Click += new System.EventHandler(this.preprocessToolStripMenuItem_Click);
+//          this.preprocessToolStripMenuItem.Click += new System.EventHandler(this.preprocessToolStripMenuItem_Click);
           // 
           // parseWordFormToolStripMenuItem
           // 
           this.parseWordFormToolStripMenuItem.Name = "parseWordFormToolStripMenuItem";
           this.parseWordFormToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
           this.parseWordFormToolStripMenuItem.Text = "Parse Word Form";
-          this.parseWordFormToolStripMenuItem.Click += new System.EventHandler(this.parseWordFormToolStripMenuItem_Click);
+//          this.parseWordFormToolStripMenuItem.Click += new System.EventHandler(this.parseWordFormToolStripMenuItem_Click);
           // 
           // parseTextToolStripMenuItem
           // 
           this.parseTextToolStripMenuItem.Name = "parseTextToolStripMenuItem";
           this.parseTextToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
           this.parseTextToolStripMenuItem.Text = "Parse Text";
-          this.parseTextToolStripMenuItem.Click += new System.EventHandler(this.parseTextToolStripMenuItem_Click);
+//          this.parseTextToolStripMenuItem.Click += new System.EventHandler(this.parseTextToolStripMenuItem_Click);
           // 
           // testToolStripMenuItem
           // 
@@ -153,7 +153,7 @@
           this.batchTestToolStripMenuItem.Name = "batchTestToolStripMenuItem";
           this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
           this.batchTestToolStripMenuItem.Text = "Test All";
-          this.batchTestToolStripMenuItem.Click += new System.EventHandler(this.batchTestToolStripMenuItem_Click);
+//          this.batchTestToolStripMenuItem.Click += new System.EventHandler(this.batchTestToolStripMenuItem_Click);
           // 
           // testRangeToolStripMenuItem
           // 
@@ -161,21 +161,21 @@
           this.testRangeToolStripMenuItem.Name = "testRangeToolStripMenuItem";
           this.testRangeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
           this.testRangeToolStripMenuItem.Text = "Test Range";
-          this.testRangeToolStripMenuItem.Click += new System.EventHandler(this.testRangeToolStripMenuItem_Click);
+//          this.testRangeToolStripMenuItem.Click += new System.EventHandler(this.testRangeToolStripMenuItem_Click);
           // 
           // exportTestDataToolStripMenuItem
           // 
           this.exportTestDataToolStripMenuItem.Name = "exportTestDataToolStripMenuItem";
           this.exportTestDataToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
           this.exportTestDataToolStripMenuItem.Text = "Export Test Data";
-          this.exportTestDataToolStripMenuItem.Click += new System.EventHandler(this.exportTestDataToolStripMenuItem_Click);
+//          this.exportTestDataToolStripMenuItem.Click += new System.EventHandler(this.exportTestDataToolStripMenuItem_Click);
           // 
           // importTestDataToolStripMenuItem
           // 
           this.importTestDataToolStripMenuItem.Name = "importTestDataToolStripMenuItem";
           this.importTestDataToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
           this.importTestDataToolStripMenuItem.Text = "Import Test Data";
-          this.importTestDataToolStripMenuItem.Click += new System.EventHandler(this.importTestDataToolStripMenuItem_Click);
+//          this.importTestDataToolStripMenuItem.Click += new System.EventHandler(this.importTestDataToolStripMenuItem_Click);
           // 
           // statusStrip
           // 
