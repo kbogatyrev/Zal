@@ -74,6 +74,7 @@
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
@@ -194,6 +195,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Verifier.cpp" />
     <ClCompile Include="WordForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -216,12 +218,15 @@
     <ClInclude Include="FormBuilderVerbPast.h" />
     <ClInclude Include="FormBuilderVerbPers.h" />
     <ClInclude Include="IDictionary.h" />
+    <ClInclude Include="IHasher.h" />
     <ClInclude Include="ILexeme.h" />
+    <ClInclude Include="IVerifier.h" />
     <ClInclude Include="IWordForm.h" />
     <ClInclude Include="Lexeme.h" />
     <ClInclude Include="LexemeProperties.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Verifier.h" />
     <ClInclude Include="WordForm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
