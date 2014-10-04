@@ -68,8 +68,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MainLibManaged, Version=1.0.5385.20329, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MainLibManaged">
       <HintPath>..\Debug\MainLibManaged.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
