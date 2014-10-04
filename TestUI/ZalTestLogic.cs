@@ -321,9 +321,8 @@ namespace TestUI
                 vp.sLexName = grSt;
 
                 CWordFormManaged wf = null;
-                string sWordForm = wf.sWordForm();
-
                 EM_ReturnCode eRet = (EM_ReturnCode)lexeme.eGetFirstWordForm(ref wf);
+                string sWordForm = wf.sWordForm();
 
                 do
                 {
@@ -336,114 +335,116 @@ namespace TestUI
                     switch (eSubparadigm)
                     {
                         case EM_Subparadigm.SUBPARADIGM_PRESENT_TENSE:
-                            {
-                                string sKey = "Pres" + m_hashPerson[wf.ePerson()];
-                                sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
-                                MarkStress(ref sWordForm, wf);
+                        {
+                            string sKey = "Pres" + m_hashPerson[wf.ePerson()];
+                            sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
+                            MarkStress(ref sWordForm, wf);
+                            vp.SetForm(sKey, sWordForm, wf.eStatus());
 
-                                break;
-                            }
+                            break;
+                        }
 
                         case EM_Subparadigm.SUBPARADIGM_PAST_TENSE:
+                        {
+                            string sKey = "Past";
+                            if (EM_Number.NUM_SG == wf.eNumber())
                             {
-                                string sKey = "Past";
-                                if (EM_Number.NUM_SG == wf.eNumber())
-                                {
-                                    sKey += m_hashGender[wf.eGender()];
-                                }
-                                sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
-
-                                MarkStress(ref sWordForm, wf);
-                                vp.SetForm(sKey, sWordForm, wf.eStatus());
-
-                                break;
+                                sKey += m_hashGender[wf.eGender()];
                             }
+                            sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
+
+                            MarkStress(ref sWordForm, wf);
+                            vp.SetForm(sKey, sWordForm, wf.eStatus());
+
+                            break;
+                        }
 
                         case EM_Subparadigm.SUBPARADIGM_IMPERATIVE:
-                            {
-                                string sKey = "Imperative";
-                                sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
+                        {
+                            string sKey = "Imperative";
+                            sKey += (wf.eNumber() == EM_Number.NUM_SG) ? "Sg" : "Pl";
 
-                                MarkStress(ref sWordForm, wf);
-                                vp.SetForm(sKey, sWordForm, wf.eStatus());
+                            MarkStress(ref sWordForm, wf);
+                            vp.SetForm(sKey, sWordForm, wf.eStatus());
 
-                                break;
-                            }
+                            break;
+                        }
 
                         case EM_Subparadigm.SUBPARADIGM_PART_PRES_ACT:
+                        {
+                            string sKey = "PartPresActive";
+                            if (wf.eNumber() == EM_Number.NUM_SG &&
+                                wf.eGender() == EM_Gender.GENDER_M &&
+                                wf.eCase() == EM_Case.CASE_NOM)
                             {
-                                string sKey = "PartPresActive";
-                                if (wf.eNumber() == EM_Number.NUM_SG &&
-                                    wf.eGender() == EM_Gender.GENDER_M &&
-                                    wf.eCase() == EM_Case.CASE_NOM)
-                                {
-                                    MarkStress(ref sWordForm, wf);
-                                    vp.SetForm(sKey, sWordForm, wf.eStatus());
-                                }
-
-                                break;
+                                MarkStress(ref sWordForm, wf);
+                                vp.SetForm(sKey, sWordForm, wf.eStatus());
                             }
+
+                            break;
+                        }
 
                         case EM_Subparadigm.SUBPARADIGM_PART_PAST_ACT:
+                        {
+                            string sKey = "PartPastActive";
+                            if (wf.eNumber() == EM_Number.NUM_SG &&
+                                wf.eGender() == EM_Gender.GENDER_M &&
+                                wf.eCase() == EM_Case.CASE_NOM)
                             {
-                                string sKey = "PartPastActive";
-                                if (wf.eNumber() == EM_Number.NUM_SG &&
-                                    wf.eGender() == EM_Gender.GENDER_M &&
-                                    wf.eCase() == EM_Case.CASE_NOM)
-                                {
-                                    MarkStress(ref sWordForm, wf);
-                                    vp.SetForm(sKey, sWordForm, wf.eStatus());
-                                }
-
-                                break;
+                                MarkStress(ref sWordForm, wf);
+                                vp.SetForm(sKey, sWordForm, wf.eStatus());
                             }
+
+                            break;
+                        }
 
                         case EM_Subparadigm.SUBPARADIGM_ADVERBIAL_PRESENT:
-                            {
-                                MarkStress(ref sWordForm, wf);
-                                vp.SetForm("PresAdverbial", sWordForm, wf.eStatus());
+                        {
+                            MarkStress(ref sWordForm, wf);
+                            vp.SetForm("PresAdverbial", sWordForm, wf.eStatus());
 
-                                break;
-                            }
+                            break;
+                        }
 
                         case EM_Subparadigm.SUBPARADIGM_ADVERBIAL_PAST:
-                            {
-                                MarkStress(ref sWordForm, wf);
-                                vp.SetForm("PastAdverbial", sWordForm, wf.eStatus());
+                        {
+                            MarkStress(ref sWordForm, wf);
+                            vp.SetForm("PastAdverbial", sWordForm, wf.eStatus());
 
-                                break;
-                            }
+                            break;
+                        }
 
                         case EM_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG:
+                        {
+                            string sKey = "PartPresPassive";
+                            if (wf.eNumber() == EM_Number.NUM_SG &&
+                                wf.eGender() == EM_Gender.GENDER_M &&
+                                wf.eCase() == EM_Case.CASE_NOM)
                             {
-                                string sKey = "PartPresPassive";
-                                if (wf.eNumber() == EM_Number.NUM_SG &&
-                                    wf.eGender() == EM_Gender.GENDER_M &&
-                                    wf.eCase() == EM_Case.CASE_NOM)
-                                {
-                                    MarkStress(ref sWordForm, wf);
-                                    vp.SetForm(sKey, sWordForm, wf.eStatus());
-                                }
-
-                                break;
+                                MarkStress(ref sWordForm, wf);
+                                vp.SetForm(sKey, sWordForm, wf.eStatus());
                             }
+
+                            break;
+                        }
 
                         case EM_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG:
+                        {
+                            string sKey = "PartPastPassive";
+                            if (wf.eNumber() == EM_Number.NUM_SG &&
+                                wf.eGender() == EM_Gender.GENDER_M &&
+                                wf.eCase() == EM_Case.CASE_NOM)
                             {
-                                string sKey = "PartPastPassive";
-                                if (wf.eNumber() == EM_Number.NUM_SG &&
-                                    wf.eGender() == EM_Gender.GENDER_M &&
-                                    wf.eCase() == EM_Case.CASE_NOM)
-                                {
-                                    MarkStress(ref sWordForm, wf);
-                                    vp.SetForm(sKey, sWordForm, wf.eStatus());
-                                }
-
-                                break;
+                                MarkStress(ref sWordForm, wf);
+                                vp.SetForm(sKey, sWordForm, wf.eStatus());
                             }
+
+                            break;
+                        }
                     }   // switch...
 
                     eRet = (EM_ReturnCode)lexeme.eGetNextWordForm(ref wf);
+                    sWordForm = wf.sWordForm();
 
                 } while (EM_ReturnCode.H_NO_ERROR == eRet);
 
