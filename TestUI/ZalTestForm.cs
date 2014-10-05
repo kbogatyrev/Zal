@@ -71,7 +71,7 @@ namespace TestUI
 
         public void SubscribeToVerbEvents (VerbPanel vp)
         {
-//            vp.ShowParticipialFormsEvent += new VerbPanel.ShowParticipialForms (VerbPanel_ShowParticipialForms);
+            vp.ShowParticipialFormsEvent += new VerbPanel.ShowParticipialForms (VerbPanel_ShowParticipialForms);
         }
 
         public void VerbPanel_ShowParticipialForms (CLexemeManaged lexeme, 

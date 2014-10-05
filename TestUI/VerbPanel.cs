@@ -14,8 +14,8 @@ namespace TestUI
     public partial class VerbPanel : WordFormsPanel
     {
         public delegate void ShowParticipialForms (CLexemeManaged lexeme, 
-                                                   ET_Subparadigm eoSubparadigmLong,
-                                                   ET_Subparadigm eoSubparadigmShort);
+                                                   EM_Subparadigm eoSubparadigmLong,
+                                                   EM_Subparadigm eoSubparadigmShort);
         public event ShowParticipialForms ShowParticipialFormsEvent;
 
         //int iLexemeId;
@@ -69,8 +69,8 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (Lexeme, 
-                                           ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT,
-                                           ET_Subparadigm.SUBPARADIGM_UNDEFINED);
+                                           EM_Subparadigm.SUBPARADIGM_PART_PRES_ACT,
+                                           EM_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
         }
 
@@ -79,8 +79,8 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (Lexeme,
-                                           ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT,
-                                           ET_Subparadigm.SUBPARADIGM_UNDEFINED);
+                                           EM_Subparadigm.SUBPARADIGM_PART_PAST_ACT,
+                                           EM_Subparadigm.SUBPARADIGM_UNDEFINED);
             }
         }
 
@@ -89,8 +89,8 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (Lexeme, 
-                                           ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG,
-                                           ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_SHORT);
+                                           EM_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG,
+                                           EM_Subparadigm.SUBPARADIGM_PART_PRES_PASS_SHORT);
             }
         }
 
@@ -99,8 +99,8 @@ namespace TestUI
             if (ShowParticipialFormsEvent != null)
             {
                 ShowParticipialFormsEvent (Lexeme, 
-                                           ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG,
-                                           ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_SHORT);
+                                           EM_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG,
+                                           EM_Subparadigm.SUBPARADIGM_PART_PAST_PASS_SHORT);
             }
         }
     }

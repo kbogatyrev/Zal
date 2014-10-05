@@ -476,7 +476,7 @@ namespace TestUI
             uint uiForms = lexeme.uiFormCount(hasher.iHash());
             if (uiForms > 0)
             {
-                lexeme.eWordFormFromHash(hasher.iHash(), 1, ref wf);
+                lexeme.eWordFormFromHash(hasher.iHash(), 0, ref wf);
                 AdjPanel adjPanel = new AdjPanel();
                 TabPage tabPageDetails = new TabPage (wf.sWordForm());
                 ArrayList al = m_lexemeToTabs[lexeme];
@@ -544,38 +544,31 @@ namespace TestUI
             EM_ReturnCode eRet = (EM_ReturnCode)lexeme.eGetFirstWordForm(ref wf);
             do
             {
-                if (CErrorCode.bError(eRet))
+                if (!CErrorCode.bError(eRet) && (eoSpLong == wf.eSubparadigm()))
                 {
-                    continue;
-                }
-
-                if (eoSpLong != wf.eSubparadigm())
-                {
-                    continue;
-                }
-
-                string sKey = string.Empty;
-                if (eoSpLong == wf.eSubparadigm() && EM_Number.NUM_SG == wf.eNumber())
-                {
-                    sKey = m_hashGender[wf.eGender()];
-                }
-
-                sKey += m_hashCase[wf.eCase()];
-                sKey += (EM_Number.NUM_SG == wf.eNumber()) ? "Sg" : "Pl";
-                if (EM_Case.CASE_ACC == wf.eCase())
-                {
-                    if ((EM_Gender.GENDER_M == wf.eGender() &&
-                         EM_Number.NUM_SG == wf.eNumber()) ||
-                         (EM_Number.NUM_PL == wf.eNumber()))
+                    string sKey = string.Empty;
+                    if (eoSpLong == wf.eSubparadigm() && EM_Number.NUM_SG == wf.eNumber())
                     {
-                        sKey += (EM_Animacy.ANIM_YES == wf.eAnimacy()) ? "Anim" : "Inanim";
+                        sKey = m_hashGender[wf.eGender()];
                     }
+
+                    sKey += m_hashCase[wf.eCase()];
+                    sKey += (EM_Number.NUM_SG == wf.eNumber()) ? "Sg" : "Pl";
+                    if (EM_Case.CASE_ACC == wf.eCase())
+                    {
+                        if ((EM_Gender.GENDER_M == wf.eGender() &&
+                             EM_Number.NUM_SG == wf.eNumber()) ||
+                             (EM_Number.NUM_PL == wf.eNumber()))
+                        {
+                            sKey += (EM_Animacy.ANIM_YES == wf.eAnimacy()) ? "Anim" : "Inanim";
+                        }
+                    }
+
+                    string sWordForm = wf.sWordForm();
+                    MarkStress(ref sWordForm, wf);
+
+                    adjPanel.SetForm(sKey, sWordForm, wf.eStatus());
                 }
-
-                string sWordForm = wf.sWordForm();
-                MarkStress(ref sWordForm, wf);
-
-                adjPanel.SetForm(sKey, sWordForm, wf.eStatus());
 
                 eRet = (EM_ReturnCode)lexeme.eGetNextWordForm(ref wf);
 
