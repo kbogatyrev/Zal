@@ -41,13 +41,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Term paper\HLib-Windows;D:\Term paper\Zal-Windows\MainLib;C:\Python27\include;C:\local\boost_1_55_0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Hadzik\Desktop\Diploma\HLib-Windows;C:\Users\Hadzik\Desktop\Diploma\Zal-Windows\MainLib;C:\Python27\include;C:\local\boost_1_55_0;$(IncludePath)</IncludePath>
     <LibraryPath>C:\local\boost_1_55_0\libs;C:\local\boost_1_55_0\lib32-msvc-12.0;C:\Python27\libs;C:\Python27\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\Hadzik\Desktop\HLib-Windows;C:\Users\Hadzik\Desktop\Zal-Windows\MainLib;C:\Python27\include;C:\local\boost_1_55_0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Hadzik\Desktop\Diploma\HLib-Windows;C:\Users\Hadzik\Desktop\Diploma\Zal-Windows\MainLib;C:\Python27\include;C:\local\boost_1_55_0;$(IncludePath)</IncludePath>
     <LibraryPath>C:\local\boost_1_55_0\libs;C:\local\boost_1_55_0\lib32-msvc-12.0;C:\Python27\libs;C:\Python27\Lib;$(LibraryPath)</LibraryPath>
+    <TargetExt>.pyd</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

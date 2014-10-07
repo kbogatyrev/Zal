@@ -3,10 +3,13 @@
 
 #include "stdafx.h"
 #include <boost/python.hpp>
+#include <boost/python/exception_translator.hpp>
 #include <map>
 #include <vector>
 #include <iostream>
 #include <string>
+#include <exception> 
+
 #include "IDictionary.h"
 #include "Dictionary.h"
 #include "ILexeme.h"
@@ -16,473 +19,12 @@
 using namespace boost::python;
 using namespace Hlib;
 using namespace std;
+
 extern "C"
 {
 	ET_ReturnCode GetDictionary(IDictionary *& d);
 }
 
-struct ILexemeWrap : ILexeme, wrapper<ILexeme>
-{
-	const StLexemeProperties& stGetProperties()
-	{
-		return this->get_override("stGetProperties")();
-	}
-	StLexemeProperties& stGetPropertiesForWriteAccess()
-	{
-		return call<StLexemeProperties&>(get_override("stGetPropertiesForWriteAccess").ptr());
-	}
-	ET_Gender eGender()
-	{
-		return this->get_override("eGender")();
-	}
-	ET_Animacy eAnimacy()
-	{
-		return this->get_override("eAnimacy")();
-	}
-	CEString sGraphicStem()
-	{
-		return this->get_override("sGraphicStem")();
-	}
-	bool bHasIrregularForms()
-	{
-		return this->get_override("bHasIrregularForms")();
-	}
-	bool bHasSecondaryStress()
-	{
-		return this->get_override("bHasSecondaryStress")();
-	}
-	bool bHasFleetingVowel()
-	{
-		return this->get_override("bHasFleetingVowel")();
-	}
-	bool bHasYoAlternation()
-	{
-		return this->get_override("bHasYoAlternation")();
-	}
-	bool bHasOAlternation()
-	{
-		return this->get_override("bHasOAlternation")();
-	}
-	CEString sSourceForm()
-	{
-		return this->get_override("sSourceForm")();
-	}
-	CEString sHeadwordComment()
-	{
-		return this->get_override("sHeadwordComment")();
-	}
-	bool bIsUnstressed()
-	{
-		return this->get_override("bIsUnstressed")();
-	}
-	bool IsVariant()
-	{
-		return this->get_override("IsVariant")();
-	}
-	CEString sMainSymbol()
-	{
-		return this->get_override("sMainSymbol")();
-	}
-	bool bIsPluralOf()
-	{
-		return this->get_override("bIsPluralOf")();
-	}
-	bool bTransitive()
-	{
-		return this->get_override("bTransitive")();
-	}
-	ET_Reflexive eIsReflexive()
-	{
-		return this->get_override("eIsReflexive")();
-	}
-	CEString sMainSymbolPluralOf()
-	{
-		return this->get_override("sMainSymbolPluralOf")();
-	}
-	CEString sAltMainSymbol()
-	{
-		return this->get_override("sAltMainSymbol")();
-	}
-	ET_Aspect eAspect()
-	{
-		return this->get_override("eAspect")();
-	}
-	CEString sInflectionType()
-	{
-		return this->get_override("sInflectionType")();
-	}
-	ET_PartOfSpeech ePartOfSpeech()
-	{
-		return this->get_override("ePartOfSpeech")();
-	}
-	CEString sComment()
-	{
-		return this->get_override("sComment")();
-	}
-	CEString sAltMainSymbolComment()
-	{
-		return this->get_override("sAltMainSymbolComment")();
-	}
-	CEString sAltInflectionComment()
-	{
-		return this->get_override("sAltInflectionComment")();
-	}
-	CEString sVerbStemAlternation()
-	{
-		return this->get_override("sVerbStemAlternation")();
-	}
-	bool bPartPastPassZhd()
-	{
-		return this->get_override("bPartPastPassZhd")();
-	}
-	int iSection()
-	{
-		return this->get_override("iSection")();
-	}
-	bool bNoComparative()
-	{
-		return this->get_override("bNoComparative")();
-	}
-	bool bAssumedForms()
-	{
-		return this->get_override("bAssumedForms")();
-	}
-	bool bYoAlternation()
-	{
-		return this->get_override("bYoAlternation")();
-	}
-	bool bOAlternation()
-	{
-		return this->get_override("bOAlternation")();
-	}
-	bool bSecondGenitive()
-	{
-		return this->get_override("bSecondGenitive")();
-	}
-	bool bSecondLocative()
-	{
-		return this->get_override("bSecondLocative")();
-	}
-	bool bSecondLocativeOptional()
-	{
-		return this->get_override("bSecondLocativeOptional")();
-	}
-	CEString sLoc2Preposition()
-	{
-		return this->get_override("sLoc2Preposition")();
-	}
-	bool bHasAspectPair()
-	{
-		return this->get_override("bHasAspectPair")();
-	}
-	int iAspectPairType()
-	{
-		return this->get_override("iAspectPairType")();
-	}
-	CEString sAspectPairComment()
-	{
-		return this->get_override("sAspectPairComment")();
-	}
-	CEString sQuestionableForms()
-	{
-		return this->get_override("sQuestionableForms")();
-	}
-	bool bHasIrregularVariants()
-	{
-		return this->get_override("bHasIrregularVariants")();
-	}
-	bool bHasDeficiencies()
-	{
-		return this->get_override("bHasDeficiencies")();
-	}
-	CEString sRestrictedFroms()
-	{
-		return this->get_override("sRestrictedFroms")();
-	}
-	CEString sContexts()
-	{
-		return this->get_override("sContexts")();
-	}
-	CEString sTrailingComment()
-	{
-		return this->get_override("sTrailingComment")();
-	}
-	int iInflectionId()
-	{
-		return this->get_override("iInflectionId")();
-	}
-	bool bPrimaryInflectionGroup()
-	{
-		return this->get_override("bPrimaryInflectionGroup")();
-	}
-	int iType()
-	{
-		return this->get_override("iType")();
-	}
-	ET_AccentType eAccentType1()
-	{
-		return this->get_override("eAccentType1")();
-	}
-	ET_AccentType eAccentType2()
-	{
-		return this->get_override("eAccentType2")();
-	}
-	bool  bShortFormsRestricted()
-	{
-		return this->get_override("bShortFormsRestricted")();
-	}
-	bool bPastParticipleRestricted()
-	{
-		return this->get_override("bPastParticipleRestricted")();
-	}
-	bool bNoLongForms()
-	{
-		return this->get_override("bNoLongForms")();
-	}
-	bool bNoShortForms()
-	{
-		return this->get_override("bNoShortForms")();
-	}
-	bool bNoPastParticiple()
-	{
-		return this->get_override("bNoPastParticiple")();
-	}
-	bool bFleetingVowel()
-	{
-		return this->get_override("bFleetingVowel")();
-	}
-	int iStemAugment()
-	{
-		return this->get_override("iStemAugment")();
-	}
-	CEString s1SgStem()
-	{
-		return this->get_override("s1SgStem")();
-	}
-	CEString s3SgStem()
-	{
-		return this->get_override("s3SgStem")();
-	}
-	CEString sInfinitive()
-	{
-		return this->get_override("sInfinitive")();
-	}
-	CEString sInfStem()
-	{
-		return this->get_override("sInfStem")();
-	}
-	bool bFindCommonDeviation(int iNum, bool& bIsOptional)
-	{
-		return this->get_override("bFindCommonDeviation")(iNum, bIsOptional);
-	}
-	bool bFindStandardAlternation(const CEString& sKey, CEString& sValue)
-	{
-		return this->get_override("bFindStandardAlternation")(sKey, sValue);
-	}
-	ET_ReturnCode eGetStemStressPositions(CEString& sLemma, vector<int>& vecPosition)
-	{
-		return this->get_override("eGetStemStressPositions")(sLemma, vecPosition);
-	}
-	ET_ReturnCode eGetAlternatingPreverb(const CEString& sVerbForm, CEString& sPreverb, bool& bVoicing)
-	{
-		return this->get_override("eGetAlternatingPreverb")(sVerbForm, sPreverb, bVoicing);
-	}
-	CEString sHash()
-	{
-		return this->get_override("sHash")();
-	}
-	ET_ReturnCode eWordFormFromHash(int iHash, unsigned int uiAt, IWordForm *& pWf)
-	{
-		return this->get_override("eWordFormFromHash")(iHash, uiAt, pWf);
-	}
-	bool bHasIrregularForm(int iGramHash)
-	{
-		return this->get_override("bHasIrregularForm")(iGramHash);
-	}
-	bool bNoRegularForms(int iGramHash)
-	{
-		return this->get_override("bNoRegularForms")(iGramHash);
-	}
-	ET_ReturnCode eGetFirstWordForm(IWordForm *& pWf)
-	{
-		return this->get_override("eGetFirstWordForm")(pWf);
-	}
-	ET_ReturnCode eGetNextWordForm(IWordForm *& pWf)
-	{
-		return this->get_override("eGetNextWordForm")(pWf);
-	}
-	ET_ReturnCode eGetFirstIrregularForm(int iHash, IWordForm *& pIWordForm, bool& bIsOptional)
-	{
-		return this->get_override("eGetFirstIrregularForm")(iHash, pIWordForm, bIsOptional);
-	}
-	ET_ReturnCode eGetNextIrregularForm(IWordForm *& pIWordForm, bool& bIsOptional)
-	{
-		return this->get_override("eGetNextIrregularForm")(pIWordForm, bIsOptional);
-	}
-	unsigned int uiFormCount(int iHash)
-	{
-		return this->get_override("uiFormCount")(iHash);
-	}
-	bool bHasCommonDeviation(int iCd)
-	{
-		return this->get_override("bHasCommonDeviation")(iCd);
-	}
-	bool bDeviationOptional(int iCd)
-	{
-		return this->get_override("bDeviationOptional")(iCd);
-	}
-	bool bIsFormMissing(int iGramHash)
-	{
-		return this->get_override("bIsFormMissing")(iGramHash);
-	}
-	bool bIsMultistressedCompound()
-	{
-		return this->get_override("bIsMultistressedCompound")();
-	}
-	ET_ReturnCode eGetFirstStemStressPos(int& iPos)
-	{
-		return this->get_override("eGetFirstStemStressPos")(iPos);
-	}
-	ET_ReturnCode eGetNextStemStressPos(int& iPos)
-	{
-		return this->get_override("eGetNextStemStressPos")(iPos);
-	}
-	ET_ReturnCode SetDb(const CEString& sDbPath)
-	{
-		return this->get_override("SetDb")(sDbPath);
-	}
-	ET_ReturnCode eGenerateParadigm()
-	{
-		return this->get_override("eGenerateParadigm")();
-	}
-	bool bSaveToDb(){
-		return this->get_override("bSaveToDb")();
-	}
-
-
-};
-struct IDictionaryWrap : IDictionary, wrapper<IDictionary>
-{
-	  ET_ReturnCode eSetDbPath(const CEString& sDbPath)
-        {	
-		        return this->get_override("eSetDbPath")(sDbPath);
-	}
-
-	ET_ReturnCode eGetLexemeById(long Id)
-	{
-		return this->get_override("eGetLexemeById")(Id);
-	}
-	ET_ReturnCode eGetLexemesByMd5(const CEString& sMd5)
-	{
-		return this->get_override("eGetLexemesByMd5")(sMd5);
-	}
-	ET_ReturnCode eGetLexemesByGraphicStem(const CEString&)
-	{
-		return this->get_override("eGetLexemesByGraphicStem")();
-	}
-	ET_ReturnCode eGetLexemesByInitialForm(const CEString&)
-	{
-		return this->get_override("eGetLexemesByInitialForm")();
-	}
-	ET_ReturnCode eGenerateAllForms()
-	{
-		return this->get_override("eGenerateAllForms")();
-	}
-	ET_ReturnCode eGenerateFormsForSelectedLexemes()
-	{
-		return this->get_override("eGenerateFormsForSelectedLexemes")();
-	}
-	ET_ReturnCode eCountLexemes(int& iLexemes)
-	{
-		return this->get_override("eCountLexemes")(iLexemes);
-	}
-	ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexeme)
-	{
-		return this->get_override("eGetFirstLexeme")(pLexeme);
-	}
-	ET_ReturnCode eGetNextLexeme(ILexeme *& pLexeme)
-	{
-		return this->get_override("eGetNextLexeme")(pLexeme);
-	}
-	void Clear(){
-		this->get_override("Clear")();
-	}
-	ET_ReturnCode eAnalyze(const CEString& sText)
-	{
-		return this->get_override("eAnalyze")(sText);
-	}
-
-};
-struct IWordFormWrap : IWordForm, wrapper<IWordForm>
-{
-	ILexeme * pLexeme()
-	{
-		return this->get_override("pLexeme")();
-	}
-	CEString sWordForm()
-	{
-		return this->get_override("sWordForm")();
-	}
-	CEString sLemma()
-	{
-		return this->get_override("sLemma")();
-	}
-	__int64 llLexemeId()
-	{
-		return this->get_override("llLexemeId")();
-	}
-	ET_PartOfSpeech ePos()
-	{
-		return this->get_override("ePos")();
-	}
-	ET_Case eCase()
-	{
-		return this->get_override("eCase")();
-	}
-	ET_Number eNumber()
-	{
-		return this->get_override("eNumber")();
-	}
-	ET_Subparadigm eSubparadigm()
-	{
-		return this->get_override("eSubparadigm")();
-	}
-	ET_Gender eGender()
-	{
-		return this->get_override("eGender")();
-	}
-	ET_Person ePerson()
-	{
-		return this->get_override("ePerson")();
-	}
-	ET_Animacy eAnimacy()
-	{
-		return this->get_override("eAnimacy")();
-	}
-	ET_Reflexive eReflexive()
-	{
-		return this->get_override("eReflexive")();
-	}
-	ET_Aspect eAspect()
-	{
-		return this->get_override("eAspect")();
-	}
-	ET_Status eStatus()
-	{
-		return this->get_override("eStatus")();
-	}
-	bool bIrregular()
-	{
-		return this->get_override("bIrregular")();
-	}
-	int iGramHash()
-	{
-		return this->get_override("iGramHash")();
-	}
-	ET_ReturnCode eInitFromHash(int iHash){
-		return this->get_override("eInitFromHash")(iHash);
-	}
-};
 wstring StrFromCES(CEString CES)
 {
 	wstring pWF = CES;
@@ -494,259 +36,652 @@ CEString StrToCES(const wstring wStr)
 	CEString sDbPath(wctStr);
 	return sDbPath;
 }
-IDictionary* GetDictionaryWrap()
+struct Null_pointer : public exception
 {
-	IDictionary * pD = NULL;
-	GetDictionary(pD);
-	return pD;
+	char const* what() const throw() { return "Class instant is not initialized"; }
+};
+void translate_exception(Null_pointer const& e)
+{
+	PyErr_SetString(PyExc_RuntimeError, e.what());
 }
-class WFP
+class IWordFormWrap
 {
 public:
-	WFP() : pWF(NULL)
+	IWordFormWrap() : pWF(NULL)
 	{}
-	IWordForm * get()
+	ILexeme * pLexeme()
 	{
-		return pWF;
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->pLexeme();
 	}
+	wstring sWordForm()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		CEString CESWF = pWF->sWordForm();
+		wstring wWF = CESWF;
+		return wWF;
+	}
+	wstring sLemma()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		CEString CESLemma = pWF->sLemma();
+		wstring wLemma = CESLemma;
+		return wLemma;
+	}
+	__int64 llLexemeId()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->llLexemeId();
+	}
+	ET_PartOfSpeech ePos()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->ePos();
+	}
+	ET_Case eCase()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eCase();
+	}
+	ET_Number eNumber()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eNumber();
+	}
+	ET_Subparadigm eSubparadigm()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eSubparadigm();
+	}
+	ET_Gender eGender()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eGender();
+	}
+	ET_Person ePerson()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->ePerson();
+	}
+	ET_Animacy eAnimacy()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eAnimacy();
+	}
+	ET_Reflexive eReflexive()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eReflexive();
+	}
+	ET_Aspect eAspect()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eAspect();
+	}
+	ET_Status eStatus()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eStatus();
+	}
+	bool bIrregular()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->bIrregular();
+	}
+	int iGramHash()
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->iGramHash();
+	}
+	ET_ReturnCode eInitFromHash(int iHash)
+	{
+		if (pWF == NULL){ throw Null_pointer(); }
+		return pWF->eInitFromHash(iHash);
+	}
+public:
 	IWordForm * pWF;
 };
-class LexP
+
+class ILexemeWrap
 {
 public:
-	LexP() : pL(NULL)
+	ILexemeWrap() : pL(NULL)
 	{}
-	ILexeme * get()
+	const StLexemeProperties& stGetProperties()
 	{
-		return pL;
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->stGetProperties();
 	}
-	ILexeme * pL;
+	StLexemeProperties& stGetPropertiesForWriteAccess()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->stGetPropertiesForWriteAccess();
+	}
+	ET_Gender eGender()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eGender();
+	}
+	ET_Animacy eAnimacy()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eAnimacy();
+	}
+	bool bHasIrregularForms()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasIrregularForms();
+	}
+	bool bHasSecondaryStress()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasSecondaryStress();
+	}
+	bool bHasFleetingVowel()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasFleetingVowel();
+	}
+	bool bHasYoAlternation()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasYoAlternation();
+	}
+	bool bHasOAlternation()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasOAlternation();
+	}
+
+	bool bIsUnstressed()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bIsUnstressed();
+	}
+
+	bool bIsPluralOf()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bIsPluralOf();
+	}
+	bool bTransitive()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bTransitive();
+	}
+	ET_Reflexive eIsReflexive()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eIsReflexive();
+	}
+
+	ET_Aspect eAspect()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eAspect();
+	}
+
+	ET_PartOfSpeech ePartOfSpeech()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->ePartOfSpeech();
+	}
+
+	bool bPartPastPassZhd()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bPartPastPassZhd();
+	}
+	int iSection()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->iSection();
+	}
+	bool bNoComparative()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bNoComparative();
+	}
+	bool bAssumedForms()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bAssumedForms();
+	}
+	bool bYoAlternation()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bYoAlternation();
+	}
+	bool bOAlternation()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bOAlternation();
+	}
+	bool bSecondGenitive()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bSecondGenitive();
+	}
+	bool bSecondLocative()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bSecondLocative();
+	}
+	bool bSecondLocativeOptional()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bSecondLocativeOptional();
+	}
+
+	bool bHasAspectPair()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasAspectPair();
+	}
+	int iAspectPairType()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->iAspectPairType();
+	}
+
+	bool bHasIrregularVariants()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasIrregularVariants();
+	}
+	bool bHasDeficiencies()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasDeficiencies();
+	}
+
+	int iInflectionId()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->iInflectionId();
+	}
+	bool bPrimaryInflectionGroup()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bPrimaryInflectionGroup();
+	}
+	int iType()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->iType();
+	}
+	ET_AccentType eAccentType1()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eAccentType1();
+	}
+	ET_AccentType eAccentType2()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eAccentType2();
+	}
+	bool bShortFormsRestricted()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bShortFormsRestricted();
+	}
+	bool bPastParticipleRestricted()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bPastParticipleRestricted();
+	}
+	bool bNoLongForms()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bNoLongForms();
+	}
+	bool bNoShortForms()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bNoShortForms();
+	}
+	bool bNoPastParticiple()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bNoPastParticiple();
+	}
+	bool bFleetingVowel()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bFleetingVowel();
+	}
+	int iStemAugment()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->iStemAugment();
+	}
+
+	list bFindCommonDeviation(int iNum)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		list res;
+		bool b;
+
+		res.append(pL->bFindCommonDeviation(iNum, b));
+		res.append(b);
+		return res;
+	}
+	list bFindStandardAlternation(wstring Key)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		list res;
+		CEString sKey = StrToCES(Key);
+		CEString sValue;
+		res.append(pL->bFindStandardAlternation(sKey, sValue));
+		res.append(StrFromCES(sValue));
+		return res;
+	}
+	list eGetStemStressPositions(wstring Lemma)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		vector<int> vecPos;
+		CEString sLemma = StrToCES(Lemma);
+		list res;
+		res.append(pL->eGetStemStressPositions(sLemma, vecPos));
+		list lPos;
+		vector<int>::iterator it;
+		for (it = vecPos.begin(); it != vecPos.end(); ++it)
+		{
+			lPos.append(*it);
+		}
+		res.append(lPos);
+		return res;
+	}
+	//ET_ReturnCode eGetAlternatingPreverb(const CEString& sVerbForm, CEString& sPreverb, bool& bVoicing)
+	//{
+	// if (pL == NULL){ throw Null_pointer(); }
+	// return pL->eGetAlternatingPreverb(sVerbForm, sPreverb, bVoicing);
+	//}
+
+	//ET_ReturnCode eWordFormFromHash(int iHash, unsigned int uiAt, IWordForm *& pWf)
+	//{
+	//if (pL == NULL){ throw Null_pointer(); }
+	// return pL->eWordFormFromHash(iHash, uiAt, pWf);
+	//}
+	bool bHasIrregularForm(int iGramHash)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasIrregularForm(iGramHash);
+	}
+	bool bNoRegularForms(int iGramHash)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bNoRegularForms(iGramHash);
+	}
+	ET_ReturnCode eGetFirstWordForm(IWordFormWrap& w)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eGetFirstWordForm(w.pWF);
+	}
+	ET_ReturnCode eGetNextWordForm(IWordFormWrap& w)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eGetNextWordForm(w.pWF);
+	}
+	list eGetFirstIrregularForm(int iHash, IWordFormWrap& w)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		bool b;
+		ET_ReturnCode rc = pL->eGetFirstIrregularForm(iHash, w.pWF, b);
+		list res;
+		res.append(rc);
+		res.append(b);
+		return res;
+	}
+	list eGetNextIrregularForm(IWordFormWrap& w)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		bool b;
+		ET_ReturnCode rc = pL->eGetNextIrregularForm(w.pWF, b);
+		list res;
+		res.append(rc);
+		res.append(b);
+		return res;
+	}
+	unsigned int uiFormCount(int iHash)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->uiFormCount(iHash);
+	}
+	bool bHasCommonDeviation(int iCd)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bHasCommonDeviation(iCd);
+	}
+	bool bDeviationOptional(int iCd)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bDeviationOptional(iCd);
+	}
+	bool bIsFormMissing(int iGramHash)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bIsFormMissing(iGramHash);
+	}
+	bool bIsMultistressedCompound()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->bIsMultistressedCompound();
+	}
+	list eGetFirstStemStressPos()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		list res;
+		int iPos;
+		res.append(pL->eGetFirstStemStressPos(iPos));
+		res.append(iPos);
+		return res;
+	}
+	list eGetNextStemStressPos()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		list res;
+		int iPos;
+		res.append(pL->eGetNextStemStressPos(iPos));
+		res.append(iPos);
+		return res;
+	}
+	ET_ReturnCode eSetDb(wstring path)
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return pL->eSetDb(StrToCES(path));
+	}
+	ET_ReturnCode eGenerateParadigm()
+	{
+		return pL->eGenerateParadigm();
+	}
+	wstring sGraphicStem()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sGraphicStem());
+	}
+	wstring sSourceForm()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sSourceForm());
+	}
+	wstring sHeadwordComment()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sHeadwordComment());
+	}
+	wstring sMainSymbol()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sMainSymbol());
+	}
+	wstring sMainSymbolPluralOf()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sMainSymbolPluralOf());
+	}
+	wstring sAltMainSymbol()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sAltMainSymbol());
+	}
+	wstring sInflectionType()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sInflectionType());
+	}
+	wstring sComment()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sComment());
+	}
+	wstring sAltMainSymbolComment()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sAltMainSymbolComment());
+	}
+	wstring sAltInflectionComment()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sAltInflectionComment());
+	}
+	wstring sVerbStemAlternation()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sVerbStemAlternation());
+	}
+	wstring sLoc2Preposition()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sLoc2Preposition());
+	}
+	wstring sAspectPairComment()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sAspectPairComment());
+	}
+	wstring sQuestionableForms()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sQuestionableForms());
+	}
+	wstring sContexts()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sContexts());
+	}
+	wstring sTrailingComment()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sTrailingComment());
+	}
+	wstring s1SgStem()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->s1SgStem());
+	}
+	wstring s3SgStem()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->s3SgStem());
+	}
+	wstring sInfinitive()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sInfinitive());
+	}
+	wstring sInfStem()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sInfStem());
+	}
+	wstring sHash()
+	{
+		if (pL == NULL){ throw Null_pointer(); }
+		return StrFromCES(pL->sHash());
+	}
+	public:
+		ILexeme * pL;
 };
-//START IDictionary functions 
-ET_ReturnCode eSetDbPathWrapped(IDictionary* pD, const wstring wDbPath)
-{
-	
-	ET_ReturnCode rc = pD->eSetDbPath(StrToCES(wDbPath));
-	return rc;
-}
-ET_ReturnCode eAnalyze(IDictionary* pD, const wstring wText)
-{
-	return pD->eAnalyze(StrToCES(wText));
-}
-list eCountLexemesWrapped(IDictionary* pD)
-{
-	int iLexeme;
-	ET_ReturnCode rc = pD->eCountLexemes(iLexeme);
-	list res;
-	res.append(rc);
-	res.append(iLexeme);
-	return res;
-}
-ET_ReturnCode eGetLexemesByInitialFormWrapped(IDictionary* pD, const wstring wIF)
-{
-	ET_ReturnCode rc = pD->eGetLexemesByInitialForm(StrToCES(wIF));
-	return rc;
-}
-ET_ReturnCode eGetLexemesByGraphicStemWrapped(IDictionary* pD, const wstring wGS)
-{
-	ET_ReturnCode rc = pD->eGetLexemesByGraphicStem(StrToCES(wGS));
-	return rc;
-}
-ET_ReturnCode eGetFirstLexemeWrapped(IDictionary* pD, LexP& l)
-{
-	return pD->eGetFirstLexeme(l.pL);
-}
-ET_ReturnCode eGetNextLexemeWrapped(IDictionary* pD, LexP& l)
-{
-	return pD->eGetNextLexeme(l.pL);
-}
-// END: IDictionary Functions
+class IDictionaryWrap
+{public:
+	IDictionaryWrap() : pD(NULL)
+	{}
 
-// START: ILexeme Functions
-list eGetNextIrregularFormWrapped(ILexeme* pL, WFP& w)
-{
-	bool b;
-	ET_ReturnCode rc = pL->eGetNextIrregularForm(w.pWF, b);
-	list res;
-	res.append(rc);
-	res.append(b);
-	return res;
-}
-list eGetFirstIrregularFormWrapped(ILexeme* pL, int iHash, WFP& w)
-{
-	bool b;
-	ET_ReturnCode rc = pL->eGetFirstIrregularForm(iHash, w.pWF, b);
-	list res;
-	res.append(rc);
-	res.append(b);
-	return res;
-}
-list eGetFirstStemStressPosWrapped(ILexeme* pL)
-{
-	list res;
-	int iPos;
-	res.append(pL->eGetFirstStemStressPos(iPos));
-	res.append(iPos);
-	return res;
-}
-list eGetNextStemStressPosWrapped(ILexeme* pL)
-{
-	list res;
-	int iPos;
-	res.append(pL->eGetNextStemStressPos(iPos));
-	res.append(iPos);
-	return res;
-}
-ET_ReturnCode eGetFirstWordFormWrapped(ILexeme* pL, WFP& w)
-{
-	return pL->eGetFirstWordForm(w.pWF);
-}
-ET_ReturnCode eGetNextWordFormWrapped(ILexeme* pL, WFP& w)
-{
-	return pL->eGetNextWordForm(w.pWF);
-}
-ET_ReturnCode SetDbWrapped(ILexeme* pL, wstring path)
-{
-	return pL->SetDb(StrToCES(path));
-}
-list bFindCommonDeviationWrapped(ILexeme* pL, int iNum)
-{
-	list res;
-	bool b;
-
-	res.append(pL->bFindCommonDeviation(iNum, b));
-	res.append(b);
-	return res;
-}
-list bFindStandardAlternationWrapped(ILexeme* pL, wstring Key)
-{
-	list res;
-	CEString sKey = StrToCES(Key);
-	CEString sValue;
-	res.append(pL->bFindStandardAlternation(sKey, sValue));
-	res.append(StrFromCES(sValue));
-	return res;
-}
-list eGetStemStressPositionsWrapped(ILexeme* pL, wstring Lemma)
-{
-	vector<int> vecPos;
-	CEString sLemma = StrToCES(Lemma);
-	list res;
-	res.append(pL->eGetStemStressPositions(sLemma, vecPos));
-	list lPos;
-	vector<int>::iterator it;
-	for (it = vecPos.begin(); it != vecPos.end(); ++it)
+	ET_ReturnCode eSetDbPath(const wstring wDbPath)
 	{
-		lPos.append(*it);
-	}
-	res.append(lPos);
-	return res;
-}
-//ILexeme CEString functions
-wstring ILsGraphicStemWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sGraphicStem());
-}
-wstring ILsSourceFormWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sSourceForm());
-}
-wstring ILsHeadwordCommentWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sHeadwordComment());
-}
-wstring ILsMainSymbolWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sMainSymbol());
-}
-wstring ILsMainSymbolPluralOfWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sMainSymbolPluralOf());
-}
-wstring ILsAltMainSymbolWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sAltMainSymbol());
-}
-wstring ILsInflectionTypeWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sInflectionType());
-}
-wstring ILsCommentWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sComment());
-}
-wstring ILsAltMainSymbolCommentWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sAltMainSymbolComment());
-}
-wstring ILsAltInflectionCommentWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sAltInflectionComment());
-}
-wstring ILsVerbStemAlternationWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sVerbStemAlternation());
-}
-wstring ILsLoc2PrepositionWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sLoc2Preposition());
-}
-wstring ILsAspectPairCommentWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sAspectPairComment());
-}
-wstring ILsQuestionableFormsWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sQuestionableForms());
-}
-wstring ILsRestrictedFromsWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sRestrictedFroms());
-}
-wstring ILsContextsWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sContexts());
-}
-wstring ILsTrailingCommentWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sTrailingComment());
-}
-wstring ILs1SgStemWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->s1SgStem());
-}
-wstring ILs3SgStemWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->s3SgStem());
-}
-wstring ILsInfinitiveWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sInfinitive());
-}
-wstring ILsInfStemWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sInfStem());
-}
-wstring ILsHashWrapped(ILexeme * pL)
-{
-	return StrFromCES(pL->sHash());
-}
-// END: ILexeme functions
+		if (pD == NULL){ throw Null_pointer(); }
 
-//IWordForm function
-wstring sWordFormWrapped(IWordForm* pW)
+		ET_ReturnCode rc = pD->eSetDbPath(StrToCES(wDbPath));
+		return rc;
+	}
+	ET_ReturnCode eGetLexemeById(long Id)
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eGetLexemeById(Id);
+	}
+	ET_ReturnCode eGetLexemesByGraphicStem(const wstring wIF)
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eGetLexemesByGraphicStem(StrToCES(wIF));
+	}
+	ET_ReturnCode eGetLexemesByInitialForm(const wstring wIF)
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eGetLexemesByInitialForm(StrToCES(wIF));
+	}
+	ET_ReturnCode eGenerateAllForms()
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eGenerateAllForms();
+	}
+	ET_ReturnCode eGenerateFormsForSelectedLexemes()
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eGenerateFormsForSelectedLexemes();
+	}
+	list eCountLexemes()
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		int iLexeme;
+		ET_ReturnCode rc = pD->eCountLexemes(iLexeme);
+		list res;
+		res.append(rc);
+		res.append(iLexeme);
+		return res;
+	}
+	ET_ReturnCode eGetFirstLexeme(ILexemeWrap& l)
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eGetFirstLexeme(l.pL);
+	}
+	ET_ReturnCode eGetNextLexeme(ILexemeWrap& l)
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eGetNextLexeme(l.pL);
+	}
+	ET_ReturnCode eAnalyze(const wstring wText)
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eAnalyze(StrToCES(wText));
+	}
+	void Clear()
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->Clear();
+	}
+public:
+	IDictionary * pD;
+
+};
+
+
+IDictionaryWrap GetDictionaryWrap()
 {
-	CEString sWF= pW->sWordForm();
-	wstring pWF = sWF;
-	return pWF;
+	IDictionaryWrap  IDict;
+	GetDictionary(IDict.pD);
+	return IDict;
 }
-wstring sLemmaWrapped(IWordForm* pW)
-{
-	CEString CESLemma = pW->sLemma();
-	wstring wLemma = CESLemma;
-	return wLemma;
-}
-//END: IWordForm fintion
 
 //START: StLexemeProperties Functions
 list vecSecondaryStressPosWrapped(StLexemeProperties stLP)
@@ -846,10 +781,6 @@ wstring sQuestionableFormsWrapped(StLexemeProperties stLP)
 {
 	return StrFromCES(stLP.sQuestionableForms);
 }
-wstring sRestrictedFromsWrapped(StLexemeProperties stLP)
-{
-	return StrFromCES(stLP.sRestrictedFroms);
-}
 wstring sContextsWrapped(StLexemeProperties stLP)
 {
 	return StrFromCES(stLP.sContexts);
@@ -881,124 +812,121 @@ void sInfinitiveWrapped_set(StLexemeProperties& stLP, wstring n)
 //END: StLexemeProperties
 BOOST_PYTHON_MODULE(Wrapper)
 {
-	class_<ILexemeWrap, boost::noncopyable>("ILexeme")
-		.def("stGetProperties", pure_virtual(&ILexeme::stGetProperties), return_value_policy<copy_const_reference>())
-		.def("stGetPropertiesForWriteAccess", pure_virtual(&ILexeme::stGetPropertiesForWriteAccess), return_value_policy<copy_non_const_reference>())
-		.def("eGender", pure_virtual(&ILexeme::eGender))
-		.def("eAnimacy", pure_virtual(&ILexeme::eAnimacy))
-		.def("sGraphicStem", ILsGraphicStemWrapped)
-		.def("bHasIrregularForms", pure_virtual(&ILexeme::bHasIrregularForms))
-		.def("bHasSecondaryStress", pure_virtual(&ILexeme::bHasSecondaryStress))
-		.def("bHasFleetingVowel", pure_virtual(&ILexeme::bHasFleetingVowel))
-		.def("bHasYoAlternation", pure_virtual(&ILexeme::bHasYoAlternation))
-		.def("bHasOAlternation", pure_virtual(&ILexeme::bHasOAlternation))
-		.def("sSourceForm", ILsSourceFormWrapped)
-		.def("sHeadwordComment", ILsHeadwordCommentWrapped)
-		.def("bIsUnstressed", pure_virtual(&ILexeme::bIsUnstressed))
-		.def("IsVariant", pure_virtual(&ILexeme::IsVariant))
-		.def("sMainSymbol", ILsMainSymbolWrapped)
-		.def("bIsPluralOf", pure_virtual(&ILexeme::bIsPluralOf))
-		.def("bTransitive", pure_virtual(&ILexeme::bTransitive))
-		.def("eIsReflexive", pure_virtual(&ILexeme::eIsReflexive))
-		.def("sMainSymbolPluralOf", ILsMainSymbolWrapped)
-		.def("sAltMainSymbol", ILsAltMainSymbolWrapped)
-		.def("eAspect", pure_virtual(&ILexeme::eAspect))
-		.def("sInflectionType", ILsInflectionTypeWrapped)
-		.def("ePartOfSpeech", pure_virtual(&ILexeme::ePartOfSpeech))
-		.def("sComment",ILsCommentWrapped)
-		.def("sAltMainSymbolComment", ILsAltMainSymbolCommentWrapped)
-		.def("sAltInflectionComment", ILsAltInflectionCommentWrapped)
-		.def("sVerbStemAlternation", ILsVerbStemAlternationWrapped)
-		.def("bPartPastPassZhd", pure_virtual(&ILexeme::bPartPastPassZhd))
-		.def("iSection", pure_virtual(&ILexeme::iSection))
-		.def("bNoComparative", pure_virtual(&ILexeme::bNoComparative))
-		.def("bAssumedForms", pure_virtual(&ILexeme::bAssumedForms))
-		.def("bYoAlternation", pure_virtual(&ILexeme::bYoAlternation))
-		.def("bOAlternation", pure_virtual(&ILexeme::bOAlternation))
-		.def("bSecondGenitive", pure_virtual(&ILexeme::bSecondGenitive))
-		.def("bSecondLocative", pure_virtual(&ILexeme::bSecondLocative))
-		.def("bSecondLocativeOptional", pure_virtual(&ILexeme::bSecondLocativeOptional))
-		.def("sLoc2Preposition", ILsLoc2PrepositionWrapped)
-		.def("bHasAspectPair", pure_virtual(&ILexeme::bHasAspectPair))
-		.def("iAspectPairType", pure_virtual(&ILexeme::iAspectPairType))
-		.def("sAspectPairComment", ILsAspectPairCommentWrapped)
-		.def("sQuestionableForms", ILsQuestionableFormsWrapped)
-		.def("bHasIrregularVariants", pure_virtual(&ILexeme::bHasIrregularVariants))
-		.def("bHasDeficiencies", pure_virtual(&ILexeme::bHasDeficiencies))
-		.def("sRestrictedFroms", ILsRestrictedFromsWrapped)
-		.def("sContexts", ILsContextsWrapped)
-		.def("sTrailingComment", ILsTrailingCommentWrapped)
-		.def("iInflectionId", pure_virtual(&ILexeme::iInflectionId))
-		.def("bPrimaryInflectionGroup", pure_virtual(&ILexeme::bPrimaryInflectionGroup))
-		.def("iType", pure_virtual(&ILexeme::iType))
-		.def("eAccentType1", pure_virtual(&ILexeme::eAccentType1))
-		.def("eAccentType2", pure_virtual(&ILexeme::eAccentType2))
-		.def("bShortFormsRestricted", pure_virtual(&ILexeme::bShortFormsRestricted))
-		.def("bPastParticipleRestricted", pure_virtual(&ILexeme::bPastParticipleRestricted))
-		.def("bNoLongForms", pure_virtual(&ILexeme::bNoLongForms))
-		.def("bNoShortForms", pure_virtual(&ILexeme::bNoShortForms))
-		.def("bNoPastParticiple", pure_virtual(&ILexeme::bNoPastParticiple))
-		.def("bFleetingVowel", pure_virtual(&ILexeme::bFleetingVowel))
-		.def("iStemAugment", pure_virtual(&ILexeme::iStemAugment))
-		.def("s1SgStem", ILs1SgStemWrapped)
-		.def("s3SgStem", ILs3SgStemWrapped)
-		.def("sInfinitive", ILsInfinitiveWrapped)
-		.def("sInfStem", ILsInfStemWrapped)
-		.def("bFindCommonDeviation", bFindCommonDeviationWrapped)
-		.def("bFindStandardAlternation", bFindStandardAlternationWrapped)
-		.def("eGetStemStressPositions", pure_virtual(&ILexeme::eGetStemStressPositions))
-		.def("eGetAlternatingPreverb", pure_virtual(&ILexeme::eGetAlternatingPreverb))
-		.def("sHash", ILsHashWrapped)
-		.def("eWordFormFromHash", pure_virtual(&ILexeme::eWordFormFromHash))
-		.def("bHasIrregularForm", pure_virtual(&ILexeme::bHasIrregularForm))
-		.def("bNoRegularForms", pure_virtual(&ILexeme::bNoRegularForms))
-		.def("eGetFirstIrregularForm", eGetFirstIrregularFormWrapped)
-		.def("eGetNextIrregularForm", eGetNextIrregularFormWrapped)
-		.def("uiFormCount", pure_virtual(&ILexeme::uiFormCount))
-		.def("bHasCommonDeviation", pure_virtual(&ILexeme::bHasCommonDeviation))
-		.def("bDeviationOptional", pure_virtual(&ILexeme::bDeviationOptional))
-		.def("bIsFormMissing", pure_virtual(&ILexeme::bIsFormMissing))
-		.def("bIsMultistressedCompound", pure_virtual(&ILexeme::bIsMultistressedCompound))
-		.def("eGetFirstStemStressPos", eGetFirstStemStressPosWrapped)
-		.def("eGetNextStemStressPos", eGetNextStemStressPosWrapped)
-		.def("SetDb", SetDbWrapped)
-		.def("eGenerateParadigm", pure_virtual(&ILexeme::eGenerateParadigm))
-		//.def("bSaveToDb", pure_virtual(&ILexeme::bSaveToDb))
-		.def("eGetFirstWordForm", eGetFirstWordFormWrapped)
-		.def("eGetNextWordForm", eGetNextWordFormWrapped)
-		.def("eGetStemStressPositions", eGetStemStressPositionsWrapped)
+	register_exception_translator<Null_pointer>(&translate_exception);
+	class_<ILexemeWrap>("ILexeme")
+		.def("stGetProperties", &ILexemeWrap::stGetProperties,return_value_policy<copy_const_reference>())
+		.def("stGetPropertiesForWriteAccess", &ILexemeWrap::stGetPropertiesForWriteAccess, return_value_policy<copy_non_const_reference>())
+		.def("eGender", &ILexemeWrap::eGender)
+		.def("eAnimacy", &ILexemeWrap::eAnimacy)
+		.def("sGraphicStem", &ILexemeWrap::sGraphicStem)
+		.def("bHasIrregularForms", &ILexemeWrap::bHasIrregularForms)
+		.def("bHasSecondaryStress", &ILexemeWrap::bHasSecondaryStress)
+		.def("bHasFleetingVowel", &ILexemeWrap::bHasFleetingVowel)
+		.def("bHasYoAlternation", &ILexemeWrap::bHasYoAlternation)
+		.def("bHasOAlternation", &ILexemeWrap::bHasOAlternation)
+		.def("sSourceForm", &ILexemeWrap::sSourceForm)
+		.def("sHeadwordComment", &ILexemeWrap::sHeadwordComment)
+		.def("bIsUnstressed", &ILexemeWrap::bIsUnstressed)
+		.def("sMainSymbol", &ILexemeWrap::sMainSymbol)
+		.def("bIsPluralOf", &ILexemeWrap::bIsPluralOf)
+		.def("bTransitive", &ILexemeWrap::bTransitive)
+		.def("eIsReflexive", &ILexemeWrap::eIsReflexive)
+		.def("sMainSymbolPluralOf", &ILexemeWrap::sMainSymbolPluralOf)
+		.def("sAltMainSymbol", &ILexemeWrap::sAltMainSymbol)
+		.def("eAspect", &ILexemeWrap::eAspect)
+		.def("sInflectionType", &ILexemeWrap::sInflectionType)
+		.def("ePartOfSpeech", &ILexemeWrap::ePartOfSpeech)
+		.def("sComment", &ILexemeWrap::sComment)
+		.def("sAltMainSymbolComment", &ILexemeWrap::sAltMainSymbolComment)
+		.def("sAltInflectionComment", &ILexemeWrap::sAltInflectionComment)
+		.def("sVerbStemAlternation", &ILexemeWrap::sVerbStemAlternation)
+		.def("bPartPastPassZhd", &ILexemeWrap::bPartPastPassZhd)
+		.def("iSection", &ILexemeWrap::iSection)
+		.def("bNoComparative", &ILexemeWrap::bNoComparative)
+		.def("bAssumedForms", &ILexemeWrap::bAssumedForms)
+		.def("bYoAlternation", &ILexemeWrap::bYoAlternation)
+		.def("bOAlternation", &ILexemeWrap::bOAlternation)
+		.def("bSecondGenitive", &ILexemeWrap::bSecondGenitive)
+		.def("bSecondLocative", &ILexemeWrap::bSecondLocative)
+		.def("bSecondLocativeOptional", &ILexemeWrap::bSecondLocativeOptional)
+		.def("sLoc2Preposition", &ILexemeWrap::sLoc2Preposition)
+		.def("bHasAspectPair", &ILexemeWrap::bHasAspectPair)
+		.def("iAspectPairType", &ILexemeWrap::iAspectPairType)
+		.def("sAspectPairComment", &ILexemeWrap::sAspectPairComment)
+		.def("sQuestionableForms", &ILexemeWrap::sQuestionableForms)
+		.def("bHasIrregularVariants", &ILexemeWrap::bHasIrregularVariants)
+		.def("bHasDeficiencies", &ILexemeWrap::bHasDeficiencies)
+		.def("sContexts", &ILexemeWrap::sContexts)
+		.def("sTrailingComment", &ILexemeWrap::sTrailingComment)
+		.def("iInflectionId", &ILexemeWrap::iInflectionId)
+		.def("bPrimaryInflectionGroup", &ILexemeWrap::bPrimaryInflectionGroup)
+		.def("iType", &ILexemeWrap::iType)
+		.def("eAccentType1", &ILexemeWrap::eAccentType1)
+		.def("eAccentType2", &ILexemeWrap::eAccentType2)
+		.def("bShortFormsRestricted", &ILexemeWrap::bShortFormsRestricted)
+		.def("bPastParticipleRestricted", &ILexemeWrap::bPastParticipleRestricted)
+		.def("bNoLongForms", &ILexemeWrap::bNoLongForms)
+		.def("bNoShortForms", &ILexemeWrap::bNoShortForms)
+		.def("bNoPastParticiple", &ILexemeWrap::bNoPastParticiple)
+		.def("bFleetingVowel", &ILexemeWrap::bFleetingVowel)
+		.def("iStemAugment", &ILexemeWrap::iStemAugment)
+		.def("s1SgStem", &ILexemeWrap::s1SgStem)
+		.def("s3SgStem", &ILexemeWrap::s3SgStem)
+		.def("sInfinitive", &ILexemeWrap::sInfinitive)
+		.def("sInfStem", &ILexemeWrap::sInfStem)
+		.def("bFindCommonDeviation", &ILexemeWrap::bFindCommonDeviation)
+		.def("bFindStandardAlternation", &ILexemeWrap::bFindStandardAlternation)
+		.def("eGetStemStressPositions", &ILexemeWrap::eGetStemStressPositions)
+		//.def("eGetAlternatingPreverb", &ILexemeWrap::eGetAlternatingPreverb)
+		.def("sHash", &ILexemeWrap::sHash)
+		//.def("eWordFormFromHash", &ILexemeWrap::eWordFormFromHash)
+		.def("bHasIrregularForm", &ILexemeWrap::bHasIrregularForm)
+		.def("bNoRegularForms", &ILexemeWrap::bNoRegularForms)
+		.def("eGetFirstWordForm", &ILexemeWrap::eGetFirstWordForm)
+		.def("eGetNextWordForm", &ILexemeWrap::eGetNextWordForm)
+		.def("eGetFirstIrregularForm", &ILexemeWrap::eGetFirstIrregularForm)
+		.def("eGetNextIrregularForm", &ILexemeWrap::eGetNextIrregularForm)
+		.def("uiFormCount", &ILexemeWrap::uiFormCount)
+		.def("bHasCommonDeviation", &ILexemeWrap::bHasCommonDeviation)
+		.def("bDeviationOptional", &ILexemeWrap::bDeviationOptional)
+		.def("bIsFormMissing", &ILexemeWrap::bIsFormMissing)
+		.def("bIsMultistressedCompound", &ILexemeWrap::bIsMultistressedCompound)
+		.def("eGetFirstStemStressPos", &ILexemeWrap::eGetFirstStemStressPos)
+		.def("eGetNextStemStressPos", &ILexemeWrap::eGetNextStemStressPos)
+		.def("eSetDb", &ILexemeWrap::eSetDb)
+		.def("eGenerateParadigm", &ILexemeWrap::eGenerateParadigm)
 		;
-	class_<IDictionaryWrap, boost::noncopyable>("IDictionary")
-		.def("eSetDbPath", eSetDbPathWrapped)
-		.def("eCountLexemes", eCountLexemesWrapped)
-		.def("eGetLexemeById", pure_virtual(&IDictionary::eGetLexemeById))
-		.def("eGetLexemesByMd5", pure_virtual(&IDictionary::eGetLexemesByMd5))
-		.def("eGetLexemesByGraphicStem", eGetLexemesByGraphicStemWrapped)
-		.def("eGetLexemesByInitialForm", eGetLexemesByInitialFormWrapped)
-		.def("eGenerateAllForms", pure_virtual(&IDictionary::eGenerateAllForms))
-		.def("eGenerateFormsForSelectedLexemes", pure_virtual(&IDictionary::eGenerateFormsForSelectedLexemes))
-		.def("Clear", pure_virtual(&IDictionary::Clear))
-		.def("eGetFirstLexeme", eGetFirstLexemeWrapped)
-		.def("eGetNextLexeme", eGetNextLexemeWrapped)
+	class_<IDictionaryWrap>("IDictionary")
+		.def("eSetDbPath", &IDictionaryWrap::eSetDbPath)
+		.def("eGetLexemeById", &IDictionaryWrap::eGetLexemeById)
+		.def("eGetLexemesByGraphicStem", &IDictionaryWrap::eGetLexemesByGraphicStem)
+		.def("eGetLexemesByInitialForm", &IDictionaryWrap::eGetLexemesByInitialForm)
+		.def("eGenerateAllForms", &IDictionaryWrap::eGenerateAllForms)
+		.def("eGenerateFormsForSelectedLexemes", &IDictionaryWrap::eGenerateFormsForSelectedLexemes)
+		.def("eCountLexemes", &IDictionaryWrap::eCountLexemes)
+		.def("eGetFirstLexeme", &IDictionaryWrap::eGetFirstLexeme)
+		.def("eGetNextLexeme", &IDictionaryWrap::eGetNextLexeme)
+		.def("eAnalyze", &IDictionaryWrap::eAnalyze)
+		.def("Clear", &IDictionaryWrap::Clear)
 		;
-	class_<IWordFormWrap, boost::noncopyable>("IWordForm")
-		.def("pLexeme", pure_virtual(&IWordForm::pLexeme), return_value_policy<manage_new_object>())
-		.def("sLemma", sLemmaWrapped)
-		.def("llLexemeId", pure_virtual(&IWordForm::llLexemeId))
-		.def("ePos", pure_virtual(&IWordForm::ePos))
-		.def("eCase", pure_virtual(&IWordForm::eCase))
-		.def("eNumber", pure_virtual(&IWordForm::eNumber))
-		.def("eSubparadigm", pure_virtual(&IWordForm::eSubparadigm))
-		.def("eGender", pure_virtual(&IWordForm::eGender))
-		.def("ePerson", pure_virtual(&IWordForm::ePerson))
-		.def("eAnimacy", pure_virtual(&IWordForm::eAnimacy))
-		.def("eReflexive", pure_virtual(&IWordForm::eReflexive))
-		.def("eAspect", pure_virtual(&IWordForm::eAspect))
-		.def("eStatus", pure_virtual(&IWordForm::eStatus))
-		.def("bIrregular", pure_virtual(&IWordForm::bIrregular))
-		.def("iGramHash", pure_virtual(&IWordForm::iGramHash))
-		.def("eInitFromHash", pure_virtual(&IWordForm::eInitFromHash))
-		.def("sWordForm", sWordFormWrapped)
+	class_<IWordFormWrap>("IWordForm")
+		.def("pLexeme", &IWordFormWrap::pLexeme, return_value_policy<manage_new_object>())
+		.def("sWordForm", &IWordFormWrap::sWordForm)
+		.def("sLemma", &IWordFormWrap::sLemma)
+		.def("llLexemeId", &IWordFormWrap::llLexemeId)
+		.def("ePos", &IWordFormWrap::ePos)
+		.def("eCase", &IWordFormWrap::eCase)
+		.def("eNumber", &IWordFormWrap::eNumber)
+		.def("eSubparadigm", &IWordFormWrap::eSubparadigm)
+		.def("eGender", &IWordFormWrap::eGender)
+		.def("ePerson", &IWordFormWrap::ePerson)
+		.def("eAnimacy", &IWordFormWrap::eAnimacy)
+		.def("eReflexive", &IWordFormWrap::eReflexive)
+		.def("eAspect", &IWordFormWrap::eAspect)
+		.def("eStatus", &IWordFormWrap::eStatus)
+		.def("bIrregular", &IWordFormWrap::bIrregular)
+		.def("iGramHash", &IWordFormWrap::iGramHash)
+		.def("eInitFromHash", &IWordFormWrap::eInitFromHash)
 		;
 	class_<CEString>("CEString")
 		.def(init<const CEString&>(args("Source")))
@@ -1049,7 +977,6 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def_readonly("bHasIrregularForms", &StLexemeProperties::bHasIrregularForms)
 		.def_readonly("bHasIrregularVariants", &StLexemeProperties::bHasIrregularVariants)
 		.def_readonly("bHasDeficiencies", &StLexemeProperties::bHasDeficiencies)
-		.add_property("sRestrictedFroms", sRestrictedFromsWrapped)
 		.add_property("sContexts", sContextsWrapped)
 		.add_property("sTrailingComment", sTrailingCommentWrapped)
 		.def_readonly("iInflectionId", &StLexemeProperties::iInflectionId)
@@ -1254,13 +1181,7 @@ BOOST_PYTHON_MODULE(Wrapper)
 		;
 	def("StrToCES", StrToCES);
 	def("StrFromCES", StrFromCES);
-	def("GetDictionary", GetDictionaryWrap, return_value_policy<manage_new_object>());
-	class_<WFP>("WFP")
-		.def("get", &WFP::get, return_value_policy<manage_new_object>())
-		;
-	class_<LexP>("LexP")
-		.def("get", &LexP::get, return_value_policy<manage_new_object>())
-		;
+	def("GetDictionary", GetDictionaryWrap);
 }
 
 int main()
