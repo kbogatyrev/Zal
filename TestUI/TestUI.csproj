@@ -68,7 +68,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MainLibManaged">
+    <Reference Include="MainLibManaged, Version=1.0.5400.11898, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Debug\MainLibManaged.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
@@ -108,7 +109,6 @@
     <Compile Include="EnterDataDlg.Designer.cs">
       <DependentUpon>EnterDataDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Enums.cs" />
     <Compile Include="GridViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

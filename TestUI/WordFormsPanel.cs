@@ -88,9 +88,10 @@ namespace TestUI
             catch (Exception ex)
             {
 //                MainLib.ZalError err = new MainLib.ZalError();
-//                string sMsg = "SetForm: ";
+                string sMsg = "SetForm: ";
 //                sMsg += err.LastError;
-//                MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                sMsg += ex.Message;
+                MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
         }   //  SetForm (...)

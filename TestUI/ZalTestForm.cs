@@ -27,7 +27,7 @@ namespace TestUI
 
     public partial class TestApplet : Form
     {
-        private CDictionaryManaged m_Dictionary = new CDictionaryManaged();
+        public CDictionaryManaged m_Dictionary = new CDictionaryManaged();
 //        private ZalStoredLexemeData m_TestData;
 //        private MainLib.ILexPreprocessor m_LexPreprocessor;
 //        private MainLib.IAnalyzer m_Analyzer;
@@ -92,15 +92,15 @@ namespace TestUI
             {
                 CLexemeManaged lexeme = m_hashLexemes[ldpSource];
                 lexeme.eGenerateParadigm();
-//                lexeme.SaveTestData();
+                lexeme.eSaveTestData();
                 MessageBox.Show ("Forms saved in the database.", "Zal", MessageBoxButtons.OK);
             }
             catch (Exception ex)
             {
 //                MainLib.ZalError err = new MainLib.ZalError();
-//                string sMsg = "LexemeDataPanel_Save: ";
-//               sMsg += err.LastError;
-//                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                string sMsg = "LexemeDataPanel_Save: ";
+                sMsg += ex.Message;
+                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
         }
@@ -182,10 +182,11 @@ namespace TestUI
             }
             catch (Exception ex)
             {
-//                string sMsg = "Error: ";
+                string sMsg = "Error: ";
 //                MainLib.ZalError err = new MainLib.ZalError();
 //                sMsg += err.LastError;
-//                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
+                sMsg = ex.Message;
+                MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
 
@@ -265,7 +266,7 @@ namespace TestUI
                 return;
             }
         }   //  parseTextToolStripMenuItem_Click (...)
-
+*/
         private void batchTestToolStripMenuItem_Click (object sender, EventArgs e)
         {
             if (!m_bDBOpen)
@@ -273,28 +274,28 @@ namespace TestUI
                 GetDbPath();
             }
 
-            if (null == m_TestData)
-            {
-                m_TestData = new MainLib.ZalStoredLexemeData();
-                m_TestData.DbPath = m_sDbPath;
-            }
+            //if (null == m_TestData)
+            //{
+            //    m_TestData = new MainLib.ZalStoredLexemeData();
+            //    m_TestData.DbPath = m_sDbPath;
+            //}
 
-            m_TestData.LoadStoredLexemes();
-            if (m_TestData.Count <= 0)
-            {
-                MessageBox.Show ("No test forms in the database", "Zal Test", MessageBoxButtons.OK);
-                return;
-            }
+            //m_TestData.LoadStoredLexemes();
+            //if (m_TestData.Count <= 0)
+            //{
+            //    MessageBox.Show ("No test forms in the database", "Zal Test", MessageBoxButtons.OK);
+            //    return;
+            //}
 
             TabPage tabPageTestCases = new TabPage ("Test");
             GridViewUserControl gv = new GridViewUserControl (m_sDbPath);
 
             tabPageTestCases.Controls.Add(gv);
 
-            foreach (MainLib.IVerifier v in m_TestData)
-            {
-                gv.AddLexeme(v);
-            }
+            //foreach (MainLib.IVerifier v in m_TestData)
+            //{
+            //    gv.AddLexeme(v);
+            //}
 
             tabControl.Controls.Add (tabPageTestCases);
             tabControl.SelectTab (tabPageTestCases);
@@ -369,7 +370,6 @@ namespace TestUI
                 m_ProgressDlg.StartPosition = FormStartPosition.CenterScreen;
                 m_ProgressDlg.Show();
                 m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
-                EventSink sink = new EventSink(this);
                 DbOperationThread exportThread = new DbOperationThread (etDbOperation.eExportTable, this, fd.FileName);
                 Thread t = new Thread (new ThreadStart (exportThread.ThreadProc));
                 t.Name = "Zal export worker thread";
@@ -384,11 +384,11 @@ namespace TestUI
             }
             catch (Exception ex)
             {
-                MainLib.ZalError err = new MainLib.ZalError();
+//                MainLib.ZalError err = new MainLib.ZalError();
                 string sMsg = "exportTestDataToolStripMenuItem_Click: ";
                 sMsg += ex.Message;
                 sMsg += "\n";
-                sMsg += err.LastError;
+//                sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
@@ -416,29 +416,6 @@ namespace TestUI
                 }
             }       // while ...
 
-            MainLib.ZalSqliteWrapper sqlite = new MainLib.ZalSqliteWrapper();
-            sqlite.DbPath = m_sDbPath;
-            if (0 != sqlite.TableExists ("test_data"))
-            {
-                string sMsg = "Table already exists. Do you want to overwrite it?";
-                DialogResult dRes = MessageBox.Show (sMsg,
-                                                     "Zal Test Import",
-                                                     MessageBoxButtons.YesNo,
-                                                     MessageBoxIcon.Question);
-                switch (dRes)
-                {
-                    case DialogResult.Yes:
-                        break;
-                    case DialogResult.No:
-                        return;
-                    default:
-                        sMsg = "Illegal dialog return.";
-                        MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
-                        return;
-
-                }       // switch
-            }
-
             m_ProgressDlg = new ProgressDialog();
             m_ProgressDlg.Text = "Table Import";
             string sTxt = "Importing stored test results from ";
@@ -447,7 +424,6 @@ namespace TestUI
             m_ProgressDlg.StartPosition = FormStartPosition.CenterScreen;
             m_ProgressDlg.Show();
             m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
-            EventSink sink = new EventSink (this);
             DbOperationThread importThread = new DbOperationThread (etDbOperation.eImportTable, this, fd.FileName);
             Thread t = new Thread (new ThreadStart (importThread.ThreadProc));
             t.Name = "Zal import worker thread";
@@ -467,16 +443,16 @@ namespace TestUI
             m_ProgressDlg.SetProgressBarPos (iProgress);
             m_ProgressDlg.Refresh();
         }
- */ 
 
     }   //  public partial class TestApplet : Form
 
-/*
     public class DbOperationThread
     {
         etDbOperation m_eOperationType;
         TestApplet m_formParent;
         string m_sPath;
+        private void m_Progress(int iPercentDone)
+        { }
 
         public DbOperationThread (etDbOperation eOpType, TestApplet formParent, string sPath)
         {
@@ -486,25 +462,18 @@ namespace TestUI
         }
 
         public void ThreadProc()
-        {
-            MainLib.ZalSqliteWrapper sqlite = null;
+        {            
             try
             {
-                sqlite = new MainLib.ZalSqliteWrapper();
-                EventSink sink = new EventSink (m_formParent);
-                sqlite.ProgressNotification += sink.ProgressNotification;
-                sqlite.DbPath = m_formParent.sDbPath;
+                MainLibManaged.DelegateProgress DelegateProgress = new MainLibManaged.DelegateProgress(m_Progress);
 
                 if (etDbOperation.eExportTable == m_eOperationType)
                 {
-                    String[] arrTableNames = new string[2];
-                    arrTableNames[0] = "test_data";
-                    arrTableNames[1] = "test_data_stress";
-                    sqlite.Export (m_sPath, arrTableNames);
+                    m_formParent.m_Dictionary.eExportTestData(m_sPath, m_Progress);
                 }
                 else if (etDbOperation.eImportTable == m_eOperationType)
                 {
-                    sqlite.Import (m_sPath);
+                    m_formParent.m_Dictionary.eImportTestData(m_sPath, m_Progress);
                 }
                 else
                 {
@@ -516,11 +485,9 @@ namespace TestUI
             }
             catch (Exception ex)
             {
-                MainLib.ZalError err = new MainLib.ZalError();
                 string sMsg = "importTestDataToolStripMenuItem_Click: ";
                 sMsg += ex.Message;
                 sMsg += "\n";
-                sMsg += err.LastError;
                 MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
@@ -528,25 +495,5 @@ namespace TestUI
         }   //  ThreadProc()
 
     }   //  public class ImportThread
-
-    public class EventSink : MainLib.IZalNotification
-    {
-        private TestApplet m_Form;
-        public EventSink(TestApplet Form)
-        {
-            m_Form = Form;
-        }
-
-        public void ProgressNotification (int iPercentDone)
-        {
-            if (m_Form.InvokeRequired)
-            {
-                m_Form.BeginInvoke (m_Form.m_DelegateUpdateProgressBar,
-                                    new Object[] { iPercentDone });
-            }
-        }
-
-    }   // EventSink 
-    */
 
 }   //  namespace TestUI

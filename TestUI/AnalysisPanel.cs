@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using MainLibManaged;
 
 namespace TestUI
 {
@@ -66,19 +67,19 @@ namespace TestUI
             }
         }
 
-        public ET_PartOfSpeech eoPOS
+        public EM_PartOfSpeech eoPOS
         {
             set
             {
                 switch (value)
                 {
-                    case ET_PartOfSpeech.POS_NOUN:
+                    case EM_PartOfSpeech.POS_NOUN:
                         TextBox_POS.Text = "N";
                         break;
-                    case ET_PartOfSpeech.POS_ADJ:
+                    case EM_PartOfSpeech.POS_ADJ:
                         TextBox_POS.Text = "Adj";
                         break;
-                    case ET_PartOfSpeech.POS_VERB:
+                    case EM_PartOfSpeech.POS_VERB:
                         TextBox_POS.Text = "V";
                         break;
                     default:
@@ -88,37 +89,37 @@ namespace TestUI
             }
         }
 
-        public ET_Case eoCase
+        public EM_Case eoCase
         {
             set
             {
                 switch (value)
                 {
-                    case ET_Case.CASE_NOM:
+                    case EM_Case.CASE_NOM:
                             TextBox_Case.Text = "nom";
                             break;
-                    case ET_Case.CASE_ACC:
+                    case EM_Case.CASE_ACC:
                             TextBox_Case.Text = "acc";
                             break;
-                    case ET_Case.CASE_GEN:
+                    case EM_Case.CASE_GEN:
                             TextBox_Case.Text = "gen";
                             break;
-                    case ET_Case.CASE_DAT:
+                    case EM_Case.CASE_DAT:
                             TextBox_Case.Text = "dat";
                             break;
-                    case ET_Case.CASE_PART:
+                    case EM_Case.CASE_PART:
                             TextBox_Case.Text = "part";
                             break;
-                    case ET_Case.CASE_INST:
+                    case EM_Case.CASE_INST:
                             TextBox_Case.Text = "inst";
                             break;
-                    case ET_Case.CASE_PREP:
+                    case EM_Case.CASE_PREP:
                             TextBox_Case.Text = "prep";
                             break;
-                    case ET_Case.CASE_LOC:
+                    case EM_Case.CASE_LOC:
                             TextBox_Case.Text = "loc";
                             break;
-                    case ET_Case.CASE_NUM:
+                    case EM_Case.CASE_NUM:
                             TextBox_Case.Text = "adnum";
                             break;
                     default:
@@ -128,16 +129,16 @@ namespace TestUI
             }
         }
 
-        public ET_Number eoNumber
+        public EM_Number eoNumber
         {
             set
             {
                 switch (value)
                 {
-                    case ET_Number.NUM_SG:
+                    case EM_Number.NUM_SG:
                         TextBox_Number.Text = "sg";
                         break;
-                    case ET_Number.NUM_PL:
+                    case EM_Number.NUM_PL:
                         TextBox_Number.Text = "pl";
                         break;
                     default:
@@ -147,19 +148,19 @@ namespace TestUI
             }
         }
 
-        public ET_Gender eoGender
+        public EM_Gender eoGender
         {
             set
             {
                 switch (value)
                 {
-                    case ET_Gender.GENDER_F:
+                    case EM_Gender.GENDER_F:
                         TextBox_Gender.Text = "f";
                         break;
-                    case ET_Gender.GENDER_M:
+                    case EM_Gender.GENDER_M:
                         TextBox_Gender.Text = "m";
                         break;
-                    case ET_Gender.GENDER_N:
+                    case EM_Gender.GENDER_N:
                         TextBox_Gender.Text = "n";
                         break;
                     default:
@@ -169,16 +170,16 @@ namespace TestUI
             }
         }
 
-        public ET_Animacy eoAnimacy
+        public EM_Animacy eoAnimacy
         {
             set
             {
                 switch (value)
                 {
-                    case ET_Animacy.ANIM_NO:
+                    case EM_Animacy.ANIM_NO:
                         TextBox_Animacy.Text = "inan";
                         break;
-                    case ET_Animacy.ANIM_YES:
+                    case EM_Animacy.ANIM_YES:
                         TextBox_Animacy.Text = "anim";
                         break;
                     default:
@@ -188,31 +189,31 @@ namespace TestUI
             }
         }
 
-        public ET_Aspect eoAspect
+        public EM_Aspect eoAspect
         {
             get
             {
                 switch (TextBox_Aspect.Text)
                 {
                     case "ipfv":
-                        return ET_Aspect.ASPECT_IMPERFECTIVE;
+                        return EM_Aspect.ASPECT_IMPERFECTIVE;
                     case "pfv":
-                        return ET_Aspect.ASPECT_PERFECTIVE;
+                        return EM_Aspect.ASPECT_PERFECTIVE;
                     default:
-                        return ET_Aspect.ASPECT_UNDEFINED;
+                        return EM_Aspect.ASPECT_UNDEFINED;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case ET_Aspect.ASPECT_IMPERFECTIVE:
+                    case EM_Aspect.ASPECT_IMPERFECTIVE:
                         TextBox_Aspect.Text = "ipfv";
                         break;
-                    case ET_Aspect.ASPECT_PERFECTIVE:
+                    case EM_Aspect.ASPECT_PERFECTIVE:
                         TextBox_Aspect.Text = "pfv";
                         break;
-                    case ET_Aspect.ASPECT_UNDEFINED:
+                    case EM_Aspect.ASPECT_UNDEFINED:
                         TextBox_Aspect.Text = "?";
                         break;
                     default:
@@ -222,13 +223,13 @@ namespace TestUI
             }
         }
 
-        public ET_Reflexive eoReflexiveness
+        public EM_Reflexive eoReflexiveness
         {
             set
             {
                 switch (value)
                 {
-                    case ET_Reflexive.REFL_YES:
+                    case EM_Reflexive.REFL_YES:
                         TextBox_Reflective.Text = "med";
                         break;
                     default:
@@ -238,32 +239,32 @@ namespace TestUI
             }
         }
 
-        public ET_Subparadigm eoSubparadigm
+        public EM_Subparadigm eoSubparadigm
         {
             set
             {
                 switch (value) // Verbs
                 {
-                    case ET_Subparadigm.SUBPARADIGM_PAST_TENSE:
+                    case EM_Subparadigm.SUBPARADIGM_PAST_TENSE:
                         TextBox_Tense.Text = "past";
                         TextBox_Mood.Text = "indic";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG:
+                    case EM_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG:
                         TextBox_Tense.Text = "past";
                         TextBox_Special.Text = "partcp";
                         TextBox_Voice.Text = "pass";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_PART_PAST_ACT:
+                    case EM_Subparadigm.SUBPARADIGM_PART_PAST_ACT:
                         TextBox_Tense.Text = "past";
                         TextBox_Special.Text = "partcp";
                         TextBox_Voice.Text = "act";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_PRESENT_TENSE:
-                        if (eoAspect == ET_Aspect.ASPECT_PERFECTIVE)
+                    case EM_Subparadigm.SUBPARADIGM_PRESENT_TENSE:
+                        if (eoAspect == EM_Aspect.ASPECT_PERFECTIVE)
                         {
                             TextBox_Tense.Text = "fut";
                         }
-                        else if (eoAspect == ET_Aspect.ASPECT_IMPERFECTIVE)
+                        else if (eoAspect == EM_Aspect.ASPECT_IMPERFECTIVE)
                         {
                             TextBox_Tense.Text = "praes";
                         }
@@ -273,12 +274,12 @@ namespace TestUI
                         }
                         TextBox_Mood.Text = "indic";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG:
-                        if (eoAspect == ET_Aspect.ASPECT_PERFECTIVE)
+                    case EM_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG:
+                        if (eoAspect == EM_Aspect.ASPECT_PERFECTIVE)
                         {
                             TextBox_Tense.Text = "fut";
                         }
-                        else if (eoAspect == ET_Aspect.ASPECT_IMPERFECTIVE)
+                        else if (eoAspect == EM_Aspect.ASPECT_IMPERFECTIVE)
                         {
                             TextBox_Tense.Text = "praes";
                         }
@@ -289,12 +290,12 @@ namespace TestUI
                         TextBox_Special.Text = "partcp";
                         TextBox_Voice.Text = "pass";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_PART_PRES_ACT:
-                        if (eoAspect == ET_Aspect.ASPECT_PERFECTIVE)
+                    case EM_Subparadigm.SUBPARADIGM_PART_PRES_ACT:
+                        if (eoAspect == EM_Aspect.ASPECT_PERFECTIVE)
                         {
                             TextBox_Tense.Text = "fut";
                         }
-                        else if (eoAspect == ET_Aspect.ASPECT_IMPERFECTIVE)
+                        else if (eoAspect == EM_Aspect.ASPECT_IMPERFECTIVE)
                         {
                             TextBox_Tense.Text = "praes";
                         }
@@ -305,16 +306,16 @@ namespace TestUI
                         TextBox_Special.Text = "partcp";
                         TextBox_Voice.Text = "act";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_ADVERBIAL_PAST:
+                    case EM_Subparadigm.SUBPARADIGM_ADVERBIAL_PAST:
                         TextBox_Tense.Text = "past";
                         TextBox_Special.Text = "ger";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_ADVERBIAL_PRESENT:
-                        if (eoAspect == ET_Aspect.ASPECT_PERFECTIVE)
+                    case EM_Subparadigm.SUBPARADIGM_ADVERBIAL_PRESENT:
+                        if (eoAspect == EM_Aspect.ASPECT_PERFECTIVE)
                         {
                             TextBox_Tense.Text = "fut";
                         }
-                        else if (eoAspect == ET_Aspect.ASPECT_IMPERFECTIVE)
+                        else if (eoAspect == EM_Aspect.ASPECT_IMPERFECTIVE)
                         {
                             TextBox_Tense.Text = "praes";
                         }
@@ -324,26 +325,26 @@ namespace TestUI
                         }
                         TextBox_Special.Text = "ger";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_INFINITIVE:
+                    case EM_Subparadigm.SUBPARADIGM_INFINITIVE:
                         TextBox_Mood.Text = "inf";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_IMPERATIVE:
+                    case EM_Subparadigm.SUBPARADIGM_IMPERATIVE:
                         TextBox_Mood.Text = "imper";
                         break;
                 }
                 switch (value) // Adjectives and participles (short / long)
                 {
-                    case ET_Subparadigm.SUBPARADIGM_SHORT_ADJ:
-                    case ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_SHORT:
-                    case ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_SHORT:
+                    case EM_Subparadigm.SUBPARADIGM_SHORT_ADJ:
+                    case EM_Subparadigm.SUBPARADIGM_PART_PAST_PASS_SHORT:
+                    case EM_Subparadigm.SUBPARADIGM_PART_PRES_PASS_SHORT:
                         TextBox_Subparadigm.Text = "brev";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_LONG_ADJ:
-                    case ET_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG:
-                    case ET_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG:
+                    case EM_Subparadigm.SUBPARADIGM_LONG_ADJ:
+                    case EM_Subparadigm.SUBPARADIGM_PART_PAST_PASS_LONG:
+                    case EM_Subparadigm.SUBPARADIGM_PART_PRES_PASS_LONG:
                         TextBox_Subparadigm.Text = "plen";
                         break;
-                    case ET_Subparadigm.SUBPARADIGM_COMPARATIVE:
+                    case EM_Subparadigm.SUBPARADIGM_COMPARATIVE:
                         TextBox_Subparadigm.Text = "compar";
                         break;
                 }
@@ -356,13 +357,13 @@ namespace TestUI
             {
                 switch (value)
                 {
-                    case MainLib.ET_Tense.TENSE_PAST:
+                    case MainLib.EM_Tense.TENSE_PAST:
                         TextBox_Tense.Text = "прош.";
                         break;
-                    case MainLib.ET_Tense.TENSE_PRESENT:
+                    case MainLib.EM_Tense.TENSE_PRESENT:
                         TextBox_Tense.Text = "наст.";
                         break;
-                    case MainLib.ET_Tense.TENSE_FUTURE:
+                    case MainLib.EM_Tense.TENSE_FUTURE:
                         TextBox_Tense.Text = "буд.";
                         break;
                     default:

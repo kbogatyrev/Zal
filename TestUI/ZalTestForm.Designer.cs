@@ -153,7 +153,7 @@
           this.batchTestToolStripMenuItem.Name = "batchTestToolStripMenuItem";
           this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
           this.batchTestToolStripMenuItem.Text = "Test All";
-//          this.batchTestToolStripMenuItem.Click += new System.EventHandler(this.batchTestToolStripMenuItem_Click);
+          this.batchTestToolStripMenuItem.Click += new System.EventHandler(this.batchTestToolStripMenuItem_Click);
           // 
           // testRangeToolStripMenuItem
           // 

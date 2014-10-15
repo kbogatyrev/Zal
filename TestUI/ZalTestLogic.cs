@@ -121,6 +121,7 @@ namespace TestUI
                 string sMsg = "GetDbPath: ";
 //                MainLib.ZalError err = new MainLib.ZalError();
 //                sMsg += err.LastError;
+                sMsg += ex.Message;
                 MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
                 return;
             }
@@ -202,6 +203,7 @@ namespace TestUI
                 string sMsg = "ShowLexemeDetails: ";
 //                MainLib.ZalError err = new MainLib.ZalError();
 //                sMsg += err.LastError;
+                sMsg += ex.Message;
                 MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
                 return;
             }
