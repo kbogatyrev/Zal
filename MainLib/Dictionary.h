@@ -11,14 +11,13 @@ class CLexeme;
 class CSqlite;
 struct CWordForm;
 class CParsingTree;
+class CVerifier;
 
 class CDictionary : public IDictionary
 {
 
 public:
-    CDictionary() : m_pDb(NULL), m_pEndingsTree(NULL)
-    {}
-
+    CDictionary();
     ~CDictionary();
 
 public:
@@ -39,13 +38,17 @@ public:
 
     virtual void Clear();
 
-    // Not part ot interface:
+    virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
+    virtual ET_ReturnCode eExportTestData(const CEString& sPath, CProgressCallback&);
+    virtual ET_ReturnCode eImportTestData(const CEString& sPath, CProgressCallback&);
 
+    // Not part ot interface:
     CSqlite * pGetDbHandle();
 
 private:
     CEString m_sDbPath;
     CSqlite * m_pDb;
+    CVerifier * m_pVerifier;
     CParsingTree * m_pEndingsTree;
     vector<CLexeme *> m_vecLexemes;
     vector<CWordForm *> m_vecWordForms;
