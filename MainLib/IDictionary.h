@@ -5,6 +5,7 @@
 #include "EString.h"
 #include "Callbacks.h"
 #include "ILexeme.h"
+#include "IVerifier.h"
 #include "LexemeProperties.h"
 
 namespace Hlib
@@ -27,6 +28,10 @@ namespace Hlib
         virtual ET_ReturnCode eAnalyze(const CEString& sText) = 0;
 
         virtual void Clear() = 0;
+
+        virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier) = 0;
+        virtual ET_ReturnCode eExportTestData(const CEString& sPath, CProgressCallback&) = 0;
+        virtual ET_ReturnCode eImportTestData(const CEString& sPath, CProgressCallback&) = 0;
     };
 
 }   // namespace Hlib

@@ -11,11 +11,10 @@ namespace Hlib
 {
     struct IVerifier
     {
-        virtual ET_ReturnCode eSetHeadWord (const CEString&) = 0;
         virtual ET_ReturnCode eSetHeadword(const CEString&) = 0;
         virtual CEString eGetHeadword() = 0;
         virtual void SetLexemeHash(const CEString&) = 0;
-        virtual CEString eGetLexemeHash() = 0;
+        virtual CEString sGetLexemeHash() = 0;
         virtual ET_ReturnCode eVerify(const CEString& sLexemeHash) = 0;
         virtual ET_TestResult eResult() = 0;
 
