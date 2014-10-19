@@ -202,6 +202,7 @@
     <None Include="MainLib.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\HLib-Windows\GramHasher.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="Endings.h" />
