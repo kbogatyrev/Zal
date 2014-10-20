@@ -226,7 +226,7 @@ namespace TestUI
                 EM_ReturnCode eRet = (EM_ReturnCode)lexeme.eGetFirstWordForm(ref wf);
                 do
                 {
-                    if (CErrorCode.bError(eRet))
+                    if (EM_ReturnCode.H_NO_ERROR != eRet)
                     {
                         continue;
                     }
