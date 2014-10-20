@@ -84,6 +84,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWf) = 0;
         virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWf) = 0;
         virtual ET_ReturnCode eGetFirstIrregularForm(int iHash, IWordForm *&, bool& bIsOptional) = 0;
+        virtual ET_ReturnCode eGetFirstIrregularForm(IWordForm *&, bool& bIsOptional) = 0;
         virtual ET_ReturnCode eGetNextIrregularForm(IWordForm *&, bool& bIsOptional) = 0;
         virtual unsigned int uiFormCount(int iHash) = 0;
         virtual bool bHasCommonDeviation(int iCd) = 0;
