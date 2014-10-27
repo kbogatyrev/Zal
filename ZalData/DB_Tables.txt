@@ -49,8 +49,10 @@ CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, form_id INTEGER, position
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER);
 
 CREATE INDEX idx_stems_select ON stems (stem_string);
--- CREATE INDEX idx_stem_data_select ON stem_data (gram_hash);
+CREATE INDEX idx_stem_data_gram_hash ON stem_data (gram_hash);
+CREATE INDEX idx_stem_data_stem_id ON stem_data (stem_id);
 CREATE INDEX idx_stem_data_select ON stem_data (lexeme_id, stem_id, gram_hash);
+CREATE INDEX idx_stem_data_select_lexeme_id ON stem_data (lexeme_id);
 CREATE INDEX idx_ending_data1 ON ending_data (number, case_value, stress);
 CREATE INDEX idx_ending_data2 ON ending_data (gender, number, case_value, animacy, stress);
 -- CREATE INDEX idx_ending_data3 ON ending_data (gender, number, stress);
@@ -92,6 +94,6 @@ CREATE INDEX idx_stems_id ON stems_for_analysis (id);
 
 CREATE INDEX idx_irregular_forms_wordform ON irregular_forms (wordform);
 CREATE INDEX idx_wordforms_stem_data_id ON wordforms (stem_data_id);
-CREATE INDEX idx_wordforms_stem_data_id ON wordforms (ending_data_id);
+CREATE INDEX idx_wordforms_ending_data_id ON wordforms (ending_data_id);
 
 CREATE INDEX idx_stems_id1 ON stems (id)
