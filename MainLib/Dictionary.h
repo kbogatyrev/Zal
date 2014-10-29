@@ -36,6 +36,9 @@ public:
 
     virtual ET_ReturnCode eAnalyze(const CEString& sWord);
 
+    virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWordForm);
+    virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm);
+
     virtual void Clear();
 
     virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
@@ -53,6 +56,7 @@ private:
     vector<CLexeme *> m_vecLexemes;
     vector<CWordForm *> m_vecWordForms;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
+    vector<CWordForm *>::iterator m_itCurrentWordForm;
 
     // Populate DB tables
     ET_ReturnCode ePopulateStemsTable();
