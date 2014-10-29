@@ -97,3 +97,5 @@ CREATE INDEX idx_wordforms_stem_data_id ON wordforms (stem_data_id);
 CREATE INDEX idx_wordforms_ending_data_id ON wordforms (ending_data_id);
 
 CREATE INDEX idx_stems_id1 ON stems (id)
+
+CREATE INDEX idx_stress_data_form_id on stress_data (form_id);
