@@ -27,6 +27,9 @@ namespace Hlib
 
         virtual ET_ReturnCode eAnalyze(const CEString& sText) = 0;
 
+        virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWordForm) = 0;
+        virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm) = 0;
+
         virtual void Clear() = 0;
 
         virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier) = 0;
