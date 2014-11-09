@@ -605,48 +605,68 @@ namespace TestUI
             }
 
         }   //  Preprocess (...)
-
+*/
         protected void ShowParseOutput()
         {
             int iWordform = 0, iPreviousID = -1;
             tabControl.TabPages.Clear();
-            foreach (MainLib.IWordForm wf in m_Analyzer)
+
+            if (null == m_Parser)
             {
-                m_listWordForms.Add(wf);
+                MessageBox.Show("Internal error: Parser object is null.", "Zal error", MessageBoxButtons.OK);
+            }
+
+            int iWordForm = 0;
+            CWordFormManaged wordform = null;
+            EM_ReturnCode eRet = (EM_ReturnCode)m_Parser.eGetFirstWordForm(ref wordform);
+            if (CErrorCode.bError(eRet))
+            {
+                MessageBox.Show("Error");
+                return;
+            }
+            if(EM_ReturnCode.H_NO_ERROR != eRet)
+            {
+                MessageBox.Show("Form not found");
+                return;
+            }
+
+            do
+            {
+                m_listWordForms.Add(wordform);
                 AnalysisPanel ap = new AnalysisPanel(iWordform);
-                ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
-                ap.sLemma = wf.Lemma;
-                ap.sWordform = wf.Wordform;
-                ap.sID = wf.LexemeId.ToString();
-                ap.eoPOS = wf.ePartOfSpeech();
-                ap.eoAspect = wf.eAspect();
-                ap.eoGender = wf.eGender();
-                ap.eoCase = wf.eCase();
-                ap.eoNumber = wf.eNumber();
-                ap.eoAnimacy = wf.eAnimacy();
-                ap.eoReflexiveness = wf.eIsFerlexive();
-                ap.eoSubparadigm = wf.eSubparadigm();
-                if (wf.LexemeId != iPreviousID)
-                {
-                    iWordform = 0;
-                    iPreviousID = wf.LexemeId;
-                    TabPage tab_Lexeme = new TabPage(wf.Lemma);
-                    tab_Lexeme.AutoScroll = true;
-                    tab_Lexeme.Controls.Add(ap);
-                    tabControl.TabPages.Add(tab_Lexeme);
-                    tab_Lexeme.Show();
-                    tab_Lexeme.Focus();
-                }
-                else
-                {
-                    tabControl.TabPages[tabControl.TabPages.Count - 1].Controls.Add(ap);
-                }
+//                ap.Location = new System.Drawing.Point(0, iWordform * ap.Size.Height + 4);
+                string sWordForm = wordform.sWordForm();
+                MarkStress(ref sWordForm, wordform);
+                ap.sWordform = sWordForm;
+                ap.sID = wordform.llLexemeId().ToString();
+                ap.eoPOS = wordform.ePos();
+                ap.eoAspect = wordform.eAspect();
+                ap.eoGender = wordform.eGender();
+                ap.eoCase = wordform.eCase();
+                ap.eoNumber = wordform.eNumber();
+                ap.eoAnimacy = wordform.eAnimacy();
+                ap.eoPerson = wordform.ePerson();
+                ap.eoReflexiveness = wordform.eReflexive();
+                ap.eoSubparadigm = wordform.eSubparadigm();
+                iWordform = 0;
+                iPreviousID = (int)wordform.llLexemeId();
+                TabPage tab_Lexeme = new TabPage(wordform.sWordForm());
+//                tab_Lexeme.Text = wordform.sWordForm();
+                tab_Lexeme.AutoScroll = true;
+                tab_Lexeme.Controls.Add(ap);
+                tabControl.TabPages.Add(tab_Lexeme);
+                tab_Lexeme.Show();
+                tab_Lexeme.Focus();
                 ++iWordform;
                 ap.Show();
-            }
+
+                eRet = (EM_ReturnCode)m_Parser.eGetNextWordForm(ref wordform);
+
+            } while (EM_ReturnCode.H_NO_ERROR == eRet);
 
         }   //  ShowParseOutput()
 
+/*
         public void SaveTestResults()
         {
             SaveFileDialog fd = new SaveFileDialog();

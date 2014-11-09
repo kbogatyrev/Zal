@@ -28,10 +28,8 @@ namespace TestUI
     public partial class TestApplet : Form
     {
         public CDictionaryManaged m_Dictionary = new CDictionaryManaged();
-//        private ZalStoredLexemeData m_TestData;
-//        private MainLib.ILexPreprocessor m_LexPreprocessor;
-//        private MainLib.IAnalyzer m_Analyzer;
-//        private TextAnalyzer m_TextAnalyzer;
+        public CParserManaged m_Parser = null;
+        public CVerifierManaged m_Verifier = null;
         private List<CWordFormManaged> m_listWordForms;
         private Dictionary<LexemeDataPanel, CLexemeManaged> m_hashLexemes;
         private Dictionary<CLexemeManaged, ArrayList> m_lexemeToTabs;
@@ -103,6 +101,18 @@ namespace TestUI
                 MessageBox.Show (sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
+        }
+
+        public void Verify(GridViewUserControl gv)
+        {
+            VerifierThread vt = new VerifierThread(gv, m_Verifier);
+            Thread t = new Thread (new ThreadStart (vt.ThreadProc));
+            t.Name = "Zal verifier thread";
+            t.IsBackground = true;
+            //              m_WorkerThread.Priority = ThreadPriority.Lowest;
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+            t.Join();
         }
 
         //private void buttonSelect_Click(object sender, EventArgs e)
@@ -214,9 +224,9 @@ namespace TestUI
 
         }   //  preprocessToolStripMenuItem_Click (...)
 
-/*
         private void parseWordFormToolStripMenuItem_Click (object sender, EventArgs e)
         {
+            EM_ReturnCode eRet = EM_ReturnCode.H_NO_ERROR;
             try
             {
                 EnterDataDlg dlg = new EnterDataDlg();
@@ -224,22 +234,39 @@ namespace TestUI
                 DialogResult dr = dlg.ShowDialog();
                 if (DialogResult.OK == dr)
                 {
-                    m_Analyzer.Analyze (dlg.sData);
+                    if (null == m_Parser)
+                    {
+                        eRet = m_Dictionary.eGetParser(ref m_Parser);
+                        if (eRet != EM_ReturnCode.H_NO_ERROR)
+                        {
+                            MessageBox.Show("Unable to retrieve IParser interface.", "Zal Error", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                    eRet = m_Parser.eAnalyze (dlg.sData);
                 }
             }
             catch (Exception ex)
             {
                 string sMsg = "Error: ";
-                MainLib.ZalError err = new MainLib.ZalError();
-                sMsg += err.LastError;
+//                MainLib.ZalError err = new MainLib.ZalError();
+//                sMsg += err.LastError;
                 MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
 
-            ShowParseOutput();
+            if (EM_ReturnCode.H_NO_ERROR == eRet)
+            {
+                ShowParseOutput();
+            }
+            else
+            {
+                MessageBox.Show("Form not found.", "Zal", MessageBoxButtons.OK);
+            }
 
         }   //  parseWordFormToolStripMenuItem_Click (...)
 
+/*
         private void parseTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Choose the new file path
@@ -267,6 +294,7 @@ namespace TestUI
             }
         }   //  parseTextToolStripMenuItem_Click (...)
 */
+
         private void batchTestToolStripMenuItem_Click (object sender, EventArgs e)
         {
             if (!m_bDBOpen)
@@ -274,28 +302,40 @@ namespace TestUI
                 GetDbPath();
             }
 
-            //if (null == m_TestData)
-            //{
-            //    m_TestData = new MainLib.ZalStoredLexemeData();
-            //    m_TestData.DbPath = m_sDbPath;
-            //}
+            EM_ReturnCode eRet = m_Dictionary.eGetVerifier(ref m_Verifier);
+            if (eRet != EM_ReturnCode.H_NO_ERROR)
+            {
+                MessageBox.Show("Unable to load Verifier.");
+                return;
+            }
 
-            //m_TestData.LoadStoredLexemes();
-            //if (m_TestData.Count <= 0)
-            //{
-            //    MessageBox.Show ("No test forms in the database", "Zal Test", MessageBoxButtons.OK);
-            //    return;
-            //}
+            eRet = m_Verifier.eLoadStoredLexemes();
+            if (eRet != EM_ReturnCode.H_NO_ERROR)
+            {
+                MessageBox.Show("Unable to load stored data.");
+                return;
+            }
+            
+            if (m_Verifier.iCount() <= 0)
+            {
+                MessageBox.Show ("No test forms in the database", "Zal Test", MessageBoxButtons.OK);
+                return;
+            }
 
             TabPage tabPageTestCases = new TabPage ("Test");
             GridViewUserControl gv = new GridViewUserControl (m_sDbPath);
+            gv.m_Parent = this;
 
             tabPageTestCases.Controls.Add(gv);
 
-            //foreach (MainLib.IVerifier v in m_TestData)
-            //{
-            //    gv.AddLexeme(v);
-            //}
+            string sLexemeHash = null;
+            string sHeadword = null;
+            eRet = m_Verifier.eGetFirstLexemeData(ref sLexemeHash, ref sHeadword);
+            while (EM_ReturnCode.H_NO_ERROR == eRet)
+            {
+                gv.AddLexeme(sHeadword, sLexemeHash);
+                eRet = m_Verifier.eGetNextLexemeData(ref sLexemeHash, ref sHeadword);
+            }
 
             tabControl.Controls.Add (tabPageTestCases);
             tabControl.SelectTab (tabPageTestCases);
@@ -445,6 +485,90 @@ namespace TestUI
         }
 
     }   //  public partial class TestApplet : Form
+
+    public class VerifierThread
+    {
+        private GridViewUserControl m_Caller;
+        private CVerifierManaged m_Verifier;
+
+        public VerifierThread(GridViewUserControl caller, CVerifierManaged verifier)
+        {
+            m_Caller = caller;
+            m_Verifier = verifier;
+        }
+
+        public void ThreadProc()
+        {
+            try
+            {
+                for (int iAt = 0; iAt < m_Caller.iRows; ++iAt)
+                {
+                    if (m_Caller.m_bCancelTest)
+                    {
+                        for (int iRow = iAt; iRow < m_Caller.iRows; ++iRow)
+                        {
+                            m_Caller.SetResult(iRow, "Cancelled", false);
+                        }
+                        break;
+                    }
+
+                    if (!m_Caller.bRowChecked(iAt))
+                    {
+                        continue;
+                    }
+
+                    string sLexemeHash = m_Caller.sLexemeHash(iAt);
+                    EM_ReturnCode eRet = m_Verifier.eVerify(sLexemeHash);
+                    if (eRet != EM_ReturnCode.H_NO_ERROR)
+                    {
+                        MessageBox.Show (string.Format("Unable to verify lexeme hash {0}", sLexemeHash));
+                    }
+
+                    EM_TestResult eTestResult = m_Verifier.eResult();
+                    switch (eTestResult)
+                    {
+                        case EM_TestResult.TEST_RESULT_OK:
+                        {
+                            m_Caller.SetResult (iAt, "Pass", false);
+                            break;
+                        }
+                        case EM_TestResult.TEST_RESULT_FAIL:
+                        {
+                            m_Caller.SetResult (iAt, "Fail", true);
+                            break;
+                        }
+                        case EM_TestResult.TEST_RESULT_INCOMPLETE:
+                        {
+                            m_Caller.SetResult (iAt, "Missing forms", true);
+                            break;
+                        }
+                        default:
+                        {
+//                            MainLib.ZalError err = new MainLib.ZalError();
+                            string sMsg = "Unexpected return from IVerifier; error msg: ";
+//                            sMsg += err.LastError;
+                            sMsg += eTestResult.ToString();
+                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
+                            return;
+                        }
+
+                    }       //  switch ...
+
+                }   //  foreach (DataGridViewRow row in dataGridView.Rows)
+            }
+            catch (Exception ex)
+            {
+                //                MainLib.ZalError err = new MainLib.ZalError();
+                string sMsg = ex.Message;
+                sMsg += "\n";
+                //                sMsg += err.LastError;
+                MessageBox.Show(sMsg, "Error", MessageBoxButtons.OK);
+                return;
+            }
+
+        }   //  ThreadProc()
+
+    }   //  public class WorkerThread
 
     public class DbOperationThread
     {

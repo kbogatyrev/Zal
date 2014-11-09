@@ -46,6 +46,10 @@
             this.TextBox_Case = new System.Windows.Forms.TextBox();
             this.TextBox_Gender = new System.Windows.Forms.TextBox();
             this.VerbFeatures = new System.Windows.Forms.GroupBox();
+            this.TextBox_Aspect = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.TextBox_Mood = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.TextBox_Special = new System.Windows.Forms.TextBox();
             this.TextBox_Reflective = new System.Windows.Forms.TextBox();
             this.TextBox_Voice = new System.Windows.Forms.TextBox();
@@ -56,14 +60,10 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.TextBox_Wordform = new System.Windows.Forms.TextBox();
-            this.TextBox_Lemma = new System.Windows.Forms.TextBox();
+            this.TextBox_Source = new System.Windows.Forms.TextBox();
             this.TextBox_ID = new System.Windows.Forms.TextBox();
             this.TextBox_POS = new System.Windows.Forms.TextBox();
             this.TextBox_PanelNum = new System.Windows.Forms.TextBox();
-            this.TextBox_Mood = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.TextBox_Aspect = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.NominalBox.SuspendLayout();
             this.VerbFeatures.SuspendLayout();
             this.SuspendLayout();
@@ -94,9 +94,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.Location = new System.Drawing.Point(45, 76);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
+            this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Lemma:";
+            this.label3.Text = "Source:";
             // 
             // label4
             // 
@@ -261,6 +261,42 @@
             this.VerbFeatures.TabStop = false;
             this.VerbFeatures.Text = "Features of verbs";
             // 
+            // TextBox_Aspect
+            // 
+            this.TextBox_Aspect.Location = new System.Drawing.Point(110, 154);
+            this.TextBox_Aspect.Name = "TextBox_Aspect";
+            this.TextBox_Aspect.ReadOnly = true;
+            this.TextBox_Aspect.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Aspect.TabIndex = 24;
+            this.TextBox_Aspect.TabStop = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(54, 157);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(50, 13);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "Aspect:";
+            // 
+            // TextBox_Mood
+            // 
+            this.TextBox_Mood.Location = new System.Drawing.Point(110, 132);
+            this.TextBox_Mood.Name = "TextBox_Mood";
+            this.TextBox_Mood.ReadOnly = true;
+            this.TextBox_Mood.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Mood.TabIndex = 22;
+            this.TextBox_Mood.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(62, 135);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(42, 13);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Mood:";
+            // 
             // TextBox_Special
             // 
             this.TextBox_Special.Location = new System.Drawing.Point(110, 110);
@@ -344,6 +380,7 @@
             // 
             // TextBox_Wordform
             // 
+            this.TextBox_Wordform.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TextBox_Wordform.Location = new System.Drawing.Point(104, 51);
             this.TextBox_Wordform.Name = "TextBox_Wordform";
             this.TextBox_Wordform.ReadOnly = true;
@@ -351,17 +388,19 @@
             this.TextBox_Wordform.TabIndex = 15;
             this.TextBox_Wordform.TabStop = false;
             // 
-            // TextBox_Lemma
+            // TextBox_Source
             // 
-            this.TextBox_Lemma.Location = new System.Drawing.Point(104, 73);
-            this.TextBox_Lemma.Name = "TextBox_Lemma";
-            this.TextBox_Lemma.ReadOnly = true;
-            this.TextBox_Lemma.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Lemma.TabIndex = 16;
-            this.TextBox_Lemma.TabStop = false;
+            this.TextBox_Source.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextBox_Source.Location = new System.Drawing.Point(104, 73);
+            this.TextBox_Source.Name = "TextBox_Source";
+            this.TextBox_Source.ReadOnly = true;
+            this.TextBox_Source.Size = new System.Drawing.Size(147, 20);
+            this.TextBox_Source.TabIndex = 16;
+            this.TextBox_Source.TabStop = false;
             // 
             // TextBox_ID
             // 
+            this.TextBox_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TextBox_ID.Location = new System.Drawing.Point(104, 95);
             this.TextBox_ID.Name = "TextBox_ID";
             this.TextBox_ID.ReadOnly = true;
@@ -371,6 +410,7 @@
             // 
             // TextBox_POS
             // 
+            this.TextBox_POS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TextBox_POS.Location = new System.Drawing.Point(372, 51);
             this.TextBox_POS.Name = "TextBox_POS";
             this.TextBox_POS.ReadOnly = true;
@@ -389,42 +429,6 @@
             this.TextBox_PanelNum.TabIndex = 19;
             this.TextBox_PanelNum.TabStop = false;
             // 
-            // TextBox_Mood
-            // 
-            this.TextBox_Mood.Location = new System.Drawing.Point(110, 132);
-            this.TextBox_Mood.Name = "TextBox_Mood";
-            this.TextBox_Mood.ReadOnly = true;
-            this.TextBox_Mood.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Mood.TabIndex = 22;
-            this.TextBox_Mood.TabStop = false;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(62, 135);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(42, 13);
-            this.label11.TabIndex = 21;
-            this.label11.Text = "Mood:";
-            // 
-            // TextBox_Aspect
-            // 
-            this.TextBox_Aspect.Location = new System.Drawing.Point(110, 154);
-            this.TextBox_Aspect.Name = "TextBox_Aspect";
-            this.TextBox_Aspect.ReadOnly = true;
-            this.TextBox_Aspect.Size = new System.Drawing.Size(147, 20);
-            this.TextBox_Aspect.TabIndex = 24;
-            this.TextBox_Aspect.TabStop = false;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(54, 157);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(50, 13);
-            this.label12.TabIndex = 23;
-            this.label12.Text = "Aspect:";
-            // 
             // AnalysisPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,7 +437,7 @@
             this.Controls.Add(this.TextBox_PanelNum);
             this.Controls.Add(this.TextBox_POS);
             this.Controls.Add(this.TextBox_ID);
-            this.Controls.Add(this.TextBox_Lemma);
+            this.Controls.Add(this.TextBox_Source);
             this.Controls.Add(this.TextBox_Wordform);
             this.Controls.Add(this.VerbFeatures);
             this.Controls.Add(this.NominalBox);
@@ -484,7 +488,7 @@
         private System.Windows.Forms.TextBox TextBox_Person;
         private System.Windows.Forms.TextBox TextBox_Tense;
         private System.Windows.Forms.TextBox TextBox_Wordform;
-        private System.Windows.Forms.TextBox TextBox_Lemma;
+        private System.Windows.Forms.TextBox TextBox_Source;
         private System.Windows.Forms.TextBox TextBox_ID;
         private System.Windows.Forms.TextBox TextBox_POS;
         private System.Windows.Forms.TextBox TextBox_PanelNum;

@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
+using MainLibManaged;
+
 namespace TestUI
 {
     public partial class GridViewUserControl : UserControl
@@ -15,6 +17,12 @@ namespace TestUI
         Thread m_WorkerThread;
         public string m_sDbPath;
         public bool m_bCancelTest = false;
+
+        public TestApplet m_Parent
+        {
+            get;
+            set;
+        }
 
         public GridViewUserControl(string sDbPath)
         {
@@ -69,23 +77,21 @@ namespace TestUI
             return (string)textBoxCell.Value;
         }
 
-/*
-        public void AddLexeme (MainLib.IVerifier v)
+        public void AddLexeme (string sHeadword, string sHash)
         {
             DataGridViewRow r = new DataGridViewRow();
             r.CreateCells(dataGridView);
             r.Cells[0].Value = true;
-            r.Cells[1].Value = v.LexemeId;
+            r.Cells[1].Value = sHash;
 //            r.Cells[1].Tag = v;
-            r.Cells[2].Value = v.Headword;
+            r.Cells[2].Value = sHeadword;
             dataGridView.Rows.Add(r);
         }
-*/
+
         private void GridViewUserControl_VisibleChanged (object sender, EventArgs e)
         {
             this.Size = Parent.Size;
-            dataGridView.Width = buttonRun.Location.X -
-                (Width - buttonRun.Width - buttonRun.Location.X);
+            dataGridView.Width = buttonRun.Location.X - (Width - buttonRun.Width - buttonRun.Location.X);
             buttonRun.Focus();
         }
 
@@ -106,14 +112,7 @@ namespace TestUI
                 cbStatus.Value = "Testing...";
             }
 
-            WorkerThread wt = new WorkerThread(this);
-            m_WorkerThread = new Thread(new ThreadStart(wt.ThreadProc));
-            m_WorkerThread.Name = "Zal verify worker thread";
-            m_WorkerThread.IsBackground = true;
-            //              m_WorkerThread.Priority = ThreadPriority.Lowest;
-            m_WorkerThread.SetApartmentState(ApartmentState.STA);
-            m_WorkerThread.Start();
-//            m_WorkerThread.Join();
+            m_Parent.Verify(this);
 
         }   // buttonRun_Click (...)
 
@@ -237,86 +236,5 @@ namespace TestUI
             }
         }
     }       //  public partial class GridViewUserControl
-
-    public class WorkerThread
-    {
-        private GridViewUserControl m_Caller;
-
-        public WorkerThread(GridViewUserControl Caller)
-        {
-            m_Caller = Caller;
-        }
-
-        public void ThreadProc()
-        {
-//            MainLib.IVerifier v = null;
-            try
-            {
-                for (int iAt = 0; iAt < m_Caller.iRows; ++iAt)
-                {
-                    if (m_Caller.m_bCancelTest)
-                    {
-                        for (int iRow = iAt; iRow < m_Caller.iRows; ++iRow)
-                        {
-                            m_Caller.SetResult (iRow, "Cancelled", false);
-                        }
-                        break;
-                    }
-
-                    if (!m_Caller.bRowChecked(iAt))
-                    {
-                        continue;
-                    }
-
-                    string sLexemeHash = m_Caller.sLexemeHash(iAt);
-//                    v = new MainLib.ZalVerifier();
-//                    v.DbPath = m_Caller.m_sDbPath;
-
-//                    MainLib.ET_TestResult eResult = v.Verify (sLexemeHash);
-/*
-                    switch (eResult)
-                    {
-                        case MainLib.ET_TestResult.TEST_RESULT_OK:
-                        {
-                            m_Caller.SetResult (iAt, "Pass", false);
-                            break;
-                        }
-                        case MainLib.ET_TestResult.TEST_RESULT_FAIL:
-                        {
-                            m_Caller.SetResult (iAt, "Fail", true);
-                            break;
-                        }
-                        case MainLib.ET_TestResult.TEST_RESULT_INCOMPLETE:
-                        {
-                            m_Caller.SetResult (iAt, "Missing forms", true);
-                            break;
-                        }
-                        default:
-                        {
-                            MainLib.ZalError err = new MainLib.ZalError();
-                            string sMsg = "Unexpected return from IVerifier; error msg: ";
-                            sMsg += err.LastError;
-                            MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
-                            return;
-                        }
-
-                    }       //  switch ...
- */ 
-
-                }   //  foreach (DataGridViewRow row in dataGridView.Rows)
-            }
-            catch (Exception ex)
-            {
-//                MainLib.ZalError err = new MainLib.ZalError();
-                string sMsg = ex.Message;
-                sMsg += "\n";
-//                sMsg += err.LastError;
-                MessageBox.Show (sMsg, "Error", MessageBoxButtons.OK);
-                return;
-            }
-
-        }   //  ThreadProc()
-
-    }   //  public class WorkerThread
 
 }  //  namespace TestUI
