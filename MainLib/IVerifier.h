@@ -11,15 +11,18 @@ namespace Hlib
 {
     struct IVerifier
     {
-        virtual ET_ReturnCode eSetHeadword(const CEString&) = 0;
-        virtual CEString eGetHeadword() = 0;
-        virtual void SetLexemeHash(const CEString&) = 0;
-        virtual CEString sGetLexemeHash() = 0;
         virtual ET_ReturnCode eVerify(const CEString& sLexemeHash) = 0;
         virtual ET_TestResult eResult() = 0;
+        virtual int iCount() = 0;
 
         virtual ET_ReturnCode eLoadStoredLexemes() = 0;
-        virtual ET_ReturnCode eDeleteStoredLexeme(const CEString& sLexeme) = 0;
+        virtual ET_ReturnCode eDeleteStoredLexeme(const CEString& sLexemeHash) = 0;
+
+        virtual ET_ReturnCode eGetFirstLexemeData(CEString& sLexemeHash, CEString& sHeadword) = 0;
+        virtual ET_ReturnCode eGetNextLexemeData(CEString& sLexemeHash, CEString& sHeadword) = 0;
+
+        virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWordForm) = 0;
+        virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm) = 0;
     };
 
 }   // namespace Hlib
