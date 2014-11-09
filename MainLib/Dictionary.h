@@ -10,7 +10,7 @@ namespace Hlib
 class CLexeme;
 class CSqlite;
 struct CWordForm;
-class CParsingTree;
+class CParser;
 class CVerifier;
 
 class CDictionary : public IDictionary
@@ -34,13 +34,9 @@ public:
     virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexeme);
     virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexeme);
 
-    virtual ET_ReturnCode eAnalyze(const CEString& sWord);
-
-    virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWordForm);
-    virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm);
-
     virtual void Clear();
 
+    virtual ET_ReturnCode eGetParser(IParser *& p);
     virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
     virtual ET_ReturnCode eExportTestData(const CEString& sPath, CProgressCallback&);
     virtual ET_ReturnCode eImportTestData(const CEString& sPath, CProgressCallback&);
@@ -51,8 +47,8 @@ public:
 private:
     CEString m_sDbPath;
     CSqlite * m_pDb;
+    CParser * m_pParser;
     CVerifier * m_pVerifier;
-    CParsingTree * m_pEndingsTree;
     vector<CLexeme *> m_vecLexemes;
     vector<CWordForm *> m_vecWordForms;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
@@ -71,9 +67,6 @@ private:
     ET_ReturnCode eReadFromDb(const CEString& sStem);
 
     ET_ReturnCode eGetL2Data(__int64 llLexemeId, StLexemeProperties& properties);
-
-    ET_ReturnCode eIrregularFormLookup(const CEString&);
-    ET_ReturnCode eFormLookup(const CEString&);
 
     void HandleDbException(CException&);
 };
