@@ -194,6 +194,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Verifier.cpp" />
     <ClCompile Include="WordForm.cpp" />
@@ -202,6 +203,7 @@
     <None Include="MainLib.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\HLib-Windows\Enums.h" />
     <ClInclude Include="..\..\HLib-Windows\GramHasher.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="dllmain.h" />
@@ -221,10 +223,12 @@
     <ClInclude Include="IDictionary.h" />
     <ClInclude Include="IHasher.h" />
     <ClInclude Include="ILexeme.h" />
+    <ClInclude Include="IParser.h" />
     <ClInclude Include="IVerifier.h" />
     <ClInclude Include="IWordForm.h" />
     <ClInclude Include="Lexeme.h" />
     <ClInclude Include="LexemeProperties.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Verifier.h" />
     <ClInclude Include="WordForm.h" />
