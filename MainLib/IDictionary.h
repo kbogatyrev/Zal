@@ -5,6 +5,8 @@
 #include "EString.h"
 #include "Callbacks.h"
 #include "ILexeme.h"
+#include "IWordForm.h"
+#include "IParser.h"
 #include "IVerifier.h"
 #include "LexemeProperties.h"
 
@@ -25,13 +27,9 @@ namespace Hlib
         virtual ET_ReturnCode eGetFirstLexeme (ILexeme *& pLexeme) = 0;
         virtual ET_ReturnCode eGetNextLexeme (ILexeme *& pLexeme) = 0;
 
-        virtual ET_ReturnCode eAnalyze(const CEString& sText) = 0;
-
-        virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWordForm) = 0;
-        virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm) = 0;
-
         virtual void Clear() = 0;
 
+        virtual ET_ReturnCode eGetParser(IParser *& p) = 0;
         virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier) = 0;
         virtual ET_ReturnCode eExportTestData(const CEString& sPath, CProgressCallback&) = 0;
         virtual ET_ReturnCode eImportTestData(const CEString& sPath, CProgressCallback&) = 0;
