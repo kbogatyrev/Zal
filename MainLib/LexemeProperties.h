@@ -38,8 +38,8 @@ namespace Hlib
         bFleetingVowel(false),
         iStemAugment(-1)
         {
-            sSourceForm.SetVowels(g_szVowels);
-            sGraphicStem.SetVowels(g_szVowels);
+            sSourceForm.SetVowels(g_szRusVowels);
+            sGraphicStem.SetVowels(g_szRusVowels);
         }
 
         int iDbKey;
