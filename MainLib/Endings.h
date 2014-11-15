@@ -101,6 +101,21 @@ struct StEndingDescriptor
                             eStemAuslaut (eSa)
     {}
 
+    // Overload for past tense forms
+    StEndingDescriptor(ET_Gender eG,
+                       ET_Number eN,
+                       ET_StemAuslaut eA) : 
+                            llDbKey(-1),
+                            iInflectionType(INFLECTION_TYPE_UNDEFINED),
+                            eGender(eG),
+                            eNumber(eN),
+                            eCase(CASE_UNDEFINED),
+                            eAnimacy(ANIM_UNDEFINED),
+                            ePerson(PERSON_UNDEFINED),
+                            eStress(STRESS_LOCATION_UNDEFINED),
+                            eStemAuslaut(eA)
+    {}
+
     CEString sToString() const
     {
         CEString s_ (L"Inflection type = ");
@@ -374,6 +389,18 @@ public:
 
 private:
     virtual int iHash (const StEndingDescriptor&);
+};
+
+class CPastTenseEndings : public CEndings
+{
+public:
+    CPastTenseEndings(CLexeme * pLexeme);
+
+    virtual ET_ReturnCode eLoad();
+    virtual ET_ReturnCode eAddEnding(const CEString&, const StEndingDescriptor&);
+
+private:
+    virtual int iHash(const StEndingDescriptor&);
 };
 
 } // namespace Hlib
