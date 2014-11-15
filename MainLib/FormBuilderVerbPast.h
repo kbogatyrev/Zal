@@ -24,7 +24,7 @@ namespace Hlib
         {}
 
     public:
-        ET_ReturnCode eGetEnding (CEString& sLemma, ET_Number eNumber, ET_Gender eGender, CEString& sEnding);
+//        ET_ReturnCode eGetEnding (CEString& sLemma, ET_Number eNumber, ET_Gender eGender, CEString& sEnding);
 
         ET_ReturnCode eGetStressPositions (const CEString& sLemma,
                                            const CEString& sEnding,
@@ -36,6 +36,7 @@ namespace Hlib
                                            const CEString& sEnding,
                                            ET_Number eNumber, 
                                            ET_Gender eGender, 
+                                           __int64 llEndingKey,
                                            CWordForm *& pWordForm);
 
         ET_ReturnCode eAssemble (CWordForm * pWordForm, int iStressPos, CEString& sLemma, CEString& sEnding);
