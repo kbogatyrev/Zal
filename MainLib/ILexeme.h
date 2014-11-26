@@ -96,6 +96,7 @@ namespace Hlib
         virtual ET_ReturnCode eSetDb(const CEString& sDbPath) = 0;
         virtual ET_ReturnCode eGenerateParadigm() = 0;
         virtual ET_ReturnCode eSaveTestData() = 0;
+        virtual ET_ReturnCode eClone(ILexeme *&) = 0;
 
     };      //  struct ILexeme
 
