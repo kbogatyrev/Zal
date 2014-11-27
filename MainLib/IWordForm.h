@@ -33,6 +33,8 @@ namespace Hlib
         virtual ET_ReturnCode eInitFromHash(int iHash) = 0;
 //        virtual ET_ReturnCode SaveTestData() = 0;
 
+        virtual ET_ReturnCode eClone(IWordForm *&) = 0;
+
     };
 
 }
