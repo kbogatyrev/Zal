@@ -614,6 +614,7 @@ namespace TestUI
             if (null == m_Parser)
             {
                 MessageBox.Show("Internal error: Parser object is null.", "Zal error", MessageBoxButtons.OK);
+                return;
             }
 
             int iWordForm = 0;

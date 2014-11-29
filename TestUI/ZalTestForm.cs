@@ -245,6 +245,10 @@ namespace TestUI
                     }
                     eRet = m_Parser.eAnalyze (dlg.sData);
                 }
+                else
+                {
+                    return;
+                }
             }
             catch (Exception ex)
             {
