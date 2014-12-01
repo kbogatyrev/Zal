@@ -32,6 +32,7 @@ private:
 
 
     ET_ReturnCode eIrregularFormLookup(const CEString&);
+    ET_ReturnCode eWholeWordLookup(const CEString&);
     ET_ReturnCode eFormLookup(const CEString&);
     ET_ReturnCode eQueryDb(const CEString& sSelect, unsigned int& uiQueryHandle);
     void HandleDbException(CException& ex);

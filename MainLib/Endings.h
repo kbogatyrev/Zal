@@ -226,6 +226,7 @@ public:
     void eSplit(const CEString& sWord);
     ET_ReturnCode eGetFirstMatch(StSplit& stSplit);
     ET_ReturnCode eGetNextMatch(StSplit& stSplit);
+    ET_ReturnCode eIsEmptyEnding(__int64 llEndingId);
 
 private:
     typedef map<CEString, vector<StEndingDescriptor>, StReverseComparisonFunctor> MapEndingToDescriptors;
@@ -235,6 +236,7 @@ private:
     StNode * m_pRoot;
     vector<StSplit> m_vecMatches;
     vector<StSplit>::iterator m_itCurrentMatch;
+    set<__int64> m_setEmptyEndingIds;
 
 protected:
     CParsingTree() {};
@@ -395,6 +397,18 @@ class CPastTenseEndings : public CEndings
 {
 public:
     CPastTenseEndings(CLexeme * pLexeme);
+
+    virtual ET_ReturnCode eLoad();
+    virtual ET_ReturnCode eAddEnding(const CEString&, const StEndingDescriptor&);
+
+private:
+    virtual int iHash(const StEndingDescriptor&);
+};
+
+class CNullEnding : public CEndings
+{
+public:
+    CNullEnding(CLexeme * pLexeme);
 
     virtual ET_ReturnCode eLoad();
     virtual ET_ReturnCode eAddEnding(const CEString&, const StEndingDescriptor&);
