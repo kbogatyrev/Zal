@@ -86,10 +86,49 @@ namespace TestUI
                         TextBox_POS.Text = "местоимение";
                         break;
                     case EM_PartOfSpeech.POS_PRONOUN_ADJ:
-                        TextBox_POS.Text = "местоимение";
+                        TextBox_POS.Text = "местоимение-прил.";
+                        break;
+                    case EM_PartOfSpeech.POS_PRONOUN_PREDIC:
+                        TextBox_POS.Text = "POS_PRONOUN_PREDIC";
+                        break;
+                    case EM_PartOfSpeech.POS_NUM:
+                        TextBox_POS.Text = "числительное";
+                        break;
+                    case EM_PartOfSpeech.POS_NUM_ADJ:
+                        TextBox_POS.Text = "порядковое числительное";
+                        break;
+                    case EM_PartOfSpeech.POS_ADV:
+                        TextBox_POS.Text = "наречие";
+                        break;
+                    case EM_PartOfSpeech.POS_COMPAR:
+                        TextBox_POS.Text = "сравнительная степень";
+                        break;
+                    case EM_PartOfSpeech.POS_PREDIC:
+                        TextBox_POS.Text = "POS_PREDIC";
+                        break;
+                    case EM_PartOfSpeech.POS_PREP:
+                        TextBox_POS.Text = "предлог";
+                        break;
+                    case EM_PartOfSpeech.POS_CONJ:
+                        TextBox_POS.Text = "союз";
+                        break;
+                    case EM_PartOfSpeech.POS_PARTICLE:
+                        TextBox_POS.Text = "частица";
+                        break;
+                    case EM_PartOfSpeech.POS_INTERJ:
+                        TextBox_POS.Text = "междометие";
+                        break;
+                    case EM_PartOfSpeech.POS_PARENTH:
+                        TextBox_POS.Text = "POS_PARENTH";
+                        break;
+                    case EM_PartOfSpeech.POS_NULL:
+                        TextBox_POS.Text = "POS_NULL";
+                        break;
+                    case EM_PartOfSpeech.POS_COUNT:
+                        TextBox_POS.Text = "POS_NULL";
                         break;
                     default:
-                        TextBox_POS.Text = "";
+                        TextBox_POS.Text = "POS not recognized";
                         break;
                 }
             }
