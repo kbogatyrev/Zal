@@ -94,18 +94,17 @@ CREATE INDEX idx_endings ON endings_for_analysis (ending);
 CREATE INDEX idx_stems ON stems_for_analysis (stem);
 CREATE INDEX idx_stems_id ON stems_for_analysis (id);
 
-CREATE INDEX idx_irregular_forms_wordform ON irregular_forms (descriptor_id);
-CREATE INDEX idx_irregular_forms_wordform ON irregular_forms (gram_hash);
+CREATE INDEX idx_irregular_forms_descriptor_id ON irregular_forms (descriptor_id);
+CREATE INDEX idx_irregular_forms_gram_hash ON irregular_forms (gram_hash);
 CREATE INDEX idx_irregular_forms_wordform ON irregular_forms (wordform);
-CREATE INDEX idx_irregular_forms_wordform ON irregular_forms (is_alternative);
+CREATE INDEX idx_irregular_forms_is_alternative ON irregular_forms (is_alternative);
 
 CREATE INDEX idx_wordforms_stem_data_id ON wordforms (stem_data_id);
-CREATE INDEX idx_wordforms_ending_data_id ON wordforms (ending_data_id);
 CREATE INDEX idx_wordforms_ending_data_id ON wordforms (ending_data_id);
  
 CREATE INDEX idx_stems_id1 ON stems (id);
 
 CREATE INDEX idx_stress_data_form_id on stress_data (form_id);
 CREATE INDEX idx_stress_data_position on stress_data (position);
-CREATE INDEX idx_stress_data_form_id on stress_data (is_primary);
+CREATE INDEX idx_stress_data_is_primary on stress_data (is_primary);
 
