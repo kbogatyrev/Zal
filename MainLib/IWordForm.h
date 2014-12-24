@@ -11,6 +11,7 @@ namespace Hlib
 
     struct IWordForm
     {
+        virtual ~IWordForm() {};
         virtual ILexeme * pLexeme() = 0;
         virtual CEString sWordForm() = 0;
         virtual CEString sLemma() = 0;

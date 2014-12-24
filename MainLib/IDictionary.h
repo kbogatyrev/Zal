@@ -14,6 +14,7 @@ namespace Hlib
 {
     struct IDictionary
     {
+        virtual ~IDictionary() {};
         virtual ET_ReturnCode eSetDbPath (const CEString& sDbPath) = 0;
         virtual CEString sGetDbPath() = 0;
         virtual ET_ReturnCode eGetLexemeById(int Id) = 0;

@@ -11,6 +11,7 @@ namespace Hlib
 {
     struct IVerifier
     {
+        virtual ~IVerifier() {};
         virtual ET_ReturnCode eVerify(const CEString& sLexemeHash) = 0;
         virtual ET_TestResult eResult() = 0;
         virtual int iCount() = 0;
