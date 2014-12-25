@@ -32,9 +32,8 @@ wstring StrFromCES(CEString CES)
 }
 CEString StrToCES(const wstring wStr)
 {
-	const wchar_t* wctStr = wStr.c_str();
-	CEString sDbPath(wctStr);
-	return sDbPath;
+	CEString sString(wStr.c_str());
+	return sString;
 }
 struct Null_pointer : public exception
 {
@@ -416,12 +415,20 @@ public:
 	ET_ReturnCode eGetFirstWordForm(IWordFormWrap& w)
 	{
 		if (pL == NULL){ throw Null_pointer(); }
-		return pL->eGetFirstWordForm(w.pWF);
+		IWordForm * ptempWF = NULL;
+		ET_ReturnCode rc = pL->eGetFirstWordForm(ptempWF);
+		if (ptempWF == NULL) { return rc; }
+		ptempWF->eClone(w.pWF);
+		return rc;
 	}
 	ET_ReturnCode eGetNextWordForm(IWordFormWrap& w)
 	{
 		if (pL == NULL){ throw Null_pointer(); }
-		return pL->eGetNextWordForm(w.pWF);
+		IWordForm * ptempWF = NULL;
+		ET_ReturnCode rc = pL->eGetNextWordForm(ptempWF);
+		if (ptempWF == NULL) { return rc; }
+		ptempWF->eClone(w.pWF);
+		return rc;
 	}
 	list eGetFirstIrregularForm(int iHash, IWordFormWrap& w)
 	{
@@ -603,6 +610,41 @@ public:
 	public:
 		ILexeme * pL;
 };
+class IParserWrap
+{
+public:
+	IParserWrap() : pP(NULL)
+	{}
+	~IParserWrap()
+	{
+		delete pP;
+	}
+	ET_ReturnCode eAnalyze(const wstring wText)
+	{
+		if (pP == NULL){ throw Null_pointer(); }
+		return pP->eAnalyze(StrToCES(wText));
+	}
+	ET_ReturnCode eGetFirstWordForm(IWordFormWrap& w)
+	{
+		if (pP == NULL){ throw Null_pointer(); }
+		IWordForm * ptempWF = NULL;
+		ET_ReturnCode rc = pP->eGetFirstWordForm(ptempWF);
+		if (ptempWF == NULL) { return rc; }
+		ptempWF->eClone(w.pWF);
+		return rc;
+	}
+	ET_ReturnCode eGetNextWordForm(IWordFormWrap& w)
+	{
+		if (pP == NULL){ throw Null_pointer(); }
+		IWordForm * ptempWF = NULL;
+		ET_ReturnCode rc = pP->eGetNextWordForm(ptempWF);
+		if (ptempWF == NULL) { return rc; }
+		ptempWF->eClone(w.pWF);
+		return rc;
+	}
+public:
+	IParser * pP;
+};
 class IDictionaryWrap
 {public:
 	IDictionaryWrap() : pD(NULL)
@@ -653,22 +695,31 @@ class IDictionaryWrap
 	ET_ReturnCode eGetFirstLexeme(ILexemeWrap& l)
 	{
 		if (pD == NULL){ throw Null_pointer(); }
-		return pD->eGetFirstLexeme(l.pL);
+		ILexeme * ptempL = NULL;
+		ET_ReturnCode rc = pD->eGetFirstLexeme(ptempL);
+		if (ptempL == NULL) { return rc; }
+		ptempL->eClone(l.pL);
+		return rc;
 	}
 	ET_ReturnCode eGetNextLexeme(ILexemeWrap& l)
 	{
 		if (pD == NULL){ throw Null_pointer(); }
-		return pD->eGetNextLexeme(l.pL);
-	}
-	ET_ReturnCode eAnalyze(const wstring wText)
-	{
-		if (pD == NULL){ throw Null_pointer(); }
-		return pD->eAnalyze(StrToCES(wText));
+		ILexeme * ptempL = NULL;
+		ET_ReturnCode rc = pD->eGetNextLexeme(ptempL);
+		if (ptempL == NULL) { return rc; }
+		ptempL->eClone(l.pL);
+		return rc;
 	}
 	void Clear()
 	{
 		if (pD == NULL){ throw Null_pointer(); }
 		return pD->Clear();
+	}
+	ET_ReturnCode eGetParser(IParserWrap & p)
+	{
+		if (pD == NULL){ throw Null_pointer(); }
+		return pD->eGetParser(p.pP);
+
 	}
 public:
 	IDictionary * pD;
@@ -906,8 +957,13 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def("eCountLexemes", &IDictionaryWrap::eCountLexemes)
 		.def("eGetFirstLexeme", &IDictionaryWrap::eGetFirstLexeme)
 		.def("eGetNextLexeme", &IDictionaryWrap::eGetNextLexeme)
-		.def("eAnalyze", &IDictionaryWrap::eAnalyze)
 		.def("Clear", &IDictionaryWrap::Clear)
+		.def("eGetParser", &IDictionaryWrap::eGetParser)
+		;
+	class_<IParserWrap>("IParser")
+		.def("eAnalyze", &IParserWrap::eAnalyze)
+		.def("eGetFirstWordForm", &IParserWrap::eGetFirstWordForm)
+		.def("eGetNextWordForm", &IParserWrap::eGetNextWordForm)
 		;
 	class_<IWordFormWrap>("IWordForm")
 		.def("pLexeme", &IWordFormWrap::pLexeme, return_value_policy<manage_new_object>())
