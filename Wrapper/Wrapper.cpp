@@ -642,6 +642,11 @@ public:
 		ptempWF->eClone(w.pWF);
 		return rc;
 	}
+	void ClearResults()
+	{
+		if (pP == NULL){ throw Null_pointer(); }
+		pP->ClearResults();
+	}
 public:
 	IParser * pP;
 };
@@ -964,6 +969,7 @@ BOOST_PYTHON_MODULE(Wrapper)
 		.def("eAnalyze", &IParserWrap::eAnalyze)
 		.def("eGetFirstWordForm", &IParserWrap::eGetFirstWordForm)
 		.def("eGetNextWordForm", &IParserWrap::eGetNextWordForm)
+		.def("ClearResults", &IParserWrap::ClearResults)
 		;
 	class_<IWordFormWrap>("IWordForm")
 		.def("pLexeme", &IWordFormWrap::pLexeme, return_value_policy<manage_new_object>())
