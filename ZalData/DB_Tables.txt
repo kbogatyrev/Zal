@@ -20,7 +20,7 @@ CREATE TABLE nonexistent_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGE
 
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending_string TEXT);
 
-CREATE TABLE ending_data (id INTEGER PRIMARY KEY ASC, ending_id INTEGER, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, stem_auslaut INTEGER, FOREIGN KEY (ending_id) REFERENCES endings (id));
+CREATE TABLE ending_data (id INTEGER PRIMARY KEY ASC, ending_id INTEGER, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, is_reflexive BOOLEAN DEFAULT(0), stem_auslaut INTEGER, FOREIGN KEY (ending_id) REFERENCES endings (id));
 
 CREATE TABLE stems (id INTEGER PRIMARY KEY ASC, stem_string TEXT UNIQUE);
 
@@ -58,7 +58,7 @@ CREATE INDEX idx_stem_data_select ON stem_data (lexeme_id, stem_id, gram_hash);
 CREATE INDEX idx_ending_data1 ON ending_data (number, case_value, stress);
 CREATE INDEX idx_ending_data2 ON ending_data (gender, number, case_value, animacy, stress);
 -- CREATE INDEX idx_ending_data3 ON ending_data (gender, number, stress);
-CREATE INDEX idx_ending_data4 ON ending_data (person, number, stress, stem_auslaut, conjugation);
+CREATE INDEX idx_ending_data4 ON ending_data (person, number, stress, stem_auslaut, conjugation, is_reflexive);
 
 CREATE INDEX idx_common_deviation_id ON common_deviation (id, inflection_id);
 CREATE INDEX idx_descriptor_id ON descriptor (id, word_id);
