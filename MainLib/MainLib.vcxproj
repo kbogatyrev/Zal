@@ -195,6 +195,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="ParsingTree.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Verifier.cpp" />
     <ClCompile Include="WordForm.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="Lexeme.h" />
     <ClInclude Include="LexemeProperties.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="ParsingTree.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Verifier.h" />
     <ClInclude Include="WordForm.h" />
