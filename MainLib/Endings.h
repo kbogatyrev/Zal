@@ -33,9 +33,6 @@ public:
         return m_vecEndings.size();
     }
 
-//    virtual ET_ReturnCode eLoad() = 0;
-//    virtual ET_ReturnCode eAddEnding() = 0;
-
     ET_ReturnCode eGetEnding(int iSeqNum, CEString& sEnding, unsigned __int64& llEndingKey);
     ET_ReturnCode eGetEnding (CEString& s_, unsigned __int64& llKey)
     {
@@ -65,15 +62,7 @@ class CNounEndings : public CEndings
 {
 public:
     CNounEndings(CLexeme *);
-
-//    virtual ET_ReturnCode eLoad();
-//    virtual ET_ReturnCode eAddEnding();
-
-    ET_ReturnCode Select(ET_Number, ET_Case, ET_StressLocation);                                            // nouns    
-
-
-private:
-//    virtual unsigned __int64 ullHash() const;
+    ET_ReturnCode eSelect(ET_Number, ET_Case, ET_StressLocation);                                            // nouns    
 
 };      //  CNounEndings
 
@@ -82,13 +71,7 @@ class CAdjLongEndings : public CEndings
 public:
     CAdjLongEndings(CLexeme *, ET_Subparadigm);
 
-//    virtual ET_ReturnCode eLoad();
-//    virtual ET_ReturnCode eAddEnding();
     ET_ReturnCode eSelect(ET_Subparadigm, ET_Gender, ET_Number, ET_Case, ET_Animacy);                     // long adjectives
-
-
-private:
-//    virtual unsigned __int64 ullHash() const;
 
     ET_Subparadigm m_eSubparadigm;
 
@@ -99,14 +82,7 @@ class CAdjShortEndings : public CEndings
 public:
     CAdjShortEndings(CLexeme * pLexeme);
 
-//    virtual ET_ReturnCode eLoad();
-//    virtual ET_ReturnCode eAddEnding();
-
     ET_ReturnCode eSelect(ET_Gender, ET_Number, ET_StressLocation);                                          // short adjectives
-
-
-private:
-//    virtual unsigned __int64 ullHash() const;
 
 };    //  CAdjShortEndings
 
@@ -115,13 +91,7 @@ class CPersonalEndings : public CEndings
 public:
     CPersonalEndings(CLexeme * pLexeme);
 
-//    virtual ET_ReturnCode eLoad();
-//    virtual ET_ReturnCode eAddEnding();
     ET_ReturnCode Select(ET_Person, ET_Number, ET_StressLocation, ET_StemAuslaut, int iInflectionType, ET_Reflexive);     // personal endings
-
-
-private:
-//    virtual unsigned __int64 ullHash() const;
 
 };   //  CPersonalEndings
 
@@ -130,14 +100,7 @@ class CInfinitiveEndings : public CEndings
 public:
     CInfinitiveEndings(CLexeme * pLexeme);
 
-//    virtual ET_ReturnCode eLoad();
-//    virtual ET_ReturnCode eAddEnding();
-
     void Select(int iInflectionType);                                                              // infinitive
-
-
-private:
-//    virtual unsigned __int64 ullHash() const;
 
 };    //   CInfinitiveEndings
 
@@ -146,15 +109,8 @@ class CPastTenseEndings : public CEndings
 public:
     CPastTenseEndings(CLexeme * pLexeme);
 
-//    virtual ET_ReturnCode eLoad();
-//    virtual ET_ReturnCode eAddEnding();
-
     void Select(ET_Gender, ET_Number, ET_StemAuslaut);                                             // past tense
 
-
-
-private:
-//    virtual unsigned __int64 ullHash() const;
 };    //  CPastTenseEndings
 
 } // namespace Hlib
