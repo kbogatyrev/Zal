@@ -91,7 +91,7 @@ class CPersonalEndings : public CEndings
 public:
     CPersonalEndings(CLexeme * pLexeme);
 
-    ET_ReturnCode Select(ET_Person, ET_Number, ET_StressLocation, ET_StemAuslaut, int iInflectionType, ET_Reflexive);     // personal endings
+    ET_ReturnCode eSelect(ET_Person, ET_Number, ET_StressLocation, ET_StemAuslaut);     // personal endings
 
 };   //  CPersonalEndings
 
