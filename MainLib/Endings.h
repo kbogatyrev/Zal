@@ -109,7 +109,7 @@ class CPastTenseEndings : public CEndings
 public:
     CPastTenseEndings(CLexeme * pLexeme);
 
-    void Select(ET_Gender, ET_Number, ET_StemAuslaut);                                             // past tense
+    ET_ReturnCode eSelect(ET_Gender, ET_Number, ET_StemAuslaut);                                             // past tense
 
 };    //  CPastTenseEndings
 
