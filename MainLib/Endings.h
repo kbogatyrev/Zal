@@ -62,7 +62,7 @@ class CNounEndings : public CEndings
 {
 public:
     CNounEndings(CLexeme *);
-    ET_ReturnCode eSelect(ET_Number, ET_Case, ET_StressLocation);                                            // nouns    
+    ET_ReturnCode eSelect(ET_Number, ET_Case, ET_StressLocation);
 
 };      //  CNounEndings
 
@@ -71,7 +71,7 @@ class CAdjLongEndings : public CEndings
 public:
     CAdjLongEndings(CLexeme *, ET_Subparadigm);
 
-    ET_ReturnCode eSelect(ET_Subparadigm, ET_Gender, ET_Number, ET_Case, ET_Animacy);                     // long adjectives
+    ET_ReturnCode eSelect(ET_Subparadigm, ET_Gender, ET_Number, ET_Case, ET_Animacy);
 
     ET_Subparadigm m_eSubparadigm;
 
@@ -82,7 +82,7 @@ class CAdjShortEndings : public CEndings
 public:
     CAdjShortEndings(CLexeme * pLexeme);
 
-    ET_ReturnCode eSelect(ET_Gender, ET_Number, ET_StressLocation);                                          // short adjectives
+    ET_ReturnCode eSelect(ET_Gender, ET_Number, ET_StressLocation);
 
 };    //  CAdjShortEndings
 
@@ -91,7 +91,7 @@ class CPersonalEndings : public CEndings
 public:
     CPersonalEndings(CLexeme * pLexeme);
 
-    ET_ReturnCode eSelect(ET_Person, ET_Number, ET_StressLocation, ET_StemAuslaut);     // personal endings
+    ET_ReturnCode eSelect(ET_Person, ET_Number, ET_StressLocation, ET_StemAuslaut);
 
 };   //  CPersonalEndings
 
@@ -100,7 +100,7 @@ class CInfinitiveEndings : public CEndings
 public:
     CInfinitiveEndings(CLexeme * pLexeme);
 
-    void Select(int iInflectionType);                                                              // infinitive
+    void Select(int iInflectionType);
 
 };    //   CInfinitiveEndings
 
@@ -109,7 +109,16 @@ class CPastTenseEndings : public CEndings
 public:
     CPastTenseEndings(CLexeme * pLexeme);
 
-    ET_ReturnCode eSelect(ET_Gender, ET_Number, ET_StemAuslaut);                                             // past tense
+    ET_ReturnCode eSelect(ET_Gender, ET_Number, ET_StemAuslaut);
+
+};    //  CPastTenseEndings
+
+class CImperativeEndings : public CEndings
+{
+public:
+    CImperativeEndings(CLexeme * pLexeme);
+
+    ET_ReturnCode eSelect(ET_Number, int iType, bool bIsVariant = false);
 
 };    //  CPastTenseEndings
 

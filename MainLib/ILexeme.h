@@ -76,7 +76,7 @@ namespace Hlib
         virtual CEString sInfStem() = 0;
         virtual bool bFindCommonDeviation(int iNum, bool& bIsOptional) = 0;
         virtual bool bFindStandardAlternation(const CEString& sKey, CEString& sValue) = 0;
-        virtual ET_ReturnCode eGetStemStressPositions(CEString& sLemma, vector<int>& vecPosition) = 0;
+        virtual ET_ReturnCode eGetStemStressPositions(const CEString& sLemma, vector<int>& vecPosition) = 0;
         virtual ET_ReturnCode eGetAlternatingPreverb(const CEString& sVerbForm, CEString& sPreverb, bool& bVoicing) = 0;
         virtual CEString sHash() = 0;
         virtual ET_ReturnCode eWordFormFromHash(int iHash, unsigned int uiAt, IWordForm *& pWf) = 0;
