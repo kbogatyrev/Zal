@@ -27,7 +27,9 @@ public:
           m_iStemStressPos (iStemStressPos),
           m_eStatus (eStatus),
           m_bIrregular (bIrregular)
-    {}
+    {
+        m_sLemma.SetVowels(g_szRusVowels);
+    }
 
 protected:
     int iGramHash (ET_PartOfSpeech ePos, ET_Subparadigm eSubparadigm, ET_Case eCase, 

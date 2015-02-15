@@ -100,7 +100,7 @@ class CInfinitiveEndings : public CEndings
 public:
     CInfinitiveEndings(CLexeme * pLexeme);
 
-    void Select(int iInflectionType);
+    ET_ReturnCode eSelect(int iInflectionType);
 
 };    //   CInfinitiveEndings
 
