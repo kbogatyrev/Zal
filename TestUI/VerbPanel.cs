@@ -54,6 +54,8 @@ namespace TestUI
             m_dictForms.Add("PastNSg", new StCell (textBoxPastNSg));
             m_dictForms.Add("PastPl", new StCell (textBoxPastPl));
 
+            m_dictForms.Add("Infinitive", new StCell(textBoxInfinitive));
+
             m_dictForms.Add("ImperativeSg", new StCell (textBoxImperativeSg));
             m_dictForms.Add("ImperativePl", new StCell (textBoxImperativePl));
             m_dictForms.Add("PartPresActive", new StCell (textBoxPartPresActive));

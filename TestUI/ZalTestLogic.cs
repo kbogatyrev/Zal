@@ -361,6 +361,15 @@ namespace TestUI
                             break;
                         }
 
+                        case EM_Subparadigm.SUBPARADIGM_INFINITIVE:
+                        {
+                            string sKey = "Infinitive";
+                            MarkStress(ref sWordForm, wf);
+                            vp.SetForm(sKey, sWordForm, wf.eStatus());
+
+                            break;
+                        }
+
                         case EM_Subparadigm.SUBPARADIGM_IMPERATIVE:
                         {
                             string sKey = "Imperative";
