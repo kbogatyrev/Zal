@@ -31,8 +31,8 @@ public:
     ET_ReturnCode eStressOnEnding (ET_Number eNumber, ET_Gender eGender);
 
     ET_ReturnCode eGetStressTypes (ET_Number eNumber, 
-                             ET_Gender eGender, 
-                             vector<ET_StressLocation>& vecStressType);
+                                   ET_Gender eGender, 
+                                   vector<ET_StressLocation>& vecStressType);
 
     ET_ReturnCode eCreateFormTemplate (const CEString& sLemma, 
                                        const CEString& sEnding,
