@@ -38,8 +38,8 @@ public:
 
     virtual ET_ReturnCode eGetParser(IParser *& p);
     virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
-    virtual ET_ReturnCode eExportTestData(const CEString& sPath, CProgressCallback&);
-    virtual ET_ReturnCode eImportTestData(const CEString& sPath, CProgressCallback&);
+    virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
+    virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
 
     // Not part ot interface:
     CSqlite * pGetDbHandle();

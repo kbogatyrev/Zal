@@ -15,8 +15,8 @@ using MainLibManaged;
 
 namespace TestUI
 {
-    public delegate void DelegateSetProgressBar (int iStart, int iRange);
-    public delegate void DelegateUpdateProgressBar (int iPercentDone);
+//    public delegate void DelegateSetProgressBar (int iStart, int iRange);
+//    public delegate void DelegateUpdateProgressBar (int iPercentDone);
 
     public enum etDbOperation
     {
@@ -40,9 +40,9 @@ namespace TestUI
         private Dictionary<EM_Person, string> m_hashPerson;
         private Dictionary<EM_AccentType, string> m_hashAccent;
 
-        ProgressDialog m_ProgressDlg;
-        public DelegateUpdateProgressBar m_DelegateUpdateProgressBar;
-        public DelegateSetProgressBar m_DelegateSetProgressBar;
+        public ProgressDialog m_ProgressDlg;
+//        public DelegateUpdateProgressBar m_DelegateUpdateProgressBar;
+//        public DelegateSetProgressBar m_DelegateSetProgressBar;
         private string m_sDbPath;
         private bool m_bDBOpen;
         private string m_sSearchString;
@@ -413,7 +413,7 @@ namespace TestUI
                 m_ProgressDlg.SetMessage(sMsg);
                 m_ProgressDlg.StartPosition = FormStartPosition.CenterScreen;
                 m_ProgressDlg.Show();
-                m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
+//                m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
                 DbOperationThread exportThread = new DbOperationThread (etDbOperation.eExportTable, this, fd.FileName);
                 Thread t = new Thread (new ThreadStart (exportThread.ThreadProc));
                 t.Name = "Zal export worker thread";
@@ -422,7 +422,7 @@ namespace TestUI
                 t.SetApartmentState (ApartmentState.STA);
 
                 t.Start();
-                t.Join();
+//                t.Join();
 
                 // m_ProgressDlg.Close();
             }
@@ -467,7 +467,7 @@ namespace TestUI
             m_ProgressDlg.SetMessage (sTxt);
             m_ProgressDlg.StartPosition = FormStartPosition.CenterScreen;
             m_ProgressDlg.Show();
-            m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
+//            m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
             DbOperationThread importThread = new DbOperationThread (etDbOperation.eImportTable, this, fd.FileName);
             Thread t = new Thread (new ThreadStart (importThread.ThreadProc));
             t.Name = "Zal import worker thread";
@@ -476,16 +476,27 @@ namespace TestUI
             t.SetApartmentState (ApartmentState.STA);
 
             t.Start();
-            t.Join();
+//            t.Join();
             
 //            m_ProgressDlg.Close();
 
         }   //  importTestDataToolStripMenuItem_Click (...)
 
-        void UpdateProgressBar (int iProgress)
+        public void UpdateProgressBar (int iProgress)
         {
-            m_ProgressDlg.SetProgressBarPos (iProgress);
-            m_ProgressDlg.Refresh();
+            if (m_ProgressDlg.InvokeRequired)
+            {
+                m_ProgressDlg.Invoke(new Action(() => 
+                {
+                    m_ProgressDlg.SetProgressBarPos(iProgress);
+                    m_ProgressDlg.Refresh();
+                }));
+            }
+            else
+            {
+                m_ProgressDlg.SetProgressBarPos(iProgress);
+                m_ProgressDlg.Refresh();
+            }
         }
 
     }   //  public partial class TestApplet : Form
@@ -579,29 +590,30 @@ namespace TestUI
         etDbOperation m_eOperationType;
         TestApplet m_formParent;
         string m_sPath;
-        private void m_Progress(int iPercentDone)
-        { }
+        private delegate void Progress(int iPercentDone);
+        Progress m_Progress;
 
         public DbOperationThread (etDbOperation eOpType, TestApplet formParent, string sPath)
         {
             m_eOperationType = eOpType;
             m_formParent = formParent;
             m_sPath = sPath;
+            m_Progress = m_formParent.UpdateProgressBar;
         }
 
         public void ThreadProc()
         {            
             try
             {
-                MainLibManaged.DelegateProgress DelegateProgress = new MainLibManaged.DelegateProgress(m_Progress);
+                MainLibManaged.DelegateProgress DelegateProgress = new MainLibManaged.DelegateProgress(m_formParent.UpdateProgressBar);
 
                 if (etDbOperation.eExportTable == m_eOperationType)
                 {
-                    m_formParent.m_Dictionary.eExportTestData(m_sPath, m_Progress);
+                    m_formParent.m_Dictionary.eExportTestData(m_sPath, DelegateProgress);
                 }
                 else if (etDbOperation.eImportTable == m_eOperationType)
                 {
-                    m_formParent.m_Dictionary.eImportTestData(m_sPath, m_Progress);
+                    m_formParent.m_Dictionary.eImportTestData(m_sPath, DelegateProgress);
                 }
                 else
                 {

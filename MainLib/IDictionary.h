@@ -12,6 +12,9 @@
 
 namespace Hlib
 {
+    // Progress delegate invokedfrom C#/CLR
+    typedef void(__stdcall *PROGRESS_CALLBACK_CLR) (int iPercentDone);
+
     struct IDictionary
     {
         virtual ~IDictionary() {};
@@ -32,8 +35,8 @@ namespace Hlib
 
         virtual ET_ReturnCode eGetParser(IParser *& p) = 0;
         virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier) = 0;
-        virtual ET_ReturnCode eExportTestData(const CEString& sPath, CProgressCallback&) = 0;
-        virtual ET_ReturnCode eImportTestData(const CEString& sPath, CProgressCallback&) = 0;
+        virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR) = 0;
+        virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR) = 0;
     };
 
 }   // namespace Hlib

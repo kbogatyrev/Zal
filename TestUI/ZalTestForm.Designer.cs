@@ -174,12 +174,14 @@
             this.exportTestDataToolStripMenuItem.Name = "exportTestDataToolStripMenuItem";
             this.exportTestDataToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.exportTestDataToolStripMenuItem.Text = "Export Test Data";
+            this.exportTestDataToolStripMenuItem.Click += new System.EventHandler(this.exportTestDataToolStripMenuItem_Click);
             // 
             // importTestDataToolStripMenuItem
             // 
             this.importTestDataToolStripMenuItem.Name = "importTestDataToolStripMenuItem";
             this.importTestDataToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.importTestDataToolStripMenuItem.Text = "Import Test Data";
+            this.importTestDataToolStripMenuItem.Click += new System.EventHandler(this.importTestDataToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
