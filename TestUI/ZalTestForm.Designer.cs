@@ -203,7 +203,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 25);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(660, 820);
+            this.tabControl.Size = new System.Drawing.Size(772, 820);
             this.tabControl.TabIndex = 0;
             // 
             // TestApplet
