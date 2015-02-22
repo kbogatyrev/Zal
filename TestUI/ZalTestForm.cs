@@ -334,6 +334,9 @@ namespace TestUI
 
             string sLexemeHash = null;
             string sHeadword = null;
+
+            gv.Clear();
+
             eRet = m_Verifier.eGetFirstLexemeData(ref sLexemeHash, ref sHeadword);
             while (EM_ReturnCode.H_NO_ERROR == eRet)
             {
@@ -607,13 +610,15 @@ namespace TestUI
             {
                 MainLibManaged.DelegateProgress DelegateProgress = new MainLibManaged.DelegateProgress(m_formParent.UpdateProgressBar);
 
+                EM_ReturnCode eRet = EM_ReturnCode.H_NO_ERROR;
+
                 if (etDbOperation.eExportTable == m_eOperationType)
                 {
-                    m_formParent.m_Dictionary.eExportTestData(m_sPath, DelegateProgress);
+                    eRet = m_formParent.m_Dictionary.eExportTestData(m_sPath, DelegateProgress);
                 }
                 else if (etDbOperation.eImportTable == m_eOperationType)
                 {
-                    m_formParent.m_Dictionary.eImportTestData(m_sPath, DelegateProgress);
+                    eRet = m_formParent.m_Dictionary.eImportTestData(m_sPath, DelegateProgress);
                 }
                 else
                 {
@@ -621,6 +626,12 @@ namespace TestUI
                                      "Zal Error", 
                                      MessageBoxButtons.OK);
                     return;
+                }
+
+                if (eRet < 0)
+                {
+                    string sMsg = "Database error.";
+                    MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 }
             }
             catch (Exception ex)
