@@ -44,7 +44,7 @@ CREATE TABLE aspect_pair (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, asp
 
 CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id TEXT, hash INTEGER, wordform TEXT);
 
-CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, form_id INTEGER, position INTEGER, is_primary BOOLEAN);
+CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, lexeme_id TEXT, hash INTEGER, position INTEGER, is_primary BOOLEAN);
 
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER);
 
