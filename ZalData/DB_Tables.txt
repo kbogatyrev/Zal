@@ -46,7 +46,7 @@ CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id TEXT, hash INTEGER
 
 CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, lexeme_id TEXT, hash INTEGER, position INTEGER, is_primary BOOLEAN);
 
-CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER);
+CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
 
 CREATE INDEX idx_stems_select ON stems (stem_string);
 
