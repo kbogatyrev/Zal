@@ -15,7 +15,7 @@ class CFormBuilderImperative : public CFormBuilderConj
 {
 public:
     CFormBuilderImperative (CLexeme * pLexeme) : 
-        CFormBuilderConj (pLexeme, SUBPARADIGM_IMPERATIVE)
+        m_bIrregularFormsOptional(false), CFormBuilderConj (pLexeme, SUBPARADIGM_IMPERATIVE)
     {}
 
 public:
@@ -38,6 +38,9 @@ public:
     ET_ReturnCode eBuild();
     ET_ReturnCode eAssembleWordForm(ET_Number eNumber, const CEString& sLemma, int iEndingType, CWordForm *& pWordForm);
     ET_ReturnCode eBuildIrregularForms();
+
+protected:
+    bool m_bIrregularFormsOptional;
 
 };
 
