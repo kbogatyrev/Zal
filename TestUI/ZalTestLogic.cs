@@ -152,6 +152,12 @@ namespace TestUI
                     continue;
                 }
 
+                if (eRet != EM_ReturnCode.H_NO_ERROR)
+                {
+                    MessageBox.Show(this, "Unable to retrieve lexeme data.", "Zal Synthesizer");
+                    return;
+                }
+
                 LexemeDataPanel ldp = new LexemeDataPanel();
                 m_hashLexemes.Add(ldp, lex);
                 SubscribeToLexemeEvents(ldp);
