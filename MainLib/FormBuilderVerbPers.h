@@ -30,6 +30,10 @@ namespace Hlib
         ET_ReturnCode eHandleIrregularForms(); // get from the dictionary or generate if abbreviated paradigm was used
         ET_ReturnCode eBuildIrregularForms (ET_Number, ET_Person); // ... when the dictionary only provides base forms
 
+    protected:
+        void CreateIrregular1SgStem(const CEString& s1SgForm);
+        void CreateIrregular3SgStem(const CEString& s3SgForm);
+
     };
 
 }       //  namespace Hlib

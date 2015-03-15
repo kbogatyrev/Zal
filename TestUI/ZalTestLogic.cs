@@ -527,10 +527,11 @@ namespace TestUI
             {
                 hasher.SetGender(eGender);
                 uint uiForms = lexeme.uiFormCount(hasher.iHash());
-                for (uint uiForm = 1; uiForm <= uiForms; ++uiForm)
+                for (uint uiForm = 0; uiForm < uiForms; ++uiForm)
                 {
                     CWordFormManaged wf = null;
-                    lexeme.eWordFormFromHash(hasher.iHash(), lexeme.uiFormCount(hasher.iHash()), ref wf);
+//                    lexeme.eWordFormFromHash(hasher.iHash(), lexeme.uiFormCount(hasher.iHash()), ref wf);
+                    lexeme.eWordFormFromHash(hasher.iHash(), uiForm, ref wf);
                     string sKey = "Short";
                     sKey += m_hashGender[wf.eGender()];
                     sKey += m_hashNumber[wf.eNumber()];
@@ -542,7 +543,7 @@ namespace TestUI
 
             hasher.SetNumber(EM_Number.NUM_PL);
             hasher.SetGender(EM_Gender.GENDER_UNDEFINED);
-            for (uint uiForm = 1; uiForm <= lexeme.uiFormCount(hasher.iHash()); ++uiForm)
+            for (uint uiForm = 0; uiForm < lexeme.uiFormCount(hasher.iHash()); ++uiForm)
             {
                 CWordFormManaged wf = null;
                 lexeme.eWordFormFromHash(hasher.iHash(), uiForm, ref wf);
