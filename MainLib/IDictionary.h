@@ -32,6 +32,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetNextLexeme (ILexeme *& pLexeme) = 0;
 
         virtual void Clear() = 0;
+        virtual ET_ReturnCode Clear(ILexeme *) = 0;
 
         virtual ET_ReturnCode eGetParser(IParser *& p) = 0;
         virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier) = 0;

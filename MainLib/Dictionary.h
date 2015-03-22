@@ -35,6 +35,7 @@ public:
     virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexeme);
 
     virtual void Clear();
+    virtual ET_ReturnCode Clear(ILexeme *);
 
     virtual ET_ReturnCode eGetParser(IParser *& p);
     virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
@@ -50,7 +51,6 @@ private:
     CParser * m_pParser;
     CVerifier * m_pVerifier;
     vector<CLexeme *> m_vecLexemes;
-    vector<CWordForm *> m_vecWordForms;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
     vector<CWordForm *>::iterator m_itCurrentWordForm;
 
