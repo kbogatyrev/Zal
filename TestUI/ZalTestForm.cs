@@ -123,6 +123,8 @@ namespace TestUI
         {
             Properties.Settings.Default.DbPath = m_sDbPath;
             Properties.Settings.Default.Save();
+
+            m_Dictionary.Dispose();
         }
 
         private void dBPathToolStripMenuItem_Click (object sender, EventArgs e)

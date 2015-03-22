@@ -158,33 +158,36 @@ namespace TestUI
                     return;
                 }
 
-                LexemeDataPanel ldp = new LexemeDataPanel();
-                m_hashLexemes.Add(ldp, lex);
-                SubscribeToLexemeEvents(ldp);
-                ldp.Location = new System.Drawing.Point(0, iLexeme * ldp.Size.Height + 4);
-                ldp.sInitialForm = lex.sSourceForm();
-                ldp.sGraphicStem = lex.sGraphicStem();
-                ldp.iInflectionId = lex.iInflectionId();
-                ldp.sMainSymbol = lex.sMainSymbol();
-                ldp.sType = lex.iType().ToString();
-                ldp.sStressType = (m_hashAccent[lex.eAccentType1()].ToString());
-                if (lex.eAccentType2() != EM_AccentType.AT_UNDEFINED)
+                if (lex.sSourceForm() == m_sSearchString)
                 {
-                    ldp.sStressType += "/" + m_hashAccent[lex.eAccentType2()];
+                    LexemeDataPanel ldp = new LexemeDataPanel();
+                    m_hashLexemes.Add(ldp, lex);
+                    SubscribeToLexemeEvents(ldp);
+                    ldp.Location = new System.Drawing.Point(0, iLexeme * ldp.Size.Height + 4);
+                    ldp.sInitialForm = lex.sSourceForm();
+                    ldp.sGraphicStem = lex.sGraphicStem();
+                    ldp.iInflectionId = lex.iInflectionId();
+                    ldp.sMainSymbol = lex.sMainSymbol();
+                    ldp.sType = lex.iType().ToString();
+                    ldp.sStressType = (m_hashAccent[lex.eAccentType1()].ToString());
+                    if (lex.eAccentType2() != EM_AccentType.AT_UNDEFINED)
+                    {
+                        ldp.sStressType += "/" + m_hashAccent[lex.eAccentType2()];
+                    }
+
+                    tabPageLexemes.Controls.Add(ldp);
+                    ldp.Left += 20;
+                    ldp.Top += 20;
+                    if (0 == iLexeme)
+                    {
+                        ldpFocused = ldp;
+                    }
+
+                    ArrayList alTabs = new ArrayList();
+                    m_lexemeToTabs.Add(lex, alTabs);
+
+                    ++iLexeme;
                 }
-
-                tabPageLexemes.Controls.Add(ldp);
-                ldp.Left += 20;
-                ldp.Top += 20;
-                if (0 == iLexeme)
-                {
-                    ldpFocused = ldp;
-                }
-
-                ArrayList alTabs = new ArrayList();
-                m_lexemeToTabs.Add(lex, alTabs);
-
-                ++iLexeme;
 
                 eRet = (EM_ReturnCode)m_Dictionary.eGetNextLexeme(ref lex);
 
@@ -733,6 +736,16 @@ namespace TestUI
 
         public void CloseLexemeTabs (LexemeDataPanel ldp)
         {
+            EM_ReturnCode eRet = m_Dictionary.Clear(m_hashLexemes[ldp]);
+
+            if (eRet != EM_ReturnCode.H_NO_ERROR)
+            {
+                MessageBox.Show("Possible internal error: unable to delete lexeme.",
+                                "Zal Warning",
+                                 MessageBoxButtons.OK,
+                                 MessageBoxIcon.Warning);
+            }
+
             ArrayList alTabs = m_lexemeToTabs [m_hashLexemes[ldp]];
             foreach (TabPage tp in alTabs)
             {
