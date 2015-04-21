@@ -127,6 +127,7 @@ ET_ReturnCode CParsingTree::eLoad(CSqlite * pDb)
             m_mapSortedEndingsList[sEnding].push_back(llDbKey);
             m_setEndingStrings.insert(sEnding);
         }
+        pDb->Finalize();
     }
     catch (...)
     {
