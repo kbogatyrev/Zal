@@ -86,6 +86,15 @@ public:
 
 };    //  CAdjShortEndings
 
+class CAdjPronounEndings : public CEndings
+{
+public:
+    CAdjPronounEndings(CLexeme *);
+
+    ET_ReturnCode eSelect(ET_Gender, ET_Number, ET_Case, ET_Animacy);
+
+};   //  CAdjPronounEndings
+
 class CPersonalEndings : public CEndings
 {
 public:
