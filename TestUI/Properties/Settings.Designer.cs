@@ -25,7 +25,7 @@ namespace TestUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Zal.db3")]
         public string DbPath {
             get {
                 return ((string)(this["DbPath"]));
