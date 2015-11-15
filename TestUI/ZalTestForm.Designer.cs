@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestApplet));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dBPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,12 +70,14 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dBPathToolStripMenuItem,
             this.FreqWFListToolStripMenuItem});
+            this.fileToolStripMenuItem.Enabled = false;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // dBPathToolStripMenuItem
             // 
+            this.dBPathToolStripMenuItem.Enabled = false;
             this.dBPathToolStripMenuItem.Name = "dBPathToolStripMenuItem";
             this.dBPathToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.dBPathToolStripMenuItem.Text = "Open Dictionary";
@@ -82,6 +85,7 @@
             // 
             // FreqWFListToolStripMenuItem
             // 
+            this.FreqWFListToolStripMenuItem.Enabled = false;
             this.FreqWFListToolStripMenuItem.Name = "FreqWFListToolStripMenuItem";
             this.FreqWFListToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.FreqWFListToolStripMenuItem.Text = "Open frequent wordforms list";
@@ -92,7 +96,6 @@
             this.synthesizeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.byEntryFormToolStripMenuItem,
             this.byGraphicStemToolStripMenuItem});
-            this.synthesizeToolStripMenuItem.Enabled = false;
             this.synthesizeToolStripMenuItem.Name = "synthesizeToolStripMenuItem";
             this.synthesizeToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
             this.synthesizeToolStripMenuItem.Text = "Synthesize";
@@ -106,6 +109,7 @@
             // 
             // byGraphicStemToolStripMenuItem
             // 
+            this.byGraphicStemToolStripMenuItem.Enabled = false;
             this.byGraphicStemToolStripMenuItem.Name = "byGraphicStemToolStripMenuItem";
             this.byGraphicStemToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.byGraphicStemToolStripMenuItem.Text = "By Graphic Stem";
@@ -117,7 +121,6 @@
             this.preprocessToolStripMenuItem,
             this.parseWordFormToolStripMenuItem,
             this.parseTextToolStripMenuItem});
-            this.analyzeToolStripMenuItem.Enabled = false;
             this.analyzeToolStripMenuItem.Name = "analyzeToolStripMenuItem";
             this.analyzeToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.analyzeToolStripMenuItem.Text = "Analyze";
@@ -157,6 +160,7 @@
             // 
             // batchTestToolStripMenuItem
             // 
+            this.batchTestToolStripMenuItem.Enabled = false;
             this.batchTestToolStripMenuItem.Name = "batchTestToolStripMenuItem";
             this.batchTestToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.batchTestToolStripMenuItem.Text = "Test All";
@@ -195,8 +199,8 @@
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(87, 17);
-            this.toolStripStatusLabel.Text = "No data source";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(295, 17);
+            this.toolStripStatusLabel.Text = "Sasha Aikhenvald\'s personal copy. Not for distribution.";
             // 
             // tabControl
             // 
@@ -214,6 +218,7 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(800, 900);
