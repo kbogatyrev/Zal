@@ -20,14 +20,13 @@ namespace TestUI
         {
 //            m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar(this.UpdateProgressBar);
 
-            m_Dictionary = new CDictionaryManaged();
-            m_bDBOpen = true;
-            m_sDbPath = Properties.Settings.Default.DbPath;
-            m_Dictionary.eSetDbPath(m_sDbPath);
+            m_bDBOpen = false;
 
+            m_sDbPath = Properties.Settings.Default.DbPath;
 
             m_lexemeToTabs = new Dictionary<CLexemeManaged, ArrayList>();
 
+            m_Dictionary = new CDictionaryManaged();
 //            m_LexPreprocessor = new MainLib.ZalLexPreprocessor();
 //            m_Analyzer = new MainLib.ZalAnalyzer();
 //            m_TextAnalyzer = new TextAnalyzer(m_Analyzer);

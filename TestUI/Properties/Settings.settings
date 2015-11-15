@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DbPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Zal.db3</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
