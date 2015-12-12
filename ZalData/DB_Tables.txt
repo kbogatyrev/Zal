@@ -45,6 +45,7 @@ CREATE TABLE aspect_pair (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, asp
 CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id TEXT, hash INTEGER, wordform TEXT);
 
 CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, lexeme_id TEXT, hash INTEGER, position INTEGER, is_primary BOOLEAN);
+CREATE INDEX idx_test_data_stress ON test_data_stress (id, form_id);
 
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
 
@@ -91,6 +92,7 @@ CREATE INDEX idx_ending_data_stress ON ending_data (stress);
 CREATE INDEX idx_endings_id ON endings_for_analysis (id);
 CREATE INDEX idx_endings_subtable_id ON endings_for_analysis (subtable_id);
 CREATE INDEX idx_endings ON endings_for_analysis (ending);
+
 CREATE INDEX idx_stems ON stems_for_analysis (stem);
 CREATE INDEX idx_stems_id ON stems_for_analysis (id);
 
@@ -103,6 +105,7 @@ CREATE INDEX idx_wordforms_stem_data_id ON wordforms (stem_data_id);
 CREATE INDEX idx_wordforms_ending_data_id ON wordforms (ending_data_id);
  
 CREATE INDEX idx_stems_id1 ON stems (id);
+CREATE INDEX idx_stems_stem_string ON stems (stem_string)
 
 CREATE INDEX idx_stress_data_form_id on stress_data (form_id);
 CREATE INDEX idx_stress_data_position on stress_data (position);
