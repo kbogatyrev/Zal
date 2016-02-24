@@ -74,9 +74,9 @@
     <ApplicationIcon>Zal.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MainLibManaged, Version=1.0.5557.14231, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="MainLibManaged, Version=1.0.5813.28855, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug\MainLibManaged.dll</HintPath>
+      <HintPath>..\Release\MainLibManaged.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
