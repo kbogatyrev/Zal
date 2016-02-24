@@ -2,10 +2,11 @@
 
 <?define S_BUILD_DIR = "..\Release" ?>
 <?define S_DATA_DIR = "..\ZalData\" ?>
+<?define S_REDIST_DIR = "C:\Program Files (x86)\Common Files\Merge Modules" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product Id="*" Name="Zalizniak's Grammatical Dictionary of Russian" Language="1033" Version="1.0.4.0" Manufacturer="Xiao Gogo Software and Baked Goods" UpgradeCode="21a83a2f-48ab-477e-bd50-ccb1ba338417">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" />
+		<Package InstallerVersion="405" Compressed="yes" InstallScope="perMachine" Platform="x86" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
@@ -18,9 +19,13 @@
 			<ComponentGroupRef Id="ProductComponents" />
       <ComponentRef Id="ApplicationShortcutStartMenu" />
     </Feature>
-	</Product>
+    <Feature Id="VCRedist" Title="Visual C++ Runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <MergeRef Id="VCRedist2013"/>
+    </Feature>
+  </Product>
 
 	<Fragment>
+
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
 				<Directory Id="INSTALLFOLDER" Name="Zal" />
@@ -37,6 +42,11 @@
         <RegistryValue Root="HKCU" Key="Software\Gogo\Zal" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+      <Merge Id="VCRedist2013" SourceFile="$(var.S_REDIST_DIR)\Microsoft_VC120_CRT_x86.msm" DiskId="1" Language="0"/>
+    </DirectoryRef>
+
   </Fragment>
 
   <Fragment>
