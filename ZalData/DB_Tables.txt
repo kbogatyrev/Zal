@@ -48,6 +48,10 @@ CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, lexeme_id TEXT, hash INTE
 
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
 
+CREATE TABLE conversion_errors (id INTEGER PRIMARY KEY, headword_id INTEGER, Description TEXT, Paragraph TEXT, Resolved INTEGER DEFAULT 0);
+
+CREATE TABLE conversion_source_recent_edit (id INTEGER PRIMARY KEY, headword_id INTEGER, edit_start INTEGER, edit_length INTEGER);
+
 CREATE INDEX idx_stems_select ON stems (stem_string);
 
 CREATE INDEX idx_stem_data_gram_hash ON stem_data (gram_hash);
@@ -72,7 +76,7 @@ CREATE INDEX idx_inflection_descr ON inflection (descriptor_id);
 CREATE INDEX idx_stress_id ON stress (id, headword_id);
 CREATE INDEX idx_stress_hw ON stress (headword_id);
 CREATE INDEX idx_test_data_id ON test_data (id, lexeme_id);
-CREATE INDEX idx_test_data_stress ON test_data_stress (id, form_id);
+CREATE INDEX idx_test_data_stress ON test_data_stress (id, lexeme_id);
 CREATE INDEX idx_lexeme_hash_to_descriptor ON lexeme_hash_to_descriptor (lexeme_hash);
 CREATE INDEX idx_stem_string ON stems (stem_string);
 
