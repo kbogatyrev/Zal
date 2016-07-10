@@ -30,8 +30,8 @@ namespace Hlib
         virtual ET_ReturnCode eGetFirstStressPos(int& iPos, ET_StressType& eType) = 0;
         virtual ET_ReturnCode eGetNextStressPos(int& iPos, ET_StressType& eType) = 0;
 
-        virtual int iGramHash() = 0;
-        virtual ET_ReturnCode eInitFromHash(int iHash) = 0;
+        virtual CEString sGramHash() = 0;
+        virtual ET_ReturnCode eInitFromHash(const CEString& sHash) = 0;
 //        virtual ET_ReturnCode SaveTestData() = 0;
 
         virtual ET_ReturnCode eClone(IWordForm *&) = 0;

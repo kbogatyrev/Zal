@@ -19,10 +19,10 @@ public:
     {}
 
 protected:
-    int iGramHash (ET_Gender eGender,
-                   ET_Animacy eAnimacy,
-                   ET_Case eCase,
-                   ET_Number eNumber);
+    CEString sGramHash (ET_Gender eGender,
+                        ET_Animacy eAnimacy,
+                        ET_Case eCase,
+                        ET_Number eNumber);
 
     ET_ReturnCode eHandleStemAugment (CEString& sLemma, ET_Number, ET_Case);
 
