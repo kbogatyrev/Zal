@@ -48,9 +48,11 @@ CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, lexeme_id TEXT, hash INTE
 
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
 
-CREATE TABLE conversion_errors (id INTEGER PRIMARY KEY, headword_id INTEGER, Description TEXT, Paragraph TEXT, Resolved INTEGER DEFAULT 0);
+CREATE TABLE conversion_errors (id INTEGER PRIMARY KEY, Description TEXT, Paragraph TEXT, Resolved INTEGER DEFAULT 0);
 
 CREATE TABLE conversion_source_recent_edit (id INTEGER PRIMARY KEY, headword_id INTEGER, edit_start INTEGER, edit_length INTEGER);
+
+CREATE TABLE conversion_source_text (id INTEGER PRIMARY KEY, headword_id INTEGER, descriptor_id INTEGER, source_text TEXT);
 
 CREATE INDEX idx_stems_select ON stems (stem_string);
 
