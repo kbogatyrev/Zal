@@ -493,10 +493,10 @@ namespace TestUI
             hasher.SetReflexivity(lexeme.eIsReflexive());
 
             CWordFormManaged wf = null;
-            uint uiForms = lexeme.uiFormCount(hasher.iHash());
+            uint uiForms = lexeme.uiFormCount(hasher.sHash());
             if (uiForms > 0)
             {
-                lexeme.eWordFormFromHash(hasher.iHash(), 0, ref wf);
+                lexeme.eWordFormFromHash(hasher.sHash(), 0, ref wf);
                 AdjPanel adjPanel = new AdjPanel();
                 TabPage tabPageDetails = new TabPage (wf.sWordForm());
                 ArrayList al = m_lexemeToTabs[lexeme];
@@ -529,12 +529,12 @@ namespace TestUI
                  ++eGender)
             {
                 hasher.SetGender(eGender);
-                uint uiForms = lexeme.uiFormCount(hasher.iHash());
+                uint uiForms = lexeme.uiFormCount(hasher.sHash());
                 for (uint uiForm = 0; uiForm < uiForms; ++uiForm)
                 {
                     CWordFormManaged wf = null;
 //                    lexeme.eWordFormFromHash(hasher.iHash(), lexeme.uiFormCount(hasher.iHash()), ref wf);
-                    lexeme.eWordFormFromHash(hasher.iHash(), uiForm, ref wf);
+                    lexeme.eWordFormFromHash(hasher.sHash(), uiForm, ref wf);
                     string sKey = "Short";
                     sKey += m_hashGender[wf.eGender()];
                     sKey += m_hashNumber[wf.eNumber()];
@@ -546,10 +546,10 @@ namespace TestUI
 
             hasher.SetNumber(EM_Number.NUM_PL);
             hasher.SetGender(EM_Gender.GENDER_UNDEFINED);
-            for (uint uiForm = 0; uiForm < lexeme.uiFormCount(hasher.iHash()); ++uiForm)
+            for (uint uiForm = 0; uiForm < lexeme.uiFormCount(hasher.sHash()); ++uiForm)
             {
                 CWordFormManaged wf = null;
-                lexeme.eWordFormFromHash(hasher.iHash(), uiForm, ref wf);
+                lexeme.eWordFormFromHash(hasher.sHash(), uiForm, ref wf);
                 string sKey = "Short";
                 sKey += m_hashNumber[wf.eNumber()];
                 string sWordForm = wf.sWordForm();
