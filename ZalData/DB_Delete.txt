@@ -23,4 +23,5 @@ DELETE FROM stems_for_analysis;
 DELETE FROM endings_for_analysis;
 DELETE FROM endings_meta;
 DELETE FROM subtables_for_heuristics;
-DELETE FROM conversion_errors
+DELETE FROM conversion_errors;
+DELETE FROM incomplete_parses;
