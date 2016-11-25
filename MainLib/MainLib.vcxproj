@@ -222,7 +222,6 @@
     <ClInclude Include="FormBuilderVerbPast.h" />
     <ClInclude Include="FormBuilderVerbPers.h" />
     <ClInclude Include="IDictionary.h" />
-    <ClInclude Include="IHasher.h" />
     <ClInclude Include="ILexeme.h" />
     <ClInclude Include="IParser.h" />
     <ClInclude Include="IVerifier.h" />
