@@ -1,6 +1,6 @@
 ; MainLib.def : Declares the module parameters.
 
-LIBRARY      "MainLib.DLL"
+LIBRARY      "ZalMainLib.DLL"
 
 EXPORTS
 	GetDictionary	@1
