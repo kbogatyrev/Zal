@@ -3,18 +3,18 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 7.00.0555 */
-/* at Sun Jan 19 07:44:45 2014
+ /* File created by MIDL compiler version 7.00.0500 */
+/* at Mon Nov 14 07:27:34 2016
  */
 /* Compiler settings for .\ConversionLib.idl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
+    Oicf, W1, Zp8, env=Win32 (32b run)
     protocol : dce , ms_ext, c_ext, robust
     error checks: stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-/* @@MIDL_FILE_HEADING(  ) */
+//@@MIDL_FILE_HEADING(  )
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -125,7 +125,7 @@ EXTERN_C const IID IID_IError;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IError * This,
             /* [in] */ REFIID riid,
-            /* [annotation][iid_is][out] */ 
+            /* [iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -262,7 +262,7 @@ EXTERN_C const IID IID_IZalSourceReader;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IZalSourceReader * This,
             /* [in] */ REFIID riid,
-            /* [annotation][iid_is][out] */ 
+            /* [iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
@@ -375,7 +375,7 @@ EXTERN_C const IID IID_IZalNotification2;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IZalNotification2 * This,
             /* [in] */ REFIID riid,
-            /* [annotation][iid_is][out] */ 
+            /* [iid_is][out] */ 
             __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
