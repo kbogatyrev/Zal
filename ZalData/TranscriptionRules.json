@@ -1,11 +1,13 @@
 {
 	"и": 
 	[{
+		"COMMENT" : "$5: Ива, Искра, избА, игрАть, издавАть; кроИть, стоИт, стОит, поигрАть; сИла, тИна, вить, чИстый, щи, стирАть, пилА, щипАть, вЫбить",
 		"LEFT_CONTEXTS": ["NOT BOUNDARY_PROCLITIC", "VOWEL", "SOFT_CONSONANT"],
 		"TARGET": "I"
 	},
 	{
-		"LEFT_CONTEXTS": ["BOUNDARY_PROCLITIC", "HARD_CONSONANT"],
+		"COMMENT" : "$6: из Искры, в Избы, с иглОй, к игрЕ, к ИванОву, брат идёт, он Ищет, ИвАн ИвАнович, мАльчик игрАет, смЕх и гОре, кот и пОвар",
+		"LEFT_CONTEXTS": ["HARD_CONSONANT + BOUNDARY_WORD"],
 		"TARGET": "Y"
 	},
 	{
@@ -45,14 +47,24 @@
 		"TARGET" : ["STRESSED_A"]
 	},
 	{
-		"STRESS" : "PRETONIC",
+		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "NOT BOUNDARY_PROCLITIC"],
 		"TARGET" : "PRETONIC_A"
 	},
 	{
-		"STRESS" : "PRETONIC",
+		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
 		"TARGET" : "PRETONIC_IE"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "Lшжц"],
+		"TARGET" : "SCHWA"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
+		"TARGET" : "PRETONIC_A"
 	}],
 	"я":
 	[{
@@ -66,21 +78,59 @@
 		"TARGET" : ["J", "STRESSED_A"]		
 	},
 	{
-		"STRESS" : "PRETONIC",
+		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
 		"TARGET" : "PRETONIC_IE"
 	},
 	{		
-		"STRESS" : "PRETONIC",
+		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
 		"TARGET" : ["J", "PRETONIC_IE"]
-	}]
-	"о":
+	},
 	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
+		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
+		"MORPHEME" : "ENDING",
+		"TARGET" : "SCHWA"
+	},
+	{
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : ["SOFT_CONSONANT", "Lчщ"],
+		"MORPHEME" : "ENDING",
+		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
+	}],
+	"о":
+	[{
 		"STRESS" : "STRESSED",
 		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "HARD_CONSONANT", "Lжшщ"],
 		"TARGET" : "STRESSED_O"
 	},
+	{
+		"STRESS" : "FIRST_PRETONIC",
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "NOT BOUNDARY_PROCLITIC"],
+		"TARGET" : "PRETONIC_A"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "Lшжц"],
+		"TARGET" : "SCHWA"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
+		"TARGET" : "PRETONIC_A"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "Lв",
+		"RIGHT_CONTEXTS" : "Lв",
+		"TARGET" : "SYLLABIC_V"
+	}],
 	"ё":
 	[{
 		"STRESS" : "STRESSED",
@@ -94,18 +144,65 @@
 	}],
 	"е":
 	[{
-		"STRESS" : "PRETONIC",
+		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : "Lцжш",
 		"TARGET" : "PRETONIC_HARD_IE"
 	},
 	{
-		"STRESS" : "PRETONIC",
+		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
 		"TARGET" : "PRETONIC_HARD_IE"
 	},
 	{		
-		"STRESS" : "PRETONIC",
+		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
 		"TARGET" : ["J", "PRETONIC_IE"]
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
+		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "Lшжц", 
+		"TARGET" : "SCHWA"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "NOT BOUNDARY_PROCLITIC", 
+		"TARGET" : ["J", "UNSTRESSED_FRONT_VOWEL"]
+	},
+	{
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : "Lшжц", 
+		"MORPHEME" : "ENDING",
+		"SUBPARADIGM" : "SUBPARADIGM_NOUN",		
+		"NUMBER" : "NUM_SG",
+		"CASE" : "CASE_PREP",
+		"TARGET" : "UNSTRESSED_YE"
+	},
+	{
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : "Lшжц", 
+		"MORPHEME" : "ENDING",
+		"SUBPARADIGM" : "SUBPARADIGM_NOUN",
+		"NUMBER" : "NUM_SG",
+		"CASE" : "CASE_DAT",
+		"GENDER" : "GENDER_F",
+		"TARGET" : "UNSTRESSED_YE"
+	},
+	{
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : "Lшжц", 
+		"MORPHEME" : "ENDING",
+		"SUBPARADIGM" : "SUBPARADIGM_COMPARATIVE",
+		"TARGET" : "UNSTRESSED_YE"
+	},
+	{
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : "Lв", 
+		"RIGHT_CONTEXTS" : "Lв",
+		"TARGET" : "SYLLABIC_V"
 	}]
 }
