@@ -1,52 +1,13 @@
 {
-	"и": 
-	[{
-		"COMMENT" : "$5: Ива, Искра, избА, игрАть, издавАть; кроИть, стоИт, стОит, поигрАть; сИла, тИна, вить, чИстый, щи, стирАть, пилА, щипАть, вЫбить",
-		"LEFT_CONTEXTS": ["NOT BOUNDARY_PROCLITIC", "VOWEL", "SOFT_CONSONANT"],
-		"TARGET": "I"
-	},
-	{
-		"COMMENT" : "$6: из Искры, в Избы, с иглОй, к игрЕ, к ИванОву, брат идёт, он Ищет, ИвАн ИвАнович, мАльчик игрАет, смЕх и гОре, кот и пОвар",
-		"LEFT_CONTEXTS": ["HARD_CONSONANT + BOUNDARY_WORD"],
-		"TARGET": "Y"
-	},
-	{
-		"LEFT_CONTEXTS" : "Lшжц",
-		"TARGET" : "Y"
-	}
-	],
-	"ы":
-	{
-		"LEFT_CONTEXTS" : "HARD_CONSONANT",
-		"TARGET" : "Y"
-	},
-	"у":
-	{
-		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "HARD_CONSONANT", "Lчщ"],
-		"TARGET" : "U"
-	},
-	"ю":
-	[{
-		"LEFT_CONTEXTS" : "SOFT_CONSONANT_NO_CH_SHCH",
-		"TARGET" : "U"		
-	},
-	{
-		"LEFT_CONTEXTS": ["BOUNDARY_WORD", "VOWEL", "Lьъ"],
-		"RIGHT_CONTEXTS": ["HARD_CONSONANT", "BOUNDARY_WORD"],
-		"TARGET" : ["J", "LEFT_FRONTED_U"]
-	},
-	{
-		"LEFT_CONTEXTS": ["BOUNDARY_WORD", "VOWEL", "Lьъ"],
-		"RIGHT_CONTEXTS": "SOFT_CONSONANT",
-		"TARGET" : ["J", "LEFT_AND_RIGHT_FRONTED_U"]
-	}],
 	"а":
 	[{
+		"COMMENT" : "$15: акт, Арка, Алый; заАхать, поАхать; там, дам, сам, гам, вам, мак, бак, брак, шаг, жАба, шАлость, жаль; час, кочАн, качАть, пощАда",
 		"STRESS" : "STRESSED",
-		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "HARD_CONSONANT", "Lчщ"],
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "HARD_CONSONANT", "Lчщ"],
 		"TARGET" : ["STRESSED_A"]
 	},
 	{
+		"COMMENT" : "",
 		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "NOT BOUNDARY_PROCLITIC"],
 		"TARGET" : "PRETONIC_A"
@@ -65,82 +26,6 @@
 		"STRESS" : "UNSTRESSED",
 		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
 		"TARGET" : "PRETONIC_A"
-	}],
-	"я":
-	[{
-		"STRESS" : "STRESSED",
-		"LEFT_CONTEXTS" : "SOFT_CONSONANT_NO_CH_SHCH",
-		"TARGET" : ["STRESSED_A"]
-	},
-	{
-		"STRESS" : "STRESSED",
-		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
-		"TARGET" : ["J", "STRESSED_A"]		
-	},
-	{
-		"STRESS" : "FIRST_PRETONIC",
-		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
-		"TARGET" : "PRETONIC_IE"
-	},
-	{		
-		"STRESS" : "FIRST_PRETONIC",
-		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
-		"TARGET" : ["J", "PRETONIC_IE"]
-	},
-	{
-		"STRESS" : "UNSTRESSED",
-		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
-		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
-	},
-	{
-		"STRESS" : "UNSTRESSED",
-		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
-		"MORPHEME" : "ENDING",
-		"TARGET" : "SCHWA"
-	},
-	{
-		"STRESS" : "POSTTONIC",
-		"LEFT_CONTEXTS" : ["SOFT_CONSONANT", "Lчщ"],
-		"MORPHEME" : "ENDING",
-		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
-	}],
-	"о":
-	[{
-		"STRESS" : "STRESSED",
-		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "HARD_CONSONANT", "Lжшщ"],
-		"TARGET" : "STRESSED_O"
-	},
-	{
-		"STRESS" : "FIRST_PRETONIC",
-		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "NOT BOUNDARY_PROCLITIC"],
-		"TARGET" : "PRETONIC_A"
-	},
-	{
-		"STRESS" : "UNSTRESSED",
-		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "Lшжц"],
-		"TARGET" : "SCHWA"
-	},
-	{
-		"STRESS" : "UNSTRESSED",
-		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
-		"TARGET" : "PRETONIC_A"
-	},
-	{
-		"STRESS" : "UNSTRESSED",
-		"LEFT_CONTEXTS" : "Lв",
-		"RIGHT_CONTEXTS" : "Lв",
-		"TARGET" : "SYLLABIC_V"
-	}],
-	"ё":
-	[{
-		"STRESS" : "STRESSED",
-		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
-		"TARGET" : "STRESSED_O"
-	},
-	{
-		"STRESS" : "STRESSED",
-		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
-		"TARGET" : ["J", "STRESSED_O"]
 	}],
 	"е":
 	[{
@@ -204,5 +89,144 @@
 		"LEFT_CONTEXTS" : "Lв", 
 		"RIGHT_CONTEXTS" : "Lв",
 		"TARGET" : "SYLLABIC_V"
+	}],
+	"ё":
+	[{
+		"COMMENT" : "$21: лён, вёл, идём, пёк, пасём, рёв, мёд, дёрну, чёлн, щёлкнуть",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
+		"TARGET" : "STRESSED_O"
+	},
+	{
+		"COMMENT" : "$22: жёлоб, жёлтый, шёлк, шёл, поджёг, чёрный, зачёт, щётка, щёлкать; see also sub о",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : "Lжшчщ",
+		"TARGET" : "STRESSED_O"
+	},	
+	{
+		"COMMENT" : "$23: ёлки, ёж, даём, заём; льёт, пьёшь, вьём, муравьём, съёмки",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "Lьъ"],
+		"TARGET" : ["J + STRESSED_O"]
+	}],
+	"и": 
+	[{
+		"COMMENT" : "$5: Ива, Искра, избА, игрАть, издавАть; кроИть, стоИт, стОит, поигрАть; сИла, тИна, вить, чИстый, щи, стирАть, пилА, щипАть, вЫбить",
+		"LEFT_CONTEXTS": ["NOT BOUNDARY_PROCLITIC", "VOWEL", "SOFT_CONSONANT"],
+		"TARGET": "I"
+	},
+	{
+		"COMMENT" : "$6: из Искры, в Избы, с иглОй, к игрЕ, к ИванОву, брат идёт, он Ищет, ИвАн ИвАнович, мАльчик игрАет, смЕх и гОре, кот и пОвар",
+		"LEFT_CONTEXTS": ["HARD_CONSONANT + BOUNDARY_WORD"],
+		"TARGET": "Y"
+	},
+	{
+		"COMMENT" : "$7: шил, жир, жилА, вЫшить, цинк",
+		"LEFT_CONTEXTS" : "Lшжц",
+		"TARGET" : "Y"
+	}],
+	"о":
+	[{
+		"COMMENT" : "$20: он, ось, Острый, охать; заОхать, заОчник, поОтдаль, проОбраз; дом, сом, пол, бок, вот, гром, лом, ток, ком, гость, ход, цОкать",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "HARD_CONSONANT"],
+		"TARGET" : "STRESSED_O"
+	},
+	{
+		"COMMENT" : "$22: обжОра, жох, шов, шОрох, поджОг, чОкаться, чОпорный, холщОвый, плющом; see also sub ё",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : "Lжшчщ",
+		"TARGET" : "STRESSED_O"
+	},	
+	{
+		"STRESS" : "FIRST_PRETONIC",
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "NOT BOUNDARY_PROCLITIC"],
+		"TARGET" : "PRETONIC_A"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "Lшжц"],
+		"TARGET" : "SCHWA"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
+		"TARGET" : "PRETONIC_A"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "Lв",
+		"RIGHT_CONTEXTS" : "Lв",
+		"TARGET" : "SYLLABIC_V"
+	}],
+	"у":
+	{
+		"COMMENT" : "$10: ум, Улица, удАр, убирАть; наУка, паУк, заучИть, вЫучить, сОус, клОун; сук, пух, куст, шум, пучОк, букАшка, кулАк, шумЕть, цукАты, пулемёт, жуликовАтый, вЫкуп, вЫступ; чУтко, чуб, щУка, чудАк, чугУн, чудакИ, на Ощупь, плАчут",
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "HARD_CONSONANT", "Lчщ"],
+		"TARGET" : "U"
+	},
+	"ы":
+	{
+		"COMMENT" : "$8: мыть, забЫть, дым, былА, сытА, дымОк, дымовОй, цыц, кУцый",
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "Lц"],
+		"TARGET" : "Y"
+	},
+	"э":
+	{
+		"COMMENT" : "$26: Эхо, Эпос, Экстра, Этот, Этакий, Экий, э!, эх!, эвОна!; поЭт, поЭзия, силуЭт, менуЭт; мэр, пэр, сэр",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "HARD_PAIRED_CONSONANT"],
+		"TARGET" : "STRESSED_E"
+	},
+	"ю":
+	[{
+		"COMMENT" : "$11: тюк, люк, рЮмки, нюх, людЕй, слюдА, вЫключил, гОлубю",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT_NO_CH_SHCH",
+		"TARGET" : "U"		
+	},
+	{
+		"COMMENT" : "$12: юг, юлА, знАю, мОю, умЕю; вью, пью, шью, чью, вЫлью, съюлИть",
+		"LEFT_CONTEXTS": ["BOUNDARY_WORD", "VOWEL", "Lьъ"],
+		"TARGET" : ["J + U"]
+	}],
+	"я":
+	[{
+		"COMMENT" : "$16: мять, пЯтый, сЯду, тЯнут, тебЯ",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT_NO_CH_SHCH",
+		"TARGET" : ["STRESSED_A"]
+	},
+	{
+		"COMMENT" : ""
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
+		"TARGET" : ["J + STRESSED_A"]		
+	},
+	{
+		"STRESS" : "FIRST_PRETONIC",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
+		"TARGET" : "PRETONIC_IE"
+	},
+	{		
+		"STRESS" : "FIRST_PRETONIC",
+		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
+		"TARGET" : ["J", "PRETONIC_IE"]
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
+		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
+	},
+	{
+		"STRESS" : "UNSTRESSED",
+		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
+		"MORPHEME" : "ENDING",
+		"TARGET" : "SCHWA"
+	},
+	{
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : ["SOFT_CONSONANT", "Lчщ"],
+		"MORPHEME" : "ENDING",
+		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
 	}]
 }
