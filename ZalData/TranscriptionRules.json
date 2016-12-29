@@ -7,12 +7,13 @@
 		"TARGET" : ["STRESSED_A"]
 	},
 	{
-		"COMMENT" : "",
+		"COMMENT" : "$32: садЫ, дарЫ, малА, пашУ, старИк, травА, шалУн, шалАш, жарА, жаркОе, царИзм, царАпать; аптЕка, армЯк, аршИн, аккОрд, амбАр",
 		"STRESS" : "FIRST_PRETONIC",
-		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "NOT BOUNDARY_PROCLITIC"],
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "BOUNDARY_WORD"],
 		"TARGET" : "PRETONIC_A"
 	},
 	{
+		"COMMENT" : "$38: ",
 		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
 		"TARGET" : "PRETONIC_IE"
@@ -29,11 +30,25 @@
 	}],
 	"е":
 	[{
+		"COMMENT" : "$27: пел, бЕлый, вЕра, мел, сЕрый, зЕркало, дЕло, тЕсно, кедр, гЕтры, нерв, тЕрмин, музЕй, инспЕктор, мЕдик; шест, жест, цЕнный",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : "CONSONANT",
+		"TARGET" : "STRESSED_E"
+	},
+	{
+		"COMMENT" : "$29: ел, ем, ель, Еду, Ездил, заЕду, поЕли, пьЕса, пьЕксы, валансьЕн, досьЕ, о муравьЕ, о соловьЕ, съел; exception: проЕкт",
+		"STRESS" : "STRESSED",
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "Lьъ"],
+		"TARGET" : "J + STRESSED_E"
+	},
+	{
+		"COMMENT" : "$33: женА, желтЕть, жестОк; шестОй, шептАть, шелкА; ценА, цедИть, лицевОй",
 		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : "Lцжш",
 		"TARGET" : "PRETONIC_HARD_IE"
 	},
 	{
+		"COMMENT" : "$37: несИ, несТи, леснИк, несёт, ведёт, плетЕнь, бежАть, чесАть, чеснОк, щенОк",
 		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
 		"TARGET" : "PRETONIC_HARD_IE"
@@ -139,8 +154,9 @@
 		"TARGET" : "STRESSED_O"
 	},	
 	{
+		"COMMENT" : "$32: водА, ногА, грозА, полЯ, морЯ, столЫ, плодЫ, прошУ, пошёл, шофёр, жонглёр; окнО, одИн, огУрчик, осИны, одЕть",
 		"STRESS" : "FIRST_PRETONIC",
-		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "NOT BOUNDARY_PROCLITIC"],
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "BOUNDARY_WORD"],
 		"TARGET" : "PRETONIC_A"
 	},
 	{
@@ -197,12 +213,13 @@
 		"TARGET" : ["STRESSED_A"]
 	},
 	{
-		"COMMENT" : ""
+		"COMMENT" : "$17: яд, струЯ, краЯ; пьян, дьяк, друзьЯ, кальЯн, мужьЯ, чья, объЯт",
 		"STRESS" : "STRESSED",
-		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "Lьъ"],
 		"TARGET" : ["J + STRESSED_A"]		
 	},
 	{
+		"COMMENT" : "$37: мяснИк, взялИсь, рябИну, тянИ, вязАть, пятёрка, лягУшки",
 		"STRESS" : "FIRST_PRETONIC",
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
 		"TARGET" : "PRETONIC_IE"
