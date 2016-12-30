@@ -27,7 +27,7 @@
 	{
 		"COMMENT" : "$44: агронОм, агрономИческий, алюмИний, алебАстр, акварЕль, анатОмия, анатомИческий, амбразУра, антрацИт",
 		"STRESS" : "PRETONIC",
-		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
+		"LEFT_CONTEXTS" : "BOUNDARY_NOT_PROCLITIC",
 		"TARGET" : "PRETONIC_A"
 	}],
 	"е":
@@ -62,8 +62,9 @@
 		"TARGET" : ["J + RETONIC_IE"]
 	},
 	{
-		"STRESS" : "UNSTRESSED",
-		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
+		"COMMENT" : "$46: переведенА, перенесУ, веселИть, деревЕнь, беговОй, лесникА, седовАт, человЕк, четырёх, счетовОд, щекотАть",
+		"STRESS" : "PRETONIC",
+		"LEFT_CONTEXTS" : ["SOFT_CONSONANT", "Lчщ"], 
 		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
 	},
 	{
@@ -73,9 +74,10 @@
 		"TARGET" : "SCHWA"
 	},
 	{
-		"STRESS" : "UNSTRESSED",
-		"LEFT_CONTEXTS" : "NOT BOUNDARY_PROCLITIC", 
-		"TARGET" : ["J", "UNSTRESSED_FRONT_VOWEL"]
+		"COMMENT" : "$47: ездовОй, егозА, ЕлизавЕта, европЕйских, единИцу, ежевИку",
+		"STRESS" : "PRETONIC",
+		"LEFT_CONTEXTS" : "BOUNDARY_NOT_PROCLITIC", 
+		"TARGET" : ["J + UNSTRESSED_FRONT_VOWEL"]
 	},
 	{
 		"STRESS" : "POSTTONIC",
@@ -131,7 +133,7 @@
 	"и": 
 	[{
 		"COMMENT" : "$5: Ива, Искра, избА, игрАть, издавАть; кроИть, стоИт, стОит, поигрАть; сИла, тИна, вить, чИстый, щи, стирАть, пилА, щипАть, вЫбить",
-		"LEFT_CONTEXTS": ["NOT BOUNDARY_PROCLITIC", "VOWEL", "SOFT_CONSONANT"],
+		"LEFT_CONTEXTS": ["BOUNDARY_NOT_PROCLITIC", "VOWEL", "SOFT_CONSONANT"],
 		"TARGET": "I"
 	},
 	{
@@ -172,7 +174,7 @@
 	{
 		"COMMENT" : "$44: оборОт, обижАть, областнОй, огласИть, огонёк, огранИчить, ограничИтель, окончАтельно, оперИровать, операциОнный, органИзм, оружЕйный, оскорбИть, остановИть, осторОжный",
 		"STRESS" : "PRETONIC",
-		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
+		"LEFT_CONTEXTS" : "BOUNDARY_NOT_PROCLITIC",
 		"TARGET" : "PRETONIC_A"
 	},
 	{
@@ -237,10 +239,17 @@
 		"TARGET" : ["J + PRETONIC_IE"]
 	},
 	{
-		"STRESS" : "UNSTRESSED",
+		"COMMENT" : "$46: мясникА, пятачОк, рябовАт, тяжеловАт",
+		"STRESS" : "PRETONIC",
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
 		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
 	},
+	{
+		"COMMENT" : "$47: ястребОк, ятагАн, языкА, ярлыкА, яровОй",
+		"STRESS" : "PRETONIC",
+		"LEFT_CONTEXTS" : "BOUNDARY_WORD",
+		"TARGET" : "J + UNSTRESSED_FRONT_VOWEL"
+	},	
 	{
 		"STRESS" : "UNSTRESSED",
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT", 
