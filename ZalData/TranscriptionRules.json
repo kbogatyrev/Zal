@@ -13,18 +13,20 @@
 		"TARGET" : "PRETONIC_A"
 	},
 	{
-		"COMMENT" : "$38: ",
+		"COMMENT" : "$38: часы, часОк, чадИть, частИт, щадИть, щавЕль",
 		"STRESS" : "FIRST_PRETONIC",
-		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
+		"LEFT_CONTEXTS" : "Lчщ",
 		"TARGET" : "PRETONIC_IE"
 	},
 	{
-		"STRESS" : "UNSTRESSED",
+		"COMMENT" : "$42: машинИст, паровОз, маловАт, разновЕсы, накурИть, залучИть, самовАр, шаловлИв, жалюзИ, царедвОрцы",
+		"STRESS" : "PRETONIC",
 		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "Lшжц"],
 		"TARGET" : "SCHWA"
 	},
 	{
-		"STRESS" : "UNSTRESSED",
+		"COMMENT" : "$44: агронОм, агрономИческий, алюмИний, алебАстр, акварЕль, анатОмия, анатомИческий, амбразУра, антрацИт",
+		"STRESS" : "PRETONIC",
 		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
 		"TARGET" : "PRETONIC_A"
 	}],
@@ -54,9 +56,10 @@
 		"TARGET" : "PRETONIC_HARD_IE"
 	},
 	{		
+		"COMMENT" : "$39: ездА, едИм, ежОм, ершОм, енОт; поедИм",
 		"STRESS" : "FIRST_PRETONIC",
-		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
-		"TARGET" : ["J", "PRETONIC_IE"]
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "Lьъ"],
+		"TARGET" : ["J + RETONIC_IE"]
 	},
 	{
 		"STRESS" : "UNSTRESSED",
@@ -64,7 +67,8 @@
 		"TARGET" : "UNSTRESSED_FRONT_VOWEL"
 	},
 	{
-		"STRESS" : "UNSTRESSED",
+		"COMMENT" : "$42: желобОк, желудЕй, желтовАтый, жестянОй, жеребёнок, шероховАтый, шелохнУться, шептунЫ, шелестИт, шевелИть, цеховОй",
+		"STRESS" : "PRETONIC",
 		"LEFT_CONTEXTS" : "Lшжц", 
 		"TARGET" : "SCHWA"
 	},
@@ -160,12 +164,14 @@
 		"TARGET" : "PRETONIC_A"
 	},
 	{
-		"STRESS" : "UNSTRESSED",
+		"COMMENT" : "$42: молодОй, полевОд, богатырИ, романИст, дороговАт, толокнО, собаковОд, головА, хорошО, костянОй, шоколАд, шовинИзм",
+		"STRESS" : "PRETONIC",
 		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "Lшжц"],
 		"TARGET" : "SCHWA"
 	},
 	{
-		"STRESS" : "UNSTRESSED",
+		"COMMENT" : "$44: оборОт, обижАть, областнОй, огласИть, огонёк, огранИчить, ограничИтель, окончАтельно, оперИровать, операциОнный, органИзм, оружЕйный, оскорбИть, остановИть, осторОжный",
+		"STRESS" : "PRETONIC",
 		"LEFT_CONTEXTS" : "NON BOUNDARY_PROCLITIC",
 		"TARGET" : "PRETONIC_A"
 	},
@@ -224,10 +230,11 @@
 		"LEFT_CONTEXTS" : "SOFT_CONSONANT",
 		"TARGET" : "PRETONIC_IE"
 	},
-	{		
+	{
+		"COMMENT" : "$39: язЫк, яйцО, ярлЫк, яснА, янвАрь, уяснИть",
 		"STRESS" : "FIRST_PRETONIC",
-		"LEFT_CONTEXTS" : ["NOT BOUNDARY_PROCLITIC", "VOWEL", "Lьъ"],
-		"TARGET" : ["J", "PRETONIC_IE"]
+		"LEFT_CONTEXTS" : ["BOUNDARY_WORD", "VOWEL", "Lьъ"],
+		"TARGET" : ["J + PRETONIC_IE"]
 	},
 	{
 		"STRESS" : "UNSTRESSED",
