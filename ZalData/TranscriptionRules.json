@@ -29,6 +29,12 @@
 		"STRESS" : "PRETONIC",
 		"LEFT_CONTEXTS" : "BOUNDARY_NOT_PROCLITIC",
 		"TARGET" : "PRETONIC_A"
+	},
+	{
+		"COMMENT" : "$48: вЫдан, вЫбрана, вЫтаскал, рабОтал, по забОрам, на забОрах, за забОрами, корОва, Окна, дЕла, вЫжал, по лУжам, в лУжах, за лУжами, лУжа, вЫцарапал, кУрица, по Улицам",
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : ["HARD_CONSONANT", "Lжц"],
+		"TARGET" : "SCHWA"
 	}],
 	"е":
 	[{
@@ -80,6 +86,13 @@
 		"TARGET" : ["J + UNSTRESSED_FRONT_VOWEL"]
 	},
 	{
+		"COMMENT" : "$49 [note exceptions]: вЫшел, скОшено, вОжено, вЫжег, прохОжего, хорОшему, в рЫжем, с мУжем, сИтцем, птИцей, кУцему, глЯнцевых",
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : "Lшжц", 
+		"TARGET" : "SCHWA"
+	},	
+	{
+		"COMMENT" : "$49: на сУше, в лОже, о мУже, в сИтце, на Улице, по сУше, по кОже",
 		"STRESS" : "POSTTONIC",
 		"LEFT_CONTEXTS" : "Lшжц", 
 		"MORPHEME" : "ENDING",
@@ -89,6 +102,7 @@
 		"TARGET" : "UNSTRESSED_YE"
 	},
 	{
+		"COMMENT" : "$49: Улице, сУше, кОже",
 		"STRESS" : "POSTTONIC",
 		"LEFT_CONTEXTS" : "Lшжц", 
 		"MORPHEME" : "ENDING",
@@ -96,20 +110,15 @@
 		"NUMBER" : "NUM_SG",
 		"CASE" : "CASE_DAT",
 		"GENDER" : "GENDER_F",
-		"TARGET" : "UNSTRESSED_YE"
+		"TARGET" : "UNSTRESSED_Y_E"
 	},
 	{
+		"COMMENT" : "$49: тИше, тОньше, мЕньше, сУше, вЫше, блИже",
 		"STRESS" : "POSTTONIC",
 		"LEFT_CONTEXTS" : "Lшжц", 
 		"MORPHEME" : "ENDING",
 		"SUBPARADIGM" : "SUBPARADIGM_COMPARATIVE",
-		"TARGET" : "UNSTRESSED_YE"
-	},
-	{
-		"STRESS" : "POSTTONIC",
-		"LEFT_CONTEXTS" : "Lв", 
-		"RIGHT_CONTEXTS" : "Lв",
-		"TARGET" : "SYLLABIC_V"
+		"TARGET" : "UNSTRESSED_Y_E"
 	}],
 	"ё":
 	[{
@@ -178,8 +187,22 @@
 		"TARGET" : "PRETONIC_A"
 	},
 	{
-		"STRESS" : "UNSTRESSED",
-		"LEFT_CONTEXTS" : "Lв",
+		"COMMENT" : "$48: вЫнос, вЫброс, гОлову, нА голову, нА дом, Узок, за дОмом, на стАром, за канАвой, сЕно, дЕло, мнОго, нАдо",
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : "HARD_CONSONANT",
+		"TARGET" : "SCHWA"
+	},
+	{
+		"COMMENT" : "$50: Ивовых, слИвовым, нОвого, лЕвого, дубОвого",
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : "Lв", 
+		"RIGHT_CONTEXTS" : "Lв",
+		"TARGET" : "SYLLABIC_V"
+	},
+	{
+		"COMMENT" : "$50: цАрствовать, хозЯйствовать, шЕствовать, злОбствовать, бЕдствовать",
+		"STRESS" : "POSTTONIC",
+		"LEFT_CONTEXTS" : "Lств", 
 		"RIGHT_CONTEXTS" : "Lв",
 		"TARGET" : "SYLLABIC_V"
 	}],
