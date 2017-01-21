@@ -157,7 +157,10 @@ namespace TestUI
                     MessageBox.Show(this, "Unable to retrieve lexeme data.", "Zal Synthesizer");
                     return;
                 }
-
+                if (null == lex)
+                {
+                    return;
+                }
                 if (lex.sSourceForm() == m_sSearchString)
                 {
                     LexemeDataPanel ldp = new LexemeDataPanel();
