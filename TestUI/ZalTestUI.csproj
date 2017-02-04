@@ -85,7 +85,7 @@
     <OutputPath>bin\x64\Release\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -103,12 +103,37 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZalMainLibManaged, Version=1.0.6189.27728, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="ZalMainLibManaged">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Debug\ZalMainLibManaged.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZalMainLibManaged">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Release\ZalMainLibManaged.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+    <ItemGroup>
     <Compile Include="AdjPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
