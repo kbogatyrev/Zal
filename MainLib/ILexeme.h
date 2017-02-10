@@ -66,7 +66,7 @@ namespace Hlib
         bool virtual bShortFormsRestricted() = 0;
         virtual bool bPastParticipleRestricted() = 0;
         virtual bool bNoLongForms() = 0;
-        virtual bool bNoShortForms() = 0;
+        virtual bool bShortFormsIncomplete() = 0;
         virtual bool bNoPastParticiple() = 0;
         virtual bool bFleetingVowel() = 0;
         virtual int iStemAugment() = 0;
