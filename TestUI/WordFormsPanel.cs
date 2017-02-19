@@ -52,7 +52,7 @@ namespace TestUI
                     }
                     case EM_Status.STATUS_QUESTIONABLE:
                     {
-                        sText += "?" + sText;
+                        sText = "(?) " + sText;
                         break;
                     }
                     case EM_Status.STATUS_RARE:
