@@ -58,6 +58,7 @@ private:
     ET_ReturnCode ePopulateStemsTable();
     ET_ReturnCode eUpdateStemIds();
     ET_ReturnCode ePopulateWordFormDataTables();
+    ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR);
 
     // Execute DB query and retrieve results
     ET_ReturnCode eQueryDb(const CEString& sSelect, unsigned int& uiQuertHandle);
