@@ -20,7 +20,7 @@ public:
 
 public:
     ET_ReturnCode eCreateFormTemplate (const CEString& sLemma, CWordForm *& pWordForm);
-    ET_ReturnCode eHandleStressAndAdd (CWordForm * pWordForm, vector<int>& vecIStress);
+    ET_ReturnCode eHandleStressAndAdd(CWordForm * pWordForm, vector<int>& vecIStress, ET_StressLocation, CEString& sStem, const CEString& sEnding);
     ET_ReturnCode eBuild();
 
 };
