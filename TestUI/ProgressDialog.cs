@@ -38,6 +38,11 @@ namespace TestUI
             }
         }
 
+        public void Done(bool bIsDone)
+        {
+            buttonClose.Enabled = bIsDone;
+        }
+
         public ProgressDialog()
         {
             InitializeComponent();

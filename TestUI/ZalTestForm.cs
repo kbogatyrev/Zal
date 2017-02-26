@@ -494,6 +494,10 @@ namespace TestUI
                 m_ProgressDlg.Invoke(new Action(() => 
                 {
                     m_ProgressDlg.SetProgressBarPos(iProgress);
+                    if (100 == iProgress)
+                    {
+                        m_ProgressDlg.Done(true);
+                    }
                     m_ProgressDlg.Refresh();
                 }));
             }
