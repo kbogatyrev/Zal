@@ -42,17 +42,22 @@ namespace TestUI
                     }
                     case EM_Status.STATUS_INCORRECT:
                     {
-                        sText += "*" + sText;
+                        sText = "(Incorrect) " + sText;
                         break;
                     }
                     case EM_Status.STATUS_OBSOLETE:
                     {
-                        sText += " (Obsolete)";
+                        sText += " (Устар.)";
+                        break;
+                    }
+                    case EM_Status.STATUS_ASSUMED:
+                    {
+                        sText = "(Предпол.) *" + sText;
                         break;
                     }
                     case EM_Status.STATUS_QUESTIONABLE:
                     {
-                        sText = "(?) " + sText;
+                        sText = "(Затрудн.) ?" + sText;
                         break;
                     }
                     case EM_Status.STATUS_RARE:
