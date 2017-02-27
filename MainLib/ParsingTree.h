@@ -29,7 +29,7 @@ namespace Hlib
 
     struct StReverseComparisonFunctor
     {
-        bool operator() (const CEString& sLeft, const CEString& sRight)
+        bool operator() (const CEString& sLeft, const CEString& sRight) const
         {
             int iLeftLength = sLeft.uiLength();
             int iRightLength = sRight.uiLength();
