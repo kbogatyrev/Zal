@@ -59,13 +59,13 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\Win32\Debug\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>..\..\bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\Win32\Release\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <Optimize>true</Optimize>
     <RunCodeAnalysis>false</RunCodeAnalysis>
@@ -77,12 +77,12 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Debug\</OutputPath>
+    <OutputPath>..\..\bin\x64\Debug\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Release\</OutputPath>
+    <OutputPath>..\..\bin\x64\Release\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
@@ -103,12 +103,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZalMainLibManaged">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Debug\ZalMainLibManaged.dll</HintPath>
-    </Reference>
   </ItemGroup>
-
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -127,13 +122,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZalMainLibManaged">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Release\ZalMainLibManaged.dll</HintPath>
-    </Reference>
   </ItemGroup>
-
-    <ItemGroup>
+  <ItemGroup>
     <Compile Include="AdjPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -272,6 +262,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MainLibManaged\MainLibManaged.vcxproj">
+      <Project>{b6a05b5a-c6d4-45e3-a6dd-3bdf2b63535c}</Project>
+      <Name>ZalMainLibManaged</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

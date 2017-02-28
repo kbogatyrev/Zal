@@ -130,8 +130,8 @@ namespace TestUI
 
         private void ShowLexemes()
         {
-            int iNumLexemes = 0;
-            if (m_Dictionary.eCountLexemes(ref iNumLexemes) != EM_ReturnCode.H_NO_ERROR)
+            long lNumLexemes = 0;
+            if (m_Dictionary.eCountLexemes(ref lNumLexemes) != EM_ReturnCode.H_NO_ERROR)
             {
                 MessageBox.Show(this, "Not in the dictionary.", "Zal Synthesizer");
                 return;
@@ -496,8 +496,8 @@ namespace TestUI
             hasher.SetReflexivity(lexeme.eIsReflexive());
 
             CWordFormManaged wf = null;
-            uint uiForms = lexeme.uiFormCount(hasher.sHash());
-            if (uiForms > 0)
+            int iForms = lexeme.iFormCount(hasher.sHash());
+            if (iForms > 0)
             {
                 lexeme.eWordFormFromHash(hasher.sHash(), 0, ref wf);
                 AdjPanel adjPanel = new AdjPanel();
@@ -532,12 +532,12 @@ namespace TestUI
                  ++eGender)
             {
                 hasher.SetGender(eGender);
-                uint uiForms = lexeme.uiFormCount(hasher.sHash());
-                for (uint uiForm = 0; uiForm < uiForms; ++uiForm)
+                int iForms = lexeme.iFormCount(hasher.sHash());
+                for (int iForm = 0; iForm < iForms; ++iForm)
                 {
                     CWordFormManaged wf = null;
-//                    lexeme.eWordFormFromHash(hasher.iHash(), lexeme.uiFormCount(hasher.iHash()), ref wf);
-                    lexeme.eWordFormFromHash(hasher.sHash(), uiForm, ref wf);
+//                    lexeme.eWordFormFromHash(hasher.iHash(), lexeme.iFormCount(hasher.iHash()), ref wf);
+                    lexeme.eWordFormFromHash(hasher.sHash(), iForm, ref wf);
                     string sKey = "Short";
                     sKey += m_hashGender[wf.eGender()];
                     sKey += m_hashNumber[wf.eNumber()];
@@ -549,10 +549,10 @@ namespace TestUI
 
             hasher.SetNumber(EM_Number.NUM_PL);
             hasher.SetGender(EM_Gender.GENDER_UNDEFINED);
-            for (uint uiForm = 0; uiForm < lexeme.uiFormCount(hasher.sHash()); ++uiForm)
+            for (int iForm = 0; iForm < lexeme.iFormCount(hasher.sHash()); ++iForm)
             {
                 CWordFormManaged wf = null;
-                lexeme.eWordFormFromHash(hasher.sHash(), uiForm, ref wf);
+                lexeme.eWordFormFromHash(hasher.sHash(), iForm, ref wf);
                 string sKey = "Short";
                 sKey += m_hashNumber[wf.eNumber()];
                 string sWordForm = wf.sWordForm();
