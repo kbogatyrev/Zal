@@ -30,11 +30,11 @@ public:
 
     int iCount()
     {
-        return m_vecEndings.size();
+        return (int)m_vecEndings.size();
     }
 
-    ET_ReturnCode eGetEnding(int iSeqNum, CEString& sEnding, unsigned __int64& llEndingKey);
-    ET_ReturnCode eGetEnding (CEString& s_, unsigned __int64& llKey)
+    ET_ReturnCode eGetEnding(int iSeqNum, CEString& sEnding, int64_t& llEndingKey);
+    ET_ReturnCode eGetEnding (CEString& s_, int64_t& llKey)
     {
         return eGetEnding (0, s_, llKey);
     }

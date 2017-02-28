@@ -79,7 +79,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetStemStressPositions(const CEString& sLemma, vector<int>& vecPosition) = 0;
         virtual ET_ReturnCode eGetAlternatingPreverb(const CEString& sVerbForm, CEString& sPreverb, bool& bVoicing) = 0;
         virtual CEString sHash() = 0;
-        virtual ET_ReturnCode eWordFormFromHash(CEString sHash, unsigned int uiAt, IWordForm *& pWf) = 0;
+        virtual ET_ReturnCode eWordFormFromHash(CEString sHash, int iAt, IWordForm *& pWf) = 0;
         virtual bool bHasIrregularForm(CEString sGramHash) = 0;
         virtual bool bNoRegularForms(CEString sGramHash) = 0;
         virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWf) = 0;
@@ -87,7 +87,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetFirstIrregularForm(CEString sHash, IWordForm *&, bool& bIsOptional) = 0;
         virtual ET_ReturnCode eGetFirstIrregularForm(IWordForm *&, bool& bIsOptional) = 0;
         virtual ET_ReturnCode eGetNextIrregularForm(IWordForm *&, bool& bIsOptional) = 0;
-        virtual unsigned int uiFormCount(CEString sHash) = 0;
+        virtual int iFormCount(CEString sHash) = 0;
         virtual bool bHasCommonDeviation(int iCd) = 0;
         virtual bool bDeviationOptional(int iCd) = 0;
         virtual bool bIsFormMissing(CEString sGramHash) = 0;

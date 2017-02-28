@@ -29,7 +29,7 @@ public:
     virtual ET_ReturnCode eGetLexemesByInitialForm(const CEString&);
     virtual ET_ReturnCode eGenerateAllForms();
     virtual ET_ReturnCode eGenerateFormsForSelectedLexemes();
-    virtual ET_ReturnCode eCountLexemes(int& iLexemes);
+    virtual ET_ReturnCode eCountLexemes(int64_t& iLexemes);
 
     virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexeme);
     virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexeme);
@@ -61,8 +61,8 @@ private:
     ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR);
 
     // Execute DB query and retrieve results
-    ET_ReturnCode eQueryDb(const CEString& sSelect, unsigned int& uiQuertHandle);
-    ET_ReturnCode eGetSingleRow(StLexemeProperties&, unsigned int uiQuertHandle);
+    ET_ReturnCode eQueryDb(const CEString& sSelect, uint64_t& uiQuertHandle);
+    ET_ReturnCode eGetSingleRow(StLexemeProperties&, uint64_t uiQuertHandle);
 
     ET_ReturnCode eReadFromDb(__int64 llLexemeId);
     ET_ReturnCode eReadFromDb(const CEString& sStem);
