@@ -13,8 +13,10 @@ namespace Hlib
         virtual ~ILexeme() {};
         virtual const StLexemeProperties& stGetProperties() = 0;
         virtual StLexemeProperties& stGetPropertiesForWriteAccess() = 0;
-        virtual ET_Gender eGender() = 0;
-        virtual ET_Animacy eAnimacy() = 0;
+        virtual ET_Gender eInflectionTypeToGender() = 0;
+        virtual ET_Gender eMainSymbolToGender() = 0;
+        virtual ET_Animacy eInflectionTypeToAnimacy() = 0;
+        virtual ET_Animacy eMainSymbolToAnimacy() = 0;
         virtual CEString sGraphicStem() = 0;
         virtual bool bHasIrregularForms() = 0;
         virtual bool bHasSecondaryStress() = 0;
