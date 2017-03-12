@@ -417,8 +417,9 @@ namespace TestUI
                 sMsg += fd.FileName;
                 m_ProgressDlg.SetMessage(sMsg);
                 m_ProgressDlg.StartPosition = FormStartPosition.CenterScreen;
+                m_ProgressDlg.Done(false);
                 m_ProgressDlg.Show();
-//                m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
+//                m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);              
                 DbOperationThread exportThread = new DbOperationThread (etDbOperation.eExportTable, this, fd.FileName);
                 Thread t = new Thread (new ThreadStart (exportThread.ThreadProc));
                 t.Name = "Zal export worker thread";
@@ -471,6 +472,7 @@ namespace TestUI
             sTxt += fd.FileName;
             m_ProgressDlg.SetMessage (sTxt);
             m_ProgressDlg.StartPosition = FormStartPosition.CenterScreen;
+            m_ProgressDlg.Done(false);
             m_ProgressDlg.Show();
 //            m_DelegateUpdateProgressBar = new DelegateUpdateProgressBar (this.UpdateProgressBar);
             DbOperationThread importThread = new DbOperationThread (etDbOperation.eImportTable, this, fd.FileName);
@@ -487,14 +489,14 @@ namespace TestUI
 
         }   //  importTestDataToolStripMenuItem_Click (...)
 
-        public void UpdateProgressBar (int iProgress)
+        public void UpdateProgressBar (int iProgress, bool bOperationComplete)
         {
             if (m_ProgressDlg.InvokeRequired)
             {
                 m_ProgressDlg.Invoke(new Action(() => 
                 {
                     m_ProgressDlg.SetProgressBarPos(iProgress);
-                    if (100 == iProgress)
+                    if (bOperationComplete)
                     {
                         m_ProgressDlg.Done(true);
                     }
@@ -599,7 +601,7 @@ namespace TestUI
         etDbOperation m_eOperationType;
         TestApplet m_formParent;
         string m_sPath;
-        private delegate void Progress(int iPercentDone);
+        private delegate void Progress(int iPercentDone, bool bOperationComplete);
         Progress m_Progress;
 
         public DbOperationThread (etDbOperation eOpType, TestApplet formParent, string sPath)
@@ -639,6 +641,7 @@ namespace TestUI
                     string sMsg = "Database error.";
                     MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 }
+
             }
             catch (Exception ex)
             {
