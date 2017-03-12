@@ -13,7 +13,7 @@
 namespace Hlib
 {
     // Progress delegate invokedfrom C#/CLR
-    typedef void(__stdcall *PROGRESS_CALLBACK_CLR) (int iPercentDone);
+    typedef void(__stdcall *PROGRESS_CALLBACK_CLR) (int iPercentDone, bool bOperationComplete);
 
     struct IDictionary
     {
