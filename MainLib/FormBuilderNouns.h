@@ -34,6 +34,7 @@ protected:
 
     ET_ReturnCode eGetStressPositions (const CEString& sLemma, 
                                        const CEString& sEnding,
+                                       ET_Number eNumber,
                                        ET_StressLocation eStressType,
                                        vector<int>& vecStressPos);
 
