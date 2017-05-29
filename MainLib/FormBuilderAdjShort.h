@@ -54,6 +54,7 @@ public:
 private:
     CEString m_sLemma;
     int m_iType;
+    int m_iVerbDeviation;              // Participles only
     vector<int> m_vecStressPos;        // Participles only
     ET_AccentType m_eAccentType1, m_eAccentType2;
     bool m_bFleetingVowel;
