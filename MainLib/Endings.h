@@ -18,7 +18,9 @@ class CEndings
 {
 public:
     CEndings(CLexeme * pLexeme) : m_pLexeme(pLexeme), m_ullDbKey(0)
-    {}
+    {
+        m_sEnding.SetVowels(g_szRusVowels);
+    }
 
     virtual ~CEndings()
     {}
@@ -73,6 +75,7 @@ public:
 
     ET_ReturnCode eSelect(ET_Subparadigm, ET_Gender, ET_Number, ET_Case, ET_Animacy);
 
+protected:
     ET_Subparadigm m_eSubparadigm;
 
 };   //  CAdjLongEndings
@@ -80,9 +83,12 @@ public:
 class CAdjShortEndings : public CEndings
 {
 public:
-    CAdjShortEndings(CLexeme * pLexeme);
+    CAdjShortEndings(CLexeme * pLexeme, ET_Subparadigm);
 
     ET_ReturnCode eSelect(ET_Gender, ET_Number, ET_StressLocation);
+
+protected:
+    ET_Subparadigm m_eSubparadigm;
 
 };    //  CAdjShortEndings
 
