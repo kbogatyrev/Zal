@@ -23,48 +23,31 @@
     <ProjectGuid>{D753F703-7E73-4F73-B14A-C45CD7E5406B}</ProjectGuid>
     <RootNamespace>Test</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-<<<<<<< Updated upstream
     <PlatformToolset>v140</PlatformToolset>
-=======
-    <PlatformToolset>v141</PlatformToolset>
->>>>>>> Stashed changes
     <UseOfAtl>Static</UseOfAtl>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-<<<<<<< Updated upstream
     <PlatformToolset>v140</PlatformToolset>
-=======
-    <PlatformToolset>v141</PlatformToolset>
->>>>>>> Stashed changes
     <UseOfAtl>Static</UseOfAtl>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-<<<<<<< Updated upstream
     <PlatformToolset>v140</PlatformToolset>
-=======
-    <PlatformToolset>v141</PlatformToolset>
->>>>>>> Stashed changes
     <UseOfAtl>Static</UseOfAtl>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-<<<<<<< Updated upstream
     <PlatformToolset>v140</PlatformToolset>
-=======
-    <PlatformToolset>v141</PlatformToolset>
->>>>>>> Stashed changes
     <UseOfAtl>Static</UseOfAtl>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -97,9 +80,6 @@
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>..\..\Lib\Debug;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
@@ -109,9 +89,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>..\..\Lib\Release;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -135,11 +112,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-<<<<<<< Updated upstream
       <AdditionalIncludeDirectories>../MainLib; ../../HLib-Windows;$(SolutionDir)\ThirdPartyLibs-Windows\Sqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-=======
-      <AdditionalIncludeDirectories>../MainLib; ../../HLib-Windows;$(SolutionDir)\..\ThirdPartyLibs-Windows\Sqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -148,11 +121,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-<<<<<<< Updated upstream
       <AdditionalDependencies>ZalMainLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-=======
-      <AdditionalDependencies>$(SolutionDir)\Debug\MainLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
->>>>>>> Stashed changes
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
     </Link>
@@ -182,11 +151,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-<<<<<<< Updated upstream
       <AdditionalIncludeDirectories>../MainLib; ../../HLib-Windows;$(SolutionDir)\ThirdPartyLibs-Windows\Sqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-=======
-      <AdditionalIncludeDirectories>../MainLib; ../../HLib-Windows;$(SolutionDir)\..\ThirdPartyLibs-Windows\Sqlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -195,11 +160,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-<<<<<<< Updated upstream
       <AdditionalDependencies>ZalMainLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-=======
-      <AdditionalDependencies>$(SolutionDir)\Release\MainLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
->>>>>>> Stashed changes
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
