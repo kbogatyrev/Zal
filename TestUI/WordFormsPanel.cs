@@ -1,19 +1,36 @@
 ﻿using MainLibManaged;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TestUI
 {
-    public class WordFormsPanel : UserControl
+    public partial class WordFormsPanel : UserControl
     {
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // WordFormsPanel
+            // 
+            this.Name = "WordFormsPanel";
+            this.Size = new System.Drawing.Size(282, 154);
+            this.ResumeLayout(false);
+
+        }
+
         public struct StCell
         {
             public TextBox m_TextboxTarget;
             public HashSet<string> m_SetContents;
 
-            public StCell (TextBox textBoxWordForms)
+            public StCell(TextBox textBoxWordForms)
             {
                 m_TextboxTarget = textBoxWordForms;
                 m_SetContents = new HashSet<string>();
@@ -30,41 +47,41 @@ namespace TestUI
             }
         }
 
-        public void SetForm (string sKey, string sText, EM_Status eStatus)
+        public void SetForm(string sKey, string sText, EM_Status eStatus)
         {
             try
             {
                 switch (eStatus)
                 {
                     case EM_Status.STATUS_COMMON:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                     case EM_Status.STATUS_INCORRECT:
-                    {
-                        sText = "(Incorrect) " + sText;
-                        break;
-                    }
+                        {
+                            sText = "(Incorrect) " + sText;
+                            break;
+                        }
                     case EM_Status.STATUS_OBSOLETE:
-                    {
-                        sText += " (Устар.)";
-                        break;
-                    }
+                        {
+                            sText += " (Устар.)";
+                            break;
+                        }
                     case EM_Status.STATUS_ASSUMED:
-                    {
-                        sText = "(Предпол.) *" + sText;
-                        break;
-                    }
+                        {
+                            sText = "(Предпол.) *" + sText;
+                            break;
+                        }
                     case EM_Status.STATUS_QUESTIONABLE:
-                    {
-                        sText = "(Затрудн.) ?" + sText;
-                        break;
-                    }
+                        {
+                            sText = "(Затрудн.) ?" + sText;
+                            break;
+                        }
                     case EM_Status.STATUS_RARE:
-                    {
-                        sText += " (Rare)";
-                        break;
-                    }
+                        {
+                            sText += " (Rare)";
+                            break;
+                        }
                 }
 
                 if (m_dictForms[sKey].m_SetContents.Contains(sText))
@@ -92,15 +109,13 @@ namespace TestUI
             }
             catch (Exception ex)
             {
-//                MainLib.ZalError err = new MainLib.ZalError();
+                //                MainLib.ZalError err = new MainLib.ZalError();
                 string sMsg = "SetForm: ";
-//                sMsg += err.LastError;
+                //                sMsg += err.LastError;
                 sMsg += ex.Message;
                 MessageBox.Show(sMsg, "Zal Error", MessageBoxButtons.OK);
                 return;
             }
         }   //  SetForm (...)
-
-    }   //  public class WordFormsPanel 
-
-}   //  namespace TestUI
+    }
+}

@@ -271,6 +271,11 @@ namespace TestUI
                         continue;
                     }
 
+                    if (null == wf)
+                    {
+                        continue;
+                    }
+
                     string sKey = "";
                     if (EM_Subparadigm.SUBPARADIGM_LONG_ADJ == wf.eSubparadigm())
                     {
