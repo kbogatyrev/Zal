@@ -11,6 +11,7 @@ namespace Hlib
     struct ILexeme
     {
         virtual ~ILexeme() {};
+		virtual __int64 llLexemeId() = 0;
         virtual const StLexemeProperties& stGetProperties() = 0;
         virtual StLexemeProperties& stGetPropertiesForWriteAccess() = 0;
         virtual ET_Gender eInflectionTypeToGender() = 0;
