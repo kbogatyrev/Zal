@@ -4,6 +4,7 @@ DELETE FROM stress;
 DELETE FROM descriptor;
 DELETE FROM difficulties;
 DELETE FROM second_locative;
+DELETE FROM second_genitive;
 DELETE FROM inflection;
 DELETE FROM irregular_forms;
 DELETE FROM irregular_stress;
