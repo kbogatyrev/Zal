@@ -42,7 +42,7 @@ CREATE TABLE stems_for_analysis (id INTEGER PRIMARY KEY ASC, descriptor_id INTEG
 
 CREATE TABLE common_deviation (id INTEGER PRIMARY KEY ASC, inflection_id INTEGER, deviation_type INTEGER, is_optional BOOLEAN);
 
-CREATE TABLE aspect_pair (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, aspect_pair_type INTEGER, aspect_pair_comment TEXT);
+CREATE TABLE aspect_pair (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, type INTEGER, data TEXT, is_variant BOOLEAN, comment TEXT);
 
 CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id TEXT, hash INTEGER, wordform TEXT);
 
@@ -50,11 +50,11 @@ CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, lexeme_id TEXT, hash INTE
 
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
 
+CREATE TABLE conversion_source_text (id INTEGER PRIMARY KEY, headword_id INTEGER, descriptor_id INTEGER, source_text TEXT);
+
 CREATE TABLE conversion_errors (id INTEGER PRIMARY KEY, Description TEXT, Paragraph TEXT, Resolved INTEGER DEFAULT 0);
 
 CREATE TABLE conversion_source_recent_edit (id INTEGER PRIMARY KEY, headword_id INTEGER, edit_start INTEGER, edit_length INTEGER);
-
-CREATE TABLE conversion_source_text (id INTEGER PRIMARY KEY, headword_id INTEGER, descriptor_id INTEGER, source_text TEXT);
 
 CREATE TABLE incomplete_parses (id INTEGER PRIMARY KEY, unparsed_segment TEXT, source_text TEXT);
 
