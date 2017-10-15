@@ -53,8 +53,10 @@ namespace Hlib
         virtual bool bSecondLocativeOptional() = 0;
         virtual CEString sLoc2Preposition() = 0;
         virtual bool bHasAspectPair() = 0;
+		virtual bool bHasAltAspectPair() = 0;
         virtual int iAspectPairType() = 0;
-        virtual CEString sAspectPairComment() = 0;
+		virtual int iAltAspectPairType() = 0;
+		virtual CEString sAltAspectPairComment() = 0;
         virtual CEString sQuestionableForms() = 0;
         virtual bool bHasIrregularVariants() = 0;
         virtual bool bHasDeficiencies() = 0;

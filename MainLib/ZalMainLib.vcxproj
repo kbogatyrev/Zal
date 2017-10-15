@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\ThirdPartyLibs-Windows\Sqlite\sqlite3.h" />
     <ClInclude Include="..\..\ThirdPartyLibs-Windows\Sqlite\sqlite3ext.h" />
+    <ClInclude Include="FormBuilderAspectPair.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Endings.h" />
     <ClInclude Include="ErrorComWrapper.h" />
@@ -53,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ThirdPartyLibs-Windows\Sqlite\sqlite3.c" />
+    <ClCompile Include="FormBuilderAspectPair.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Endings.cpp" />
     <ClCompile Include="FormBuilderAdjComparative.cpp" />

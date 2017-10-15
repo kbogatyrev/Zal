@@ -1,6 +1,8 @@
 #ifndef LEXEMEPROPERTIES_H_INCLUDED
 #define LEXEMEPROPERTIES_H_INCLUDED
 
+#include <map>
+
 namespace Hlib
 {
     struct StLexemeProperties
@@ -76,7 +78,10 @@ namespace Hlib
         CEString sLoc2Preposition;
         bool bHasAspectPair;
         int iAspectPairType;
-        CEString sAspectPairComment;
+		int iAltAspectPairType;
+		CEString sAspectPairData;
+		CEString sAltAspectPairData;
+		CEString sAltAspectPairComment;
         CEString sQuestionableForms;
         bool bHasIrregularForms;
         bool bHasIrregularVariants;    // true if any of irreg. forms alternates with regular
