@@ -8,7 +8,7 @@ namespace Hlib
 	class CFormBuilderAspectPair
 	{
     protected:
-        enum class ExtraData
+        enum class ET_ExtraData
         {
             None,
             Vowel,
@@ -18,12 +18,15 @@ namespace Hlib
 
     protected:
 		CLexeme * m_pLexeme;
-        ExtraData m_eExtraData;
+        CWordForm * m_p1stPersonWordForm;
+        ET_ExtraData m_eExtraData;
+        CEString m_sSource;
+        CEString m_sReflexiveSuffix;
         CEString m_sAspectPairSource;
         int m_iStressPos;
 
 	public:
-		CFormBuilderAspectPair(CLexeme * pLexeme) : m_pLexeme(pLexeme), m_eExtraData(ExtraData::None)
+		CFormBuilderAspectPair(CLexeme * pLexeme) : m_pLexeme(pLexeme), m_p1stPersonWordForm(NULL), m_eExtraData(ET_ExtraData::None)
 		{}
 
 	protected:
@@ -32,7 +35,12 @@ namespace Hlib
         ET_ReturnCode eBuildTypeIa(const CEString& sStem);
         ET_ReturnCode eBuildTypeIb(const CEString& sStem);
         ET_ReturnCode eBuildTypeIc();
+        ET_ReturnCode eSvToNsvTypeII();
+        ET_ReturnCode eSvToNsvTypeIII();
+        ET_ReturnCode eFindStressPositionI();
+        ET_ReturnCode eApplyVowelModification();
 		ET_ReturnCode eGetPairedLexeme();
+        ET_ReturnCode eGet1PersonWordForm();
 
     protected:
 
