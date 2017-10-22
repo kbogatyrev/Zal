@@ -35,7 +35,15 @@ namespace Hlib
             m_pLexeme(pLexeme), m_p1stPersonWordForm(NULL), m_pInfWordForm(NULL), m_eExtraData(ET_ExtraData::None)
 		{}
 
-	protected:
+    protected:      // helpers
+        ET_ReturnCode eFindStressPositionI(bool bIsVariant = false);
+        ET_ReturnCode eGet1PersonWordForm();
+        ET_ReturnCode eGetInfinitiveWordForm();
+        ET_ReturnCode eGetInfinitiveStressPos(int&);
+        ET_ReturnCode eGetNsvDerivationType(CWordForm * pInfinitive, int& iType);
+        ET_ReturnCode eGetPairedLexeme();
+
+	protected:      // build
 		ET_ReturnCode eBuild();
 		ET_ReturnCode eSvToNsvTypeI(bool bIsVariant = false);
         ET_ReturnCode eBuildTypeIa(const CEString& sStem, CEString& sOutput);
@@ -45,12 +53,15 @@ namespace Hlib
         ET_ReturnCode eSvToNsvTypeIII(bool bIsVariant = false);
         ET_ReturnCode eNsvToSvTypes1_5_6(bool bIsVariant = false);
         ET_ReturnCode eNsvToSvTypes2(bool bIsVariant = false);
-        ET_ReturnCode eFindStressPositionI(bool bIsVariant = false);
+        ET_ReturnCode eNsvToSvTypes3(bool bIsVariant = false);
+        ET_ReturnCode eNsvToSvTypes4(bool bIsVariant = false);
+        ET_ReturnCode eNsvToSvTypes7(bool bIsVariant = false);
+        ET_ReturnCode eNsvToSvTypes8(bool bIsVariant = false);
+        ET_ReturnCode eNsvToSvTypes9(bool bIsVariant = false);
+        ET_ReturnCode eNsvToSvTypes10(bool bIsVariant = false);
+        ET_ReturnCode eNsvToSvTypes14(bool bIsVariant = false);
+        ET_ReturnCode eNsvToSvTypes11_12_13_15_16(bool bIsVariant = false);
         ET_ReturnCode eApplyVowelModification(bool bIsVariant = false);
-		ET_ReturnCode eGetPairedLexeme();
-        ET_ReturnCode eGet1PersonWordForm();
-        ET_ReturnCode eGetInfinitiveWordForm();
-        ET_ReturnCode eGetInfinitiveStressPos(int&);
     };
 }
 
