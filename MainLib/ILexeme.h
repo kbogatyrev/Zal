@@ -101,6 +101,8 @@ namespace Hlib
         virtual ET_ReturnCode eGetNextStemStressPos(int& iPos) = 0;
         virtual ET_ReturnCode eSetDb(const CEString& sDbPath) = 0;
         virtual ET_ReturnCode eGenerateParadigm() = 0;
+        virtual ET_ReturnCode eGetAspectPair(CEString& sAspectPair, int& iStressPos) = 0;
+        virtual ET_ReturnCode eGetAltAspectPair(CEString& sAltAspectPair, int& iAltStressPos) = 0;
         virtual ET_ReturnCode eSaveTestData() = 0;
         virtual ET_ReturnCode eClone(ILexeme *&) = 0;
 
