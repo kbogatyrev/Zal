@@ -31,8 +31,11 @@ public:
     virtual ET_ReturnCode eGenerateFormsForSelectedLexemes();
     virtual ET_ReturnCode eCountLexemes(int64_t& iLexemes);
 
-    virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexeme);
-    virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexeme);
+    virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexemeItf);
+    virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexemeItf);
+
+    virtual ET_ReturnCode eGetFirstLexeme(CLexeme *& pLexeme);
+    virtual ET_ReturnCode eGetNextLexeme(CLexeme *& pLexeme);
 
     virtual void Clear();
     virtual ET_ReturnCode Clear(ILexeme *);
