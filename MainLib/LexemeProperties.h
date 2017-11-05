@@ -2,6 +2,7 @@
 #define LEXEMEPROPERTIES_H_INCLUDED
 
 #include <map>
+#include "EString.h"
 
 namespace Hlib
 {

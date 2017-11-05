@@ -3,8 +3,8 @@
 
 namespace Hlib
 {
-    class CDictionary;
     class CLexeme;
+    struct CWordForm;
 
 	class CFormBuilderAspectPair
 	{
@@ -17,12 +17,10 @@ namespace Hlib
             WholeWord
         };
 
+        typedef map<int, ET_StressType> ET_StressMap;
+
     protected:
-        CDictionary * m_pDictionary;
-        bool m_bPairedLexemesAcquired;
-        bool m_bNoPairedLexemes;
-        vector<CLexeme> m_vecPairedLexemes;
-		CLexeme * m_pLexeme;
+        CLexeme * m_pLexeme;
         CWordForm * m_p1stPersonWordForm;
         CWordForm * m_pInfWordForm;
         ET_ExtraData m_eExtraData;
@@ -38,16 +36,13 @@ namespace Hlib
         bool m_bError;
 
 	public:
-        CFormBuilderAspectPair(CDictionary * pDictionary, CLexeme * pLexeme) :
-            m_pDictionary(pDictionary), m_bPairedLexemesAcquired(false), m_bNoPairedLexemes(false), m_pLexeme(pLexeme),
-            m_p1stPersonWordForm(NULL), m_pInfWordForm(NULL), m_eExtraData(ET_ExtraData::None), m_bBuilt(false), m_bError(false)
+        CFormBuilderAspectPair(CLexeme * pLexeme) : m_pLexeme(pLexeme), m_p1stPersonWordForm(NULL), m_pInfWordForm(NULL), 
+            m_eExtraData(ET_ExtraData::None), m_bBuilt(false), m_bError(false)
 		{}
+
         ET_ReturnCode eBuild();
-//        unsigned int uiNPairedLexemes();
-//        ET_ReturnCode eGetFirstPairedLexeme(ILexeme *&);
-//        ET_ReturnCode eGetNextPairedLexeme(ILexeme *&);
-        ET_ReturnCode eGetPairedInfinitive(CEString&, int& iStressPos);
-        ET_ReturnCode eGetAltPairedInfinitive(CEString&, int& iStressPos);
+        ET_ReturnCode eGetAspectPair(CEString&, int&);
+        ET_ReturnCode eGetAltAspectPair(CEString&, int&);
 
     protected:      // helpers
         ET_ReturnCode eFindStressPositionI(bool bIsVariant = false);
@@ -56,7 +51,6 @@ namespace Hlib
         ET_ReturnCode eGetInfinitiveWordForm();
         ET_ReturnCode eGetInfinitiveStressPos(int&);
         ET_ReturnCode eGetNsvDerivationType(CWordForm * pInfinitive, int& iType);
-        ET_ReturnCode eGetPairedLexemes();
 
 	protected:      // build
 		ET_ReturnCode eSvToNsvTypeI(bool bIsVariant = false);
