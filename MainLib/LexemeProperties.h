@@ -49,9 +49,15 @@ namespace Hlib
         int iDbKey;
         CEString sSourceForm;
         CEString sHeadwordComment;
+        CEString sHeadwordVariant;
+        CEString sHeadwordVariantComment;
         vector<int> vecSourceStressPos, vecSecondaryStressPos;
         bool bIsUnstressed;
         vector<int> vecHomonyms;
+        CEString sPluralOf;
+        CEString sUsage;
+        CEString sSeeRef;
+        CEString sBackRef;
         CEString sGraphicStem;
         bool bIsVariant;
         CEString sMainSymbol;

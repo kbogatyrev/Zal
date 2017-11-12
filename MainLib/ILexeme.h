@@ -27,8 +27,13 @@ namespace Hlib
         virtual bool bHasYoAlternation() = 0;
         virtual bool bHasOAlternation() = 0;
         virtual CEString sSourceForm() = 0;
-        //    virtual CSqlite * pGetDb() = 0;
         virtual CEString sHeadwordComment() = 0;
+        virtual CEString sHeadwordVariant() = 0;
+        virtual CEString sHeadwordVariantComment() = 0;
+        virtual CEString sPluralOf() = 0;
+        virtual CEString sUsage() = 0;
+        virtual CEString sSeeRef() = 0;
+        virtual CEString sBackRef() = 0;
         virtual bool bIsUnstressed() = 0;
         virtual bool bIsVariant() = 0;
         virtual CEString sMainSymbol() = 0;
