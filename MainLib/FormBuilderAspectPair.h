@@ -46,7 +46,7 @@ namespace Hlib
 
     protected:      // helpers
         ET_ReturnCode eFindStressPositionI(bool bIsVariant = false);
-        ET_ReturnCode eExtractStressMark(bool bIsVariant, const CEString& sData);
+        ET_ReturnCode eExtractStressMark(bool bIsVariant);
         ET_ReturnCode eGet1PersonWordForm();
         ET_ReturnCode eGetInfinitiveWordForm();
         ET_ReturnCode eGetInfinitiveStressPos(int&);
@@ -69,7 +69,10 @@ namespace Hlib
         ET_ReturnCode eNsvToSvTypes10(bool bIsVariant = false);
         ET_ReturnCode eNsvToSvTypes14(bool bIsVariant = false);
         ET_ReturnCode eNsvToSvTypes11_12_13_15_16(bool bIsVariant = false);
-        ET_ReturnCode eApplyVowelModification(bool bIsVariant = false);
+        ET_ReturnCode eApplyNsvVowelModification(bool bIsVariant = false);
+        ET_ReturnCode eApplySvVowelModification(bool bIsVariant = false);
+        ET_ReturnCode eApplySvSuffix(bool bIsVariant = false);
+        ET_ReturnCode eApplySvWholeWord(bool bIsVariant = false);
     };
 }
 
