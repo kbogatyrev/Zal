@@ -52,6 +52,7 @@ namespace Hlib
         CEString sHeadwordVariant;
         CEString sHeadwordVariantComment;
         vector<int> vecSourceStressPos, vecSecondaryStressPos;
+        vector<int> vecSourceVariantStressPos, vecSecondaryVariantStressPos;
         bool bIsUnstressed;
         vector<int> vecHomonyms;
         CEString sPluralOf;

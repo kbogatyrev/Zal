@@ -104,8 +104,11 @@ namespace Hlib
         virtual bool bDeviationOptional(int iCd) = 0;
         virtual bool bIsFormMissing(CEString sGramHash) = 0;
         virtual bool bIsMultistressedCompound() = 0;
+        virtual ET_ReturnCode eGetSourceFormWithStress(CEString& sSourceForm) = 0;
         virtual ET_ReturnCode eGetFirstStemStressPos(int& iPos) = 0;
         virtual ET_ReturnCode eGetNextStemStressPos(int& iPos) = 0;
+        virtual ET_ReturnCode eGetFirstSecondaryStemStressPos(int& iPos) = 0;
+        virtual ET_ReturnCode eGetNextSecondaryStemStressPos(int& iPos) = 0;
         virtual ET_ReturnCode eSetDb(const CEString& sDbPath) = 0;
         virtual ET_ReturnCode eGenerateParadigm() = 0;
         virtual ET_ReturnCode eSaveTestData() = 0;
