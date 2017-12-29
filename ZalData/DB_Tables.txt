@@ -12,13 +12,13 @@ CREATE TABLE second_genitive (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER,
 
 CREATE TABLE inflection (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, is_primary BOOLEAN DEFAULT (0), inflection_type INTEGER, accent_type1 INTEGER, accent_type2 INTEGER, short_form_restrictions BOOLEAN DEAFULT (0), past_part_restrictions BOOLEAN DEAFULT (0), no_short_form BOOLEAN DEAFULT (0), no_past_part BOOLEAN DEAFULT (0), fleeting_vowel BOOLEAN DEFAULT (0), stem_augment BOOLEAN DEFAULT (0), inflected_parts BOOLEAN DEFAULT (0));
 
-CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash INTEGER, wordform TEXT, is_alternative BOOLEAN DEFAULT (0), lead_comment TEXT, trailing_comment TEXT, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
+CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash TEXT, wordform TEXT, is_alternative BOOLEAN DEFAULT (0), lead_comment TEXT, trailing_comment TEXT, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
 CREATE TABLE irregular_stress (id INTEGER PRIMARY KEY ASC, form_id INTEGER, position INTEGER, is_primary BOOLEAN, FOREIGN KEY (form_id) REFERENCES irregular_forms (id));
 
-CREATE TABLE difficulties (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash INTEGER, wordform TEXT, type INTEGER, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
+CREATE TABLE difficulties (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash TEXT, wordform TEXT, type INTEGER, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
-CREATE TABLE nonexistent_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash INTEGER, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
+CREATE TABLE nonexistent_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash TEXT, FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending_string TEXT);
 
@@ -26,13 +26,13 @@ CREATE TABLE ending_data (id INTEGER PRIMARY KEY ASC, ending_id INTEGER, inflect
 
 CREATE TABLE stems (id INTEGER PRIMARY KEY ASC, stem_string TEXT UNIQUE);
 
-CREATE TABLE stem_data (id INTEGER PRIMARY KEY ASC, stem_id INTEGER, gram_hash INTEGER, lexeme_id INTEGER, FOREIGN KEY (stem_id) REFERENCES stems (id), FOREIGN KEY (lexeme_id) REFERENCES descriptor (id));
+CREATE TABLE stem_data (id INTEGER PRIMARY KEY ASC, stem_id INTEGER, gram_hash TEXT, lexeme_id INTEGER, FOREIGN KEY (stem_id) REFERENCES stems (id), FOREIGN KEY (lexeme_id) REFERENCES descriptor (id));
 
 CREATE TABLE stress_data (id INTEGER PRIMARY KEY, form_id INTEGER, position INTEGER, is_primary BOOLEAN, is_variant BOOLEAN);
 
 CREATE TABLE wordforms (id INTEGER PRIMARY KEY ASC, stem_data_id INTEGER, ending_data_id INTEGER, FOREIGN KEY (stem_data_id) REFERENCES stem_data (id), FOREIGN KEY (ending_data_id) REFERENCES ending_data (id));
 
-CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash INTEGER, stress_pos INTEGER);
+CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash TEXT, stress_pos INTEGER);
 
 CREATE TABLE endings_meta (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, entries_count INTEGER);
 
