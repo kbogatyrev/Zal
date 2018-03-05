@@ -23,6 +23,7 @@ public:
 public:
     virtual ET_ReturnCode eSetDbPath(const CEString& sDbPath);
     virtual CEString sGetDbPath();
+    virtual ET_ReturnCode eCreateLexeme(ILexeme *&);
     virtual ET_ReturnCode eGetLexemeById(int Id);
     virtual ET_ReturnCode eGetLexemesByHash(const CEString& sMd5);
     virtual ET_ReturnCode eGetLexemesByGraphicStem(const CEString&);
@@ -44,6 +45,8 @@ public:
     virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
     virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
     virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
+
+    virtual ET_ReturnCode eSaveLexeme(ILexeme * pLexeme);
 
     // Not part ot interface:
     CSqlite * pGetDbHandle();

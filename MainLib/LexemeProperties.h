@@ -85,18 +85,22 @@ namespace Hlib
         bool bSecondLocative;
         bool bSecondLocativeOptional;
         CEString sLoc2Preposition;
+        bool bIsImpersonal;
+        bool bIsIterative;
         bool bHasAspectPair;
         int iAspectPairType;
-		int iAltAspectPairType;
-		CEString sAspectPairData;
-		CEString sAltAspectPairData;
-		CEString sAltAspectPairComment;
+        int iAltAspectPairType;
+        CEString sAspectPairData;
+        CEString sAltAspectPairData;
+        CEString sAltAspectPairComment;
         CEString sQuestionableForms;
         bool bHasIrregularForms;
+        CEString sIrregularFormsLeadComment;
         bool bHasIrregularVariants;    // true if any of irreg. forms alternates with regular
         bool bHasDeficiencies;
         CEString sRestrictedForms;
         CEString sContexts;
+        CEString sCognate;
         CEString sTrailingComment;
 
         // From inflection table:
@@ -112,6 +116,7 @@ namespace Hlib
         bool bNoPastParticiple;
         bool bFleetingVowel;
         int iStemAugment;
+        bool bInflectedParts;
 
         //
         // Verb stems & infinitive:
