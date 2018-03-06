@@ -35,6 +35,8 @@ namespace Hlib
         virtual void SetSourceForm(const CEString&) = 0;
         virtual CEString sHeadwordComment() = 0;
         virtual void SetHeadwordComment(const CEString&) = 0;
+        virtual CEString sHeadwordVariant() = 0;
+        virtual void SetHeadwordVariant(const CEString&) = 0;
         virtual CEString sHeadwordVariantComment() = 0;
         virtual void SetHeadwordVariantComment(const CEString&) = 0;
         virtual CEString sPluralOf() = 0;
@@ -83,10 +85,10 @@ namespace Hlib
         virtual void SetNoComparative(bool) = 0;
         virtual bool bAssumedForms() = 0;
         virtual void SetAssumedForms(bool) = 0;
-        virtual bool bYoAlternation() = 0;
-        virtual void SetYoAlternation(bool) = 0;
-        virtual bool bOAlternation() = 0;
-        virtual void SetOAlternation(bool) = 0;
+//        virtual bool bYoAlternation() = 0;
+//        virtual void SetYoAlternation(bool) = 0;
+//        virtual bool bOAlternation() = 0;
+//        virtual void SetOAlternation(bool) = 0;
         virtual bool bSecondGenitive() = 0;
         virtual void SetSecondGenitive(bool) = 0;
         virtual bool bSecondLocative() = 0;
@@ -102,8 +104,14 @@ namespace Hlib
         virtual void SetAspectPairType(int) = 0;
         virtual int iAltAspectPairType() = 0;
         virtual void SetAltAspectPairType(int) = 0;
+        virtual void SetAspectPairData(const CEString&) = 0;
+        virtual void SetAltAspectPairData(const CEString&) = 0;
         virtual CEString sAltAspectPairComment() = 0;
         virtual void SetAltAspectPairComment(const CEString&) = 0;
+        virtual ET_ReturnCode eGetAspectPair(CEString&, int&) = 0;
+//        virtual void SetAspectPair(CEString&, int&) = 0;
+        virtual ET_ReturnCode eGetAltAspectPair(CEString&, int&) = 0;
+//        virtual void SetAltAspectPair(CEString&, int&) = 0;
         virtual CEString sQuestionableForms() = 0;
         virtual void SetQuestionableForms(const CEString&) = 0;
         virtual bool bHasIrregularVariants() = 0;
@@ -177,8 +185,6 @@ namespace Hlib
         virtual ET_ReturnCode eSaveTestData() = 0;
         virtual ET_ReturnCode eClone(ILexeme *&) = 0;
 //        virtual ET_ReturnCode eGetAspectPairs(IAspectPair *&) = 0;
-        virtual ET_ReturnCode eGetAspectPair(CEString&, int&) = 0;
-        virtual ET_ReturnCode eGetAltAspectPair(CEString&, int&) = 0;
 
     };      //  struct ILexeme
 
