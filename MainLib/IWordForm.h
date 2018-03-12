@@ -14,7 +14,7 @@ namespace Hlib
         virtual ~IWordForm() {};
         virtual ILexeme * pLexeme() = 0;
         virtual CEString sWordForm() = 0;
-        virtual CEString sLemma() = 0;
+        virtual CEString sStem() = 0;
         virtual __int64 llLexemeId() = 0;
         virtual ET_PartOfSpeech ePos() = 0;
         virtual ET_Case eCase() = 0;

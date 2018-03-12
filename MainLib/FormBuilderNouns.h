@@ -24,7 +24,7 @@ protected:
                         ET_Case eCase,
                         ET_Number eNumber);
 
-    ET_ReturnCode eHandleStemAugment (CEString& sLemma, ET_Number, ET_Case);
+    ET_ReturnCode eHandleStemAugment (CEString& sStem, ET_Number, ET_Case);
 
     ET_ReturnCode eGetStressType (ET_Number eNumber,                 // in
                                   ET_Case eCase,                     // in
@@ -32,13 +32,13 @@ protected:
 
     ET_ReturnCode eHandleAccEnding (ET_Number, ET_Case&);
 
-    ET_ReturnCode eGetStressPositions (const CEString& sLemma, 
+    ET_ReturnCode eGetStressPositions (const CEString& sStem,
                                        const CEString& sEnding,
                                        ET_Number eNumber,
                                        ET_StressLocation eStressType,
                                        vector<int>& vecStressPos);
 
-    ET_ReturnCode eCreateFormTemplate (ET_Number eNumber, ET_Case eCase, const CEString& sLemma, CWordForm *&);
+    ET_ReturnCode eCreateFormTemplate (ET_Number eNumber, ET_Case eCase, const CEString& sStem, CWordForm *&);
 
     ET_ReturnCode eCheckIrregularForms (ET_Gender eGender, 
                                         ET_Animacy eAnimacy, 

@@ -14,21 +14,21 @@ class CFormBuilderLongAdj : public CFormBuilderDecl
 {
 public:
     CFormBuilderLongAdj (CLexeme * pLexeme,
-                         const CEString& sLemma,
+                         const CEString& sStem,
                          ET_AccentType eAccentType, 
                          ET_Subparadigm eSubparadigm,
                          int iStemStressPos = -1,
                          ET_Status eStatus = STATUS_COMMON,
                          bool bIrregular = false) 
         : CFormBuilderDecl (pLexeme, SUBPARADIGM_LONG_ADJ),
-          m_sLemma (sLemma),
+          m_sStem(sStem),
           m_eAccentType (eAccentType),
           m_eSubparadigm (eSubparadigm),
           m_iStemStressPos (iStemStressPos),
           m_eStatus (eStatus),
           m_bIrregular (bIrregular)
     {
-        m_sLemma.SetVowels(g_szRusVowels);
+        m_sStem.SetVowels(g_szRusVowels);
     }
 
 protected:
@@ -46,7 +46,7 @@ public:
     ET_ReturnCode eBuildParticiple();
 
 private:
-    CEString m_sLemma;
+    CEString m_sStem;
     ET_AccentType m_eAccentType;
     ET_Subparadigm m_eSubparadigm;
     int m_iStemStressPos;        // participles only

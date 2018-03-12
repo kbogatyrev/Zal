@@ -19,7 +19,7 @@ public:
     // Use with participles
     CFormBuilderShortAdj (CLexeme * pLexeme, 
                           bool bYoAlternation, 
-                          const CEString& sLemma,
+                          const CEString& sStem,
                           ET_Subparadigm eSubparadigm,
                           ET_AccentType eAccentType1,
                           ET_AccentType eAccentType2,
@@ -34,7 +34,7 @@ public:
                                    ET_Gender eGender, 
                                    vector<ET_StressLocation>& vecStressType);
 
-    ET_ReturnCode eCreateFormTemplate (const CEString& sLemma, 
+    ET_ReturnCode eCreateFormTemplate (const CEString& sStem,
                                        const CEString& sEnding,
                                        __int64 llEndingKey,
                                        ET_Gender eGender,
@@ -45,14 +45,14 @@ public:
                                    ET_Gender eGender, 
                                    ET_StressLocation eStressType,
                                    const CEString& sEnding,
-                                   CEString& sLemma);
+                                   CEString& sStem);
 
     ET_ReturnCode eHandleDeviations (CWordForm *);
 
     ET_ReturnCode eBuild();
 
 private:
-    CEString m_sLemma;
+    CEString m_sStem;
     int m_iType;
     int m_iVerbDeviation;              // Participles only
     vector<int> m_vecStressPos;        // Participles only

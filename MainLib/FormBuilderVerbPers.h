@@ -19,7 +19,7 @@ namespace Hlib
     public:
         ET_ReturnCode eGetStressType (ET_Number, ET_Person,  ET_StressLocation&);
         ET_ReturnCode eGetAuslautType (ET_Number, ET_Person, ET_StemAuslaut&);
-        ET_ReturnCode eGetLemma (ET_Number, ET_Person, CEString&);
+        ET_ReturnCode eGetStem(ET_Number, ET_Person, CEString&);
         ET_ReturnCode eGetStressPositions (const CEString& sLemma,
                                            const CEString& sEnding,
                                            ET_StressLocation eStressType,
