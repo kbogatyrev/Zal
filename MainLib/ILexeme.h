@@ -146,8 +146,8 @@ namespace Hlib
         virtual void SetNoPastParticiple(bool) = 0;
         virtual bool bFleetingVowel() = 0;
         virtual void SetFleetingVowel(bool) = 0;
-        virtual bool bStemAugment() = 0;
-        virtual void SetStemAugment(bool) = 0;
+        virtual int iStemAugment() = 0;
+        virtual void SetStemAugment(int) = 0;
         virtual CEString s1SgStem() = 0;
         virtual void Set1SgStem(const CEString&) = 0;
         virtual CEString s3SgStem() = 0;
