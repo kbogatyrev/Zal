@@ -40,7 +40,7 @@ namespace Hlib
             bShortFormsIncomplete(false),
             bNoPastParticiple(false),
             bFleetingVowel(false),
-            iStemAugment(false)
+            iStemAugment(-1)
             {
                 sSourceForm.SetVowels(g_szRusVowels);
                 sGraphicStem.SetVowels(g_szRusVowels);
@@ -115,7 +115,7 @@ namespace Hlib
         bool bShortFormsIncomplete;
         bool bNoPastParticiple;
         bool bFleetingVowel;
-        bool iStemAugment;
+        int iStemAugment;
         bool bInflectedParts;
 
         //
