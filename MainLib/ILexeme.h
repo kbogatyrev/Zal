@@ -20,6 +20,7 @@ namespace Hlib
         virtual ET_Gender eMainSymbolToGender() = 0;
         virtual ET_Animacy eInflectionTypeToAnimacy() = 0;
         virtual ET_Animacy eMainSymbolToAnimacy() = 0;
+        virtual ET_MainSymbol eMainSymbolToEnum(const CEString&) = 0;
         virtual CEString sGraphicStem() = 0;
         virtual void SetGraphicStem (const CEString&) = 0;
         virtual bool bHasIrregularForms() = 0;
@@ -185,6 +186,8 @@ namespace Hlib
         virtual ET_ReturnCode eSaveTestData() = 0;
         virtual ET_ReturnCode eClone(ILexeme *&) = 0;
 //        virtual ET_ReturnCode eGetAspectPairs(IAspectPair *&) = 0;
+        virtual ET_ReturnCode eCheckLexemeProperties() = 0;
+        virtual ET_ReturnCode eGetErrorMsg(CEString& sErrorMsg) = 0;
 
     };      //  struct ILexeme
 
