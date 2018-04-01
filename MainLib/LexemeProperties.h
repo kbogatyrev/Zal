@@ -24,12 +24,17 @@ namespace Hlib
             bNoComparative(false),
             bAssumedForms(false),
             bYoAlternation(false),
+            bOAlternation(false),
             bSecondGenitive(false),
+            bSecondLocative(false),
+            bIsImpersonal(false),
+            bIsIterative(false),
             bHasAspectPair(false),
             iAspectPairType(0),
             iAltAspectPairType(0),
             bHasIrregularForms(false),
             bHasIrregularVariants(false),
+            bHasDeficiencies(false),
             bPrimaryInflectionGroup(false),
             iType(-1),
             eAccentType1(AT_UNDEFINED),
@@ -40,8 +45,9 @@ namespace Hlib
             bShortFormsIncomplete(false),
             bNoPastParticiple(false),
             bFleetingVowel(false),
-            iStemAugment(-1)
-            {
+            iStemAugment(-1),
+            bInflectedParts(false)
+        {
                 sSourceForm.SetVowels(g_szRusVowels);
                 sGraphicStem.SetVowels(g_szRusVowels);
             }
