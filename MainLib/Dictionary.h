@@ -23,7 +23,8 @@ public:
 public:
     virtual ET_ReturnCode eSetDbPath(const CEString& sDbPath);
     virtual CEString sGetDbPath();
-    virtual ET_ReturnCode eCreateLexeme(ILexeme *&);
+    virtual ET_ReturnCode eCreateLexemeForEdit(ILexeme *&);
+    virtual ET_ReturnCode eCopyLexemeForEdit(const ILexeme * pSource, ILexeme *& pCopy);
     virtual ET_ReturnCode eGetLexemeById(int Id);
     virtual ET_ReturnCode eGetLexemesByHash(const CEString& sMd5);
     virtual ET_ReturnCode eGetLexemesByGraphicStem(const CEString&);
@@ -54,6 +55,8 @@ public:
 private:
     CEString m_sDbPath;
     CSqlite * m_pDb;
+    CEString m_sEditDbPath;
+    CSqlite * m_pEditDb;
     CParser * m_pParser;
     CVerifier * m_pVerifier;
     vector<CLexeme *> m_vecLexemes;

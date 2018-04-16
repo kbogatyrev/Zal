@@ -20,7 +20,8 @@ namespace Hlib
         virtual ~IDictionary() {};
         virtual ET_ReturnCode eSetDbPath (const CEString& sDbPath) = 0;
         virtual CEString sGetDbPath() = 0;
-        virtual ET_ReturnCode eCreateLexeme(ILexeme *&) = 0;
+        virtual ET_ReturnCode eCreateLexemeForEdit(ILexeme *&) = 0;
+        virtual ET_ReturnCode eCopyLexemeForEdit(const ILexeme * pSource, ILexeme *& pCopy) = 0;
         virtual ET_ReturnCode eGetLexemeById(int Id) = 0;
         virtual ET_ReturnCode eGetLexemesByHash (const CEString& sMd5) = 0;
         virtual ET_ReturnCode eGetLexemesByGraphicStem (const CEString&) = 0;
