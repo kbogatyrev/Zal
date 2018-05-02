@@ -106,7 +106,9 @@ namespace Hlib
         virtual int iAltAspectPairType() = 0;
         virtual void SetAltAspectPairType(int) = 0;
         virtual void SetAspectPairData(const CEString&) = 0;
+        virtual CEString sAspectPairData() = 0;
         virtual void SetAltAspectPairData(const CEString&) = 0;
+        virtual CEString sAltAspectPairData() = 0;
         virtual CEString sAltAspectPairComment() = 0;
         virtual void SetAltAspectPairComment(const CEString&) = 0;
         virtual ET_ReturnCode eGetAspectPair(CEString&, int&) = 0;
@@ -157,6 +159,7 @@ namespace Hlib
         virtual void SetInfinitive(const CEString&) = 0;
         virtual CEString sInfStem() = 0;
         virtual void SetInfStem(const CEString&) = 0;
+        virtual ET_ReturnCode eAddCommonDeviation(int iValue, bool bIsOptional) = 0;
 
         virtual bool bFindCommonDeviation(int iNum, bool& bIsOptional) = 0;
         virtual bool bFindStandardAlternation(const CEString& sKey, CEString& sValue) = 0;
