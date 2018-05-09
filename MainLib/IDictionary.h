@@ -30,6 +30,7 @@ namespace Hlib
         virtual ET_ReturnCode eGenerateFormsForSelectedLexemes() = 0;
         virtual ET_ReturnCode eCountLexemes (int64_t& iLexemes) = 0;
 
+        virtual int nLexemesFound() = 0;
         virtual ET_ReturnCode eGetFirstLexeme (ILexeme *& pLexeme) = 0;
         virtual ET_ReturnCode eGetNextLexeme (ILexeme *& pLexeme) = 0;
 

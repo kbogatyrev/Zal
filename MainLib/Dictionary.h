@@ -36,6 +36,7 @@ public:
     virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexemeItf);
     virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexemeItf);
 
+    virtual int nLexemesFound();
     virtual ET_ReturnCode eGetFirstLexeme(CLexeme *& pLexeme);
     virtual ET_ReturnCode eGetNextLexeme(CLexeme *& pLexeme);
 
@@ -55,8 +56,6 @@ public:
 private:
     CEString m_sDbPath;
     CSqlite * m_pDb;
-    CEString m_sEditDbPath;
-    CSqlite * m_pEditDb;
     CParser * m_pParser;
     CVerifier * m_pVerifier;
     vector<CLexeme *> m_vecLexemes;
