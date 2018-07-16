@@ -44,6 +44,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetNextStressPos(int& iPos, ET_StressType& eType) = 0;
 
         virtual ET_ReturnCode eSaveIrregularForm() = 0;
+        virtual ET_ReturnCode eSaveIrregularStress(map<int, ET_StressType>&) = 0;
 
         virtual CEString sGramHash() = 0;
         virtual ET_ReturnCode eInitFromHash(const CEString& sHash) = 0;
