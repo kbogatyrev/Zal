@@ -41,11 +41,11 @@ public:
                                        ET_Number eNumber,
                                        CWordForm *& pWordForm);
 
-    ET_ReturnCode eCreateWordForm (ET_Number eNumber, 
-                                   ET_Gender eGender, 
-                                   ET_StressLocation eStressType,
-                                   const CEString& sEnding,
-                                   CEString& sStem);
+//    ET_ReturnCode eCreateWordForm (ET_Number eNumber, 
+//                                   ET_Gender eGender, 
+//                                   ET_StressLocation eStressType,
+//                                   const CEString& sEnding,
+//                                   CEString& sStem);
 
     ET_ReturnCode eHandleDeviations (CWordForm *);
 

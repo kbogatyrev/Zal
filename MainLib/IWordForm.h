@@ -13,6 +13,7 @@ namespace Hlib
     {
         virtual ~IWordForm() {};
         virtual ILexeme * pLexeme() = 0;
+        virtual void SetLexeme(ILexeme * pLexeme) = 0;
         virtual CEString sWordForm() = 0;
         virtual void SetWordForm(const CEString&) = 0;
         virtual CEString sStem() = 0;
