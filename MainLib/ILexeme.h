@@ -169,6 +169,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetAlternatingPreverb(const CEString& sVerbForm, CEString& sPreverb, bool& bVoicing) = 0;
         virtual CEString sHash() = 0;
         virtual ET_ReturnCode eWordFormFromHash(CEString sHash, int iAt, IWordForm *& pWf) = 0;
+        virtual ET_ReturnCode eCreateWordForm(IWordForm *&) = 0;
         virtual bool bHasIrregularForm(CEString sGramHash) = 0;
         virtual bool bNoRegularForms(CEString sGramHash) = 0;
         virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWf) = 0;
