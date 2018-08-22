@@ -46,6 +46,12 @@ protected:
                                         ET_Case eEndingsCase,
                                         ET_Number eNumber, 
                                         bool& bHandled);
+    void CreateWordForm(vector<int> vecStressPositions, 
+                        ET_StressLocation eStressType, 
+                        const CEString sStem, 
+                        const CEString sEnding, 
+                        long long llEndingKey, 
+                        CWordForm * pWordForm);
 
 public:
     ET_ReturnCode eBuild();
