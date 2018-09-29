@@ -170,6 +170,8 @@ namespace Hlib
         virtual CEString sHash() = 0;
         virtual ET_ReturnCode eWordFormFromHash(CEString sHash, int iAt, IWordForm *& pWf) = 0;
         virtual ET_ReturnCode eCreateWordForm(IWordForm *&) = 0;
+        virtual ET_ReturnCode eRemoveWordForm(CEString sHash, int iAt) = 0;
+
         virtual bool bHasIrregularForm(CEString sGramHash) = 0;
         virtual bool bNoRegularForms(CEString sGramHash) = 0;
         virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWf) = 0;
@@ -193,6 +195,8 @@ namespace Hlib
         virtual ET_ReturnCode eClone(ILexeme *&) = 0;
 //        virtual ET_ReturnCode eGetAspectPairs(IAspectPair *&) = 0;
         virtual ET_ReturnCode eCheckLexemeProperties() = 0;
+        virtual ET_ReturnCode eDeleteIrregularForm(const CEString& sFormHash) = 0;
+        virtual ET_ReturnCode eSaveIrregularForm(const CEString& sFormHash, IWordForm *&) = 0;
         virtual ET_ReturnCode eGetErrorMsg(CEString& sErrorMsg) = 0;
 
     };      //  struct ILexeme
