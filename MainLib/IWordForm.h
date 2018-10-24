@@ -46,6 +46,8 @@ namespace Hlib
         virtual CEString sTrailingComment() = 0;
         virtual bool bIsEdited() = 0;
         virtual void SetIsEdited(bool) = 0;
+        virtual bool bIsVariant() = 0;
+        virtual void SetIsVariant(bool) = 0;
         virtual void SetTrailingComment(const CEString&) = 0;
         virtual ET_ReturnCode eGetFirstStressPos(int& iPos, ET_StressType& eType) = 0;
         virtual ET_ReturnCode eGetNextStressPos(int& iPos, ET_StressType& eType) = 0;
