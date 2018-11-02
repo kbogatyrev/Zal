@@ -48,6 +48,7 @@ public:
     virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
     virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
 
+//    virtual ET_ReturnCode eDeleteLexeme(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveLexeme(ILexeme * pLexeme);
 
     // Not part ot interface:
@@ -76,6 +77,7 @@ private:
     ET_ReturnCode eReadFromDb(const CEString& sStem);
 
     ET_ReturnCode eGetL2Data(__int64 llLexemeId, StLexemeProperties& properties);
+    ET_ReturnCode eGetWordIdFromLemexeId(__int64 llLexemeId, __int64& llWordId);
 
     void HandleDbException(CException&);
 };
