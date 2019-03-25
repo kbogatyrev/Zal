@@ -25,7 +25,7 @@ public:
     virtual CEString sGetDbPath();
     virtual ET_ReturnCode eCreateLexemeForEdit(ILexeme *&);
     virtual ET_ReturnCode eCopyLexemeForEdit(const ILexeme * pSource, ILexeme *& pCopy);
-    virtual ET_ReturnCode eGetLexemeById(int Id);
+    virtual ET_ReturnCode eGetLexemeById(long long Id, ILexeme *& pLexeme);
     virtual ET_ReturnCode eGetLexemesByHash(const CEString& sMd5);
     virtual ET_ReturnCode eGetLexemesByGraphicStem(const CEString&);
     virtual ET_ReturnCode eGetLexemesByInitialForm(const CEString&);

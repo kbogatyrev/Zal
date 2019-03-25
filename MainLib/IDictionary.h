@@ -22,11 +22,11 @@ namespace Hlib
         virtual CEString sGetDbPath() = 0;
         virtual ET_ReturnCode eCreateLexemeForEdit(ILexeme *&) = 0;
         virtual ET_ReturnCode eCopyLexemeForEdit(const ILexeme * pSource, ILexeme *& pCopy) = 0;
-        virtual ET_ReturnCode eGetLexemeById(int Id) = 0;
+        virtual ET_ReturnCode eGetLexemeById(long long Id, ILexeme *&) = 0;
         virtual ET_ReturnCode eGetLexemesByHash (const CEString& sMd5) = 0;
         virtual ET_ReturnCode eGetLexemesByGraphicStem (const CEString&) = 0;
         virtual ET_ReturnCode eGetLexemesByInitialForm (const CEString&) = 0;
-        virtual ET_ReturnCode eGenerateAllForms () = 0;
+        virtual ET_ReturnCode eGenerateAllForms() = 0;
         virtual ET_ReturnCode eGenerateFormsForSelectedLexemes() = 0;
         virtual ET_ReturnCode eCountLexemes (int64_t& iLexemes) = 0;
 
