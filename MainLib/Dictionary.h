@@ -48,8 +48,14 @@ public:
     virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
     virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
 
+    virtual ET_ReturnCode eSaveHeadword(ILexeme * pLexeme);
 //    virtual ET_ReturnCode eDeleteLexeme(ILexeme * pLexeme);
-    virtual ET_ReturnCode eSaveLexeme(ILexeme * pLexeme);
+    virtual ET_ReturnCode eSaveAspectPairInfo(ILexeme * pLexeme);
+    virtual ET_ReturnCode eSaveLoc2Info(ILexeme * pLexeme);
+    virtual ET_ReturnCode eSaveDescriptorInfo(ILexeme * pLexeme);
+    virtual ET_ReturnCode eSaveCommonDeviation(ILexeme * pLexeme);
+    virtual ET_ReturnCode eSaveInflectionInfo(ILexeme * pLexeme);
+//    virtual ET_ReturnCode eSaveLexeme(ILexeme * pLexeme);
 
     // Not part ot interface:
     CSqlite * pGetDbHandle();
