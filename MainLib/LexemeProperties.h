@@ -12,7 +12,8 @@ namespace Hlib
         // Stem data as acquired from the DB
         //
         StLexemeProperties() :
-            iDbKey(-1),
+            llDescriptorId(-1),
+            llHeadwordId(-1),
             bIsUnstressed(false),
             bIsVariant(false),
             bIsPluralOf(false),
@@ -50,9 +51,10 @@ namespace Hlib
         {
                 sSourceForm.SetVowels(g_szRusVowels);
                 sGraphicStem.SetVowels(g_szRusVowels);
-            }
+        }
 
-        int iDbKey;
+        long long llDescriptorId;
+        long long llHeadwordId;
         CEString sSourceForm;
         CEString sHeadwordComment;
         CEString sHeadwordVariant;
