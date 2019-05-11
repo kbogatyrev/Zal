@@ -23,6 +23,8 @@ public:
     virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm);
     virtual void ClearResults();
 
+    void SetDb(CSqlite * pDb);
+
 private:
     CParser();  // no use
 
