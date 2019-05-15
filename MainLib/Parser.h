@@ -18,7 +18,7 @@ public:
     ~CParser();
 
 public:
-    virtual ET_ReturnCode eAnalyze(const CEString& sWord);
+    virtual ET_ReturnCode eParseWord(const CEString& sWord);
     virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWordForm);
     virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm);
     virtual void ClearResults();

@@ -85,6 +85,8 @@ private:
     ET_ReturnCode eGetL2Data(__int64 llLexemeId, StLexemeProperties& properties);
     ET_ReturnCode eGetWordIdFromLemexeId(__int64 llLexemeId, __int64& llWordId);
 
+    ET_ReturnCode eMarkLexemeAsEdited(ILexeme * pLexeme);
+
     void HandleDbException(CException&);
 };
 
