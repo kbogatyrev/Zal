@@ -142,7 +142,7 @@ class CAdverbialEndings : public CEndings
 public:
     CAdverbialEndings(CLexeme * pLexeme);
 
-    ET_ReturnCode eSelect(ET_Subparadigm, bool bHusherStem, bool bIsVariant);
+    ET_ReturnCode eSelect(ET_Subparadigm, bool bHusherStem, bool bVStem, bool bIsVariant);
     ET_ReturnCode eSelectPastAdvAugmentedEndings(ET_Subparadigm, bool bIsVariant);
 };
 
