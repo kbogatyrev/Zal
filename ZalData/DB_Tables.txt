@@ -22,7 +22,7 @@ CREATE TABLE nonexistent_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGE
 
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending_string TEXT);
 
-CREATE TABLE ending_data (id INTEGER PRIMARY KEY ASC, ending_id INTEGER, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, is_reflexive BOOLEAN DEFAULT(0), stem_auslaut INTEGER, FOREIGN KEY (ending_id) REFERENCES endings (id));
+CREATE TABLE ending_data (id INTEGER PRIMARY KEY ASC, ending_id INTEGER, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, tense INTEGER, is_reflexive BOOLEAN DEFAULT(0), stem_auslaut INTEGER, FOREIGN KEY (ending_id) REFERENCES endings (id));
 
 CREATE TABLE stems (id INTEGER PRIMARY KEY ASC, stem_string TEXT UNIQUE);
 
@@ -31,6 +31,10 @@ CREATE TABLE stem_data (id INTEGER PRIMARY KEY ASC, stem_id INTEGER, gram_hash T
 CREATE TABLE stress_data (id INTEGER PRIMARY KEY, form_id INTEGER, position INTEGER, is_primary BOOLEAN, is_variant BOOLEAN);
 
 CREATE TABLE wordforms (id INTEGER PRIMARY KEY ASC, stem_data_id INTEGER, ending_data_id INTEGER, FOREIGN KEY (stem_data_id) REFERENCES stem_data (id), FOREIGN KEY (ending_data_id) REFERENCES ending_data (id));
+
+CREATE TABLE parsed_text (id INTEGER PRIMARY KEY ASC, text_id INTEGER, word_position INTEGER, line_number INTEGER, line_offset INTEGER, word_length INTEGER, is_irregular BOOLEAN, is_unknown BOOLEAN, wordform_id INTEGER, FOREIGN KEY (text_id) REFERENCES text (id), FOREIGN KEY (wordform_id) REFERENCES wordforms(id));
+
+CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, title TEXT, metadata TEXT);
 
 CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash TEXT, stress_pos INTEGER);
 
@@ -50,6 +54,8 @@ CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY, lexeme_id TEXT, hash INTE
 
 CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
 
+-- CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
+
 CREATE TABLE conversion_source_text (id INTEGER PRIMARY KEY, headword_id INTEGER, descriptor_id INTEGER, source_text TEXT);
 
 CREATE TABLE conversion_errors (id INTEGER PRIMARY KEY, Description TEXT, Paragraph TEXT, Resolved INTEGER DEFAULT 0);
@@ -57,6 +63,8 @@ CREATE TABLE conversion_errors (id INTEGER PRIMARY KEY, Description TEXT, Paragr
 CREATE TABLE conversion_source_recent_edit (id INTEGER PRIMARY KEY, headword_id INTEGER, edit_start INTEGER, edit_length INTEGER);
 
 CREATE TABLE incomplete_parses (id INTEGER PRIMARY KEY, unparsed_segment TEXT, source_text TEXT);
+
+CREATE TABLE edited_lexemes (id INTEGER PRIMARY KEY, lexeme_hash TEXT);
 
 CREATE INDEX idx_stems_select ON stems (stem_string);
 
