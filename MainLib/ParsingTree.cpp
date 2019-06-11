@@ -43,6 +43,11 @@ void CParsingTree::Traverse(StNode * pNode, const CEString& sWord)
     //    sMsg += pRoot->cLetter;
     //    CLogger::bWriteLog(wstring(sMsg));
 
+    if (s_iLevel >= (int)sWord.uiLength())
+    {
+        return;
+    }
+
     if (s_iLevel > 0 && sWord[sWord.uiLength() - s_iLevel] != pNode->cLetter)
     {
         return;
