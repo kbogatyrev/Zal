@@ -34,7 +34,7 @@ CREATE TABLE wordforms (id INTEGER PRIMARY KEY ASC, stem_data_id INTEGER, ending
 
 CREATE TABLE words_in_text (id INTEGER PRIMARY KEY ASC, text_id INTEGER, line_number INTEGER, word_position INTEGER,  line_offset INTEGER, word_length INTEGER, FOREIGN KEY (text_id) REFERENCES text(id));
 
-CREATE TABLE text_to_word_form (id INTEGER PRIMARY KEY ASC, word_in_text_id INTEGER, wordform_id INTEGER, FOREIGN KEY word_in_text_id REFERENCES words_in_text, FOREIGN KEY wordform_id REFERENCES wordforms);
+CREATE TABLE text_to_word_form (id INTEGER PRIMARY KEY ASC, word_in_text_id INTEGER, wordform_id INTEGER, FOREIGN KEY (word_in_text_id) REFERENCES words_in_text, FOREIGN KEY (wordform_id) REFERENCES wordforms);
 
 CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, metadata TEXT, text TEXT);
 
