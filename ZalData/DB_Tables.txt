@@ -32,9 +32,11 @@ CREATE TABLE stress_data (id INTEGER PRIMARY KEY, form_id INTEGER, position INTE
 
 CREATE TABLE wordforms (id INTEGER PRIMARY KEY ASC, stem_data_id INTEGER, ending_data_id INTEGER, FOREIGN KEY (stem_data_id) REFERENCES stem_data (id), FOREIGN KEY (ending_data_id) REFERENCES ending_data (id));
 
-CREATE TABLE parsed_text (id INTEGER PRIMARY KEY ASC, text_id INTEGER, line_number INTEGER, word_position INTEGER,  line_offset INTEGER, word_length INTEGER, is_irregular BOOLEAN, is_unknown BOOLEAN, wordform_id INTEGER, FOREIGN KEY (text_id) REFERENCES text (id), FOREIGN KEY (wordform_id) REFERENCES wordforms(id));
+CREATE TABLE words_in_text (id INTEGER PRIMARY KEY ASC, text_id INTEGER, line_number INTEGER, word_position INTEGER,  line_offset INTEGER, word_length INTEGER, FOREIGN KEY (text_id) REFERENCES text(id));
 
-CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, title TEXT, metadata TEXT, text TEXT);
+CREATE TABLE text_to_word_form (id INTEGER PRIMARY KEY ASC, word_in_text_id INTEGER, wordform_id INTEGER, FOREIGN KEY word_in_text_id REFERENCES words_in_text, FOREIGN KEY wordform_id REFERENCES wordforms);
+
+CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, metadata TEXT, text TEXT);
 
 CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash TEXT, stress_pos INTEGER);
 
