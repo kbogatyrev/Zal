@@ -156,6 +156,13 @@ ET_ReturnCode CParsingTree::eLoad(CSqlite * pDb)
         return H_ERROR_DB;
     }
 
+    if (0 == m_mapSortedEndingsList.size())
+    { 
+        CEString sMsg(L"Warning: no endings found.");
+        ERROR_LOG(sMsg);
+        return H_ERROR_UNEXPECTED;
+    }
+
     MapEndingToDescriptors::iterator itEnding = m_mapSortedEndingsList.begin();
 
     // TEST ONLY
