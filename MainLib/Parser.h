@@ -42,6 +42,7 @@ private:
     ET_ReturnCode eIrregularFormLookup(const CEString&);
     ET_ReturnCode eWholeWordLookup(const CEString&);
     ET_ReturnCode eFormLookup(const CEString&);
+    ET_ReturnCode eRemoveFalsePositives();
     ET_ReturnCode eQueryDb(const CEString& sSelect, uint64_t& uiQueryHandle);
     ET_ReturnCode eSaveWord(int iLine, int iWord, int iLineOffset, int iSegmentLength, long long& llWordDbKey);
     ET_ReturnCode eSaveWordParse(long long llSegmentId, long long llWordFormId);
