@@ -32,20 +32,6 @@ CREATE TABLE stress_data (id INTEGER PRIMARY KEY, form_id INTEGER, position INTE
 
 CREATE TABLE wordforms (id INTEGER PRIMARY KEY ASC, stem_data_id INTEGER, ending_data_id INTEGER, FOREIGN KEY (stem_data_id) REFERENCES stem_data (id), FOREIGN KEY (ending_data_id) REFERENCES ending_data (id));
 
-CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, metadata TEXT);
-
-CREATE TABLE lines_in_text (id INTEGER PRIMARY KEY ASC, text_id INTEGER, line_number INTEGER, text_offset INTEGER, length INTEGER, number_of_words INTEGER, source TEXT, FOREIGN KEY (text_id) REFERENCES text(id));
-
--- word_text redundant, needed for testing
-CREATE TABLE words_in_line (id INTEGER PRIMARY KEY ASC, line_id INTEGER, word_position INTEGER, line_offset INTEGER, word_length INTEGER, word_text TEXT, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
-
-CREATE TABLE word_to_wordform (id INTEGER PRIMARY KEY ASC, word_in_line_id INTEGER, wordform_id INTEGER, FOREIGN KEY (word_in_line_id) REFERENCES words_in_line(id), FOREIGN KEY (wordform_id) REFERENCES wordforms(id));
-
--- this table is added to simplify retrieval of transcription and stress positions
-CREATE TABLE tact_group (id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, num_of_words INTEGER, source TEXT, transcription TEXT, stressed_syllable INTEGER, reverse_stressed_syllable INTEGER, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
-
-CREATE TABLE word_to_tact_group (id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY (word_to_wordform_id) REFERENCES word_to_word_form(id));
-
 CREATE TABLE endings_for_analysis (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, ending TEXT, gram_hash TEXT, stress_pos INTEGER);
 
 CREATE TABLE endings_meta (id INTEGER PRIMARY KEY ASC, subtable_id INTEGER, entries_count INTEGER);
@@ -75,6 +61,23 @@ CREATE TABLE conversion_source_recent_edit (id INTEGER PRIMARY KEY, headword_id 
 CREATE TABLE incomplete_parses (id INTEGER PRIMARY KEY, unparsed_segment TEXT, source_text TEXT);
 
 CREATE TABLE edited_lexemes (id INTEGER PRIMARY KEY, lexeme_hash TEXT);
+
+-- Text analysis --
+CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, metadata TEXT, contents TEXT);
+
+CREATE TABLE lines_in_text (id INTEGER PRIMARY KEY ASC, text_id INTEGER, line_number INTEGER, text_offset INTEGER, length INTEGER, number_of_words INTEGER, source TEXT, FOREIGN KEY (text_id) REFERENCES text(id));
+
+-- word_text redundant, needed for testing
+CREATE TABLE words_in_line (id INTEGER PRIMARY KEY ASC, line_id INTEGER, word_position INTEGER, line_offset INTEGER, word_length INTEGER, word_text TEXT, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
+
+CREATE TABLE word_to_wordform (id INTEGER PRIMARY KEY ASC, word_in_line_id INTEGER, wordform_id INTEGER, FOREIGN KEY (word_in_line_id) REFERENCES words_in_line(id), FOREIGN KEY (wordform_id) REFERENCES wordforms(id));
+
+-- this table is added to simplify retrieval of transcription and stress positions
+CREATE TABLE tact_group (id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, num_of_words INTEGER, source TEXT, transcription TEXT, stressed_syllable INTEGER, reverse_stressed_syllable INTEGER, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
+
+CREATE TABLE word_to_tact_group (id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY (word_to_wordform_id) REFERENCES word_to_wordform(id));
+
+-------------------
 
 CREATE INDEX idx_stems_select ON stems (stem_string);
 
