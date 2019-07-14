@@ -8,14 +8,14 @@ using namespace Hlib;
 
 extern "C"
 {
-ET_ReturnCode GetDictionary (IDictionary *& d)
-{
-    d = new CDictionary;
-    if (NULL == d)
+    ET_ReturnCode GetDictionary (IDictionary *& d)
     {
-        return H_ERROR_POINTER;
-    }
+        d = new CDictionary;
+        if (NULL == d)
+        {
+            return H_ERROR_POINTER;
+        }
 
-    return H_NO_ERROR;
-}
+        return H_NO_ERROR;
+    }
 }
