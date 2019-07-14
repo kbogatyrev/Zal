@@ -1,6 +1,8 @@
 #ifndef PARSINGTREE_H_INCLUDED
 #define PARSINGTREE_H_INCLUDED
 
+#include <set>
+
 using namespace std;
 
 //
