@@ -1,4 +1,6 @@
-﻿#include "StdAfx.h"
+﻿#include <vector>
+#include "EString.h"
+#include "SqliteWrapper.h"
 #include "ParsingTree.h"
 
 using namespace Hlib;

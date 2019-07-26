@@ -2,6 +2,7 @@
 #define PARSINGTREE_H_INCLUDED
 
 #include <set>
+#include <map>
 
 using namespace std;
 
@@ -95,7 +96,7 @@ namespace Hlib
         ET_ReturnCode eIsEmptyEnding(__int64 llEndingId);
 
     private:
-        typedef map<CEString, vector<__int64>, StReverseComparisonFunctor> MapEndingToDescriptors;
+        typedef std::map<CEString, vector<__int64>, StReverseComparisonFunctor> MapEndingToDescriptors;
 
         MapEndingToDescriptors m_mapSortedEndingsList;
         StNode * m_pRoot;
