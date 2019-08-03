@@ -7,6 +7,7 @@
 #include "ILexeme.h"
 #include "IWordForm.h"
 #include "IParser.h"
+#include "IAnalytics.h"
 #include "IVerifier.h"
 #include "LexemeProperties.h"
 
@@ -38,6 +39,7 @@ namespace Hlib
         virtual ET_ReturnCode Clear(ILexeme *) = 0;
 
         virtual ET_ReturnCode eGetParser(IParser *& p) = 0;
+        virtual ET_ReturnCode eGetAnalytics(IAnalytics*& p) = 0;
         virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier) = 0;
         virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR) = 0;
         virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR) = 0;
