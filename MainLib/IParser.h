@@ -9,7 +9,7 @@ namespace Hlib
     struct IParser
     {
         virtual ~IParser() {};
-        virtual ET_ReturnCode eParseText(const CEString& sName, const CEString& sMetaData, const CEString& sText) = 0;
+//        virtual ET_ReturnCode eParseText(const CEString& sName, const CEString& sMetaData, const CEString& sText) = 0;
         virtual ET_ReturnCode eParseWord(const CEString& sWord) = 0;
         virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWordForm) = 0;
         virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm) = 0;
