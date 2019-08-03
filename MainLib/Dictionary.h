@@ -11,6 +11,7 @@ class CLexeme;
 class CSqlite;
 struct CWordForm;
 class CParser;
+class CAnalytics;
 class CVerifier;
 
 class CDictionary : public IDictionary
@@ -44,6 +45,7 @@ public:
     virtual ET_ReturnCode Clear(ILexeme *);
 
     virtual ET_ReturnCode eGetParser(IParser *& p);
+    virtual ET_ReturnCode eGetAnalytics(IAnalytics*& p);
     virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
     virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
     virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
@@ -64,6 +66,7 @@ private:
     CEString m_sDbPath;
     CSqlite * m_pDb;
     CParser * m_pParser;
+    CAnalytics* m_pAnalytics;
     CVerifier * m_pVerifier;
     vector<CLexeme *> m_vecLexemes;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
