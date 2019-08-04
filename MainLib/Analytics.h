@@ -102,7 +102,7 @@ namespace Hlib
         ET_ReturnCode eSaveLine(long long llTextId, int iLineNum, int iTextOffset, int iLength, int iNumOfWords, const CEString& sText, long long& llDbKey);
         ET_ReturnCode eSaveWord(long long llLineDbId, int iLine, int iWord, int iLineOffset, int iSegmentLength, const CEString& sWord, long long& llWordDbKey);
         ET_ReturnCode eSaveWordParse(long long llSegmentId, long long llWordFormId, long long& llWordToWordFormId);
-        ET_ReturnCode eSaveTactGroups(vector<StTactGroup>&);
+        ET_ReturnCode eSaveTactGroup(StTactGroup&);
         ET_ReturnCode eClearTextData(long long llText);
         bool bIsProclitic(const CWordForm&);
         bool bIsEnclitic(const CWordForm&);

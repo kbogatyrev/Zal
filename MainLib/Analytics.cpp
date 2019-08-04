@@ -118,11 +118,12 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
 
         eRet = eAssembleTactGroups(sLine);
 
-//        vector<StTactGroup> vecTactGroups;
-//        StTactGroup stCurrentTactGroup;
-//        stCurrentTactGroup.llLineId = llLineDbId;
-//        stCurrentTactGroup.iFirstWordNum = 0;
-    }
+        for (auto itTg = m_mapTactGroups.begin(); itTg != m_mapTactGroups.end(); ++itTg)
+        {
+            eRet = eSaveTactGroup((*itTg).second);
+        }
+
+    }       //  for (int iLine = 0; iLine < iNLines; ++iLine)
 
     return H_NO_ERROR;
 
@@ -746,46 +747,45 @@ bool CAnalytics::bArePhoneticallyIdentical(CWordForm& wf1, CWordForm& wf2)
 //  num_of_words INTEGER, source TEXT, transcription TEXT, stressed_syllable INTEGER, 
 //  reverse_stressed_syllable INTEGER, SECONDARY_STRESSED_SYLLABLE, FOREIGN KEY(line_id) 
 //  REFERENCES lines_in_text(id));
-ET_ReturnCode CAnalytics::eSaveTactGroups(vector<StTactGroup>& vecTactGroups)
+ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
 {
+    if (NULL == m_pDb)
+    {
+        ERROR_LOG(L"No database access.");
+        return H_ERROR_POINTER;
+    }
+
     try
     {
-        for (auto stTactGroup : vecTactGroups)
+        m_pDb->PrepareForInsert(L"tact_group", 7);
+
+        m_pDb->Bind(1, stTg.llLineId);
+        m_pDb->Bind(2, stTg.iFirstWordNum);
+        m_pDb->Bind(3, stTg.iNumOfWords);
+        m_pDb->Bind(4, stTg.sSource);
+        m_pDb->Bind(5, stTg.sTranscription);
+        m_pDb->Bind(6, stTg.iStressPos);
+        m_pDb->Bind(7, stTg.iReverseStressPos);
+
+        m_pDb->InsertRow();
+        m_pDb->Finalize();
+
+        long long llTactGroupId = m_pDb->llGetLastKey();
+
+        // CREATE TABLE word_to_tact_group(id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, 
+        // tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY(word_to_wordform_id) 
+        // REFERENCES word_to_word_form(id));
+
+        unsigned long long llInsertHandle = 0;
+        m_pDb->uiPrepareForInsert(L"word_to_tact_group", 3, (sqlite3_stmt * &)llInsertHandle);
+        for (StWordParse& stWordParse : stTg.vecWords)
         {
-            if (NULL == m_pDb)
-            {
-                ERROR_LOG(L"No database access.");
-                return H_ERROR_POINTER;
-            }
-
-            m_pDb->PrepareForInsert(L"tact_group", 7);
-
-            m_pDb->Bind(1, stTactGroup.llLineId);
-            m_pDb->Bind(2, stTactGroup.iFirstWordNum);
-            m_pDb->Bind(3, stTactGroup.iNumOfWords);
-            m_pDb->Bind(4, stTactGroup.sSource);
-            m_pDb->Bind(5, stTactGroup.sTranscription);
-            m_pDb->Bind(6, stTactGroup.iStressPos);
-            m_pDb->Bind(7, stTactGroup.iReverseStressPos);
-
-            m_pDb->InsertRow();
-            m_pDb->Finalize();
-
-            long long llTactGroupId = m_pDb->llGetLastKey();
-
-            // CREATE TABLE word_to_tact_group(id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, 
-            // tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY(word_to_wordform_id) 
-            // REFERENCES word_to_word_form(id));
-            m_pDb->PrepareForInsert(L"word_to_tact_group", 3);
-            //            for (auto stWordParse : stTactGroup.vecWords)
-            {
-                //                m_pDb->Bind(1, stWordParse.llWordToWordFormId);
-                m_pDb->Bind(2, llTactGroupId);
-                //                m_pDb->Bind(3, stWordParse.iPosInTactGroup);
-                m_pDb->InsertRow();
-            }
-            m_pDb->Finalize();
+            m_pDb->Bind(1, stWordParse.llWordToWordFormId, llInsertHandle);
+            m_pDb->Bind(2, llTactGroupId, llInsertHandle);
+            m_pDb->Bind(3, stWordParse.iPosInTactGroup, llInsertHandle);
+            m_pDb->InsertRow(llInsertHandle);
         }
+        m_pDb->Finalize(llInsertHandle);
     }
     catch (CException& exc)
     {
