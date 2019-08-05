@@ -373,7 +373,7 @@ ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
 
             if (bIsProclitic(wordForm))
             {
-                // insert before 1st autonomously stressed word, ajust iFirstWordNum
+                // insert before 1st autonomously stressed word, adjust iFirstWordNum
             }
 
             if (bIsEnclitic(wordForm))
@@ -383,134 +383,8 @@ ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
             m_mapTactGroups.insert(make_pair(iField, stTg));
         }
     }
-            /*
-                            // ASSERT(iWordPos == stWordParse.iNumber)
-                            if (bIsProclitic(stWordParse.WordForm) || bIsEnclitic(stWordParse.WordForm))
-                            {
-                                continue;
-                            }
 
-                            if (iField > 0)
-                            {
-                                auto pairProcliticParses = m_mmapWordParses.equal_range(iField - 1);
-                                for (auto itProcliticParse = pairProcliticParses.first; itProcliticParse != pairParses.second; ++itParse)
-                                {
-                                    StWordParse& stProcliticParse = (*itProcliticParse).second;
-                                    if (bIsProclitic(stProcliticParse.WordForm))
-                                    {
-                                        stCurrentTactGroup.iFirstWordNum = stProcliticParse.iNumber;
-                                        stCurrentTactGroup.iNumOfWords = 1;
-                                        stCurrentTactGroup.sSource = stProcliticParse.WordForm.sWordForm();
-
-                                        auto pairInvariants = m_mmapEquivalencies.equal_range(iField);
-                                        for (auto itInv = pairInvariants.first; itInv != pairInvariants.second; ++itInv)
-                                        {
-                                            set<StWordParse>& setInvariants = (*itInv).second;
-                                            if (setInvariants.find(stProcliticParse) != setInvariants.end())
-                                            {
-                                                stCurrentTactGroup.setWords = setInvariants;
-                                            }
-                                        }
-                                        //&&&&
-                                        //set<StWordParse>& setInvariants =
-
-            //                            stCurrentTactGroup.setWords &&&&
-                                    }
-                                }
-                                StWordParse stPreviousWord;
-
-                                vecTactGroups.push_back(stCurrentTactGroup);
-                                stCurrentTactGroup.Reset();
-                                stCurrentTactGroup.llLineId = llLineDbId;
-                                stCurrentTactGroup.iFirstWordNum = stWordParse.iNumber;
-                            }
-                            
-            
-
-            stWordParse.iPosInTactGroup = stCurrentTactGroup.iNumOfWords;
-            //                stCurrentTactGroup.vecWords.push_back(stWordParse);
-            if (stCurrentTactGroup.iNumOfWords > 0)
-            {
-                stCurrentTactGroup.sSource += L" ";
-            }
-            stCurrentTactGroup.sSource += stWordParse.WordForm.sWordForm();
-
-            ET_StressType eType = ET_StressType::STRESS_TYPE_UNDEFINED;
-            int iStressPos = -1;
-            eRet = stWordParse.WordForm.eGetFirstStressPos(iStressPos, eType);
-            if (eRet != H_NO_ERROR)
-            {
-                CEString sMsg(L"Unable to get stress position, error ");
-                sMsg += CEString::sToString(eRet);
-                ERROR_LOG(sMsg);
-            }
-
-            if (ET_StressType::STRESS_PRIMARY == eType)
-            {
-                stCurrentTactGroup.iStressPos = iStressPos;
-            }
-            else if (ET_StressType::STRESS_SECONDARY == eType)
-            {
-                stCurrentTactGroup.iSecondaryStressPos = iStressPos;
-            }
-            else
-            {
-                CEString sMsg(L"Unknown stress type.");
-                ERROR_LOG(sMsg);
-            }
-
-            while (H_NO_ERROR == eRet)
-            {
-                eRet = stWordParse.WordForm.eGetNextStressPos(iStressPos, eType);
-                if (eRet != H_NO_ERROR && eRet != H_NO_MORE)
-                {
-                    CEString sMsg(L"Unable to get next stress position, error ");
-                    sMsg += CEString::sToString(eRet);
-                    ERROR_LOG(sMsg);
-                }
-                if (ET_StressType::STRESS_PRIMARY == eType)
-                {
-                    if (-1 == stCurrentTactGroup.iStressPos)
-                    {
-                        stCurrentTactGroup.iStressPos = iStressPos;
-                    }
-                    else
-                    {
-                        ERROR_LOG(L"Multiple stress positions.");
-                    }
-                }
-                else if (ET_StressType::STRESS_SECONDARY == eType)
-                {
-                    if (-1 == stCurrentTactGroup.iSecondaryStressPos)
-                    {
-                        stCurrentTactGroup.iSecondaryStressPos = iStressPos;
-                    }
-                    else
-                    {
-                        ERROR_LOG(L"Multiple secondary stress positions.");
-                    }
-                }
-                else
-                {
-                    CEString sMsg(L"Unknown stress type.");
-                    ERROR_LOG(sMsg);
-                }
-            }
-
-            ++stCurrentTactGroup.iNumOfWords;
-        }
-    }       //  for (auto iWordPos : vecWordPos)
-
-    eRet = eSaveTactGroups(vecTactGroups);
-    if (eRet != H_NO_ERROR)
-    {
-        CEString sMsg(L"Unable to save tact group, error ");
-        sMsg += CEString::sToString(eRet);
-        ERROR_LOG(sMsg);
-    }
-}       //  for (int iLine = 0; iLine < iNLines; ++iLine)
-*/
-return H_NO_ERROR;
+    return H_NO_ERROR;
 
 }       //  eAssembleTactGroups()
 
