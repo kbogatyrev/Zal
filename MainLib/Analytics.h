@@ -23,6 +23,7 @@ namespace Hlib
             int iLineOffset;
             int iLength;
             int iPosInTactGroup;
+            ET_WordStressType eStressType;
             long long llLineDbId;
             long long llWordInLIneDbId;
             long long llWordToWordFormId;
@@ -40,6 +41,7 @@ namespace Hlib
                 int iLength = -1;
                 int iPosInTactGroup = -1;
                 long long llLineDbId = -1;
+                eStressType = WORD_STRESS_TYPE_UNDEFINED;
                 long long llWordInLIneDbId = -1;
                 long long llWordToWordFormId = -1;
                 CWordForm WordForm;
@@ -60,9 +62,8 @@ namespace Hlib
             long long llLineId;
             int iFirstWordNum;
             int iNumOfWords;
-            int iStressPos;
-            int iReverseStressPos;
-            int iSecondaryStressPos;
+            int iStressedSyllable;             // TODO: multiple stresses, dash-separated compounds etc
+            int iReverseStressedSyllable;
             CEString sSource;
             CEString sTranscription;
             vector<StWordParse> vecWords;
@@ -77,9 +78,8 @@ namespace Hlib
                 llLineId = -1;
                 iFirstWordNum = -1;
                 iNumOfWords = 0;
-                iStressPos = -1;
-                iReverseStressPos = -1;
-                iSecondaryStressPos = -1;
+                iStressedSyllable = -1;
+                iReverseStressedSyllable = -1;
                 sSource.Erase();
                 sTranscription.Erase();
                 vecWords.clear();
@@ -98,6 +98,8 @@ namespace Hlib
         ET_ReturnCode eRegisterText(const CEString& sTextName, const CEString sTextMetadata, const CEString& sText);
         ET_ReturnCode eParseWord(const CEString& sWord, int iLine, int iNumInLine, long long llLineDbKey);
         ET_ReturnCode eFindEquivalencies(CEString& sLine);
+        ET_ReturnCode eGetStress(StTactGroup&);
+        ET_ReturnCode eTranscribe();
         ET_ReturnCode eAssembleTactGroups(CEString& sLine);
         ET_ReturnCode eSaveLine(long long llTextId, int iLineNum, int iTextOffset, int iLength, int iNumOfWords, const CEString& sText, long long& llDbKey);
         ET_ReturnCode eSaveWord(long long llLineDbId, int iLine, int iWord, int iLineOffset, int iSegmentLength, const CEString& sWord, long long& llWordDbKey);

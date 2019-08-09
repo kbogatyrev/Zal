@@ -278,6 +278,20 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, int iLine, int iNumI
         stParse.iNumber = iNumInLine;
         stParse.iLineOffset = iOffset;
         stParse.iLength = sWord.uiLength();
+
+        if (bIsProclitic(pWf))
+        {
+            stParse.eStressType = WORD_STRESS_TYPE_PROCLITIC;
+        }
+        else if (bIsEnclitic(pWf))
+        {
+            stParse.eStressType = WORD_STRESS_TYPE_ENCLITIC;
+        }
+        else
+        {
+            stParse.eStressType = WORD_STRESS_TYPE_AUTONOMOUS;
+        }
+
         stParse.llLineDbId = llLineDbKey;
         stParse.llWordInLIneDbId = llWordInLineDbKey;
         stParse.llWordToWordFormId = llWordToWordFormId;
@@ -351,10 +365,116 @@ ET_ReturnCode CAnalytics::eFindEquivalencies(CEString& sLine)
     }
 
     return H_NO_ERROR;
+
+}       //  eFindEquivalencies()
+
+ET_ReturnCode CAnalytics::eGetStress(StTactGroup& stTg)
+{
+    ET_ReturnCode eRet = H_NO_ERROR;
+
+    vector<int> vecPrimary;
+    vector<int> vecSecondary;
+
+    for (int iWord = stTg.iFirstWordNum, iCount = 0; iCount < stTg.iNumOfWords; ++iWord, ++iCount)
+    {
+        StWordParse& stWp = *(stTg.vecWords.begin());      // we can use any of the words
+        if (WORD_STRESS_TYPE_AUTONOMOUS == stWp.eStressType)
+        {
+            int iPos = -1;
+            ET_StressType eType = STRESS_TYPE_UNDEFINED;
+            eRet = const_cast<CWordForm&>(stWp.WordForm).eGetFirstStressPos(iPos, eType);
+            if (H_NO_ERROR == eRet)     //  NB: H_NO_MORE is the same as H_FALSE
+            {
+                if (STRESS_PRIMARY == eType)
+                {
+                    vecPrimary.push_back(iPos);
+                }
+//                else if (STRESS_SECONDARY == eType)
+//                {
+//                    vecSecondary.push_back(eType);
+//                }
+            }
+            else
+            {
+                return eRet;
+            }
+
+            // Very unlikely:
+            while (H_NO_ERROR == eRet)
+            {
+                eRet = const_cast<CWordForm&>(stWp.WordForm).eGetNextStressPos(iPos, eType);
+                if (H_NO_ERROR == eRet)     //  NB: H_NO_MORE is the same as H_FALSE
+                {
+                    if (STRESS_PRIMARY == eType)
+                    {
+                        vecPrimary.push_back(iPos);
+                    }
+                    else if (STRESS_SECONDARY == eType)
+                    {
+                        vecSecondary.push_back(eType);
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }       //  while (H_NO_ERROR == eRet)...
+
+            if (H_NO_ERROR != eRet && H_NO_MORE != eRet && H_FALSE != eRet)
+            {
+                return eRet;
+            }
+
+            if (vecPrimary.size() == 1)
+            {
+                auto iStressedCharPosInWord = *vecPrimary.begin();
+                CEString& sWord = stWp.WordForm.sWordForm();
+
+                try
+                {
+                    stTg.iStressedSyllable = sWord.uiGetSyllableFromVowelPos(iStressedCharPosInWord);
+                }
+                catch (CException& ex)
+                {
+                    return H_EXCEPTION;
+                }
+
+                // If this word is not the first word in the tact group, add syllable count from that word
+                for (auto iProclitic = stTg.iFirstWordNum; iProclitic < iWord; ++iProclitic)
+                {
+                    StWordParse& stWpProclitic = *(stTg.vecWords.begin());      // we can use any of the words
+                    stTg.iStressedSyllable += stWpProclitic.WordForm.sWordForm().uiNSyllables();
+                }
+
+                eRet = H_NO_ERROR;
+            }
+            else
+            {
+                eRet = H_FALSE;
+            }
+        }
+    }       //  for (auto iWord = stTg.iFirstWordNum; ...
+
+    auto iTotalSyllables = stTg.sSource.uiNSyllables();
+
+    if (stTg.iStressedSyllable >= 0)
+    {
+        stTg.iReverseStressedSyllable = iTotalSyllables - stTg.iStressedSyllable - 1;
+    }
+
+    return eRet;
+
+}       //  eGetStress()
+
+ET_ReturnCode CAnalytics::eTranscribe()
+{
+    return H_NO_ERROR;
 }
 
 ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
 {
+    ET_ReturnCode eRet = H_NO_ERROR;
+
     for (int iField = 0; iField < (int)sLine.uiNFields(); ++iField)
     {
         auto pairInvariants = m_mmapEquivalencies.equal_range(iField);
@@ -374,11 +494,18 @@ ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
             if (bIsProclitic(wordForm))
             {
                 // insert before 1st autonomously stressed word, adjust iFirstWordNum
+
+            }
+            else
+            {
             }
 
             if (bIsEnclitic(wordForm))
             {
-            }
+            }            
+
+            eRet = eGetStress(stTg);
+            eRet = eTranscribe();
 
             m_mapTactGroups.insert(make_pair(iField, stTg));
         }
@@ -638,8 +765,8 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
         m_pDb->Bind(3, stTg.iNumOfWords);
         m_pDb->Bind(4, stTg.sSource);
         m_pDb->Bind(5, stTg.sTranscription);
-        m_pDb->Bind(6, stTg.iStressPos);
-        m_pDb->Bind(7, stTg.iReverseStressPos);
+        m_pDb->Bind(6, stTg.iStressedSyllable);
+        m_pDb->Bind(7, stTg.iReverseStressedSyllable);
 
         m_pDb->InsertRow();
         m_pDb->Finalize();
