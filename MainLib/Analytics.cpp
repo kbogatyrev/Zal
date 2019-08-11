@@ -123,6 +123,8 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
             eRet = eSaveTactGroup((*itTg).second);
         }
 
+        m_mapTactGroups.clear();
+
     }       //  for (int iLine = 0; iLine < iNLines; ++iLine)
 
     return H_NO_ERROR;
