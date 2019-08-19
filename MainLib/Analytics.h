@@ -64,6 +64,7 @@ namespace Hlib
             int iNumOfWords;
             int iStressedSyllable;             // TODO: multiple stresses, dash-separated compounds etc
             int iReverseStressedSyllable;
+            int iSecondaryStressedSyllable;
             CEString sSource;
             CEString sTranscription;
             vector<StWordParse> vecWords;
@@ -80,6 +81,7 @@ namespace Hlib
                 iNumOfWords = 0;
                 iStressedSyllable = -1;
                 iReverseStressedSyllable = -1;
+                iSecondaryStressedSyllable = -1;
                 sSource.Erase();
                 sTranscription.Erase();
                 vecWords.clear();
@@ -99,7 +101,7 @@ namespace Hlib
         ET_ReturnCode eParseWord(const CEString& sWord, int iLine, int iNumInLine, long long llLineDbKey);
         ET_ReturnCode eFindEquivalencies(CEString& sLine);
         ET_ReturnCode eGetStress(StTactGroup&);
-        ET_ReturnCode eTranscribe();
+        ET_ReturnCode eTranscribe(StTactGroup&);
         ET_ReturnCode eAssembleTactGroups(CEString& sLine);
         ET_ReturnCode eSaveLine(long long llTextId, int iLineNum, int iTextOffset, int iLength, int iNumOfWords, const CEString& sText, long long& llDbKey);
         ET_ReturnCode eSaveWord(long long llLineDbId, int iLine, int iWord, int iLineOffset, int iSegmentLength, const CEString& sWord, long long& llWordDbKey);
