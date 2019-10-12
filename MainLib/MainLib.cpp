@@ -1,5 +1,4 @@
 // MainLib.cpp : Implementation of DLL Exports.
-#include "stdafx.h"
 
 #include "Enums.h"
 #include "Dictionary.h"
