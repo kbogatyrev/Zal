@@ -17,7 +17,7 @@ CAnalytics::CAnalytics(CSqlite* pDb, CParser* pParser) : m_pDb(pDb), m_pParser(p
 CAnalytics::~CAnalytics()
 {}
 
-ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& sMetadata, const CEString& sText)
+ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& sMetadata, const CEString& sText, long long& llParsedTextId)
 {
     ET_ReturnCode eRet = H_NO_ERROR;
 
@@ -112,7 +112,9 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
         eRet = eFindEquivalencies(sLine);
         if (eRet != H_NO_ERROR)
         {
-            ERROR_LOG(L"Failed fo find equivalencies.");
+            CEString sMsg(L"Failed fo find equivalencies; line: ");
+            sMsg += sLine;
+            ERROR_LOG(sMsg);
             continue;
         }
 
@@ -126,6 +128,8 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
         m_mapTactGroups.clear();
 
     }       //  for (int iLine = 0; iLine < iNLines; ++iLine)
+
+    llParsedTextId = m_llTextDbId;
 
     return H_NO_ERROR;
 
@@ -254,6 +258,8 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, int iLine, int iNumI
     eRet = eSaveWord(llLineDbKey, iLine, iNumInLine, iOffset, sWord.uiLength(), sWord, llWordInLineDbKey);   // words_in_line
     if (eRet != H_NO_ERROR)
     {
+        CEString sMsg(L"Unable to save a word '");
+        sMsg += sWord + L"'";
         ERROR_LOG(L"Unable to save a word.");
         return eRet;
     }
@@ -272,7 +278,9 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, int iLine, int iNumI
         eRet = eSaveWordParse(llLineDbKey, pWf->llDbKey(), llWordToWordFormId);   //  word_to_wordform
         if (eRet != H_NO_ERROR)
         {
-            ERROR_LOG(L"Unable to save a word parse.");
+            CEString sMsg(L"Unable to save a word parse, word: ");
+            sMsg += pWf->sWordForm();
+            ERROR_LOG(sMsg);
             continue;
         }
 
@@ -320,7 +328,9 @@ ET_ReturnCode CAnalytics::eFindEquivalencies(CEString& sLine)
         auto it = m_mmapWordParses.find(iField);
         if (m_mmapWordParses.end() == it)
         {
-            ERROR_LOG(L"Cant's find parse for a word.");
+            CEString sMsg(L"Cant's find parse for a word '");
+            sMsg += (*it).first + L"'";
+            ERROR_LOG(L"Cant's find parse for a word '");
             continue;
         }
 
@@ -468,6 +478,8 @@ ET_ReturnCode CAnalytics::eGetStress(StTactGroup& stTg)
             }
             catch (CException& ex)
             {
+                CEString sMsg(L"Unable to get secondary stress: ");
+                sMsg += ex.szGetDescription();
                 return H_EXCEPTION;
             }
 
@@ -538,13 +550,37 @@ ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
             {
             }
 
-            eRet = eGetStress(stTg);
+            try
+            {
+                stTg.iNumOfSyllables = stTg.sSource.uiNSyllables();
 
-            eRet = eTranscribe(stTg);
+                eRet = eGetStress(stTg);
+                if (eRet != H_NO_ERROR)
+                {
+                    CEString sMsg(L"Unable to obtain stress position: ");
+                    sMsg += stTg.sSource;
+                    ERROR_LOG(sMsg);
+                }
+
+                eRet = eTranscribe(stTg);
+                if (eRet != H_NO_ERROR)
+                {
+                    CEString sMsg(L"Unable to transcribe: ");
+                    sMsg += stTg.sSource;
+                    ERROR_LOG(sMsg);
+                }
+            }
+            catch (CException& ex)
+            {
+                CEString sMsg(L"Exception: ");
+                sMsg += ex.szGetDescription();
+                ERROR_LOG(sMsg);
+            }
 
             m_mapTactGroups.insert(make_pair(iField, stTg));
-        }
-    }
+        
+        }       // for (auto itWordToParses = ...
+    }       //  for (int iField = 0; ...
 
     return H_NO_ERROR;
 
@@ -730,10 +766,21 @@ bool CAnalytics::bArePhoneticallyIdentical(CWordForm& wf1, CWordForm& wf2)
         return true;
     }
 
-    if (eRet1 != H_NO_ERROR || eRet2 != H_NO_ERROR)
+    if (eRet1 != H_NO_ERROR)
     {
         ASSERT(0);
-        ERROR_LOG(L"Error getting 1st stress position.");
+        CEString sMsg(L"Error getting 1st stress position, words: ");
+        sMsg += wf1.sWordForm();
+        ERROR_LOG(sMsg);
+        return false;
+    }
+
+    if (eRet2 != H_NO_ERROR)
+    {
+        ASSERT(0);
+        CEString sMsg(L"Error getting 1st stress position, words: ");
+        sMsg += wf2.sWordForm();
+        ERROR_LOG(sMsg);
         return false;
     }
 
@@ -756,7 +803,10 @@ bool CAnalytics::bArePhoneticallyIdentical(CWordForm& wf1, CWordForm& wf2)
         if ((eRet1 != H_NO_ERROR && eRet1 != H_NO_MORE) || (eRet2 != H_NO_ERROR && eRet2 != H_NO_MORE))
         {
             ASSERT(0);
-            ERROR_LOG(L"Error getting 1st stress position.");
+            CEString sMsg(L"Error getting 1st stress position: '");
+            sMsg += wf1.sWordForm() + L"', '";
+            sMsg += wf2.sWordForm() + L"'.";
+            ERROR_LOG(sMsg);
             return false;
         }
 
@@ -780,7 +830,7 @@ bool CAnalytics::bArePhoneticallyIdentical(CWordForm& wf1, CWordForm& wf2)
 
 // Save tact groups for a line
 //  CREATE TABLE tact_group(id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, 
-//  num_of_words INTEGER, source TEXT, transcription TEXT, stressed_syllable INTEGER, 
+//  num_of_words INTEGER, source TEXT, transcription TEXT, num_of_syllables INTEGER, stressed_syllable INTEGER, 
 //  reverse_stressed_syllable INTEGER, SECONDARY_STRESSED_SYLLABLE, FOREIGN KEY(line_id) 
 //  REFERENCES lines_in_text(id));
 ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
@@ -793,16 +843,17 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
 
     try
     {
-        m_pDb->PrepareForInsert(L"tact_group", 8);
+        m_pDb->PrepareForInsert(L"tact_group", 9);
 
         m_pDb->Bind(1, stTg.llLineId);
         m_pDb->Bind(2, stTg.iFirstWordNum);
         m_pDb->Bind(3, stTg.iNumOfWords);
         m_pDb->Bind(4, stTg.sSource);
         m_pDb->Bind(5, stTg.sTranscription);
-        m_pDb->Bind(6, stTg.iStressedSyllable);
-        m_pDb->Bind(7, stTg.iReverseStressedSyllable);
-        m_pDb->Bind(8, stTg.iSecondaryStressedSyllable);
+        m_pDb->Bind(6, stTg.iNumOfSyllables);
+        m_pDb->Bind(7, stTg.iStressedSyllable);
+        m_pDb->Bind(8, stTg.iReverseStressedSyllable);
+        m_pDb->Bind(9, stTg.iSecondaryStressedSyllable);
 
         m_pDb->InsertRow();
         m_pDb->Finalize();

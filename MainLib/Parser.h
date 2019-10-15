@@ -20,7 +20,6 @@ public:
     ~CParser();
 
 public:
-//    virtual ET_ReturnCode eParseText(const CEString& sName, const CEString& sMetaData, const CEString& sText);
     virtual ET_ReturnCode eParseWord(const CEString& sWord);
     virtual ET_ReturnCode eGetFirstWordForm(IWordForm *& pWordForm);
     virtual ET_ReturnCode eGetNextWordForm(IWordForm *& pWordForm);

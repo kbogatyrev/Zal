@@ -62,6 +62,7 @@ namespace Hlib
             long long llLineId;
             int iFirstWordNum;
             int iNumOfWords;
+            int iNumOfSyllables;
             int iStressedSyllable;             // TODO: multiple stresses, dash-separated compounds etc
             int iReverseStressedSyllable;
             int iSecondaryStressedSyllable;
@@ -79,6 +80,7 @@ namespace Hlib
                 llLineId = -1;
                 iFirstWordNum = -1;
                 iNumOfWords = 0;
+                iNumOfSyllables = -1;   
                 iStressedSyllable = -1;
                 iReverseStressedSyllable = -1;
                 iSecondaryStressedSyllable = -1;
@@ -93,13 +95,14 @@ namespace Hlib
         CAnalytics(CSqlite*, CParser*);
         ~CAnalytics();
 
-        virtual ET_ReturnCode eParseText(const CEString& sTextName, const CEString& sMetadata, const CEString& sText);
+        virtual ET_ReturnCode eParseText(const CEString& sTextName, const CEString& sMetadata, const CEString& sText, long long& llParsedTextId);
         virtual void ClearResults();
 
     private:
         ET_ReturnCode eRegisterText(const CEString& sTextName, const CEString sTextMetadata, const CEString& sText);
         ET_ReturnCode eParseWord(const CEString& sWord, int iLine, int iNumInLine, long long llLineDbKey);
         ET_ReturnCode eFindEquivalencies(CEString& sLine);
+//        ET_ReturnCode eCountSyllables(StTactGroup&);
         ET_ReturnCode eGetStress(StTactGroup&);
         ET_ReturnCode eTranscribe(StTactGroup&);
         ET_ReturnCode eAssembleTactGroups(CEString& sLine);
