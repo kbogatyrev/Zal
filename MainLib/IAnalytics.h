@@ -8,7 +8,7 @@ namespace Hlib
 {
     struct IAnalytics
     {
-        virtual ET_ReturnCode eParseText(const CEString& sName, const CEString& sMetaData, const CEString& sText) = 0;
+        virtual ET_ReturnCode eParseText(const CEString& sName, const CEString& sMetaData, const CEString& sText, long long& llParsedTextId) = 0;
         virtual void ClearResults() = 0;
 
     };
