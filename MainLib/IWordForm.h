@@ -33,8 +33,8 @@ namespace Hlib
         virtual void SetPerson(ET_Person) = 0;
         virtual ET_Animacy eAnimacy() = 0;
         virtual void SetAnimacy(ET_Animacy) = 0;
-        virtual ET_Reflexive eReflexive() = 0;
-        virtual void SetReflexive(ET_Reflexive) = 0;
+        virtual ET_Reflexivity eReflexive() = 0;
+        virtual void SetReflexive(ET_Reflexivity) = 0;
         virtual ET_Aspect eAspect() = 0;
         virtual void SetAspect(ET_Aspect) = 0;
         virtual ET_Status eStatus() = 0;

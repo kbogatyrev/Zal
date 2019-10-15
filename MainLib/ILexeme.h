@@ -60,8 +60,8 @@ namespace Hlib
         virtual void SetIsPluralOf(bool) = 0;
         virtual bool bTransitive() = 0;
         virtual void SetTransitive(bool) = 0;
-        virtual ET_Reflexive eIsReflexive() = 0;
-        virtual void SetIsReflexive(ET_Reflexive) = 0;
+        virtual ET_Reflexivity eIsReflexive() = 0;
+        virtual void SetIsReflexive(ET_Reflexivity) = 0;
         virtual CEString sMainSymbolPluralOf() = 0;
         virtual void SetMainSymbolPluralOf(const CEString&) = 0;
         virtual CEString sAltMainSymbol() = 0;

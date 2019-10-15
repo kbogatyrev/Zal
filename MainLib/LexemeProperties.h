@@ -72,7 +72,7 @@ namespace Hlib
         CEString sMainSymbol;
         bool bIsPluralOf;
         bool bTransitive;
-        ET_Reflexive eReflexive;
+        ET_Reflexivity eReflexive;
         CEString sMainSymbolPluralOf;
         CEString sAltMainSymbol;
         ET_Aspect eAspect;
