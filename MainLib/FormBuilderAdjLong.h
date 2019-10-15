@@ -34,7 +34,7 @@ public:
 protected:
     CEString sGramHash (ET_PartOfSpeech ePos, ET_Subparadigm eSubparadigm, ET_Case eCase, 
                         ET_Number eNum, ET_Gender eGender, ET_Animacy eAnimacy, 
-                        ET_Reflexive eRefl);
+                        ET_Reflexivity eRefl);
 
     CEString sGramHashNSgMLong();
     ET_ReturnCode eGetStressPositions (const CEString&, ET_StressLocation, vector<int>& vecStressPos);
