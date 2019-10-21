@@ -73,7 +73,7 @@ CREATE TABLE words_in_line (id INTEGER PRIMARY KEY ASC, line_id INTEGER, word_po
 CREATE TABLE word_to_wordform (id INTEGER PRIMARY KEY ASC, word_in_line_id INTEGER, wordform_id INTEGER, FOREIGN KEY (word_in_line_id) REFERENCES words_in_line(id), FOREIGN KEY (wordform_id) REFERENCES wordforms(id));
 
 -- this table is added to simplify retrieval of transcription and stress positions
-CREATE TABLE tact_group (id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, num_of_words INTEGER, source TEXT, transcription TEXT, stressed_syllable INTEGER, reverse_stressed_syllable INTEGER, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
+CREATE TABLE tact_group (id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, num_of_words INTEGER, source TEXT, transcription TEXT, num_of_syllables INTEGER, stressed_syllable INTEGER, reverse_stressed_syllable INTEGER, secondary_stressed_syllable INTEGER, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
 
 CREATE TABLE word_to_tact_group (id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY (word_to_wordform_id) REFERENCES word_to_wordform(id));
 
@@ -139,3 +139,16 @@ CREATE INDEX idx_stress_data_form_id on stress_data (form_id);
 CREATE INDEX idx_stress_data_position on stress_data (position);
 CREATE INDEX idx_stress_data_is_primary on stress_data (is_primary);
 
+CREATE INDEX idx_stress_data_is_primary on stress_data (is_primary);
+
+CREATE INDEX idx_text ON text(id);
+
+CREATE INDEX idx_lines_in_text ON lines_in_text(id);
+
+CREATE INDEX idx_words_in_line ON words_in_line(id);
+
+CREATE INDEX idx_word_to_wordform ON word_to_wordform(id);
+
+CREATE INDEX idx_tact_group ON tact_group(id);
+
+CREATE INDEX idx_word_to_tact_group ON word_to_tact_group(id);
