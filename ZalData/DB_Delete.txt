@@ -25,5 +25,10 @@ DELETE FROM endings_for_analysis;
 DELETE FROM endings_meta;
 DELETE FROM subtables_for_heuristics;
 DELETE FROM conversion_source_text;
+DELETE FROM conversion_source_recent_edit;
 DELETE FROM conversion_errors;
 DELETE FROM incomplete_parses;
+DELETE FROM edited_lexemes
+DELETE FROM words_in_text
+DELETE FROM text_to_word_form
+DELETE FROM text
