@@ -1,5 +1,9 @@
 import os
 from ctypes import *
+import re
+import logging
+import sys
+
 
 #
 #  Data structures (they map C++ interfaces defined in MainLib)
@@ -73,6 +77,8 @@ class Parser:
             print(e)
 
     # Get a word without accents, send to Zal parser
+
+
     def parse_word_form(self, input_word):
    
         if self.zal_lib is None:
@@ -92,10 +98,43 @@ class Parser:
             self.zal_lib.GetParsedWordForm.argtypes = [c_int, POINTER(StWordForm)]
             ret = self.zal_lib.GetParsedWordForm(0, byref(parse))
 
-            print('koko = ' + parse.szWordForm)
+
+            print('wordform = {}', parse.szWordForm)
 
     #  parse_word_form
 
+#
+#  Analyzer
+#
+class Analyzer:
+
+    def __init__(self, lib_path):
+        self.lib_path = None
+        self.data_path = None
+        self.text = []
+        self.metadata = None
+
+    def read(self, data_path):
+        try:
+            with open (data_path, encoding='utf-16', mode='r') as reader:
+                for line in enumerate(reader):
+                    line = reader.readline(1000)
+                    match = re.match(r"^\<(.+?)\s+(.+)/(.+)>", line)
+
+                    if match != None:
+                        start_tag = match.group(1)
+                        text = match.group(2)
+                        end_tag = match.group(3)
+
+                        if start_tag != end_tag:
+                            logging.error ('Tag mismatch: %', line)
+
+                    self.text.append(line)
+        except Exception as e:
+            logging.error ('Exception: %', sys.exc_info()[0])
+
+        print(self.text)
+        kiki = 0
 
 if __name__== "__main__":
 
@@ -105,15 +144,14 @@ if __name__== "__main__":
 #    db_edited_connection = sqlite3.connect ('../Zal-Windows/ZalData/ZalData_Edited.db3')
 #    db_edited_cursor = db_edited_connection.cursor()
 
-    lib_path = '../Zal-Windows/x64/Debug/MainLibCTypes.dll'
-    db_path = '../Zal-Windows/ZalData/ZalData_Dasha_Jan_22_lexeme_hashes_added.db3'
+    lib_path = '../x64/Debug/MainLibCTypes.dll'
+    db_path = '../ZalData/ZalData_Dasha_Jan_22_lexeme_hashes_added.db3'
 
+#    parser = Parser(lib_path, db_path)
+#    parser.parse_word_form('собака')
 
-    parser = Parser(lib_path, db_path)
-
-    parser.parse_word_form('собака')
-
-
+    a = Analyzer(lib_path)
+    a.read("../ZalData/Pasternak.txt")
 
 os._exit(0)
 
