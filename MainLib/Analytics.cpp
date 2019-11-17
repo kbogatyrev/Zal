@@ -447,7 +447,7 @@ ET_ReturnCode CAnalytics::eGetStress(StTactGroup& stTg)
                 {
                     stTg.iStressedSyllable = sWord.uiGetSyllableFromVowelPos(iStressedCharPosInWord);
                 }
-                catch (CException& ex)
+                catch (...)
                 {
                     return H_EXCEPTION;
                 }
