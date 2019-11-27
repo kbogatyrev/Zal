@@ -85,7 +85,7 @@ class Parser:
             print ('Parser library was not initialized. Exiting.')
             return False
 
-        ret = self.zal_lib.bParseWord(input_word);
+        ret = self.zal_lib.bParseWord(input_word)
         if not ret:
             return False
 
@@ -98,8 +98,7 @@ class Parser:
             self.zal_lib.GetParsedWordForm.argtypes = [c_int, POINTER(StWordForm)]
             ret = self.zal_lib.GetParsedWordForm(0, byref(parse))
 
-
-            print('wordform = {}', parse.szWordForm)
+            print('wordform = {}'.format(parse.szWordForm))
 
     #  parse_word_form
 
@@ -112,7 +111,28 @@ class Analyzer:
         self.lib_path = None
         self.data_path = None
         self.text = []
-        self.metadata = None
+        self.collection = None
+        self.book = None
+        self.title = None
+        self.date = None
+
+    def handle_metadata_line(self, tag_name, text):
+        if 'collection' == tag_name:
+            self.collection = text
+            return True
+        elif 'book' == tag_name:
+            self.book = text
+            return True
+        elif 'title' == tag_name:
+            self.title = text
+            return True
+        elif 'date' == tag_name:
+            self.date = text
+            return True
+        else:
+            return False
+
+        return False
 
     def read(self, data_path):
         try:
@@ -128,6 +148,10 @@ class Analyzer:
 
                         if start_tag != end_tag:
                             logging.error ('Tag mismatch: %', line)
+                            continue
+
+                        if self.handle_metadata(start_tag, text) != True:
+                            logging.error('Unable to parse metadata: %', line)
 
                     self.text.append(line)
         except Exception as e:
@@ -135,6 +159,28 @@ class Analyzer:
 
         print(self.text)
         kiki = 0
+
+#
+#  DB maintenance
+#
+class Database:
+    def __init__(self, lib_path, db_path):
+        try:
+            self.zal_lib = cdll.LoadLibrary(lib_path)
+            if self.zal_lib is None:
+                return False
+
+            ret = self.zal_lib.Init(db_path)
+            if not ret:
+                return False
+
+        except Exception as e:
+            print(e)
+
+    def add_lexeme_hashes(self):
+        self.zal_lib.AddLexemeHashes()
+
+
 
 if __name__== "__main__":
 
@@ -144,14 +190,19 @@ if __name__== "__main__":
 #    db_edited_connection = sqlite3.connect ('../Zal-Windows/ZalData/ZalData_Edited.db3')
 #    db_edited_cursor = db_edited_connection.cursor()
 
-    lib_path = '../x64/Debug/MainLibCTypes.dll'
-    db_path = '../ZalData/ZalData_Dasha_Jan_22_lexeme_hashes_added.db3'
+    lib_path = '../x64/Release/MainLibCTypes.dll'
+#    db_path = '../ZalData/ZalData_Dasha_Jan_22_lexeme_hashes_added.db3'
+    db_path = '../ZalData/ZalData_test.db3'
+    db = Database(lib_path, db_path)
+    db.add_lexeme_hashes()
+#    zal_lib = cdll.LoadLibrary(lib_path)
+#    zal_lib.AddLexemeHashes()
 
 #    parser = Parser(lib_path, db_path)
 #    parser.parse_word_form('собака')
 
-    a = Analyzer(lib_path)
-    a.read("../ZalData/Pasternak.txt")
+#    a = Analyzer(lib_path)
+#    a.read("../ZalData/Pasternak.txt")
 
 os._exit(0)
 
