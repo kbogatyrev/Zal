@@ -54,6 +54,9 @@ namespace MainLibForPython {
         __declspec(dllexport) bool bParseWord(const wchar_t* szWord);
         __declspec(dllexport) int iNumOfParses();
         __declspec(dllexport) bool GetParsedWordForm(int iNum, StWordForm* pstParsedForm);
+        __declspec(dllexport) bool GenerateAllForms();
+        __declspec(dllexport) void ReportProgress (int iPercentDone, bool bDone, int recordNumber, double dDuration);
+        __declspec(dllexport) bool AddLexemeHashes();
     }
 
     static IDictionary* g_pDictionary = nullptr;
@@ -77,8 +80,8 @@ namespace MainLibForPython {
         return true;
     }
 
-    void CopyStressData(IWordForm* pWf, char* pData) {
-        
+    void CopyStressData(IWordForm* pWf, char* pData) 
+    {    
         try {
 
             int iPos = 0;
@@ -227,5 +230,67 @@ namespace MainLibForPython {
         return true;
 
     }
+
+    bool GenerateAllForms()
+    {
+        if (nullptr == g_pDictionary)
+        {
+            ERROR_LOG(L"Dictionary object not initialized.");
+            return false;
+        }
+
+        ET_ReturnCode eRet = g_pDictionary->eGenerateAllForms();
+        if (eRet != H_NO_ERROR)
+        {
+            cout << "Failed to generate word forms." << endl;
+            return false;
+        }
+
+        return true;
+    }
+
+/*
+    void ReportProgress(int iPercentDone, bool bOperationComplete, int iRecord, double dDuration)
+    {
+        cout << "Record " << iRecord << ", " << dDuration << " seconds." << endl;
+        if (bOperationComplete)
+        {
+            cout << endl << "Done!" << endl << endl;
+        }
+    }
+*/
+
+    void ReportProgress(int iPercentDone, bool bOperationComplete, int iRecord, double dDuration)
+    {
+        cout << "Record " << iRecord << ", " << dDuration << " seconds, " << iPercentDone << "%" << endl;
+        if (bOperationComplete)
+        {
+            cout << endl << "****    Done!" << endl << endl;
+        }
+    }
+
+    bool AddLexemeHashes()
+    {
+        if (nullptr == g_pDictionary)
+        {
+            ERROR_LOG(L"Dictionary is not available.");
+            exit(-1);
+        }
+
+        cout << endl << "****      ADDING LEXEME HASHES" << endl << endl;
+        ET_ReturnCode eRet = g_pDictionary->ePopulateHashToDescriptorTable(nullptr, &ReportProgress);
+
+        return true;
+    }
+
+    //
+    //  Analytics
+    //
+
+//    struct IAnalytics
+//    {
+//        virtual ET_ReturnCode eParseText(const CEString& sName, const CEString& sMetaData, const CEString& sText, long long& llParsedTextId) = 0;
+//        virtual void ClearResults() = 0;
+//    };
 
 }       //  namespace MainLibForPython 
