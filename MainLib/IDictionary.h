@@ -13,9 +13,9 @@
 
 namespace Hlib
 {
-    // Progress delegate invokedfrom C#/CLR
-    typedef void(__stdcall *PROGRESS_CALLBACK_CLR) (int iPercentDone, bool bOperationComplete);
-
+    typedef void(__stdcall* PROGRESS_CALLBACK_CLR) (int iPercentDone, bool bOperationComplete);
+    typedef void(__cdecl* PROGRESS_CALLBACK_PYTHON) (int iPercentDone, bool bOperationComplete, int iRecord, double dDuration);
+ 
     struct IDictionary
     {
         virtual ~IDictionary() {};
@@ -43,6 +43,8 @@ namespace Hlib
         virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier) = 0;
         virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR) = 0;
         virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR) = 0;
+
+        virtual ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR, PROGRESS_CALLBACK_PYTHON=nullptr) = 0;
 
         virtual ET_ReturnCode eSaveHeadword(ILexeme * pLexeme) = 0;
         virtual ET_ReturnCode eSaveAspectPairInfo(ILexeme * pLexeme) = 0;
