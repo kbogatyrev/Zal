@@ -63,7 +63,10 @@ CREATE TABLE incomplete_parses (id INTEGER PRIMARY KEY, unparsed_segment TEXT, s
 CREATE TABLE edited_lexemes (id INTEGER PRIMARY KEY, lexeme_hash TEXT);
 
 -- Text analysis --
-CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, metadata TEXT, contents TEXT);
+CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, contents TEXT);
+
+CREATE TABLE text_metadata (id INTEGER PRIMARY KEY ASC, text_id INTEGER, category TEXT, content text, FOREIGN KEY (text_id) REFERENCES 
+text(id));
 
 CREATE TABLE lines_in_text (id INTEGER PRIMARY KEY ASC, text_id INTEGER, line_number INTEGER, text_offset INTEGER, length INTEGER, number_of_words INTEGER, source TEXT, FOREIGN KEY (text_id) REFERENCES text(id));
 
