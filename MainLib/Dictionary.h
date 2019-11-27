@@ -59,6 +59,8 @@ public:
     virtual ET_ReturnCode eSaveInflectionInfo(ILexeme * pLexeme);
 //    virtual ET_ReturnCode eSaveLexeme(ILexeme * pLexeme);
 
+    virtual ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR, PROGRESS_CALLBACK_PYTHON=nullptr);
+
     // Not part ot interface:
     CSqlite * pGetDbHandle();
 
@@ -76,7 +78,6 @@ private:
     ET_ReturnCode ePopulateStemsTable();
     ET_ReturnCode eUpdateStemIds();
     ET_ReturnCode ePopulateWordFormDataTables();
-    ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR);
 
     // Execute DB query and retrieve results
     ET_ReturnCode eQueryDb(const CEString& sSelect, uint64_t& uiQuertHandle);
