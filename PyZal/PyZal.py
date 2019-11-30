@@ -3,6 +3,7 @@ from ctypes import *
 import re
 import logging
 import sys
+import json
 
 
 #
@@ -92,6 +93,7 @@ class Parser:
         for iIdx in range (self.zal_lib.iNumOfParses()):
             parse = StWordForm()
 
+
 #            p_parse = pointer(parse)
 
 #           bool GetParsedWordForm(int iNum, StWordForm* pstParsedForm);
@@ -180,7 +182,34 @@ class Database:
     def add_lexeme_hashes(self):
         self.zal_lib.AddLexemeHashes()
 
+class Transcriber:
+    def __init__(self, lib_path, db_path, json_path):
+        try:
+            self.zal_lib = cdll.LoadLibrary(lib_path)
+            if self.zal_lib is None:
+                return False
 
+            ret = self.zal_lib.Init(db_path)
+            if not ret:
+                return False
+
+            self.db_path = db_path
+            self.json_path = json_path
+
+        except Exception as e:
+            print(e)
+
+    def load_rules(self):
+        f = open(self.json_path, mode='r', encoding='utf-8')
+        t = f.read()
+
+        decoder = json.JSONDecoder()
+        d = decoder.decode(t)
+
+        # Test:
+        v = d['VOWELS']
+        v[0]['а']      # NB Cyrillic 'a'
+        print(v[0]['а'])
 
 if __name__== "__main__":
 
@@ -193,8 +222,12 @@ if __name__== "__main__":
     lib_path = '../x64/Release/MainLibCTypes.dll'
 #    db_path = '../ZalData/ZalData_Dasha_Jan_22_lexeme_hashes_added.db3'
     db_path = '../ZalData/ZalData_test.db3'
-    db = Database(lib_path, db_path)
-    db.add_lexeme_hashes()
+
+    t = Transcriber(lib_path, db_path, 'C:/git-repos/Zal-Windows/ZalData/TranscriptionRules.json')
+    t.load_rules()
+
+#    db = Database(lib_path, db_path)
+#    db.add_lexeme_hashes()
 #    zal_lib = cdll.LoadLibrary(lib_path)
 #    zal_lib.AddLexemeHashes()
 
@@ -205,4 +238,3 @@ if __name__== "__main__":
 #    a.read("../ZalData/Pasternak.txt")
 
 os._exit(0)
-
