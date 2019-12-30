@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7ae4d97c-4e14-4279-ab68-3f0d6d37f690</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>PyZal.py</StartupFile>
+    <StartupFile>Database.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,7 +23,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Analyzer.py" />
+    <Compile Include="Database.py" />
+    <Compile Include="Parser.py" />
     <Compile Include="PyZal.py" />
+    <Compile Include="Transcriber.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
