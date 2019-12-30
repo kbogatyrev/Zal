@@ -35,4 +35,5 @@ DELETE FROM tact_group;
 DELETE FROM word_to_wordform;
 DELETE FROM words_in_line;
 DELETE FROM lines_in_text;
+DELETE FROM text_metadata;
 DELETE FROM text;
