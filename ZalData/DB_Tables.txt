@@ -142,8 +142,6 @@ CREATE INDEX idx_stress_data_form_id on stress_data (form_id);
 CREATE INDEX idx_stress_data_position on stress_data (position);
 CREATE INDEX idx_stress_data_is_primary on stress_data (is_primary);
 
-CREATE INDEX idx_stress_data_is_primary on stress_data (is_primary);
-
 CREATE INDEX idx_text ON text(id);
 
 CREATE INDEX idx_lines_in_text ON lines_in_text(id);
