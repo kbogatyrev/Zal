@@ -1,70 +1,79 @@
+from ctypes import *
 import logging
 import re
 import sys
 
 #
-#  Analyzer
+# Helper class
 #
-class Analyzer:
-
-    def __init__(self, lib_path):
-        self.lib_path = None
-        self.data_path = None
-        self.text = []
-        self.collection = None
-        self.book = None
-        self.title = None
-        self.date = None
-
-    def handle_metadata_line(self, tag_name, text):
-        if 'collection' == tag_name:
-            self.collection = text
-            return True
-        elif 'book' == tag_name:
-            self.book = text
-            return True
-        elif 'title' == tag_name:
-            self.title = text
-            return True
-        elif 'date' == tag_name:
-            self.date = text
-            return True
-        else:
-            return False
-
-        return False
-
-    def read(self, data_path):
-        try:
-            with open (data_path, encoding='utf-16', mode='r') as reader:
-                for line in enumerate(reader):
-                    line = reader.readline(1000)
-                    match = re.match(r"^\<(.+?)\s+(.+)/(.+)>", line)
-
-                    if match != None:
-                        start_tag = match.group(1)
-                        text = match.group(2)
-                        end_tag = match.group(3)
-
-                        if start_tag != end_tag:
-                            logging.error ('Tag mismatch: %', line)
-                            continue
-
-                        if self.handle_metadata_line(start_tag, text) != True:
-                            logging.error('Unable to parse metadata: %', line)
-
-                    self.text.append(line)
-        except Exception as e:
-            logging.error ('Exception: %s', e)
-
-        print(self.text)
-        removeMe = 0
-
 if __name__== "__main__":
 
     lib_path = '../x64/Release/MainLibCTypes.dll'
     db_path = '../ZalData/ZalData_test.db3'
+    text_path = "../ZalData/Pasternak_01_12_2020.txt"
 
-    a = Analyzer(lib_path)
-    a.read("../ZalData/Pasternak.txt")
+    zal_lib = cdll.LoadLibrary(lib_path)
+    if zal_lib is None:
+        print('Unable to load Zal library.')
+        exit(0)
+
+    author = None
+    collection = None
+    book = None
+    title = None
+    date = None
+
+    texts = []
+    text = ''
+
+    last_line = ''
+
+    try:
+        with open (text_path, encoding='utf-16', mode='r') as reader:
+            for line_num, line in enumerate(reader):
+                line = line.rstrip()
+                if not line:
+                    continue
+                match = re.match(r'^\<(\w+?)\s+(.+?)\/(\w+)>', line)
+                if match != None:
+                    start_tag = match.group(1)
+                    value = match.group(2)
+                    end_tag = match.group(3)
+
+                    if start_tag != end_tag:
+                        logging.error('Tag mismatch: %s', line)
+                        continue
+
+                    tag_name = start_tag
+
+                    if 'author' == tag_name:
+                        author = value
+                    elif 'collection' == tag_name:
+                        collection = value
+                    elif 'book' == tag_name:
+                        book = value
+                    elif 'title' == tag_name:
+                        if title:
+                            title += ':'
+                        title = value
+                    elif 'date' == tag_name:
+                        date = value
+                    else:
+                        print('Unable to parse tag: {0} in: {1}'.format(tag_name, line))
+                else:
+                    if last_line:
+                        if last_line[0] == '<':
+                            metadata = 'author = {0} collection = {1} book = {2} title = {3} date = {4}'.format(author, collection, book, title, date)
+                            if text:
+                                last_text_id = zal_lib.llParseText(title, metadata, text)
+                                text = ''
+                    if text:
+                        text += '\r\n'
+                    text += line
+
+                last_line = line
+
+    except Exception as e:
+        logging.error ('Exception: %s', e)
+        print(text)
 
