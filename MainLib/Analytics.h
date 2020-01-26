@@ -99,6 +99,7 @@ namespace Hlib
         virtual void ClearResults();
 
     private:
+        ET_ReturnCode eParseMetadata(const CEString& sMetadata);
         ET_ReturnCode eRegisterText(const CEString& sTextName, const CEString sTextMetadata, const CEString& sText);
         ET_ReturnCode eParseWord(const CEString& sWord, int iLine, int iNumInLine, long long llLineDbKey);
         ET_ReturnCode eFindEquivalencies(CEString& sLine);
@@ -127,6 +128,8 @@ namespace Hlib
         multimap<int, StWordParse> m_mmapWordParses;
         multimap<int, vector<StWordParse>> m_mmapEquivalencies;  // word # --> phonetic invariant sets
         multimap<int, StTactGroup> m_mapTactGroups;   // 1st word # --> tact group
+
+        vector<pair<CEString, CEString>> m_vecMetadataKeyValPairs;
 
     };      //  class CAnalytics
 

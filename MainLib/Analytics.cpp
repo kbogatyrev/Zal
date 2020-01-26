@@ -138,6 +138,42 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
 void CAnalytics::ClearResults()
 {}
 
+ET_ReturnCode CAnalytics::eParseMetadata(const CEString& sConstMetadata)
+{
+    CEString sMetadata(sConstMetadata);
+    sMetadata.ResetSeparators();
+    sMetadata.SetBreakChars(L"|");
+
+    if (sMetadata.uiNFields() < 1)
+    {
+        CEString sMsg(L"Unable to parse text metadata: ");
+        ERROR_LOG(sMsg + sMetadata);
+        return ET_ReturnCode(H_ERROR_INVALID_ARG);
+    }
+
+    for (int iKeyValPair = 0; iKeyValPair < (int)sMetadata.uiNFields(); ++iKeyValPair)
+    {
+        auto sKeyValPair = sMetadata.sGetField(iKeyValPair);
+        sKeyValPair.ResetSeparators();
+        sKeyValPair.SetBreakChars(L"=");
+        if (sKeyValPair.uiNFields() < 2)
+        {
+            CEString sMsg(L"Bad key/value pair: ");
+            ERROR_LOG(sMsg + sMetadata);
+            continue;
+        }
+
+        auto sKey = sKeyValPair.sGetField(0);
+        sKey.Trim();
+        auto sValue = sKeyValPair.sGetField(1);
+        sKey.Trim();
+
+        m_vecMetadataKeyValPairs.push_back(make_pair(sKey, sValue));
+    }
+
+    return H_NO_ERROR;
+}
+
 //  CREATE TABLE text(id INTEGER PRIMARY KEY ASC, name TEXT, metadata TEXT, contents TEXT);
 ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEString sTextMetadata, const CEString& sText)
 {
@@ -148,7 +184,8 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
         ERROR_LOG(L"No text or text descriptor.");
         return H_ERROR_UNEXPECTED;
     }
-
+    
+/*
     CEString sQuery = L"SELECT id FROM text WHERE name = '#NAME#' AND metadata = '#METADATA#';";
     sQuery = sQuery.sReplace(L"#NAME#", m_sTextName);
     sQuery = sQuery.sReplace(L"#METADATA#", m_sTextMetaData);
@@ -201,17 +238,24 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
         sMsg += CEString::sToString(m_pDb->iGetLastError());
         ERROR_LOG(sMsg);
     }
+*/
+
+    eRet = eParseMetadata(sTextMetadata);
+    if (eRet != H_NO_ERROR)
+    {
+        ERROR_LOG(L"Unable to parse text metadata.");
+        return eRet;
+    }
 
     //
     // Create DB entry for the text
     //
     try
     {
-        m_pDb->PrepareForInsert(L"text", 3);
+        m_pDb->PrepareForInsert(L"text", 2);
 
         m_pDb->Bind(1, m_sTextName);
-        m_pDb->Bind(2, m_sTextMetaData);
-        m_pDb->Bind(3, m_sText);
+        m_pDb->Bind(2, m_sText);
 
         m_pDb->InsertRow();
         m_pDb->Finalize();
@@ -220,6 +264,8 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
     }
     catch (CException& exc)
     {
+        m_llTextDbId = -1;
+
         CEString sMsg(exc.szGetDescription());
         CEString sError;
         try
@@ -237,6 +283,49 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
         ERROR_LOG(sMsg);
 
         return H_ERROR_DB;
+    }
+
+    //  CREATE TABLE text_metadata(id INTEGER PRIMARY KEY ASC, text_id INTEGER, category TEXT, content text, FOREIGN KEY(text_id) REFERENCES text(id))
+
+    for (auto keyValPair : m_vecMetadataKeyValPairs)
+    {
+        //
+        // Create DB entry for each key/value pair
+        //
+        try
+        {
+            m_pDb->PrepareForInsert(L"text_metadata", 3);
+
+            m_pDb->Bind(1, m_llTextDbId);
+            m_pDb->Bind(2, keyValPair.first);
+            m_pDb->Bind(3, keyValPair.second);
+
+            m_pDb->InsertRow();
+            m_pDb->Finalize();
+
+            m_llTextDbId = m_pDb->llGetLastKey();
+        }
+        catch (CException & exc)
+        {
+            CEString sMsg(exc.szGetDescription());
+            CEString sError;
+            try
+            {
+                m_pDb->GetLastError(sError);
+                sMsg += CEString(L", error: ");
+                sMsg += sError;
+            }
+            catch (...)
+            {
+                sMsg = L"Apparent DB error ";
+            }
+
+            sMsg += CEString::sToString(m_pDb->iGetLastError());
+            ERROR_LOG(sMsg);
+
+            return H_ERROR_DB;
+        }
+
     }
 
     return eRet;
@@ -328,8 +417,8 @@ ET_ReturnCode CAnalytics::eFindEquivalencies(CEString& sLine)
         auto it = m_mmapWordParses.find(iField);
         if (m_mmapWordParses.end() == it)
         {
-            CEString sMsg(L"Cant's find parse for a word '");
-            sMsg += (*it).first + L"'";
+            CEString sMsg(L"Cant's find parse for the word number '");
+            sMsg += CEString::sToString(iField);
             ERROR_LOG(L"Cant's find parse for a word '");
             continue;
         }
@@ -555,7 +644,7 @@ ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
                 stTg.iNumOfSyllables = stTg.sSource.uiNSyllables();
 
                 eRet = eGetStress(stTg);
-                if (eRet != H_NO_ERROR)
+                if (eRet != H_NO_ERROR && eRet != H_FALSE && eRet != H_NO_MORE)
                 {
                     CEString sMsg(L"Unable to obtain stress position: ");
                     sMsg += stTg.sSource;
@@ -778,7 +867,7 @@ bool CAnalytics::bArePhoneticallyIdentical(CWordForm& wf1, CWordForm& wf2)
     if (eRet2 != H_NO_ERROR)
     {
         ASSERT(0);
-        CEString sMsg(L"Error getting 1st stress position, words: ");
+        CEString sMsg(L"Error getting 2nd stress position, words: ");
         sMsg += wf2.sWordForm();
         ERROR_LOG(sMsg);
         return false;
