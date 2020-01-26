@@ -52,7 +52,7 @@ CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT
 
 -- CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
 
-CREATE TABLE conversion_source_text (id INTEGER PRIMARY KEY, headword_id INTEGER, descriptor_id INTEGER, source_text TEXT);
+CREATE TABLE conversion_source_text (id INTEGER PRIMARY KEY, guid TEXT, headword_id INTEGER, descriptor_id INTEGER, source_text TEXT);
 
 CREATE TABLE conversion_errors (id INTEGER PRIMARY KEY, Description TEXT, Paragraph TEXT, Resolved INTEGER DEFAULT 0);
 
