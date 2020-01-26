@@ -8,7 +8,7 @@ import sys
 #
 if __name__== "__main__":
 
-    lib_path = '../x64/Release/MainLibCTypes.dll'
+    lib_path = '../x64/Debug/MainLibCTypes.dll'
     db_path = '../ZalData/ZalData_test.db3'
     text_path = "../ZalData/Pasternak_01_12_2020.txt"
 
@@ -16,6 +16,11 @@ if __name__== "__main__":
     if zal_lib is None:
         print('Unable to load Zal library.')
         exit(0)
+
+    ret = zal_lib.Init(db_path)
+    if not ret:
+       print('Unable to initialize Zal library.')
+       exit(0)
 
     author = None
     collection = None
@@ -63,7 +68,7 @@ if __name__== "__main__":
                 else:
                     if last_line:
                         if last_line[0] == '<':
-                            metadata = 'author = {0} collection = {1} book = {2} title = {3} date = {4}'.format(author, collection, book, title, date)
+                            metadata = 'author = {0} | collection = {1} | book = {2} | title = {3} | date = {4}'.format(author, collection, book, title, date)
                             if text:
                                 last_text_id = zal_lib.llParseText(title, metadata, text)
                                 text = ''
