@@ -57,11 +57,13 @@ namespace MainLibForPython {
         __declspec(dllexport) bool GenerateAllForms();
         __declspec(dllexport) void ReportProgress (int iPercentDone, bool bDone, int recordNumber, double dDuration);
         __declspec(dllexport) bool AddLexemeHashes();
+        __declspec(dllexport) long long llParseText(const wchar_t* szTextName, const wchar_t* szMetadata, const wchar_t* szText);
     }
 
     static IDictionary* g_pDictionary = nullptr;
     static IParser* g_pParser = nullptr;
     static ILexeme* g_pLexeme = nullptr;
+    static IAnalytics* g_pAnalytics = nullptr;
 
     static vector<IWordForm *> vecWordForms;
 
@@ -222,8 +224,8 @@ namespace MainLibForPython {
             return false;
         }
 
-        auto koko = vecWordForms[iNum];
-        FillWordFormData(koko, pstParsedForm);
+//        auto koko = vecWordForms[iNum];
+//        FillWordFormData(koko, pstParsedForm);
 
 //        cout << pstParsedForm->szWordForm;
 
@@ -283,14 +285,41 @@ namespace MainLibForPython {
         return true;
     }
 
+
     //
     //  Analytics
     //
 
-//    struct IAnalytics
-//    {
-//        virtual ET_ReturnCode eParseText(const CEString& sName, const CEString& sMetaData, const CEString& sText, long long& llParsedTextId) = 0;
-//        virtual void ClearResults() = 0;
-//    };
+    long long llParseText(const wchar_t* szTextName, const wchar_t* szMetadata, const wchar_t* szText)
+    {
+        ET_ReturnCode eRet = H_NO_ERROR;
+
+        if (nullptr == g_pDictionary)
+        {
+            ERROR_LOG(L"Dictionary is not available.");
+            return - 1;
+        }
+
+        if (nullptr == g_pAnalytics)
+        {
+            eRet = g_pDictionary->eGetAnalytics(g_pAnalytics);
+            if (eRet != H_NO_ERROR)
+            {
+                ERROR_LOG(L"Unable to get analytics object, exiting.");
+                return -1;
+            }
+        }
+
+        long long llParsedTextId = 0;
+        eRet = g_pAnalytics->eParseText(szTextName, szMetadata, szText, llParsedTextId);
+        if (H_NO_ERROR != eRet)
+        {
+            llParsedTextId = -1;
+            wcout << endl << L"Failed to parse text " << szTextName << endl << endl;
+        }
+
+        return llParsedTextId;
+    }
+
 
 }       //  namespace MainLibForPython 
