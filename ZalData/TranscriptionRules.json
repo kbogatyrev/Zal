@@ -1,5 +1,5 @@
 {
-    "VOWELS": [
+    "VOWELS": 
         {
             "а": [
                 {
@@ -438,9 +438,8 @@
                     "TARGET": "SCHWA"
                 }
             ]
-        }
-    ],
-    "CONSONANTS": [
+        },
+    "CONSONANTS": 
         {
             "бвдптф": {
                 "COMMENT": "$66: бёдра, топь",
@@ -534,5 +533,4 @@
                 "TARGET": "VOICE"
             }
         }
-    ]
 }
