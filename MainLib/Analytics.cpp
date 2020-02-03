@@ -105,7 +105,7 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
         {
             CEString sWord = sLine.sGetField(iField);
             sWord.ToLower();
-            eRet = eParseWord(sWord, iLine, iField, llLineDbId);
+            eRet = eParseWord(sWord, iLine, iField, (int)sLine.uiNFields(), llLineDbId);
 
         }       //  for (int iField = 0; iField < (int)sLine.uiNFields(); ++iField)
 
@@ -332,7 +332,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
 
 }       //  eRegisterText()
 
-ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, int iLine, int iNumInLine, long long llLineDbKey)
+ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, int iLine, int iNumInLine, int iWordsInLine, long long llLineDbKey)
 {
     if (nullptr == m_pParser)
     {
@@ -344,7 +344,7 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, int iLine, int iNumI
 
     int iOffset = m_sText.uiGetFieldOffset(iNumInLine);
     long long llWordInLineDbKey = -1;
-    eRet = eSaveWord(llLineDbKey, iLine, iNumInLine, iOffset, sWord.uiLength(), sWord, llWordInLineDbKey);   // words_in_line
+    eRet = eSaveWord(llLineDbKey, iLine, iNumInLine, iWordsInLine, iOffset, sWord.uiLength(), sWord, llWordInLineDbKey);   // words_in_line
     if (eRet != H_NO_ERROR)
     {
         CEString sMsg(L"Unable to save a word '");
@@ -726,9 +726,9 @@ ET_ReturnCode CAnalytics::eSaveLine(long long llTextId, int iLineNum, int iTextO
     return H_NO_ERROR;
 }
 
-//  CREATE TABLE words_in_line(id INTEGER PRIMARY KEY ASC, line_id INTEGER, word_position INTEGER, line_offset INTEGER, word_length INTEGER, 
+//  CREATE TABLE words_in_line(id INTEGER PRIMARY KEY ASC, line_id INTEGER, word_position INTEGER, reverse_word_position INTEGER, line_offset INTEGER, word_length INTEGER, 
 //  word_text TEXT, FOREIGN KEY(line_id) REFERENCES lines_in_text(id));
-ET_ReturnCode CAnalytics::eSaveWord(long long llLineDbId, int iLine, int iWord, int iLineOffset, int iSegmentLength, const CEString& sWord, long long& llWordDbKey)
+ET_ReturnCode CAnalytics::eSaveWord(long long llLineDbId, int iLine, int iWord, int iWordsInLine, int iLineOffset, int iSegmentLength, const CEString& sWord, long long& llWordDbKey)
 {
     try
     {
@@ -744,13 +744,14 @@ ET_ReturnCode CAnalytics::eSaveWord(long long llLineDbId, int iLine, int iWord, 
             return H_ERROR_UNEXPECTED;
         }
 
-        m_pDb->PrepareForInsert(L"words_in_line", 5);
+        m_pDb->PrepareForInsert(L"words_in_line", 6);
 
         m_pDb->Bind(1, llLineDbId);
         m_pDb->Bind(2, iWord);
-        m_pDb->Bind(3, iLineOffset);
-        m_pDb->Bind(4, iSegmentLength);
-        m_pDb->Bind(5, sWord);
+        m_pDb->Bind(3, iWordsInLine-iWord-1);
+        m_pDb->Bind(4, iLineOffset);
+        m_pDb->Bind(5, iSegmentLength);
+        m_pDb->Bind(6, sWord);
 
         m_pDb->InsertRow();
         m_pDb->Finalize();

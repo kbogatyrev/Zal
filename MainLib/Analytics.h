@@ -101,14 +101,14 @@ namespace Hlib
     private:
         ET_ReturnCode eParseMetadata(const CEString& sMetadata);
         ET_ReturnCode eRegisterText(const CEString& sTextName, const CEString sTextMetadata, const CEString& sText);
-        ET_ReturnCode eParseWord(const CEString& sWord, int iLine, int iNumInLine, long long llLineDbKey);
+        ET_ReturnCode eParseWord(const CEString& sWord, int iLine, int iNumInLine, int iWordsInLine, long long llLineDbKey);
         ET_ReturnCode eFindEquivalencies(CEString& sLine);
 //        ET_ReturnCode eCountSyllables(StTactGroup&);
         ET_ReturnCode eGetStress(StTactGroup&);
         ET_ReturnCode eTranscribe(StTactGroup&);
         ET_ReturnCode eAssembleTactGroups(CEString& sLine);
         ET_ReturnCode eSaveLine(long long llTextId, int iLineNum, int iTextOffset, int iLength, int iNumOfWords, const CEString& sText, long long& llDbKey);
-        ET_ReturnCode eSaveWord(long long llLineDbId, int iLine, int iWord, int iLineOffset, int iSegmentLength, const CEString& sWord, long long& llWordDbKey);
+        ET_ReturnCode eSaveWord(long long llLineDbId, int iLine, int iWord, int iWordsInLine, int iLineOffset, int iSegmentLength, const CEString& sWord, long long& llWordDbKey);
         ET_ReturnCode eSaveWordParse(long long llSegmentId, long long llWordFormId, long long& llWordToWordFormId);
         ET_ReturnCode eSaveTactGroup(StTactGroup&);
         ET_ReturnCode eClearTextData(long long llText);
