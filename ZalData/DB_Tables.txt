@@ -62,6 +62,12 @@ CREATE TABLE incomplete_parses (id INTEGER PRIMARY KEY, unparsed_segment TEXT, s
 
 CREATE TABLE edited_lexemes (id INTEGER PRIMARY KEY, lexeme_hash TEXT);
 
+-- Transcription --
+CREATE TABLE transcription_rules_vowels (id INTEGER PRIMARY KEY, input_chars TEXT, target TEXT, stress TEXT, notes TEXT);
+
+CREATE TABLE transcription_contexts_vowels (id INTEGER PRIMARY KEY, rule_id INTEGER, context_type TEXT, target TEXT);
+
+
 -- Text analysis --
 CREATE TABLE text (id INTEGER PRIMARY KEY ASC, name TEXT, contents TEXT);
 
@@ -71,7 +77,7 @@ text(id));
 CREATE TABLE lines_in_text (id INTEGER PRIMARY KEY ASC, text_id INTEGER, line_number INTEGER, text_offset INTEGER, length INTEGER, number_of_words INTEGER, source TEXT, FOREIGN KEY (text_id) REFERENCES text(id));
 
 -- word_text redundant, needed for testing
-CREATE TABLE words_in_line (id INTEGER PRIMARY KEY ASC, line_id INTEGER, word_position INTEGER, line_offset INTEGER, word_length INTEGER, word_text TEXT, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
+CREATE TABLE words_in_line (id INTEGER PRIMARY KEY ASC, line_id INTEGER, word_position INTEGER, reverse_word_position INTEGER, line_offset INTEGER, word_length INTEGER, word_text TEXT, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
 
 CREATE TABLE word_to_wordform (id INTEGER PRIMARY KEY ASC, word_in_line_id INTEGER, wordform_id INTEGER, FOREIGN KEY (word_in_line_id) REFERENCES words_in_line(id), FOREIGN KEY (wordform_id) REFERENCES wordforms(id));
 
