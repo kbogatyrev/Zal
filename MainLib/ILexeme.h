@@ -197,6 +197,8 @@ namespace Hlib
         virtual ET_ReturnCode eCheckLexemeProperties() = 0;
         virtual ET_ReturnCode eDeleteIrregularForm(const CEString& sFormHash) = 0;
         virtual ET_ReturnCode eSaveIrregularForm(const CEString& sFormHash, IWordForm *&) = 0;
+        virtual ET_ReturnCode eMakeGraphicStem() = 0;
+        virtual ET_ReturnCode eMakeGraphicStem(const CEString& sSource, CEString& sGraphicStem) = 0;
         virtual ET_ReturnCode eGetErrorMsg(CEString& sErrorMsg) = 0;
 
     };      //  struct ILexeme
