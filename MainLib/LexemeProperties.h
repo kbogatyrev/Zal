@@ -17,6 +17,7 @@ namespace Hlib
             bIsUnstressed(false),
             bIsVariant(false),
             bIsPluralOf(false),
+            llSourceEntryId(-1),
             bTransitive(false),
             eReflexive(REFL_UNDEFINED),
             ePartOfSpeech(POS_UNDEFINED),
@@ -67,6 +68,7 @@ namespace Hlib
         CEString sUsage;
         CEString sSeeRef;
         CEString sBackRef;
+        long long llSourceEntryId;
         CEString sGraphicStem;
         bool bIsVariant;
         CEString sMainSymbol;
