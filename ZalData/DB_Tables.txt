@@ -1,4 +1,4 @@
-CREATE TABLE headword (id INTEGER PRIMARY KEY ASC, source TEXT, plural_of TEXT, comment TEXT, usage TEXT, variant TEXT, variant_comment TEXT, see_ref INTEGER, back_ref INTEGER, is_edited BOOLEAN DEFAULT (0));
+CREATE TABLE headword (id INTEGER PRIMARY KEY ASC, source TEXT, plural_of TEXT, comment TEXT, usage TEXT, variant TEXT, variant_comment TEXT, see_ref INTEGER, back_ref INTEGER, source_entry_id INTEGER, is_edited BOOLEAN DEFAULT (0));
 
 CREATE TABLE homonyms (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, homonym_number INTEGER, is_variant BOOLEAN,  is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (headword_id) REFERENCES headword (id));
 
@@ -52,11 +52,9 @@ CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT
 
 -- CREATE TABLE lexeme_hash_to_descriptor (id INTEGER PRIMARY KEY, lexeme_hash TEXT, descriptor_id INTEGER, inflection_id INTEGER);
 
-CREATE TABLE conversion_source_text (id INTEGER PRIMARY KEY, guid TEXT, headword_id INTEGER, descriptor_id INTEGER, source_text TEXT);
+CREATE TABLE conversion_source_text (id INTEGER PRIMARY KEY, guid TEXT, source_text TEXT);
 
 CREATE TABLE conversion_errors (id INTEGER PRIMARY KEY, Description TEXT, Paragraph TEXT, Resolved INTEGER DEFAULT 0);
-
-CREATE TABLE conversion_source_recent_edit (id INTEGER PRIMARY KEY, headword_id INTEGER, edit_start INTEGER, edit_length INTEGER);
 
 CREATE TABLE incomplete_parses (id INTEGER PRIMARY KEY, unparsed_segment TEXT, source_text TEXT);
 
