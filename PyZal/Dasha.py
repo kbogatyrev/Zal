@@ -8,7 +8,7 @@ class Data:
     position = -1
     text = ''
     line_number = -1
-    reverse_line_number = -1
+    words_in_line = -1
 
 class Handler:
 
@@ -18,7 +18,7 @@ class Handler:
         self.db_cursor = None
         self.syll_count_query = 'SELECT tg.source, lit.source, tg.first_word_position, txt.name, lit.line_number FROM tact_group AS tg INNER JOIN lines_in_text AS lit ON tg.line_id = lit.id \
 INNER JOIN text AS txt ON txt.id = lit.text_id WHERE num_of_syllables = {} ORDER BY lit.source ASC'
-        self.syll_count_query_with_stress = 'SELECT tg.source, lit.source, tg.first_word_position, txt.name, lit.line_number, tg.reverse_stressed_syllable FROM tact_group AS tg INNER JOIN \
+        self.syll_count_query_with_stress = 'SELECT tg.source, lit.source, tg.first_word_position, txt.name, lit.line_number, lit.number_of_words FROM tact_group AS tg INNER JOIN \
 lines_in_text AS lit ON tg.line_id = lit.id INNER JOIN text AS txt ON txt.id = lit.text_id WHERE num_of_syllables = {0} AND stressed_syllable = {1}'
 
         self.data_dict = {}
@@ -49,7 +49,7 @@ lines_in_text AS lit ON tg.line_id = lit.id INNER JOIN text AS txt ON txt.id = l
                 data.position = row[2]
                 data.text = row[3]
                 data.line_number = row[4]
-                self.data_dict[row[0]] = data
+                data.words_in_line = row[5]
 
         except Exception as e:
             print('Exception: {}'.format(e))
@@ -69,8 +69,8 @@ lines_in_text AS lit ON tg.line_id = lit.id INNER JOIN text AS txt ON txt.id = l
             return
 #        tg.source, lit.source, tg.first_word_position, txt.name, lit.line_number, tg.reverse_stressed_syllable
         try:
-            for num_of_syllables in range (3,6):
-                for stress_pos in range (0,num_of_syllables):
+            for num_of_syllables in range (3, 6):
+                for stress_pos in range (0, num_of_syllables):
                     query = self.syll_count_query_with_stress.format(num_of_syllables, stress_pos)
                     self.db_cursor.execute(query)
                     result_rows = self.db_cursor.fetchall()
@@ -81,9 +81,10 @@ lines_in_text AS lit ON tg.line_id = lit.id INNER JOIN text AS txt ON txt.id = l
                         data.position = row[2]            # position in line
                         data.text = row[3]                # source
                         data.line_number = row[4]
-                        data.reverse_line_number = row[5]
+                        data.words_in_line = row[5]
 
-                        self.data_dict[row[0]] = data
+                        if data.words_in_line - 1 == data.position:
+                            self.data_dict[row[0]] = data
 
                     self.sort_by_word()
 
