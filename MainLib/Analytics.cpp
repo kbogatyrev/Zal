@@ -303,7 +303,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
             m_pDb->InsertRow();
             m_pDb->Finalize();
 
-            m_llTextDbId = m_pDb->llGetLastKey();
+//            m_llTextDbId = m_pDb->llGetLastKey();
         }
         catch (CException & exc)
         {
