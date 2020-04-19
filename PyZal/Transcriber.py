@@ -34,16 +34,22 @@ class Transcriber:
 
         # Test:
         vowels_rules = dict_rules['VOWELS']
-        for vowel in vowels_rules:
-            for rule in vowel.items():
-#                self.vowel_map[rule.key] = rule.value
-#                print (rule, end='\n')
-                for vowel in rule:
-                    for sub_rule in vowel:
-                        print(sub_rule)
+        for vowel in vowels_rules.keys():
+            rules = vowels_rules[vowel]
+            for rule in rules:
+                comment = rule.get('COMMENT')
+                stress = rule.get('STRESS')
+                l_contexts = rule.get('LEFT_CONTEXTS')
+                r_contexts = rule.get('RIGHT_CONTEXTS')
+                target = rule.get('TARGET')
+                morpheme = rule.get('MORPHEME')
+                strength = rule.get('STRENGTH') # recommended/not recommended, etc.
+
+#                for vowel in rule:
+#                    for sub_rule in vowel:
+#                        print(sub_rule)
 #                        for vvv in sub_rule:
 #                            print (vvv, ' -> ', sub_rule[vvv])
-
 
 if __name__== "__main__":
 
