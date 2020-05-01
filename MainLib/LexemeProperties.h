@@ -28,7 +28,7 @@ namespace Hlib
             bYoAlternation(false),
             bOAlternation(false),
             bSecondGenitive(false),
-            bSecondLocative(false),
+            bSecondPrepositional(false),
             bIsImpersonal(false),
             bIsIterative(false),
             bHasAspectPair(false),
@@ -92,9 +92,9 @@ namespace Hlib
         bool bYoAlternation;
         bool bOAlternation;
         bool bSecondGenitive;
-        bool bSecondLocative;
-        bool bSecondLocativeOptional;
-        CEString sLoc2Preposition;
+        bool bSecondPrepositional;
+        bool bSecondPrepositionalOptional;
+        CEString sP2Preposition;
         bool bIsImpersonal;
         bool bIsIterative;
         bool bHasAspectPair;

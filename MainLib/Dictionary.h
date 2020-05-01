@@ -54,7 +54,7 @@ public:
     virtual ET_ReturnCode eSaveHeadword(ILexeme * pLexeme);
 //    virtual ET_ReturnCode eDeleteLexeme(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveAspectPairInfo(ILexeme * pLexeme);
-    virtual ET_ReturnCode eSaveLoc2Info(ILexeme * pLexeme);
+    virtual ET_ReturnCode eSaveP2Info(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveDescriptorInfo(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveCommonDeviation(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveInflectionInfo(ILexeme * pLexeme);
@@ -87,7 +87,7 @@ private:
     ET_ReturnCode eReadFromDb(__int64 llLexemeId);
     ET_ReturnCode eReadFromDb(const CEString& sStem);
 
-    ET_ReturnCode eGetL2Data(__int64 llLexemeId, StLexemeProperties& properties);
+    ET_ReturnCode eGetP2Data(__int64 llLexemeId, StLexemeProperties& properties);
     ET_ReturnCode eGetWordIdFromLemexeId(__int64 llLexemeId, __int64& llWordId);
 
     ET_ReturnCode eMarkLexemeAsEdited(ILexeme * pLexeme);
