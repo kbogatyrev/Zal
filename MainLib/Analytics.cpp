@@ -59,7 +59,9 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
         return H_ERROR_POINTER;
     }
 
-    eRet = eRegisterText(sTextName, sMetadata, sText);
+    m_pDb->BeginTransaction();
+
+    eRet = eRegisterText(sTextName, sMetadata, m_sText);
     if (eRet != H_NO_ERROR)
     {
         ERROR_LOG(L"Unable to register text");
@@ -128,6 +130,8 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
         m_mapTactGroups.clear();
 
     }       //  for (int iLine = 0; iLine < iNLines; ++iLine)
+
+    m_pDb->CommitTransaction();
 
     llParsedTextId = m_llTextDbId;
 
