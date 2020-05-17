@@ -101,7 +101,7 @@ namespace Hlib
     private:
         ET_ReturnCode eParseMetadata(const CEString& sMetadata);
         ET_ReturnCode eRegisterText(const CEString& sTextName, const CEString sTextMetadata, const CEString& sText);
-        ET_ReturnCode eParseWord(const CEString& sWord, int iLine, int iNumInLine, int iWordsInLine, long long llLineDbKey);
+        ET_ReturnCode eParseWord(const CEString& sWord, const CEString& sLine, int iLine, int iNumInLine, int iWordsInLine, long long llLineDbKey);
         ET_ReturnCode eFindEquivalencies(CEString& sLine);
 //        ET_ReturnCode eCountSyllables(StTactGroup&);
         ET_ReturnCode eGetStress(StTactGroup&);

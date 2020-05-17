@@ -23,7 +23,7 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
 
     m_sTextName = sTextName;
     m_sTextMetaData = sMetadata;
-    m_sText = sText;
+    m_sText = sText;                // used to split text into lines
 
     const_cast<CEString&>(sText).SetBreakChars(L"\r\n");
     const_cast<CEString&>(sText).SetTabs(L"");
@@ -81,7 +81,7 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
     {
         int iTextOffset = const_cast<CEString&>(sText).uiGetFieldOffset(iLine);
         
-        CEString sLine = const_cast<CEString&>(sText).sGetField(iLine);
+        CEString sLine = const_cast<CEString&>(sText).sGetField(iLine);     // use to split line into words
         sLine.EnableBreaks();
         sLine.EnablePunctuation();
         sLine.EnableEscapeChars();
@@ -107,7 +107,7 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
         {
             CEString sWord = sLine.sGetField(iField);
             sWord.ToLower();
-            eRet = eParseWord(sWord, iLine, iField, (int)sLine.uiNFields(), llLineDbId);
+            eRet = eParseWord(sWord, sLine, iLine, iField, (int)sLine.uiNFields(), llLineDbId);
 
         }       //  for (int iField = 0; iField < (int)sLine.uiNFields(); ++iField)
 
@@ -336,7 +336,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
 
 }       //  eRegisterText()
 
-ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, int iLine, int iNumInLine, int iWordsInLine, long long llLineDbKey)
+ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, const CEString& sLine, int iLine, int iNumInLine, int iWordsInLine, long long llLineDbKey)
 {
     if (nullptr == m_pParser)
     {
@@ -346,7 +346,7 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, int iLine, int iNumI
 
     ET_ReturnCode eRet = H_NO_ERROR;
 
-    int iOffset = m_sText.uiGetFieldOffset(iNumInLine);
+    int iOffset = const_cast<CEString&>(sLine).uiGetFieldOffset(iNumInLine);
     long long llWordInLineDbKey = -1;
     eRet = eSaveWord(llLineDbKey, iLine, iNumInLine, iWordsInLine, iOffset, sWord.uiLength(), sWord, llWordInLineDbKey);   // words_in_line
     if (eRet != H_NO_ERROR)
