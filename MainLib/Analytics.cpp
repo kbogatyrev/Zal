@@ -163,7 +163,7 @@ ET_ReturnCode CAnalytics::eParseMetadata(const CEString& sConstMetadata)
         if (sKeyValPair.uiNFields() < 2)
         {
             CEString sMsg(L"Bad key/value pair: ");
-            ERROR_LOG(sMsg + sMetadata);
+            ERROR_LOG(sMsg + sKeyValPair);
             continue;
         }
 
@@ -368,7 +368,7 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, const CEString& sLin
     while (H_NO_ERROR == eRet)
     {
         long long llWordToWordFormId = -1;
-        eRet = eSaveWordParse(llLineDbKey, pWf->llDbKey(), llWordToWordFormId);   //  word_to_wordform
+        eRet = eSaveWordParse(llWordInLineDbKey, pWf->llDbKey(), llWordToWordFormId);   //  word_to_wordform
         if (eRet != H_NO_ERROR)
         {
             CEString sMsg(L"Unable to save a word parse, word: ");
