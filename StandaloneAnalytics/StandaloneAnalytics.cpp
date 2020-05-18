@@ -73,7 +73,7 @@ int main()
                 sMetadata += L" | title = ";
                 sMetadata += sTitle;
                 sMetadata += L"";
-                sMetadata += L" | date";
+                sMetadata += L" | date = ";
                 sMetadata += sDate;
 
                 ET_ReturnCode eRet = pAnalytics->eParseText(sTitle, sMetadata, sText, llLastTextId);
@@ -84,10 +84,10 @@ int main()
                     continue;
                 }
 
-                if (++iCount % 100 == 0)
-                {
-                    wcout << iCount << endl;
-                }
+//                if (++iCount % 100 == 0)
+//                {
+                    cout << ++iCount << endl;
+//                }
             }
 
             CEString sStartTag = sLine.sGetRegexMatch(0);
