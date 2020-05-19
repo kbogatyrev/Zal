@@ -626,21 +626,27 @@ ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
 
             StTactGroup stTg;
             stTg.iFirstWordNum = iField;
-            stTg.iNumOfWords = 1;
+            stTg.iNumOfWords = 0;
+            stTg.iMainWordPos = 0;
             stTg.sSource = const_cast<CWordForm&>(wordForm).sWordForm();
             stTg.llLineId = stRandomVariant.llLineDbId;
             stTg.vecWords = vecVariants;
 
+            int iPosInGroup = 0;
             if (bIsProclitic(wordForm))
             {
                 // insert before 1st autonomously stressed word, adjust iFirstWordNum
+                ++stTg.iMainWordPos;
+                ++stTg.iNumOfWords;
 
             }
             else if (bIsEnclitic(wordForm))
             {
+                ++stTg.iNumOfWords;
             }
             else
             {
+                ++stTg.iNumOfWords;
             }
 
             try
@@ -935,59 +941,64 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
         return H_ERROR_POINTER;
     }
 
-    try
+    for (auto wordParse : stTg.vecWords)
     {
-        m_pDb->PrepareForInsert(L"tact_group", 9);
-
-        m_pDb->Bind(1, stTg.llLineId);
-        m_pDb->Bind(2, stTg.iFirstWordNum);
-        m_pDb->Bind(3, stTg.iNumOfWords);
-        m_pDb->Bind(4, stTg.sSource);
-        m_pDb->Bind(5, stTg.sTranscription);
-        m_pDb->Bind(6, stTg.iNumOfSyllables);
-        m_pDb->Bind(7, stTg.iStressedSyllable);
-        m_pDb->Bind(8, stTg.iReverseStressedSyllable);
-        m_pDb->Bind(9, stTg.iSecondaryStressedSyllable);
-
-        m_pDb->InsertRow();
-        m_pDb->Finalize();
-
-        long long llTactGroupId = m_pDb->llGetLastKey();
-
-        // CREATE TABLE word_to_tact_group(id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, 
-        // tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY(word_to_wordform_id) 
-        // REFERENCES word_to_word_form(id));
-
-        unsigned long long llInsertHandle = 0;
-        m_pDb->uiPrepareForInsert(L"word_to_tact_group", 3, (sqlite3_stmt * &)llInsertHandle);
-        for (StWordParse& stWordParse : stTg.vecWords)
-        {
-            m_pDb->Bind(1, stWordParse.llWordToWordFormId, llInsertHandle);
-            m_pDb->Bind(2, llTactGroupId, llInsertHandle);
-            m_pDb->Bind(3, stWordParse.iPosInTactGroup, llInsertHandle);
-            m_pDb->InsertRow(llInsertHandle);
-        }
-        m_pDb->Finalize(llInsertHandle);
-    }
-    catch (CException& exc)
-    {
-        CEString sMsg(exc.szGetDescription());
-        CEString sError;
         try
         {
-            m_pDb->GetLastError(sError);
-            sMsg += CEString(L", error: ");
-            sMsg += sError;
+            m_pDb->PrepareForInsert(L"tact_group", 11);
+
+            m_pDb->Bind(1, stTg.llLineId);
+            m_pDb->Bind(2, stTg.iFirstWordNum);
+            m_pDb->Bind(3, stTg.iMainWordPos);
+            m_pDb->Bind(4, stTg.iNumOfWords);
+            m_pDb->Bind(5, stTg.sSource);
+            m_pDb->Bind(6, wordParse.WordForm.sGramHash());
+            m_pDb->Bind(7, stTg.sTranscription);
+            m_pDb->Bind(8, stTg.iNumOfSyllables);
+            m_pDb->Bind(9, stTg.iStressedSyllable);
+            m_pDb->Bind(10, stTg.iReverseStressedSyllable);
+            m_pDb->Bind(11, stTg.iSecondaryStressedSyllable);
+
+            m_pDb->InsertRow();
+            m_pDb->Finalize();
+
+            long long llTactGroupId = m_pDb->llGetLastKey();
+
+            // CREATE TABLE word_to_tact_group(id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, 
+            // tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY(word_to_wordform_id) 
+            // REFERENCES word_to_word_form(id));
+
+            unsigned long long llInsertHandle = 0;
+            m_pDb->uiPrepareForInsert(L"word_to_tact_group", 3, (sqlite3_stmt*&)llInsertHandle);
+            for (StWordParse& stWordParse : stTg.vecWords)
+            {
+                m_pDb->Bind(1, stWordParse.llWordToWordFormId, llInsertHandle);
+                m_pDb->Bind(2, llTactGroupId, llInsertHandle);
+                m_pDb->Bind(3, stWordParse.iPosInTactGroup, llInsertHandle);
+                m_pDb->InsertRow(llInsertHandle);
+            }
+            m_pDb->Finalize(llInsertHandle);
         }
-        catch (...)
+        catch (CException & exc)
         {
-            sMsg = L"Apparent DB error ";
+            CEString sMsg(exc.szGetDescription());
+            CEString sError;
+            try
+            {
+                m_pDb->GetLastError(sError);
+                sMsg += CEString(L", error: ");
+                sMsg += sError;
+            }
+            catch (...)
+            {
+                sMsg = L"Apparent DB error ";
+            }
+
+            sMsg += CEString::sToString(m_pDb->iGetLastError());
+            ERROR_LOG(sMsg);
+
+            return H_ERROR_DB;
         }
-
-        sMsg += CEString::sToString(m_pDb->iGetLastError());
-        ERROR_LOG(sMsg);
-
-        return H_ERROR_DB;
     }
 
     return H_NO_ERROR;

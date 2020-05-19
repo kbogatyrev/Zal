@@ -61,6 +61,7 @@ namespace Hlib
         {
             long long llLineId;
             int iFirstWordNum;
+            int iMainWordPos;
             int iNumOfWords;
             int iNumOfSyllables;
             int iStressedSyllable;             // TODO: multiple stresses, dash-separated compounds etc
@@ -79,6 +80,7 @@ namespace Hlib
             {
                 llLineId = -1;
                 iFirstWordNum = -1;
+                iMainWordPos = -1;
                 iNumOfWords = 0;
                 iNumOfSyllables = -1;   
                 iStressedSyllable = -1;
