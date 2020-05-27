@@ -9,6 +9,7 @@ class Data:
     text = ''
     line_number = -1
     words_in_line = -1
+    line_source = ''
 
 class Handler:
 
@@ -16,9 +17,11 @@ class Handler:
 
         self.db_connect = None
         self.db_cursor = None
-        self.syll_count_query = 'SELECT tg.source, lit.source, tg.first_word_position, txt.name, lit.line_number FROM tact_group AS tg INNER JOIN lines_in_text AS lit ON tg.line_id = lit.id \
+        self.words_query = 'SELECT tg.source, tg.gram_hash, tg.num_of_syllables, tg.stressed_syllable, tg.reverse_stressed_syllable, lit.source, tg.first_word_position, lit.number_of_words, txt.name, lit.line_number \
+FROM tact_group AS tg INNER JOIN lines_in_text AS lit ON tg.line_id = lit.id INNER JOIN text AS txt ON txt.id = lit.text_id ORDER BY tg.source ASC'
+        self.syll_count_query = 'SELECT tg.source, tg.gram_hash, lit.source, tg.first_word_position, txt.name, lit.line_number FROM tact_group AS tg INNER JOIN lines_in_text AS lit ON tg.line_id = lit.id \
 INNER JOIN text AS txt ON txt.id = lit.text_id WHERE num_of_syllables = {} ORDER BY lit.source ASC'
-        self.syll_count_query_with_stress = 'SELECT tg.source, lit.source, tg.first_word_position, txt.name, lit.line_number, lit.number_of_words FROM tact_group AS tg INNER JOIN \
+        self.syll_count_query_with_stress = 'SELECT tg.source, tg.gram_hash, lit.source, tg.num_of_syllables, tg.stressed_syllable, tg.reverse_stressed_syllable, tg.first_word_position, txt.name, lit.line_number, lit.number_of_words FROM tact_group AS tg INNER JOIN \
 lines_in_text AS lit ON tg.line_id = lit.id INNER JOIN text AS txt ON txt.id = lit.text_id WHERE num_of_syllables = {0} AND stressed_syllable = {1}'
 
         self.data_dict = {}
@@ -33,6 +36,39 @@ lines_in_text AS lit ON tg.line_id = lit.id INNER JOIN text AS txt ON txt.id = l
         except Exception as e:
             self.ready = False
             print(e)
+
+    def get_words(self):
+        if not self.ready:
+            print('Error: Handler not initialized.')
+            return
+        try:
+            query = self.words_query
+            self.db_cursor.execute(query)
+            result_rows = self.db_cursor.fetchall()
+            self.data_dict = {}
+
+            for row in result_rows:
+                data = Data()
+                data.source_with_stress = row[0]
+                data.gram_hash = row[1]
+                data.num_of_syllables = row[2]
+                data.stressed_syllable = row[3] + 1
+                data.reverse_stressed_syllable = row[4] + 1
+                data.line_source = row[5]
+                data.position = row[6]
+                data.text_name = row[8]
+                data.line_number = row[9]
+                data.is_last_word = '*' if row[6] + 1 == row[7] else ''
+                self.data_dict[row[0]+row[1]] = data
+
+            out_file = open(output_path, "w", encoding='utf16')
+            for key in sorted(self.data_dict.keys()):
+                data = self.data_dict[key]
+                out_file.write ('{0} | {1} | {2} | {3} | {4} | {5} | {6} | {7} | {8} \n'.format(data.source_with_stress, data.gram_hash, data.num_of_syllables, data.stressed_syllable, \
+data.reverse_stressed_syllable, data.is_last_word, data.text_name, data.line_number, data.line_source))
+
+        except Exception as e:
+            print('Exception: {}'.format(e))
 
 
     def get_words_by_num_of_syllables(self, num_of_syllables):
@@ -88,18 +124,16 @@ lines_in_text AS lit ON tg.line_id = lit.id INNER JOIN text AS txt ON txt.id = l
 
                     self.sort_by_word()
 
-                    kiki = 0
-
         except Exception as e:
             print('Exception: {}'.format(e))
 
 if __name__== "__main__":
-
-    db_path = '../ZalData/ZalData_04_18_2020_Pasternak.db3'
+    db_path = '../ZalData/ZalData_05_14_2020_Pasternak.db3'
+    output_path = '../ZalData/Dasha_05_27_2020.csv'
     h = Handler(db_path)
-    h.get_words_by_stress_pos()
+#    h.get_words_by_stress_pos()
 #    h.get_words_by_num_of_syllables(3)
-#    h.sort_by_word()
+    h.get_words()
 
-    koko = 0
+    k = 0
    
