@@ -14,6 +14,7 @@ namespace Hlib
         virtual ~IWordForm() {};
         virtual ILexeme * pLexeme() = 0;
         virtual void SetLexeme(ILexeme * pLexeme) = 0;
+        virtual long long llDbId() = 0;
         virtual CEString sWordForm() = 0;
         virtual void SetWordForm(const CEString&) = 0;
         virtual CEString sStem() = 0;
@@ -53,7 +54,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetNextStressPos(int& iPos, ET_StressType& eType) = 0;
 
         virtual ET_ReturnCode eSaveIrregularForm() = 0;
-        virtual ET_ReturnCode eSaveIrregularStress(map<int, ET_StressType>&) = 0;
+//        virtual ET_ReturnCode eSaveIrregularStress(map<int, ET_StressType>&) = 0;
 
         virtual CEString sGramHash() = 0;
         virtual ET_ReturnCode eInitFromHash(const CEString& sHash) = 0;
