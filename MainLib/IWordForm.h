@@ -52,7 +52,7 @@ namespace Hlib
         virtual void SetTrailingComment(const CEString&) = 0;
         virtual ET_ReturnCode eGetFirstStressPos(int& iPos, ET_StressType& eType) = 0;
         virtual ET_ReturnCode eGetNextStressPos(int& iPos, ET_StressType& eType) = 0;
-
+        virtual ET_ReturnCode eSetStressPositions(map<int, ET_StressType> mapStress) = 0;
         virtual ET_ReturnCode eSaveIrregularForm() = 0;
 //        virtual ET_ReturnCode eSaveIrregularStress(map<int, ET_StressType>&) = 0;
 
