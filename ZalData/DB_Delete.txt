@@ -29,6 +29,9 @@ DELETE FROM conversion_errors;
 DELETE FROM incomplete_parses;
 DELETE FROM edited_lexemes;
 --
+DELETE FROM transcription_inputs;
+DELETE FROM transcription_rules;
+--
 DELETE FROM word_to_tact_group;
 DELETE FROM tact_group;
 DELETE FROM word_to_wordform;

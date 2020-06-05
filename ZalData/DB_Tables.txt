@@ -61,9 +61,9 @@ CREATE TABLE incomplete_parses (id INTEGER PRIMARY KEY, unparsed_segment TEXT, s
 CREATE TABLE edited_lexemes (id INTEGER PRIMARY KEY, lexeme_hash TEXT);
 
 -- Transcription --
-CREATE TABLE transcription_rules_vowels (id INTEGER PRIMARY KEY, input_chars TEXT, target TEXT, stress TEXT, notes TEXT);
+CREATE TABLE transcription_inputs (id INTEGER PRIMARY KEY, input_chars TEXT);
 
-CREATE TABLE transcription_contexts_vowels (id INTEGER PRIMARY KEY, rule_id INTEGER, context_type TEXT, target TEXT);
+CREATE TABLE transcription_rules (id INTEGER PRIMARY KEY, input_id INTEGER, stress TEXT, left_contexts TEXT, right_contexts TEXT, target TEXT, morpheme_type TEXT, subparadigm TEXT, gramm_gender TEXT, gramm_number TEXT, gramm_case TEXT, strength TEXT, comment TEXT);
 
 
 -- Text analysis --
