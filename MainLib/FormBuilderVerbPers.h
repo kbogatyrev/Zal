@@ -1,10 +1,12 @@
 #ifndef FORMBUILDERVERBPERS_H_INCLUDED
 #define FORMBUILDERVERBPERS_H_INCLUDED
 
+#include "Enums.h"
+#include "EString.h"
+
 #include "FormBuilderBaseConj.h"
 
 using namespace std;
-//using namespace std::tr1;
 
 namespace Hlib
 {

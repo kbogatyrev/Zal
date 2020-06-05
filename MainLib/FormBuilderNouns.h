@@ -1,6 +1,9 @@
 #ifndef FORMBUILDERNOUNS_H_INCLUDED
 #define FORMBUILDERNOUNS_H_INCLUDED
 
+#include "Enums.h"
+#include "EString.h"
+
 #include "WordForm.h"
 #include "SqliteWrapper.h"
 #include "Endings.h"

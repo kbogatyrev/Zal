@@ -1,10 +1,12 @@
 #ifndef FORMBUILDERADJCOMPARATIVE_H_INCLUDED
 #define FORMBUILDERADJCOMPARATIVE_H_INCLUDED
 
+#include "Enums.h"
+#include "EString.h"
+
 #include "FormBuilderBaseDecl.h"
 
 using namespace std;
-//using namespace std::tr1;
 
 namespace Hlib
 {

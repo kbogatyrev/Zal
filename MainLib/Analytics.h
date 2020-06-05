@@ -5,6 +5,8 @@
 #include <vector>
 #include <map>
 
+#include "Enums.h"
+#include "EString.h"
 #include "IAnalytics.h"
 
 namespace Hlib

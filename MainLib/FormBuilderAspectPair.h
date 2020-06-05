@@ -1,6 +1,9 @@
 #ifndef ASPECTPAIRBUILDER_H_INCLUDED
 #define ASPECTPAIRBUILDER_H_INCLUDED
 
+#include "Enums.h"
+#include "EString.h"
+
 namespace Hlib
 {
     class CLexeme;

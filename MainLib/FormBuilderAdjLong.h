@@ -1,11 +1,13 @@
 #ifndef FORMBUILDERADJLONG_H_INCLUDED
 #define FORMBUILDERADJLONG_H_INCLUDED
 
+#include "Enums.h"
+#include "EString.h"
+
 #include "WordForm.h"
 #include "FormBuilderBaseDecl.h"
 
 using namespace std;
-//using namespace std::tr1;
 
 namespace Hlib
 {

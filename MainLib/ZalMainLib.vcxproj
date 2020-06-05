@@ -25,7 +25,6 @@
     <ClInclude Include="FormBuilderAspectPair.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Endings.h" />
-    <ClInclude Include="ErrorComWrapper.h" />
     <ClInclude Include="FormBuilderAdjComparative.h" />
     <ClInclude Include="FormBuilderAdjLong.h" />
     <ClInclude Include="FormBuilderAdjShort.h" />
@@ -49,7 +48,7 @@
     <ClInclude Include="Parser.h" />
     <ClInclude Include="ParsingTree.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="TestData.h" />
+    <ClInclude Include="Transcriber.h" />
     <ClInclude Include="Verifier.h" />
     <ClInclude Include="WordForm.h" />
   </ItemGroup>
@@ -75,6 +74,7 @@
     <ClCompile Include="MainLib.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="ParsingTree.cpp" />
+    <ClCompile Include="Transcriber.cpp" />
     <ClCompile Include="Verifier.cpp" />
     <ClCompile Include="WordForm.cpp" />
   </ItemGroup>

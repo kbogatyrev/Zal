@@ -3,6 +3,9 @@
 
 #include <vector>
 
+#include "Enums.h"
+#include "EString.h"
+
 #include "IParser.h"
 
 namespace Hlib

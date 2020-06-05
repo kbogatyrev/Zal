@@ -1,6 +1,9 @@
 #ifndef FORMBUILDERVERBIMPV_H_INCLUDED
 #define FORMBUILDERVERBIMPV_H_INCLUDED
 
+#include "Enums.h"
+#include "EString.h"
+
 #include "WordForm.h"
 #include "SqliteWrapper.h"
 #include "FormBuilderBaseConj.h"

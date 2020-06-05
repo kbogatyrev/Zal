@@ -4,6 +4,9 @@
 #include <set>
 #include <map>
 
+#include "Enums.h"
+#include "EString.h"
+
 using namespace std;
 
 //

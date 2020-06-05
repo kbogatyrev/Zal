@@ -2,6 +2,8 @@
 #define LEXEMEPROPERTIES_H_INCLUDED
 
 #include <map>
+
+#include "Enums.h"
 #include "EString.h"
 
 namespace Hlib

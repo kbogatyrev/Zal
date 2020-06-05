@@ -1,8 +1,10 @@
 #ifndef C_DICTIONARY_H_INCLUDED
 #define C_DICTIONARY_H_INCLUDED
 
-#include "LexemeProperties.h"
+#include "Enums.h"
+#include "EString.h"
 #include "IDictionary.h"
+#include "LexemeProperties.h"
 
 namespace Hlib
 {
