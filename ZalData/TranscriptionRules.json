@@ -5,7 +5,7 @@
                 {
                     "COMMENT": "$15: акт, Арка, Алый; заАхать, поАхать; там, дам, сам, гам, вам, мак, бак, брак, шаг, жАба, шАлость, жаль; час, кочАн, качАть, пощАда",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "HARD_CONSONANT", "Lчщ" ],
+                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "HARD_CONSONANT", "чщ" ],
                     "TARGET":  "A" 
                 },
                 {
@@ -17,32 +17,32 @@
                 {
                     "COMMENT": "$38: часы, часОк, чадИть, частИт, щадИть, щавЕль",
                     "STRESS": "FIRST_PRETONIC",
-                    "LEFT_CONTEXTS": "Lчщ",
+                    "LEFT_CONTEXTS": [ "чщ" ],
                     "TARGET": "PRETONIC_IE"
                 },
                 {
                     "COMMENT": "$42: машинИст, паровОз, маловАт, разновЕсы, накурИть, залучИть, самовАр, шаловлИв, жалюзИ, царедвОрцы",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": [ "HARD_CONSONANT", "Lшжц" ],
+                    "LEFT_CONTEXTS": [ "HARD_CONSONANT", "шжц" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$44: агронОм, агрономИческий, алюмИний, алебАстр, акварЕль, анатОмия, анатомИческий, амбразУра, антрацИт",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": "BOUNDARY_NOT_PROCLITIC",
+                    "LEFT_CONTEXTS": [ "BOUNDARY_NOT_PROCLITIC" ],
                     "TARGET": "PRETONIC_A"
                 },
                 {
                     "COMMENT": "$48: вЫдан, вЫбрана, вЫтаскал, рабОтал, по забОрам, на забОрах, за забОрами, корОва, Окна, дЕла, вЫжал, по лУжам, в лУжах, за лУжами, лУжа, вЫцарапал, кУрица, по Улицам",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": [ "HARD_CONSONANT", "Lжц" ],
+                    "LEFT_CONTEXTS": [ "HARD_CONSONANT", "жц" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$53: плАча (G. Pl. gerund), рОщам, рОщами, рОщах",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "Lчщ",
-                    "MORPHEME": "ENDING",
+                    "LEFT_CONTEXTS": [ "чщ" ],
+                    "MORPHEMES": [ "ENDING" ],
                     "TARGET": "SCHWA"
                 }
             ],
@@ -70,62 +70,62 @@
                 {
                     "COMMENT": "$27: пел, бЕлый, вЕра, мел, сЕрый, зЕркало, дЕло, тЕсно, кедр, гЕтры, нерв, тЕрмин, музЕй, инспЕктор, мЕдик; шест, жест, цЕнный",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": "CONSONANT",
+                    "LEFT_CONTEXTS": [ "CONSONANT" ],
                     "TARGET": "E"
                 },
                 {
                     "COMMENT": "$29: ел, ем, ель, Еду, Ездил, заЕду, поЕли, пьЕса, пьЕксы, валансьЕн, досьЕ, о муравьЕ, о соловьЕ, съел; exception: проЕкт",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "Lьъ" ],
+                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
                     "TARGET": "J + E"
                 },
                 {
                     "COMMENT": "$33: женА, желтЕть, жестОк; шестОй, шептАть, шелкА; ценА, цедИть, лицевОй",
                     "STRESS": "FIRST_PRETONIC",
-                    "LEFT_CONTEXTS": "Lцжш",
+                    "LEFT_CONTEXTS": [ "цжш" ],
                     "TARGET": "PRETONIC_HARD_IE"
                 },
                 {
                     "COMMENT": "$37: несИ, несТи, леснИк, несёт, ведёт, плетЕнь, бежАть, чесАть, чеснОк, щенОк",
                     "STRESS": "FIRST_PRETONIC",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
                     "TARGET": "PRETONIC_HARD_IE"
                 },
                 {
                     "COMMENT": "$39: ездА, едИм, ежОм, ершОм, енОт; поедИм",
                     "STRESS": "FIRST_PRETONIC",
-                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "Lьъ" ],
-                    "TARGET": "J + RETONIC_IE" 
+                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
+                    "TARGET": "J + PRETONIC_IE"
                 },
                 {
                     "COMMENT": "$46: переведенА, перенесУ, веселИть, деревЕнь, беговОй, лесникА, седовАт, человЕк, четырёх, счетовОд, щекотАть",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT", "Lчщ" ],
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT", "чщ" ],
                     "TARGET": "UNSTRESSED_FRONT_VOWEL"
                 },
                 {
                     "COMMENT": "$42: желобОк, желудЕй, желтовАтый, жестянОй, жеребёнок, шероховАтый, шелохнУться, шептунЫ, шелестИт, шевелИть, цеховОй",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": "Lшжц",
+                    "LEFT_CONTEXTS": [ "шжц" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$47: ездовОй, егозА, ЕлизавЕта, европЕйских, единИцу, ежевИку",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": "BOUNDARY_NOT_PROCLITIC",
+                    "LEFT_CONTEXTS": [ "BOUNDARY_NOT_PROCLITIC" ],
                     "TARGET": "J + UNSTRESSED_FRONT_VOWEL"
                 },
                 {
                     "COMMENT": "$49 [note exceptions]: вЫшел, скОшено, вОжено, вЫжег, прохОжего, хорОшему, в рЫжем, с мУжем, сИтцем, птИцей, кУцему, глЯнцевых",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "Lшжц",
+                    "LEFT_CONTEXTS": [ "шжц" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$49: на сУше, в лОже, о мУже, в сИтце, на Улице, по сУше, по кОже",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "Lшжц",
-                    "MORPHEME": "ENDING",
+                    "LEFT_CONTEXTS": [ "шжц" ],
+                    "MORPHEMES": [ "ENDING" ],
                     "SUBPARADIGM": "SUBPARADIGM_NOUN",
                     "NUMBER": "NUM_SG",
                     "CASE": "CASE_PREP",
@@ -134,8 +134,8 @@
                 {
                     "COMMENT": "$49: Улице, сУше, кОже",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "Lшжц",
-                    "MORPHEME": "ENDING",
+                    "LEFT_CONTEXTS": [ "шжц" ],
+                    "MORPHEMES": [ "ENDING" ],
                     "SUBPARADIGM": "SUBPARADIGM_NOUN",
                     "NUMBER": "NUM_SG",
                     "CASE": "CASE_DAT",
@@ -145,60 +145,60 @@
                 {
                     "COMMENT": "$49: тИше, тОньше, мЕньше, сУше, вЫше, блИже",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "Lшжц",
-                    "MORPHEME": "ENDING",
+                    "LEFT_CONTEXTS": [ "шжц" ],
+                    "MORPHEMES": [ "ENDING" ],
                     "SUBPARADIGM": "SUBPARADIGM_COMPARATIVE",
                     "TARGET": "UNSTRESSED_Y_E"
                 },
                 {
                     "COMMENT": "$55: вЫберу, вЫлезу, вЫчет, пАлец; олЕней, сосЕдей; кАплей, бАней, тУчей, рОщей; армЯне, горожАне; в дОме, в пОле, на сЕне; к рабОте, в бАне, в рОще; красИвее, угрЮмее; дешЕвле, богАче; стАнешь, бУдешь, плАчешь; стАнет, бУдет, плАчет; стАнем, бУдем, плАчем; стАнете, бУдете, плАчете; стАньте, бУдьте, плАчьте, купИте, кладИте",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXT": "SOFT_CONSONANT",
+                    "LEFT_CONTEXT": [ "SOFT_CONSONANT" ],
                     "TARGET": "UNSTRESSED_FRONT_VOWEL"
                 },
                 {
                     "COMMENT": "$55: злОе, другОе, стАрое, дОброе; барАнье, птИчье",
                     "IS_VARIANT": "YES",
                     "STRESS": "POSTTONIC",
-                    "MORPHEME": "ENDING",
+                    "MORPHEMES": [ "ENDING" ],
                     "SUBPARADIGM": "SUBPARADIGM_LONG_ADJ",
                     "NUMBER": "NUM_SG",
                     "GENDER": "GENDER_N",
                     "CASE": "CASE_NOM",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$55: кАмнем, учИтелем, плАчем",
                     "IS_VARIANT": "YES",
                     "STRESS": "POSTTONIC",
-                    "MORPHEME": "ENDING",
+                    "MORPHEMES": [ "ENDING" ],
                     "SUBPARADIGM": "SUBPARADIGM_NOUN",
                     "NUMBER": "NUM_SG",
                     "CASE": "CASE_INST",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$55: брАтьев, сУчьев, стУльев, сУчьев",
                     "IS_VARIANT": "YES",
                     "STRESS": "POSTTONIC",
-                    "MORPHEME": "ENDING",
+                    "MORPHEMES": [ "ENDING" ],
                     "SUBPARADIGM": "SUBPARADIGM_NOUN",
                     "NUMBER": "NUM_PL",
                     "CASE": "CASE_GEN",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$55: мОре, пОле, счАстье",
                     "IS_VARIANT": "YES",
                     "STRESS": "POSTTONIC",
-                    "MORPHEME": "ENDING",
+                    "MORPHEMES": [ "ENDING" ],
                     "SUBPARADIGM": "SUBPARADIGM_NOUN",
                     "NUMBER": "NUM_SG",
                     "CASE": "CASE_NOM",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
                     "TARGET": "SCHWA"
                 }
             ],
@@ -226,19 +226,19 @@
                 {
                     "COMMENT": "$21: лён, вёл, идём, пёк, пасём, рёв, мёд, дёрну, чёлн, щёлкнуть",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
                     "TARGET": "O"
                 },
                 {
                     "COMMENT": "$22: жёлоб, жёлтый, шёлк, шёл, поджёг, чёрный, зачёт, щётка, щёлкать; see also sub о",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": "Lжшчщ",
+                    "LEFT_CONTEXTS": [ "жшчщ" ],
                     "TARGET": "O"
                 },
                 {
                     "COMMENT": "$23: ёлки, ёж, даём, заём; льёт, пьёшь, вьём, муравьём, съёмки",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "Lьъ" ],
+                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
                     "TARGET": "J + O"
                 }
             ],
@@ -255,7 +255,7 @@
                 },
                 {
                     "COMMENT": "$7: шил, жир, жилА, вЫшить, цинк",
-                    "LEFT_CONTEXTS": "Lшжц",
+                    "LEFT_CONTEXTS": [ "шжц" ],
                     "TARGET": "Y"
                 }
             ],
@@ -269,7 +269,7 @@
                 {
                     "COMMENT": "$22: обжОра, жох, шов, шОрох, поджОг, чОкаться, чОпорный, холщОвый, плющом; see also sub ё",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": "Lжшчщ",
+                    "LEFT_CONTEXTS": [ "жшчщ" ],
                     "TARGET": "O"
                 },
                 {
@@ -281,45 +281,45 @@
                 {
                     "COMMENT": "$42: молодОй, полевОд, богатырИ, романИст, дороговАт, толокнО, собаковОд, головА, хорошО, костянОй, шоколАд, шовинИзм",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": [ "HARD_CONSONANT", "Lшжц" ],
+                    "LEFT_CONTEXTS": [ "HARD_CONSONANT", "шжц" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$44: оборОт, обижАть, областнОй, огласИть, огонёк, огранИчить, ограничИтель, окончАтельно, оперИровать, операциОнный, органИзм, оружЕйный, оскорбИть, остановИть, осторОжный",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": "BOUNDARY_NOT_PROCLITIC",
+                    "LEFT_CONTEXTS": [ "BOUNDARY_NOT_PROCLITIC" ],
                     "TARGET": "PRETONIC_A"
                 },
                 {
                     "COMMENT": "$48: вЫнос, вЫброс, гОлову, нА голову, нА дом, Узок, за дОмом, на стАром, за канАвой, сЕно, дЕло, мнОго, нАдо",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "HARD_CONSONANT",
+                    "LEFT_CONTEXTS": [ "HARD_CONSONANT" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "COMMENT": "$50: Ивовых, слИвовым, нОвого, лЕвого, дубОвого",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "Lв",
-                    "RIGHT_CONTEXTS": "Lв",
+                    "LEFT_CONTEXTS": [ "в" ],
+                    "RIGHT_CONTEXTS": [ "в" ],
                     "TARGET": "SYLLABIC_V"
                 },
                 {
                     "COMMENT": "$50: цАрствовать, хозЯйствовать, шЕствовать, злОбствовать, бЕдствовать",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "Lств",
-                    "RIGHT_CONTEXTS": "Lв",
+                    "LEFT_CONTEXTS": [ "ств" ],
+                    "RIGHT_CONTEXTS": [ "в" ],
                     "TARGET": "SYLLABIC_V"
                 },
                 {
                     "COMMENT": "$50: NB -- TODO alternative -- цАрствовать, хозЯйствовать, шЕствовать, злОбствовать, бЕдствовать",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "Lств",
+                    "LEFT_CONTEXTS": [ "ств" ],
                     "TARGET": "SYLLABIC_V"
                 },
                 {
                     "COMMENT": "$56: NB -- TODO select words -- какАо, рАдио, хАос, адАжио",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "VOWEL",
+                    "LEFT_CONTEXTS": [ "VOWEL" ],
                     "TARGET": "О"
                 }
             ],
@@ -345,7 +345,7 @@
             }],
             "у": [{
                 "COMMENT": "$10: ум, Улица, удАр, убирАть; наУка, паУк, заучИть, вЫучить, сОус, клОун; сук, пух, куст, шум, пучОк, букАшка, кулАк, шумЕть, цукАты, пулемёт, жуликовАтый, вЫкуп, вЫступ; чУтко, чуб, щУка, чудАк, чугУн, чудакИ, на Ощупь, плАчут",
-                "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "HARD_CONSONANT", "Lчщ" ],
+                "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "HARD_CONSONANT", "чщ" ],
                 "TARGET": "U"
             }],
             "у+а": [{
@@ -360,7 +360,7 @@
             }],
             "ы": [{
                 "COMMENT": "$8: мыть, забЫть, дым, былА, сытА, дымОк, дымовОй, цыц, кУцый",
-                "LEFT_CONTEXTS": [ "HARD_CONSONANT", "Lц" ],
+                "LEFT_CONTEXTS": [ "HARD_CONSONANT", "ц" ],
                 "TARGET": "Y"
             }],
             "э": [{
@@ -372,12 +372,12 @@
             "ю": [
                 {
                     "COMMENT": "$11: тюк, люк, рЮмки, нюх, людЕй, слюдА, вЫключил, гОлубю",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT_NO_CH_SHCH",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT_NO_CH_SHCH" ],
                     "TARGET": "U"
                 },
                 {
                     "COMMENT": "$12, $69: юг, юлА, знАю, мОю, умЕю; вью, пью, шью, чью, вЫлью, съюлИть",
-                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "Lьъ" ],
+                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
                     "TARGET": "J + U"
                 }
             ],
@@ -385,152 +385,175 @@
                 {
                     "COMMENT": "$16: мять, пЯтый, сЯду, тЯнут, тебЯ",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT_NO_CH_SHCH",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT_NO_CH_SHCH" ],
                     "TARGET": "A"
                 },
                 {
                     "COMMENT": "$17: яд, струЯ, краЯ; пьян, дьяк, друзьЯ, кальЯн, мужьЯ, чья, объЯт",
                     "STRESS": "STRESSED",
-                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "Lьъ" ],
+                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
                     "TARGET": "J + A" 
                 },
                 {
                     "COMMENT": "$37: мяснИк, взялИсь, рябИну, тянИ, вязАть, пятёрка, лягУшки",
                     "STRESS": "FIRST_PRETONIC",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
                     "TARGET": "PRETONIC_IE"
                 },
                 {
                     "COMMENT": "$39: язЫк, яйцО, ярлЫк, яснА, янвАрь, уяснИть",
                     "STRESS": "FIRST_PRETONIC",
-                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "Lьъ" ],
+                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
                     "TARGET": "J + PRETONIC_IE"
                 },
                 {
                     "COMMENT": "$46: мясникА, пятачОк, рябовАт, тяжеловАт",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
                     "TARGET": "UNSTRESSED_FRONT_VOWEL"
                 },
                 {
                     "COMMENT": "$47: ястребОк, ятагАн, языкА, ярлыкА, яровОй",
                     "STRESS": "OTHER_PRETONIC",
-                    "LEFT_CONTEXTS": "BOUNDARY_WORD",
+                    "LEFT_CONTEXTS": [ "BOUNDARY_WORD" ],
                     "TARGET": "J + UNSTRESSED_FRONT_VOWEL"
                 },
                 {
                     "STRESS": "UNSTRESSED",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
-                    "MORPHEME": "ENDING",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
+                    "MORPHEMES": [ "ENDING" ],
                     "TARGET": "SCHWA"
                 },
                 {
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT", "Lчщ" ],
-                    "MORPHEME": "ENDING",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT", "чщ" ],
+                    "MORPHEMES": [ "ENDING" ],
                     "TARGET": "UNSTRESSED_FRONT_VOWEL"
                 },
                 {
                     "COMMENT": "$53: мОря, пОля, Окуня; пЕрья, стУлья, сУчья; кАплям, кАплями, кАплях; Имя, врЕмя, плАмя, стрЕмя; вИдя, знАя, злАя, другАя, стАрая, дОбрая; барАнья, птИчья, врАжья; сегОдня",
                     "STRESS": "POSTTONIC",
-                    "LEFT_CONTEXTS": "SOFT_CONSONANT",
-                    "MORPHEME": "ENDING",
+                    "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
+                    "MORPHEMES": [ "ENDING" ],
                     "TARGET": "SCHWA"
                 }
             ]
         },
     "CONSONANTS": 
         {
-            "бвдптф": {
+            "бвдптф": [
+                {
                 "COMMENT": "$66: бёдра, топь",
-                "RIGHT_CONTEXT": [ "Lь + BOUNDARY_WORD", "Lяёюи" ],
+                "RIGHT_CONTEXTS": [ "ь + BOUNDARY_WORD", "яёюи" ],
                 "TARGET": "B_SOFT"
-            },
+                }
+            ],
             "бвгджз": [
                 {
                     "COMMENT": "$80: хлеб, дуб, гроб, клуб, груб, гОлубь, вглубь, дробь; нрав, залИв, улОв, прав, слов, корОв, узнАв, столОв, плодОв, кровь, любОвь, бровь, остАвь, приготОвь; снег, пирОг, сапОг, вдруг, круг, плуг, шаг, помОг, продрОг, лёг, слог; ног, дуг, нарОд, сад, склад, ход, суд, бред, лёд; борОд, вод, бед; медь, лЕбедь, лОшадь, сядь, нож, муж, чиж, стриж, гарАж; луж, стуж; рожь, ложь, дрожь, нарЕжь, намАжь, груз, навОз, морОз, глаз, влез, вниз; коз, роз, лоз; лезь, грязь, врозь",
-                    "RIGHT_CONTEXTS": "BOUNDARY_WORD",
+                    "RIGHT_CONTEXTS": [ "BOUNDARY_WORD" ],
                     "TARGET": "DEVOICE"
                 },
                 {
                     "COMMENT": "$85: трУбки, скобки, рОбко, дубкИ, хлЕбца, озЯбший; трАвка, лАвка, канАвка, лОвко, ловкА, зАвтра, всё, всхОды, вход, вторОй, вскипИт, в шкОлу; острИгшись, продрОгший; лОдка, рЕдко, склАдки, слАдко, грЯдки, пОдпись; кнИжки, лОжки, бумАжки, рОжки да нОжки, сторОжка, подрУжка; нИзко, Узко, рЕзко, скОльзко, лезть",
-                    "RIGHT_CONTEXTS": "VOICELESS",
+                    "RIGHT_CONTEXTS": [ "VOICELESS" ],
                     "TARGET": "DEVOICE"
                 }
             ],
-            "бвг": {
-                "COMMENT": "$84: Глеб ИвАнович, ЛюбОвь АндрЕевна, Пров ИвАнович, Олег АлексАндрович, Лев МихАйлович, ОлЕг РомАнович, ЛюбОвь Яковлевна, ОлЕг ЛьвОвич",
-                "RIGHT_CONTEXTS": "BOUNDARY_WORD",
-                "TARGET": "DEVOICE"
-            },
-            "вгджз": {
-                "COMMENT": "$83: бл'из Оки, скв'озь Окна, пр'отив Окон, напрОтив Улицы, вокр'уг Озера, ведь онИ ушлИ, уж он-то знал, бл'из рЕчки, напрОтив рАмпы, бл'из лЕса, скв'озь лес, пр'отив лАвки, вокр'уг лАмпы, ведь мАй уж'е, пр'отив мышЕй, вокр'Уг машИн, напрОтив нАс, вокр'уг нИх, ведь нАс нЕ было, вокрУг ёлки, уж Я знал, ведь Я это, напрОтив Ямы, пр'Отив вАс",
-                "INDIVIDUAL_FORMS": "близ, сквозь, против, напротив, вокруг, ведь, уж",
-                "RIGHT_CONTEXTS": "BOUNDARY_WORD",
-                "TARGET": "DEVOICE"
-            },
+            "бвг": [
+                {
+                    "COMMENT": "$84: Глеб ИвАнович, ЛюбОвь АндрЕевна, Пров ИвАнович, Олег АлексАндрович, Лев МихАйлович, ОлЕг РомАнович, ЛюбОвь Яковлевна, ОлЕг ЛьвОвич",
+                    "RIGHT_CONTEXTS": [ "BOUNDARY_WORD" ],
+                    "TARGET": "DEVOICE"
+                }
+            ],
+            "вгджз": [
+                {
+                    "COMMENT": "$83: бл'из Оки, скв'озь Окна, пр'отив Окон, напрОтив Улицы, вокр'уг Озера, ведь онИ ушлИ, уж он-то знал, бл'из рЕчки, напрОтив рАмпы, бл'из лЕса, скв'озь лес, пр'отив лАвки, вокр'уг лАмпы, ведь мАй уж'е, пр'отив мышЕй, вокр'Уг машИн, напрОтив нАс, вокр'уг нИх, ведь нАс нЕ было, вокрУг ёлки, уж Я знал, ведь Я это, напрОтив Ямы, пр'Отив вАс",
+                    "INDIVIDUAL_FORMS": [ "близ, сквозь, против, напротив, вокруг, ведь, уж" ],
+                    "RIGHT_CONTEXTS": [ "BOUNDARY_WORD" ],
+                    "TARGET": "DEVOICE"
+                }
+            ],
             "гкх": [
                 {
                     "COMMENT": "$67: гид, кит, рукИ, похИтить",
-                    "RIGHT_CONTEXTS": "Lие",
+                    "RIGHT_CONTEXTS": [ "ие" ],
                     "TARGET": "SOFTEN"
                 },
                 {
                     "COMMENT": "$67: год, гад; кум, кот; ход, хАта, пахУчий",
-                    "RIGHT_CONTEXTS": "NOT Lие",
+                    "RIGHT_CONTEXTS": [ "NOT ие" ],
                     "TARGET": "SELF"
                 }
             ],
-            "дт": {
-                "COMMENT": "$92: Оттиск, оттёр, отдЕл, поддЕл",
-                "RIGHT_CONTEXTS": [ "D_SOFT", "T_SOFT" ],
-                "TARGET": "SOFTEN + GEMINATE"
-
-            },
-            "жцш": {
-                "COMMENT": "$68: жил, жар, жук; цинк, цАпля; шил, шёлк, шум",
-                "TARGET": "SELF"
-            },
-            "з": {
-                "COMMENT": "$90: вознИк, воссЕл, раздЕл, разнёс, растЯнут, истёк, издЕржат, из селА, из дЕрева, бессИльный, бездЕльник, без нИх, через сИто",
-                "RIGHT_CONTEXTS": [ "D_SOFT", "N_SOFT", "S_SOFT", "T_SOFT" ],
-                "MORPHEME": [ "воз-", "раз-", "роз-", "из-", "без-", "через-", "чрез-" ],
-                "TARGET": "SOFTEN",
-                "STRENGTH": "RECOMMENDED"
-            },
-            "зж + бвгд": {
-                "COMMENT": "$81: визг, лязг, мозг, дрязг; борОзд, гнёзд, звёзд, пОезд, горАзд, гроздь, груздь, гвоздь; изб; надЕжд, невЕжд; язв, трезв, резв",
-                "RIGHT_CONTEXTS": "BOUNDARY_WORD",
-                "COMMENT_KB": "other consonants?",
-                "TARGET": "DEVOICE + DEVOICE"
-            },
-            "зс": {
-                "COMMENT": "$91: слёт, слЮни, слИвы, слизь, Ясли, маслИны, спаслИ, злить, кОзлик, злЮка, разлИть, через лЕс",
-                "RIGHT_CONTEXTS": "Lл",
-                "TARGET": "SOFTEN",
-                "STRENGTH": "VARIATION"
-            },
-            "с": {
-                "COMMENT": "$89: стирАть, стёр, стЯнут, снял, снёс, сдирАть, сдёрнуть, с тёсом, с сестрОй, с зимЫ, с дЕдом, с ним",
-                "RIGHT_CONTEXTS": [ "D_SOFT", "N_SOFT", "S_SOFT", "T_SOFT" ],
-                "MORPHEME": "Lс",
-                "TARGET": "SOFTEN"
-            },
-            "сз": {
-                "COMMENT": "$88: стих, пустИть, стёк, лесть, часть; здесь, гвОзди, грУзди; в мАссе, в кАссе, на трАссе; снег, соснЯк, уснИ, воскрЕсник; дразнИть, мазнЯ, кузнЕц, казнь, болЕзнь",
-                "RIGHT_CONTEXTS": [ "D_SOFT", "N_SOFT", "S_SOFT", "T_SOFT" ],
-                "MORPHEME": [ "ROOT", "ROOT_AUSLAUT" ],
-                "TARGET": "SOFTEN"
-            },
-            "VOICED": {
-                "COMMENT": "$82: пруд тот, пруд Этот, пруд такОй; озЯб он, продрОг он, морОз удАрил, кровь идёт, снег идёт, слов Этих; гОрод Ростов, плодОв рАзных, моркОвь растёт; здорОв ли ты, рожь ли Это, в глубь лЕса, нарЕжь лимОн, не загрЫз ли волк",
-                "RIGHT_CONTEXTS": [ "VOICELESS", "VOWEL + NOT BOUNDARY_SYNTAGM", "Lвйлмнр + NOT BOUNDARY_SYNTAGM" ],
-                "TARGET": "DEVOICE"
-            },
-            "VOICELESS": {
-                "COMMENT": "$86: прОсьба, косьбА, сбыть, сбыт, сгорЕл, с горЫ, сзАди, молотьбА, отгадАть, Отбыл, отдалА, тОт же, к женЕ, тАкже, вокзАл, анекдОт, экзАмен, к горЕ",
-                "RIGHT_CONTEXTS": [ "Lбгджз" ],
-                "TARGET": "VOICE"
-            }
+            "дт": [
+                {
+                    "COMMENT": "$92: Оттиск, оттёр, отдЕл, поддЕл",
+                    "RIGHT_CONTEXTS": [ "D_SOFT", "T_SOFT" ],
+                    "TARGET": "SOFTEN + GEMINATE"
+                }
+            ],
+            "жцш": [
+                {
+                    "COMMENT": "$68: жил, жар, жук; цинк, цАпля; шил, шёлк, шум",
+                    "TARGET": "SELF"
+                }
+            ],
+            "з": [
+                {
+                    "COMMENT": "$90: вознИк, воссЕл, раздЕл, разнёс, растЯнут, истёк, издЕржат, из селА, из дЕрева, бессИльный, бездЕльник, без нИх, через сИто",
+                    "RIGHT_CONTEXTS": [ "D_SOFT", "N_SOFT", "S_SOFT", "T_SOFT" ],
+                    "MORPHEMES": [ "воз-", "раз-", "роз-", "из-", "без-", "через-", "чрез-" ],
+                    "TARGET": "SOFTEN",
+                    "STRENGTH": "RECOMMENDED"
+                }
+            ],
+            "зж + бвгд": [
+                {
+                    "COMMENT": "$81: визг, лязг, мозг, дрязг; борОзд, гнёзд, звёзд, пОезд, горАзд, гроздь, груздь, гвоздь; изб; надЕжд, невЕжд; язв, трезв, резв",
+                    "RIGHT_CONTEXTS": [ "BOUNDARY_WORD" ],
+                    "COMMENT_KB": "other consonants?",
+                    "TARGET": "DEVOICE + DEVOICE"
+                }
+            ],
+            "зс": [
+                {
+                    "COMMENT": "$91: слёт, слЮни, слИвы, слизь, Ясли, маслИны, спаслИ, злить, кОзлик, злЮка, разлИть, через лЕс",
+                    "RIGHT_CONTEXTS": [ "л" ],
+                    "TARGET": "SOFTEN",
+                    "STRENGTH": "VARIATION"
+                }
+            ],
+            "с": [
+                {
+                    "COMMENT": "$89: стирАть, стёр, стЯнут, снял, снёс, сдирАть, сдёрнуть, с тёсом, с сестрОй, с зимЫ, с дЕдом, с ним",
+                    "RIGHT_CONTEXTS": [ "D_SOFT", "N_SOFT", "S_SOFT", "T_SOFT" ],
+                    "MORPHEMES": [ "с" ],
+                    "TARGET": "SOFTEN"
+                }
+            ],
+            "сз": [
+                {
+                    "COMMENT": "$88: стих, пустИть, стёк, лесть, часть; здесь, гвОзди, грУзди; в мАссе, в кАссе, на трАссе; снег, соснЯк, уснИ, воскрЕсник; дразнИть, мазнЯ, кузнЕц, казнь, болЕзнь",
+                    "RIGHT_CONTEXTS": [ "D_SOFT", "N_SOFT", "S_SOFT", "T_SOFT" ],
+                    "MORPHEMES": [ "ROOT", "ROOT_AUSLAUT" ],
+                    "TARGET": "SOFTEN"
+                }
+            ],
+            "VOICED": [
+                {
+                    "COMMENT": "$82: пруд тот, пруд Этот, пруд такОй; озЯб он, продрОг он, морОз удАрил, кровь идёт, снег идёт, слов Этих; гОрод Ростов, плодОв рАзных, моркОвь растёт; здорОв ли ты, рожь ли Это, в глубь лЕса, нарЕжь лимОн, не загрЫз ли волк",
+                    "RIGHT_CONTEXTS": [ "VOICELESS", "VOWEL + NOT BOUNDARY_SYNTAGM", "вйлмнр + NOT BOUNDARY_SYNTAGM" ],
+                    "TARGET": "DEVOICE"
+                }
+            ],
+            "VOICELESS": [
+                {
+                    "COMMENT": "$86: прОсьба, косьбА, сбыть, сбыт, сгорЕл, с горЫ, сзАди, молотьбА, отгадАть, Отбыл, отдалА, тОт же, к женЕ, тАкже, вокзАл, анекдОт, экзАмен, к горЕ",
+                    "RIGHT_CONTEXTS": [ "бгджз" ],
+                    "TARGET": "VOICE"
+                }
+            ]
         }
 }
