@@ -22,7 +22,7 @@ extern "C"
 
 int main()
 {
-    CEString sDbPath(L"C:/git-repos/Zal-Windows/ZalData/ZalData_05_14_2020_Pasternak.db3");
+    CEString sDbPath(L"C:/git-repos/Zal-Windows/ZalData/ZalData_06_07_2020_Pasternak.db3");
     CEString sSourceTextPath(L"C:/git-repos/Zal-Windows/ZalData/Pasternak_05_2020.txt");
 
     IDictionary* pDictionary = nullptr;
