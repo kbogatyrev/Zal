@@ -81,7 +81,6 @@ namespace Hlib
         CEString sAltMainSymbol;
         ET_Aspect eAspect;
         CEString sInflectionType;
-        CEString sPartOfSpeech;
         ET_PartOfSpeech ePartOfSpeech;
         CEString sComment;
         CEString sAltMainSymbolComment;
