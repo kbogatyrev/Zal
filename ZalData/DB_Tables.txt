@@ -84,6 +84,10 @@ CREATE TABLE tact_group (id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word
 CREATE TABLE word_to_tact_group (id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY (word_to_wordform_id) REFERENCES word_to_wordform(id));
 
 -------------------
+-- needed for merging edited DB with a newly generated DB
+CREATE TABLE lexeme_hashes_changed (id INTEGER PRIMARY KEY ASC, old_hash TEXT, new_hash TEXT);
+
+-------------------
 
 CREATE INDEX idx_stems_select ON stems (stem_string);
 

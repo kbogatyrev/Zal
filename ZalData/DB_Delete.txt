@@ -39,3 +39,5 @@ DELETE FROM words_in_line;
 DELETE FROM lines_in_text;
 DELETE FROM text_metadata;
 DELETE FROM text;
+--
+DELETE FROM lexeme_hashes_changed;
