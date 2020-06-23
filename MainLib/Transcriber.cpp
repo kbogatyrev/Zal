@@ -28,7 +28,6 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             CEString sInputs;
             spDb->GetData(0, sInputs);
 
-
             CEString sStressType;
             spDb->GetData(1, sStressType);
 
@@ -69,3 +68,31 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
     return H_NO_ERROR;
 
 }       //  eLoadTranscriptionRules()
+
+ET_ReturnCode CTranscriber::eFormatInputs(const CEString& sSource)
+{
+    //
+    //  E.g., "a+a" --> "aa", "aa" --> vector of chars
+    //
+
+    if (sSource.uiFind(L"+") != ERelation::ecNotFound)
+    {
+
+    }
+    else
+    {
+        for (int iAt = 0; iAt < sSource.uiLength(); ++iAt)
+        {
+//            m_vecInputs
+        }
+    }
+
+
+    return H_NO_ERROR;
+}
+
+ET_ReturnCode CTranscriber::eFormatContexts(const CEString& sContext, EC_CONTEXT_TYPE eLeftOrRight)
+{
+
+    return H_NO_ERROR;
+}
