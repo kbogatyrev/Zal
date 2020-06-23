@@ -47,7 +47,7 @@ namespace Hlib
             bPastParticipleRestricted(false),
             bNoLongForms(false),
             bShortFormsIncomplete(false),
-            bNoPastParticiple(false),
+            bNoPassivePastParticiple(false),
             bFleetingVowel(false),
             iStemAugment(-1),
             bInflectedParts(false)
@@ -124,7 +124,7 @@ namespace Hlib
         bool bPastParticipleRestricted;
         bool bNoLongForms;
         bool bShortFormsIncomplete;
-        bool bNoPastParticiple;
+        bool bNoPassivePastParticiple;
         bool bFleetingVowel;
         int iStemAugment;
         bool bInflectedParts;
