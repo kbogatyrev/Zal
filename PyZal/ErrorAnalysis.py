@@ -24,4 +24,4 @@ if __name__== "__main__":
         for t in lstTuples:
             out_file.write(str(t[1]) + '\n')
 
-    print ("koko")
+    print ("Done.")
