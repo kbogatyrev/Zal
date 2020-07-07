@@ -52,6 +52,7 @@ namespace Hlib
         virtual ET_ReturnCode eSaveDescriptorInfo(ILexeme * pLexeme) = 0;
         virtual ET_ReturnCode eSaveCommonDeviation(ILexeme * pLexeme) = 0;
         virtual ET_ReturnCode eSaveInflectionInfo(ILexeme * pLexeme) = 0;
+        virtual ET_ReturnCode eSaveMissingFormHashes(ILexeme* pLexeme) = 0;
 
 //        virtual ET_ReturnCode eSaveLexeme(ILexeme * pL) = 0;
     };

@@ -123,6 +123,9 @@ namespace Hlib
         virtual void SetHasIrregularVariants(bool) = 0;
         virtual bool bHasDeficiencies() = 0;
         virtual void SetHasDeficiencies(bool) = 0;
+        virtual void SetMissingForm(const CEString& sGramHash) = 0;
+        virtual ET_ReturnCode eGetFirstMissingFormHash(CEString& sHash) = 0;
+        virtual ET_ReturnCode eGetNextMissingFormHash(CEString& sHash) = 0;
         virtual CEString sRestrictedForms() = 0;
         virtual void SetRestrictedForms(const CEString&) = 0;
         virtual CEString sContexts() = 0;
