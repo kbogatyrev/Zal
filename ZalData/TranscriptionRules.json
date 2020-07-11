@@ -140,7 +140,7 @@
                     "NUMBER": "NUM_SG",
                     "CASE": "CASE_DAT",
                     "GENDER": "GENDER_F",
-                    "TARGET": "UNSTRESSED_Y_E"
+                    "TARGET": "UNSTRESSED_YE"
                 },
                 {
                     "COMMENT": "$49: тИше, тОньше, мЕньше, сУше, вЫше, блИже",
@@ -148,7 +148,7 @@
                     "LEFT_CONTEXTS": [ "шжц" ],
                     "MORPHEMES": [ "ENDING" ],
                     "SUBPARADIGM": "SUBPARADIGM_COMPARATIVE",
-                    "TARGET": "UNSTRESSED_Y_E"
+                    "TARGET": "UNSTRESSED_YE"
                 },
                 {
                     "COMMENT": "$55: вЫберу, вЫлезу, вЫчет, пАлец; олЕней, сосЕдей; кАплей, бАней, тУчей, рОщей; армЯне, горожАне; в дОме, в пОле, на сЕне; к рабОте, в бАне, в рОще; красИвее, угрЮмее; дешЕвле, богАче; стАнешь, бУдешь, плАчешь; стАнет, бУдет, плАчет; стАнем, бУдем, плАчем; стАнете, бУдете, плАчете; стАньте, бУдьте, плАчьте, купИте, кладИте",
@@ -491,7 +491,7 @@
                 {
                     "COMMENT": "$92: Оттиск, оттёр, отдЕл, поддЕл",
                     "RIGHT_CONTEXTS": [ "D_SOFT", "T_SOFT" ],
-                    "TARGET": "SOFTEN + GEMINATE"
+                    "TARGET": "SOFTEN + GEMINATE" 
                 }
             ],
             "жцш": [
