@@ -146,6 +146,14 @@ public:
     ET_ReturnCode eSelectPastAdvAugmentedEndings(ET_Subparadigm, bool bIsVariant);
 };
 
+class CComparativeEndings : public CEndings
+{
+public:
+    CComparativeEndings(CLexeme* pLexeme);
+
+    ET_ReturnCode eSelect(bool bVelarStem, bool bIsVariant);
+};
+
 } // namespace Hlib
 
 #endif // ENDINGS_H_INCLUDED
