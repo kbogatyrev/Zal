@@ -16,7 +16,6 @@ class Headword:
 
     def __eq__(self, other):
         if (self.hw_source == other.hw_source and
-        self.hw_id == other.hw_id and
         self.hw_comment == other.hw_comment and
         self.hw_variant_comment == other.hw_variant_comment and
         self.hw_plural_of == other.hw_plural_of and
@@ -257,7 +256,7 @@ if __name__=="__main__":
     db_connection_L = sqlite3.connect('../ZalData/ZalData_07_23_2020_TEST.db3')
     db_cursor_L = db_connection_L.cursor()
 
-    db_connection_R = sqlite3.connect ('../ZalData/ZalData_07_20_2020_BAD_TEST.db3')
+    db_connection_R = sqlite3.connect ('../ZalData/ZalData_07_20_2020_BAD.db3')
     db_cursor_R = db_connection_R.cursor()
 
     db_cursor_L.execute(query)
@@ -266,14 +265,16 @@ if __name__=="__main__":
 
     db_cursor_R.execute(query)
     result_rows_R = db_cursor_R.fetchall()
-    lstH_R, lstD_R, lstI_R = get_rows(result_rows_L)
+    lstH_R, lstD_R, lstI_R = get_rows(result_rows_R)
 
     current_R = 0
     total_L = len(result_rows_L)
 
+    bad_entries = 0
+
     for current_L in range(len(lstH_L)):
         found = False
-        if lstH_L[current_L]== lstH_R[current_R] and lstD_L[current_L] == lstD_R[current_R] and lstI_L[current_L] == lstI_R[current_R]:
+        if lstH_L[current_L] == lstH_R[current_R] and lstD_L[current_L] == lstD_R[current_R] and lstI_L[current_L] == lstI_R[current_R]:
             current_R += 1
             found = True
             continue
@@ -295,7 +296,10 @@ if __name__=="__main__":
         if not found:
             print ('Error: {0}, entry ID = {1}'.format(lstH_L[current_L].hw_source, str(lstH_L[current_L].hw_source_entry_id)))
             current_R = current_L + 1
+            bad_entries += 1
         else:
             current_R += 1
     print ('++++++ current_L {0}, current_R {1}'.format(current_L, current_R))
     print ('*** total (L) {}'.format (len(result_rows_L)))
+    print ('*** bad {}'.format(bad_entries))
+
