@@ -54,6 +54,7 @@ namespace Hlib
         {
                 sSourceForm.SetVowels(g_szRusVowels);
                 sGraphicStem.SetVowels(g_szRusVowels);
+                sGraphicStem2.SetVowels(g_szRusVowels);
         }
 
         long long llDescriptorId;
@@ -72,6 +73,7 @@ namespace Hlib
         CEString sBackRef;
         long long llSourceEntryId;
         CEString sGraphicStem;
+        CEString sGraphicStem2;
         bool bIsVariant;
         CEString sMainSymbol;
         bool bIsPluralOf;
