@@ -25,6 +25,8 @@ namespace Hlib
         virtual ET_MainSymbol eMainSymbolToEnum(const CEString&) = 0;
         virtual CEString sGraphicStem() = 0;
         virtual void SetGraphicStem (const CEString&) = 0;
+        virtual CEString sGraphicStem2() = 0;
+        virtual void SetGraphicStem2(const CEString&) = 0;
         virtual bool bHasIrregularForms() = 0;
         virtual void SetHasIrregularForms(bool) = 0;
         virtual bool bHasSecondaryStress() = 0;
@@ -165,6 +167,10 @@ namespace Hlib
         virtual CEString sInfStem() = 0;
         virtual void SetInfStem(const CEString&) = 0;
         virtual ET_ReturnCode eAddCommonDeviation(int iValue, bool bIsOptional) = 0;
+        virtual int iInflectedParts() = 0;
+        virtual void SetInflectedParts(int) = 0;
+        virtual bool bIsSecondPart() = 0;
+        virtual void SetIsSecondPart(bool) = 0;
 
         virtual bool bFindCommonDeviation(int iNum, bool& bIsOptional) = 0;
         virtual bool bFindStandardAlternation(const CEString& sKey, CEString& sValue) = 0;

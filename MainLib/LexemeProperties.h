@@ -50,7 +50,8 @@ namespace Hlib
             bNoPassivePastParticiple(false),
             bFleetingVowel(false),
             iStemAugment(-1),
-            bInflectedParts(false)
+            iInflectedParts(-1),
+            bIsSecondPart(false)
         {
                 sSourceForm.SetVowels(g_szRusVowels);
                 sGraphicStem.SetVowels(g_szRusVowels);
@@ -129,7 +130,8 @@ namespace Hlib
         bool bNoPassivePastParticiple;
         bool bFleetingVowel;
         int iStemAugment;
-        bool bInflectedParts;
+        int iInflectedParts;
+        bool bIsSecondPart;
 
         //
         // Verb stems & infinitive:
