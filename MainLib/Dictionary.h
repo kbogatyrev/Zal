@@ -16,8 +16,28 @@ class CParser;
 class CAnalytics;
 class CVerifier;
 
+class CLexemeEnumerator : public ILexemeEnumerator
+{
+public:
+    CLexemeEnumerator() = delete;
+    CLexemeEnumerator(CDictionary * dict) : m_pDictionary(dict) {}
+
+    virtual ET_ReturnCode eReset();
+
+    virtual ET_ReturnCode eGetFirstLexeme(ILexeme*& pLexemeItf);
+    virtual ET_ReturnCode eGetNextLexeme(ILexeme*& pLexemeItf);
+
+    virtual ET_ReturnCode eGetFirstLexeme(CLexeme*& pLexeme);
+    virtual ET_ReturnCode eGetNextLexeme(CLexeme*& pLexeme);
+
+private:
+    vector<CLexeme*>::iterator m_itCurrentLexeme;
+    CDictionary * m_pDictionary;
+};
+
 class CDictionary : public IDictionary
 {
+    friend class CLexemeEnumerator;
 
 public:
     CDictionary();
@@ -36,15 +56,18 @@ public:
     virtual ET_ReturnCode eGenerateFormsForSelectedLexemes();
     virtual ET_ReturnCode eCountLexemes(int64_t& iLexemes);
 
-    virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexemeItf);
-    virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexemeItf);
+//    virtual ET_ReturnCode eGetFirstLexeme(ILexeme *& pLexemeItf);
+//    virtual ET_ReturnCode eGetNextLexeme(ILexeme *& pLexemeItf);
 
     virtual int nLexemesFound();
-    virtual ET_ReturnCode eGetFirstLexeme(CLexeme *& pLexeme);
-    virtual ET_ReturnCode eGetNextLexeme(CLexeme *& pLexeme);
+//    virtual ET_ReturnCode eGetFirstLexeme(CLexeme *& pLexeme);
+//    virtual ET_ReturnCode eGetNextLexeme(CLexeme *& pLexeme);
 
     virtual void Clear();
     virtual ET_ReturnCode Clear(ILexeme *);
+
+    virtual ET_ReturnCode eCreateLexemeEnumerator(ILexemeEnumerator*&);
+    virtual void DeleteLexemeEnumerator(ILexemeEnumerator*);
 
     virtual ET_ReturnCode eGetParser(IParser *& p);
     virtual ET_ReturnCode eGetAnalytics(IAnalytics*& p);

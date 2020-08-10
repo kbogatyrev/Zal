@@ -15,6 +15,14 @@ namespace Hlib
 {
     typedef void(__stdcall* PROGRESS_CALLBACK_CLR) (int iPercentDone, bool bOperationComplete);
     typedef void(__cdecl* PROGRESS_CALLBACK_PYTHON) (int iPercentDone, bool bOperationComplete, int iRecord, double dDuration);
+
+    struct  ILexemeEnumerator
+    {
+        virtual ET_ReturnCode eReset() = 0;
+
+        virtual ET_ReturnCode eGetFirstLexeme(ILexeme*& pLexemeItf) = 0;
+        virtual ET_ReturnCode eGetNextLexeme(ILexeme*& pLexemeItf) = 0;
+    };
  
     struct IDictionary
     {
@@ -32,11 +40,12 @@ namespace Hlib
         virtual ET_ReturnCode eCountLexemes (int64_t& iLexemes) = 0;
 
         virtual int nLexemesFound() = 0;
-        virtual ET_ReturnCode eGetFirstLexeme (ILexeme *& pLexeme) = 0;
-        virtual ET_ReturnCode eGetNextLexeme (ILexeme *& pLexeme) = 0;
 
         virtual void Clear() = 0;
         virtual ET_ReturnCode Clear(ILexeme *) = 0;
+
+        virtual ET_ReturnCode eCreateLexemeEnumerator(ILexemeEnumerator*&) = 0;
+        virtual void DeleteLexemeEnumerator(ILexemeEnumerator *) = 0;
 
         virtual ET_ReturnCode eGetParser(IParser *& p) = 0;
         virtual ET_ReturnCode eGetAnalytics(IAnalytics*& p) = 0;
