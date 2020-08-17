@@ -4,7 +4,7 @@ CREATE TABLE homonyms (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, homonym_
 
 CREATE TABLE stress (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, stress_position INTEGER, is_primary BOOLEAN, is_variant BOOLEAN, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (headword_id) REFERENCES headword (id));
 
-CREATE TABLE descriptor (id INTEGER PRIMARY KEY ASC, word_id INTEGER, graphic_stem TEXT, graphic_stem2 TEXT, is_variant BOOLEAN DEFAULT (0), main_symbol TEXT, part_of_speech INTEGER, is_plural_of BOOLEAN DEFAULT (0), is_intransitive BOOLEAN DEFAULT (0), is_reflexive BOOLEAN DEFAULT(0), main_symbol_plural_of TEXT, alt_main_symbol TEXT, inflection_type TEXT, comment TEXT, alt_main_symbol_comment TEXT, alt_inflection_comment TEXT, verb_stem_alternation TEXT, part_past_pass_zhd BOOLEAN DEFAULT (0), section INTEGER, no_comparative BOOLEAN DEFAULT (0), assumed_forms BOOLEAN DEFAULT (0), yo_alternation BOOLEAN DEFAULT (0), o_alternation BOOLEAN DEFAULT (0), second_genitive BOOLEAN DEFAULT (0), is_impersonal BOOLEAN DEFAULT (0), is_iterative BOOLEAN DEFAULT (0), has_aspect_pair BOOLEAN DEFAULT (0), has_difficulties BOOLEAN DEFAULT (0), difficult_and_missing_forms TEXT, has_irregular_forms BOOLEAN DEFAULT (0), irregular_forms_lead_comment TEXT, has_deficiencies BOOLEAN DEFAULT (0), restricted_contexts TEXT, contexts TEXT, cognate TEXT, trailing_comment TEXT, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (word_id) REFERENCES headword (id));
+CREATE TABLE descriptor (id INTEGER PRIMARY KEY ASC, word_id INTEGER, graphic_stem TEXT, graphic_stem2 TEXT, is_variant BOOLEAN DEFAULT (0), main_symbol TEXT, part_of_speech INTEGER, is_plural_of BOOLEAN DEFAULT (0), is_intransitive BOOLEAN DEFAULT (0), is_reflexive BOOLEAN DEFAULT(0), main_symbol_plural_of TEXT, alt_main_symbol TEXT, inflection_type TEXT, comment TEXT, alt_main_symbol_comment TEXT, alt_inflection_comment TEXT, verb_stem_alternation TEXT, part_past_pass_zhd BOOLEAN DEFAULT (0), section INTEGER, no_comparative BOOLEAN DEFAULT (0), assumed_forms BOOLEAN DEFAULT (0), yo_alternation BOOLEAN DEFAULT (0), o_alternation BOOLEAN DEFAULT (0), second_genitive BOOLEAN DEFAULT (0), is_impersonal BOOLEAN DEFAULT (0), is_iterative BOOLEAN DEFAULT (0), has_aspect_pair BOOLEAN DEFAULT (0), has_difficulties BOOLEAN DEFAULT (0), has_missing_forms BOOLEAN DEFAULT (0), has_irregular_forms BOOLEAN DEFAULT (0), irregular_forms_lead_comment TEXT, restricted_contexts TEXT, contexts TEXT, cognate TEXT, trailing_comment TEXT, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (word_id) REFERENCES headword (id));
 
 CREATE TABLE second_locative (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, is_optional BOOLEAN DEFAULT (0), preposition TEXT, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
@@ -12,13 +12,13 @@ CREATE TABLE second_genitive (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER,
 
 CREATE TABLE inflection (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, is_primary BOOLEAN DEFAULT (0), inflection_type INTEGER, accent_type1 INTEGER, accent_type2 INTEGER, short_form_restrictions BOOLEAN DEAFULT (0), past_part_restrictions BOOLEAN DEAFULT (0), no_short_form BOOLEAN DEAFULT (0), no_past_part BOOLEAN DEAFULT (0), fleeting_vowel BOOLEAN DEFAULT (0), stem_augment BOOLEAN DEFAULT (0), inflected_parts INTEGER DEFAULT (0), is_second_part BOOLEAN DEFAULT(0), is_edited BOOLEAN DEFAULT(0));
 
+CREATE TABLE difficult_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, content TEXT);
+
+CREATE TABLE missing_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, content TEXT);
+
 CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash TEXT, wordform TEXT, is_alternative BOOLEAN DEFAULT (0), lead_comment TEXT, trailing_comment TEXT, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
 CREATE TABLE irregular_stress (id INTEGER PRIMARY KEY ASC, form_id INTEGER, position INTEGER, is_primary BOOLEAN, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (form_id) REFERENCES irregular_forms (id));
-
-CREATE TABLE difficulties (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash TEXT, wordform TEXT, type INTEGER, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
-
-CREATE TABLE nonexistent_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash TEXT, is_edited BOOLEAN DEFAULT (0), FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
 
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending_string TEXT);
 
@@ -112,7 +112,7 @@ CREATE INDEX idx_inflection_descr ON inflection (descriptor_id);
 CREATE INDEX idx_stress_id ON stress (id, headword_id);
 CREATE INDEX idx_stress_hw ON stress (headword_id);
 CREATE INDEX idx_test_data_id ON test_data (id, lexeme_id);
-CREATE INDEX idx_test_data_stress ON test_data_stress (id, lexeme_id);
+CREATE INDEX idx_test_data_stress ON test_data_stress (id, test_data_id);
 CREATE INDEX idx_lexeme_hash_to_descriptor ON lexeme_hash_to_descriptor (lexeme_hash);
 CREATE INDEX idx_stem_string ON stems (stem_string);
 
