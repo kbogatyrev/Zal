@@ -36,9 +36,10 @@ namespace Hlib
             bHasAspectPair(false),
             iAspectPairType(0),
             iAltAspectPairType(0),
+            bHasDifficultForms(false),
+            bHasMissingForms(false),
             bHasIrregularForms(false),
             bHasIrregularVariants(false),
-            bHasDeficiencies(false),
             bPrimaryInflectionGroup(false),
             iType(-1),
             eAccentType1(AT_UNDEFINED),
@@ -107,11 +108,11 @@ namespace Hlib
         CEString sAspectPairData;
         CEString sAltAspectPairData;
         CEString sAltAspectPairComment;
-        CEString sQuestionableForms;
+        bool bHasDifficultForms;
+        bool bHasMissingForms;
         bool bHasIrregularForms;
         CEString sIrregularFormsLeadComment;
         bool bHasIrregularVariants;    // true if any of irreg. forms alternates with regular
-        bool bHasDeficiencies;
         CEString sRestrictedForms;
         CEString sContexts;
         CEString sCognate;
