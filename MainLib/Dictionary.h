@@ -83,7 +83,7 @@ public:
     virtual ET_ReturnCode eSaveDescriptorInfo(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveCommonDeviation(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveInflectionInfo(ILexeme * pLexeme);
-    virtual ET_ReturnCode eSaveMissingFormHashes(ILexeme * pLexeme);
+//    virtual ET_ReturnCode eSaveMissingFormHashes(ILexeme * pLexeme);
 //    virtual ET_ReturnCode eSaveLexeme(ILexeme * pLexeme);
 
     virtual ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR, PROGRESS_CALLBACK_PYTHON=nullptr);
@@ -117,6 +117,8 @@ private:
     ET_ReturnCode eGetWordIdFromLemexeId(__int64 llLexemeId, __int64& llWordId);
 
     ET_ReturnCode eMarkLexemeAsEdited(ILexeme * pLexeme);
+
+    ET_ReturnCode eDifficultFormLabelToGramHash(const CEString sLabel);
 
     void HandleDbException(CException&);
 };
