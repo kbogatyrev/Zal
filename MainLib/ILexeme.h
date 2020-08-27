@@ -191,7 +191,8 @@ namespace Hlib
         virtual int iFormCount(CEString sHash) = 0;
         virtual bool bHasCommonDeviation(int iCd) = 0;
         virtual bool bDeviationOptional(int iCd) = 0;
-        virtual bool bIsFormDifficult(CEString sGramHash) = 0;
+        virtual ET_ReturnCode eFormExists(const CEString& hash) = 0;
+        virtual ET_ReturnCode eIsFormDifficult(CEString sGramHash) = 0;
         virtual bool bIsMultistressedCompound() = 0;
         virtual ET_ReturnCode eGetSourceFormWithStress(CEString& sSourceForm, bool bIsVariant=false) = 0;
         virtual ET_ReturnCode eGetFirstStemStressPos(int& iPos) = 0;
