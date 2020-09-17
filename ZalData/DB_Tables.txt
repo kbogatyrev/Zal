@@ -44,7 +44,7 @@ CREATE TABLE common_deviation (id INTEGER PRIMARY KEY ASC, inflection_id INTEGER
 
 CREATE TABLE aspect_pair (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, type INTEGER, data TEXT, is_variant BOOLEAN, comment TEXT, is_edited BOOLEAN DEFAULT (0));
 
-CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id TEXT, gram_hash INTEGER, wordform TEXT);
+CREATE TABLE test_data (id INTEGER PRIMARY KEY ASC, lexeme_id TEXT, gram_hash TEXT, wordform TEXT);
 
 CREATE TABLE test_data_stress (id INTEGER PRIMARY KEY ASC, test_data_id INTEGER, position INTEGER, is_primary BOOLEAN);
 
