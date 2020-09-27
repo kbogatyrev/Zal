@@ -192,8 +192,11 @@ namespace Hlib
         virtual bool bHasCommonDeviation(int iCd) = 0;
         virtual bool bDeviationOptional(int iCd) = 0;
         virtual ET_ReturnCode eFormExists(const CEString& hash) = 0;
+        virtual ET_ReturnCode eSetFormExists(const CEString& hash, bool bExists) = 0;
         virtual ET_ReturnCode eIsFormDifficult(const CEString& sGramHash) = 0;
+        virtual ET_ReturnCode eSetFormDifficult(const CEString& hash, bool bIsDifficult) = 0;
         virtual ET_ReturnCode eIsFormAssumed(const CEString& sGramHash) = 0;
+        virtual ET_ReturnCode eSetHasAssumedForms(bool bIsAssumed) = 0;
         virtual bool bIsMultistressedCompound() = 0;
         virtual ET_ReturnCode eGetSourceFormWithStress(CEString& sSourceForm, bool bIsVariant=false) = 0;
         virtual ET_ReturnCode eGetFirstStemStressPos(int& iPos) = 0;
