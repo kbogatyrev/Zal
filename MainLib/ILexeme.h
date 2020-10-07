@@ -176,6 +176,7 @@ namespace Hlib
         virtual ET_ReturnCode eGetStemStressPositions(const CEString& sLemma, vector<int>& vecPosition) = 0;
         virtual ET_ReturnCode eGetAlternatingPreverb(const CEString& sVerbForm, CEString& sPreverb, bool& bVoicing) = 0;
         virtual CEString sHash() = 0;
+        virtual CEString sParadigmHash() = 0;
         virtual ET_ReturnCode eWordFormFromHash(CEString sHash, int iAt, IWordForm *& pWf) = 0;
         virtual ET_ReturnCode eCreateWordForm(IWordForm *&) = 0;
         virtual ET_ReturnCode eRemoveWordForm(CEString sHash, int iAt) = 0;
