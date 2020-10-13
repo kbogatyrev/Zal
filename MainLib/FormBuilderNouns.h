@@ -33,7 +33,7 @@ protected:
                                   ET_Case eCase,                     // in
                                   ET_StressLocation& eStressType);   // out
 
-    ET_ReturnCode eHandleAccEnding (ET_Number, ET_Case&);
+    ET_ReturnCode eHandleAccEnding (ET_Number, ET_Case& eCase, ET_Case& eAltCase);
 
     ET_ReturnCode eGetStressPositions (const CEString& sStem,
                                        const CEString& sEnding,

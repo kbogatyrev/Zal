@@ -20,7 +20,7 @@ namespace Hlib
         virtual StLexemeProperties& stGetPropertiesForWriteAccess() = 0;
         virtual ET_Gender eInflectionTypeToGender() = 0;
         virtual ET_Gender eMainSymbolToGender() = 0;
-        virtual ET_Animacy eInflectionTypeToAnimacy() = 0;
+        virtual ET_Animacy eInflectionTypeToAnimacy(bool) = 0;
         virtual ET_Animacy eMainSymbolToAnimacy() = 0;
         virtual ET_MainSymbol eMainSymbolToEnum(const CEString&) = 0;
         virtual CEString sGraphicStem() = 0;
