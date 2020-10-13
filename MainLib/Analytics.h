@@ -4,16 +4,19 @@
 #include <set>
 #include <vector>
 #include <map>
+#include <memory>
 
 #include "Enums.h"
 #include "EString.h"
 #include "IAnalytics.h"
+#include "WordForm.h"
 
 namespace Hlib
 {
     class CSqlite;
     class CParser;
-    struct CWordForm;
+    class CTranscriber;
+//    struct CWordForm;
     class CEString;
 
     class CAnalytics : public IAnalytics
@@ -103,6 +106,7 @@ namespace Hlib
         virtual void ClearResults();
 
     private:
+        ET_ReturnCode eInit();
         ET_ReturnCode eParseMetadata(const CEString& sMetadata);
         ET_ReturnCode eRegisterText(const CEString& sTextName, const CEString sTextMetadata, const CEString& sText);
         ET_ReturnCode eParseWord(const CEString& sWord, const CEString& sLine, int iLine, int iNumInLine, int iWordsInLine, long long llLineDbKey);
@@ -123,6 +127,7 @@ namespace Hlib
     private:
         CSqlite* m_pDb;
         CParser* m_pParser;
+        unique_ptr<CTranscriber> m_spTranscriber;
         CEString m_sTextName;
         CEString m_sTextTitle;
         CEString m_sTextMetaData;

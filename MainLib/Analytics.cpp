@@ -4,18 +4,30 @@
 #include "SqliteWrapper.h"
 #include "WordForm.h"
 #include "Parser.h"
+#include "Transcriber.h"
 #include "Analytics.h"
 
 using namespace Hlib;
 
 CAnalytics::CAnalytics() : m_pDb(nullptr), m_llTextDbId(-1) 
-{};
+{
+    eInit();
+};
 
 CAnalytics::CAnalytics(CSqlite* pDb, CParser* pParser) : m_pDb(pDb), m_pParser(pParser), m_llTextDbId(-1)
-{}
+{
+    eInit();
+}
 
 CAnalytics::~CAnalytics()
 {}
+
+ET_ReturnCode CAnalytics::eInit()
+{
+    m_spTranscriber = make_unique<CTranscriber>(m_pDb);
+    ET_ReturnCode eRet = m_spTranscriber->eLoadTranscriptionRules();
+    return eRet;
+}
 
 ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& sMetadata, const CEString& sText, long long& llParsedTextId)
 {

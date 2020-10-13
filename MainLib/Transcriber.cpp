@@ -5,15 +5,22 @@
 
 using namespace Hlib;
 
-CTranscriber::CTranscriber(const CEString& sDbPath) : m_sDbPath(sDbPath) {}
+CTranscriber::CTranscriber(CSqlite* pCSqlite) : m_pSqlite(pCSqlite)
+{}
 
 ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 {
+    if (nullptr == m_pSqlite)
+    {
+        ERROR_LOG(L"Database not available.");
+        return H_ERROR_DB;
+    }
+
     ET_ReturnCode eRet = H_NO_ERROR;
 
     static const CEString sQuery
     (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.right_contexts, tr.morpheme_type,  \
-    tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target,  FROM transcription_inputs \
+    tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
     AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
 
     try
