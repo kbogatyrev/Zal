@@ -118,6 +118,8 @@ namespace Hlib
         CEString sCognate;
         CEString sTrailingComment;
 
+        bool bHasPresPassParticiple;
+
         // From inflection table:
         int iInflectionId;
         bool bPrimaryInflectionGroup;
