@@ -95,7 +95,7 @@ private:
     CEString m_sDbPath;
     shared_ptr<CSqlite> m_spDb;
     shared_ptr<CParser> m_spParser;
-    CAnalytics* m_pAnalytics;
+    shared_ptr<CAnalytics> m_spAnalytics;
     shared_ptr<CVerifier> m_spVerifier;
     vector<CLexeme *> m_vecLexemes;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
