@@ -69,7 +69,7 @@ public:
     virtual ET_ReturnCode eCreateLexemeEnumerator(ILexemeEnumerator*&);
     virtual void DeleteLexemeEnumerator(ILexemeEnumerator*);
 
-    virtual ET_ReturnCode eGetParser(IParser *& p);
+    virtual ET_ReturnCode eGetParser(shared_ptr<IParser>& p);
     virtual ET_ReturnCode eGetAnalytics(IAnalytics*& p);
     virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
 
@@ -89,12 +89,12 @@ public:
     virtual ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR, PROGRESS_CALLBACK_PYTHON=nullptr);
 
     // Not part ot interface:
-    CSqlite * pGetDbHandle();
+    shared_ptr<CSqlite> spGetDbHandle();
 
 private:
     CEString m_sDbPath;
-    CSqlite * m_pDb;
-    CParser * m_pParser;
+    shared_ptr<CSqlite> m_spDb;
+    shared_ptr<CParser> m_spParser;
     CAnalytics* m_pAnalytics;
     CVerifier * m_pVerifier;
     vector<CLexeme *> m_vecLexemes;

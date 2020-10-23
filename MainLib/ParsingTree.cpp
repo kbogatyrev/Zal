@@ -8,14 +8,14 @@ using namespace Hlib;
 static CEString sSelectBase
 (L"SELECT DISTINCT d.id, e.ending_string, number, case_value, stress FROM endings AS e INNER JOIN ending_data AS d ON (e.id = d.ending_id)");
 
-CParsingTree::CParsingTree(CSqlite * pDb)
+CParsingTree::CParsingTree(shared_ptr<CSqlite> spDb)
 {
-    if (NULL == pDb)
+    if (nullptr == spDb)
     {
         throw CException(H_ERROR_POINTER, L"Database handle not initialized.");
     }
 
-    ET_ReturnCode rc = eLoad(pDb);
+    ET_ReturnCode rc = eLoad(spDb);
     if (rc != H_NO_ERROR)
     {
         throw CException(H_ERROR_GENERAL, L"Unable to initalize parsing tree.");
@@ -108,12 +108,12 @@ ET_ReturnCode CParsingTree::eIsEmptyEnding(__int64 llEndingId)
     }
 }
 
-ET_ReturnCode CParsingTree::eLoad(CSqlite * pDb)
+ET_ReturnCode CParsingTree::eLoad(shared_ptr<CSqlite> spDb)
 {
     // ся/сь!!!!!!
     // common dev????
 
-    if (NULL == pDb)
+    if (nullptr == spDb)
     {
         return H_ERROR_POINTER;
     }
@@ -124,17 +124,17 @@ ET_ReturnCode CParsingTree::eLoad(CSqlite * pDb)
 
     try
     {
-        pDb->PrepareForSelect(sSelectBase);
-        while (pDb->bGetRow())
+        spDb->PrepareForSelect(sSelectBase);
+        while (spDb->bGetRow())
         {
             CEString sEnding;
             __int64 llDbKey = 0;
-            pDb->GetData(0, (__int64)llDbKey);
-            pDb->GetData(1, sEnding);
+            spDb->GetData(0, (__int64)llDbKey);
+            spDb->GetData(1, sEnding);
             m_mapSortedEndingsList[sEnding].push_back(llDbKey);
             m_setEndingStrings.insert(sEnding);
         }
-        pDb->Finalize();
+        spDb->Finalize();
     }
     catch (...)
     {
@@ -142,18 +142,18 @@ ET_ReturnCode CParsingTree::eLoad(CSqlite * pDb)
         try
         {
             CEString sError;
-            pDb->GetLastError(sError);
+            spDb->GetLastError(sError);
             sMsg = L"DB error: ";
             sMsg += sError;
             sMsg += L"; code = ";
-            sMsg += CEString::sToString(pDb->iGetLastError());
+            sMsg += CEString::sToString(spDb->iGetLastError());
         }
         catch (...)
         {
             sMsg = L"Apparent DB error ";
         }
 
-        sMsg += CEString::sToString(pDb->iGetLastError());
+        sMsg += CEString::sToString(spDb->iGetLastError());
         ERROR_LOG(sMsg);
         return H_ERROR_DB;
     }
