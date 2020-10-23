@@ -5,12 +5,12 @@
 
 using namespace Hlib;
 
-CTranscriber::CTranscriber(CSqlite* pCSqlite) : m_pSqlite(pCSqlite)
+CTranscriber::CTranscriber(shared_ptr<CSqlite> spCSqlite) : m_spDb(spCSqlite)
 {}
 
 ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 {
-    if (nullptr == m_pSqlite)
+    if (nullptr == m_spDb)
     {
         ERROR_LOG(L"Database not available.");
         return H_ERROR_DB;
@@ -25,17 +25,11 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
     try
     {
-        unique_ptr<CSqlite> spDb = make_unique<CSqlite>();
-        if (!spDb)
-        {
-            return H_ERROR_DB;
-        }
-
-        auto uiHandle = spDb->uiPrepareForSelect(sQuery);
-        while (spDb->bGetRow())
+        m_spDb->PrepareForSelect(sQuery);
+        while (m_spDb->bGetRow())
         {
             CEString sInputs;
-            spDb->GetData(0, sInputs);
+            m_spDb->GetData(0, sInputs);
 
             PairInput pairInputs;
             eRet = eFormatInputs(sInputs, pairInputs);
@@ -44,7 +38,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Stress (a string)
             CEString sStressType;
-            spDb->GetData(1, sStressType);
+            m_spDb->GetData(1, sStressType);
             auto itStressType = m_mapStringToStressRelation.find(sStressType);
             if (m_mapStringToStressRelation.end() == itStressType)
             {
@@ -55,127 +49,163 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Left contexts (an array of strings)
             CEString sLeftContexts;
-            spDb->GetData(2, sLeftContexts);
-            vector<CEString> vecLeftContexts;
-            eRet = eSplitSource(sLeftContexts, vecLeftContexts);
-            if (eRet != H_NO_ERROR)
+            m_spDb->GetData(2, sLeftContexts);
+            if (!sLeftContexts.bIsEmpty())
             {
-                ERROR_LOG(L"unable to split left context string.");
-                continue;
-            }
-            for (auto sLeftContext : vecLeftContexts)
-            {
-                auto itLeftContext = m_mapStringToContext.find(sLeftContext);
-                if (m_mapStringToContext.end() == itLeftContext)
+                vector<CEString> vecLeftContexts;
+                eRet = eSplitSource(sLeftContexts, vecLeftContexts);
+                if (eRet != H_NO_ERROR)
                 {
-                    ERROR_LOG(L"Left context not recognized.");
+                    ERROR_LOG(L"unable to split left context string.");
                     continue;
                 }
-                rule.m_vecLeftContexts.push_back((*itLeftContext).second);
+                for (auto sLeftContext : vecLeftContexts)
+                {
+                    auto itLeftContext = m_mapStringToContext.find(sLeftContext);
+                    if (m_mapStringToContext.end() == itLeftContext)
+                    {
+                        for (int iAt = 0; iAt < (int)sLeftContext.uiLength(); ++iAt)
+                        {
+                            auto chrAt = sLeftContext.chrGetAt(iAt);
+                            if (L'\0' == chrAt)
+                            {
+                                CEString sMsg(L"Unable to get character at pos. ");
+                                sMsg += CEString::sToString(iAt);
+                                ERROR_LOG(sMsg);
+                                continue;
+                            }
+// &&&&                            rule.m_vecLeftContexts.push_back
+                        }
+//                        ERROR_LOG(L"Left context not recognized.");
+//                        continue;
+                    }
+                    else
+                    {
+                        rule.m_vecLeftContexts.push_back((*itLeftContext).second);
+                    }
+                }
             }
 
             // Right contexts (an array of strings)
             CEString sRightContexts;
-            spDb->GetData(3, sRightContexts);
-            vector<CEString> vecRightContexts;
-            eRet = eSplitSource(sRightContexts, vecRightContexts);
-            if (eRet != H_NO_ERROR)
+            m_spDb->GetData(3, sRightContexts);
+            if (!sRightContexts.bIsEmpty())
             {
-                ERROR_LOG(L"unable to split right context string.");
-                continue;
-            }
-            for (auto sRightContext : vecRightContexts)
-            {
-                auto itRightContext = m_mapStringToContext.find(sRightContext);
-                if (m_mapStringToContext.end() == itRightContext)
+                vector<CEString> vecRightContexts;
+                eRet = eSplitSource(sRightContexts, vecRightContexts);
+                if (eRet != H_NO_ERROR)
                 {
-                    ERROR_LOG(L"Right context not recognized.");
+                    ERROR_LOG(L"unable to split right context string.");
                     continue;
                 }
-                rule.m_vecRightContexts.push_back((*itRightContext).second);
+                for (auto sRightContext : vecRightContexts)
+                {
+                    auto itRightContext = m_mapStringToContext.find(sRightContext);
+                    if (m_mapStringToContext.end() == itRightContext)
+                    {
+                        ERROR_LOG(L"Right context not recognized.");
+                        continue;
+                    }
+                    rule.m_vecRightContexts.push_back((*itRightContext).second);
+                }
             }
 
             // Morphemic context: an array of strings
             CEString sMorphemeType;
-            spDb->GetData(4, sMorphemeType);
-            vector<CEString> vecMorphemeTypes;
-            eRet = eSplitSource(sMorphemeType, vecMorphemeTypes);
-            if (eRet != H_NO_ERROR)
+            m_spDb->GetData(4, sMorphemeType);
+            if (!sMorphemeType.bIsEmpty())
             {
-                ERROR_LOG(L"unable to split morphemic contexts string.");
-                continue;
-            }
-            for (auto sMorphemeType : vecMorphemeTypes)
-            {
-                auto itMorphemeType = m_mapStringToMorphemicContext.find(sMorphemeType);
-                if (m_mapStringToMorphemicContext.end() == itMorphemeType)
+                vector<CEString> vecMorphemeTypes;
+                eRet = eSplitSource(sMorphemeType, vecMorphemeTypes);
+                if (eRet != H_NO_ERROR)
                 {
-                    ERROR_LOG(L"Morpheme not recognized.");
+                    ERROR_LOG(L"unable to split morphemic contexts string.");
                     continue;
                 }
-                rule.m_vecMorphemicContexts.push_back((*itMorphemeType).second);
+                for (auto sMorphemeType : vecMorphemeTypes)
+                {
+                    auto itMorphemeType = m_mapStringToMorphemicContext.find(sMorphemeType);
+                    if (m_mapStringToMorphemicContext.end() == itMorphemeType)
+                    {
+                        ERROR_LOG(L"Morpheme not recognized.");
+                        continue;
+                    }
+                    rule.m_vecMorphemicContexts.push_back((*itMorphemeType).second);
+                }
             }
 
             // Subparadigm (a string)
             CEString sSubparadigm;
-            spDb->GetData(5, sSubparadigm);
-            spDb->GetData(1, sSubparadigm);
-            auto itSubparadigm = m_mapStringToSubparadigm.find(sSubparadigm);
-            if (m_mapStringToSubparadigm.end() == itSubparadigm)
+            m_spDb->GetData(5, sSubparadigm);
+            if (!sSubparadigm.bIsEmpty())
             {
-                ERROR_LOG(L"Subparadigm not recognized.");
-                continue;
+                auto itSubparadigm = m_mapStringToSubparadigm.find(sSubparadigm);
+                if (m_mapStringToSubparadigm.end() == itSubparadigm)
+                {
+                    ERROR_LOG(L"Subparadigm not recognized.");
+                    continue;
+                }
+                rule.m_vecSubparadigms.push_back((*itSubparadigm).second);
             }
-            rule.m_vecSubparadigms.push_back((*itSubparadigm).second);
 
             // Gender (a string)
             CEString sGender;
-            spDb->GetData(6, sGender);
-            auto itGender = m_mapStringToGender.find(sGender);
-            if (m_mapStringToGender.end() == itGender)
+            m_spDb->GetData(6, sGender);
+            if (!sGender.bIsEmpty())
             {
-                ERROR_LOG(L"Gender not recognized.");
-                continue;
+                auto itGender = m_mapStringToGender.find(sGender);
+                if (m_mapStringToGender.end() == itGender)
+                {
+                    ERROR_LOG(L"Gender not recognized.");
+                    continue;
+                }
+                rule.m_vecGenders.push_back((*itGender).second);
             }
-            rule.m_vecGenders.push_back((*itGender).second);
 
             // Number (a string)
             CEString sNumber;
-            spDb->GetData(7, sNumber);
-            spDb->GetData(1, sNumber);
-            auto itNumber = m_mapStringToNumber.find(sNumber);
-            if (m_mapStringToNumber.end() == itNumber)
+            m_spDb->GetData(7, sNumber);
+            if (!sNumber.bIsEmpty())
             {
-                ERROR_LOG(L"Number not recognized.");
-                continue;
+                auto itNumber = m_mapStringToNumber.find(sNumber);
+                if (m_mapStringToNumber.end() == itNumber)
+                {
+                    ERROR_LOG(L"Number not recognized.");
+                    continue;
+                }
+                rule.m_vecNumbers.push_back((*itNumber).second);
             }
-            rule.m_vecNumbers.push_back((*itNumber).second);
 
             // Case (a string)
             CEString sCase;
-            spDb->GetData(8, sCase);
-            spDb->GetData(1, sCase);
-            auto itCase = m_mapStringToCase.find(sCase);
-            if (m_mapStringToCase.end() == itCase)
+            m_spDb->GetData(8, sCase);
+            if (!sCase.bIsEmpty())
             {
-                ERROR_LOG(L"Case not recognized.");
-                continue;
+                auto itCase = m_mapStringToCase.find(sCase);
+                if (m_mapStringToCase.end() == itCase)
+                {
+                    ERROR_LOG(L"Case not recognized.");
+                    continue;
+                }
+                rule.m_vecCases.push_back((*itCase).second);
             }
-            rule.m_vecCases.push_back((*itCase).second);
 
             // Strength (a string)
             CEString sStrength;
-            spDb->GetData(9, sStrength);
-            auto itStrength = m_mapStringToRuleStrength.find(sStrength);
-            if (m_mapStringToRuleStrength.end() == itStrength)
+            m_spDb->GetData(9, sStrength);
+            if (!sStrength.bIsEmpty())
             {
-                ERROR_LOG(L"Strength not recognized.");
-                continue;
+                auto itStrength = m_mapStringToRuleStrength.find(sStrength);
+                if (m_mapStringToRuleStrength.end() == itStrength)
+                {
+                    ERROR_LOG(L"Strength not recognized.");
+                    continue;
+                }
+                rule.m_eStrength = (*itStrength).second;
             }
-            rule.m_eStrength = (*itStrength).second;
 
             // IsVariant (boolean value)
-            spDb->GetData(10, rule.m_bIsVariant);
+            m_spDb->GetData(10, rule.m_bIsVariant);
 
             // push back to the vector of rules for this input
         }
@@ -219,11 +249,8 @@ ET_ReturnCode CTranscriber::eFormatInputs(CEString& sSource, PairInput& pairPars
 
 ET_ReturnCode CTranscriber::eSplitSource(CEString& sSource, vector<CEString>& vecTarget)
 {
-    sSource.EnableBreaks();
-    sSource.EnablePunctuation();
-    sSource.EnableEscapeChars();
-    sSource.EnableTabs();
-    sSource.EnableVowels();
+    sSource.ResetSeparators();
+    sSource.SetBreakChars(L", \t");
 
     int iNWords = sSource.uiNFields();
     if (iNWords < 1)

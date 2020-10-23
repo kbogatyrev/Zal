@@ -24,11 +24,9 @@ CAnalytics::~CAnalytics()
 
 ET_ReturnCode CAnalytics::eInit()
 {
-//    m_spTranscriber = make_shared<CTranscriber>(m_spDb);
-//    ET_ReturnCode eRet = m_spTranscriber->eLoadTranscriptionRules();
-//    return eRet;
-
-    return H_NO_ERROR;
+    m_spTranscriber = make_shared<CTranscriber>(m_spDb);
+    ET_ReturnCode eRet = m_spTranscriber->eLoadTranscriptionRules();
+    return eRet;
 }
 
 ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& sMetadata, const CEString& sText, long long& llParsedTextId)
