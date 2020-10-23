@@ -96,7 +96,7 @@ private:
     shared_ptr<CSqlite> m_spDb;
     shared_ptr<CParser> m_spParser;
     CAnalytics* m_pAnalytics;
-    CVerifier * m_pVerifier;
+    shared_ptr<CVerifier> m_spVerifier;
     vector<CLexeme *> m_vecLexemes;
     vector<CLexeme *>::iterator m_itCurrentLexeme;
     vector<CWordForm *>::iterator m_itCurrentWordForm;
