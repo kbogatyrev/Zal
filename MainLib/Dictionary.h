@@ -20,7 +20,7 @@ class CLexemeEnumerator : public ILexemeEnumerator
 {
 public:
     CLexemeEnumerator() = delete;
-    CLexemeEnumerator(CDictionary * dict) : m_pDictionary(dict) {}
+    CLexemeEnumerator(CDictionary * dict) : m_spDictionary(dict) {}
 
     virtual ET_ReturnCode eReset();
 
@@ -31,8 +31,8 @@ public:
     virtual ET_ReturnCode eGetNextLexeme(CLexeme*& pLexeme);
 
 private:
-    vector<CLexeme*>::iterator m_itCurrentLexeme;
-    CDictionary * m_pDictionary;
+    vector<shared_ptr<CLexeme>>::iterator m_itCurrentLexeme;
+    shared_ptr<CDictionary> m_spDictionary;
 };
 
 class CDictionary : public IDictionary
@@ -97,9 +97,9 @@ private:
     shared_ptr<CParser> m_spParser;
     shared_ptr<CAnalytics> m_spAnalytics;
     shared_ptr<CVerifier> m_spVerifier;
-    vector<CLexeme *> m_vecLexemes;
-    vector<CLexeme *>::iterator m_itCurrentLexeme;
-    vector<CWordForm *>::iterator m_itCurrentWordForm;
+    vector<shared_ptr<CLexeme>> m_vecLexemes;
+    vector<shared_ptr<CLexeme>>::iterator m_itCurrentLexeme;
+    vector<shared_ptr<CWordForm>>::iterator m_itCurrentWordForm;
 
     // Populate DB tables
     ET_ReturnCode ePopulateStemsTable();
