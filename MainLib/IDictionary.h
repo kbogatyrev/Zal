@@ -49,9 +49,9 @@ namespace Hlib
         virtual ET_ReturnCode eCreateLexemeEnumerator(ILexemeEnumerator*&) = 0;
         virtual void DeleteLexemeEnumerator(ILexemeEnumerator *) = 0;
 
-        virtual ET_ReturnCode eGetParser(shared_ptr<IParser>& p) = 0;
-        virtual ET_ReturnCode eGetAnalytics(IAnalytics*& p) = 0;
-        virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier) = 0;
+        virtual ET_ReturnCode eGetParser(shared_ptr<IParser>& sp) = 0;
+        virtual ET_ReturnCode eGetAnalytics(shared_ptr<IAnalytics>& sp) = 0;
+        virtual ET_ReturnCode eGetVerifier(shared_ptr<IVerifier>& sp) = 0;
         virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR) = 0;
         virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR) = 0;
 

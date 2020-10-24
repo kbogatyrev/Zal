@@ -69,9 +69,9 @@ public:
     virtual ET_ReturnCode eCreateLexemeEnumerator(ILexemeEnumerator*&);
     virtual void DeleteLexemeEnumerator(ILexemeEnumerator*);
 
-    virtual ET_ReturnCode eGetParser(shared_ptr<IParser>& p);
-    virtual ET_ReturnCode eGetAnalytics(IAnalytics*& p);
-    virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
+    virtual ET_ReturnCode eGetParser(shared_ptr<IParser>& ps);
+    virtual ET_ReturnCode eGetAnalytics(shared_ptr<IAnalytics>& ps);
+    virtual ET_ReturnCode eGetVerifier(shared_ptr<IVerifier>& sp);
 
     virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
     virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
