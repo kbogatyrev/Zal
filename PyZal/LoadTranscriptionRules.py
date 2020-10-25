@@ -27,14 +27,14 @@ class TranscriptionRules:
         except Exception as e:
             print(e)
 
-    def load_rules(self):
-
 #  CREATE TABLE transcription_inputs (id INTEGER PRIMARY KEY, input_chars TEXT)
 #  CREATE TABLE transcription_rules (id INTEGER PRIMARY KEY, input_id INTEGER, stress TEXT, left_contexts TEXT, \
 #   right_contexts TEXT, target TEXT, morpheme_type TEXT, subparadigm TEXT, gramm_number TEXT, gramm_case TEXT, \
 #   gramm_gender TEXT, strength TEXT, comment TEXT);
 
-        db_path = '../ZalData/ZalData_05_14_2020_Pasternak.db3'
+    def load_rules(self):
+
+#        db_path = '../ZalData/ZalData_05_14_2020_Pasternak.db3'
         db_connect = sqlite3.connect(db_path)
         db_cursor = db_connect.cursor()
 
@@ -68,8 +68,6 @@ class TranscriptionRules:
                     lst_r_contexts = ''
                     if r_contexts:
                         lst_r_contexts = ','.join(r_contexts)
-                    target = rule.get('TARGET')
-
                     lst_morphemes = ''
                     morphemes = rule.get('MORPHEMES')
                     if morphemes:
@@ -79,12 +77,14 @@ class TranscriptionRules:
                     number = rule.get('NUMBER')
                     gender = rule.get('GENDER')
                     case = rule.get('CASE')
+                    is_variant = rule.get('IS_VARIANT')
+                    target = rule.get('TARGET')
 
                     insert_query_rules = 'INSERT INTO transcription_rules (input_id, stress, left_contexts, right_contexts, \
-                    target, morpheme_type, subparadigm, gramm_number, gramm_case, gramm_gender, strength, comment) \
+                    morpheme_type, subparadigm, gramm_gender, gramm_number, gramm_case, strength, target, comment) \
                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'
-    #                       0 1 2 3 4 5 6 7 8 9 0 1 2
-                    tuple_columns_rules = (inputs_id, stress, lst_l_contexts, lst_r_contexts, target, lst_morphemes, subparadigm, gender, number, case, strength, comment)
+    #                       0 1 2 3 4 5 6 7 8 9 0 1 
+                    tuple_columns_rules = (inputs_id, stress, lst_l_contexts, lst_r_contexts, lst_morphemes, subparadigm, gender, number, case, strength, target, comment)
 
                     db_cursor.execute(insert_query_rules, tuple_columns_rules)
 
@@ -93,7 +93,7 @@ class TranscriptionRules:
 if __name__== "__main__":
 
     lib_path = '../x64/Release/MainLibCTypes.dll'
-    db_path = '../ZalData/ZalData_05_14_2020_Pasternak.db3'
+    db_path = '../ZalData/ZalData.db3'
 
     t = TranscriptionRules(lib_path, db_path, 'C:/git-repos/Zal-Windows/ZalData/TranscriptionRules.json')
     t.load_rules()
