@@ -50,7 +50,7 @@ namespace MainLibForPython {
 
     extern "C"
     {
-        __declspec(dllexport) ET_ReturnCode GetDictionary(IDictionary*&);
+        __declspec(dllexport) ET_ReturnCode GetDictionary(shared_ptr<IDictionary>&);
         __declspec(dllexport) bool Init(const wchar_t* szDbPath);
         __declspec(dllexport) bool bParseWord(const wchar_t* szWord);
         __declspec(dllexport) int iNumOfParses();
@@ -61,24 +61,24 @@ namespace MainLibForPython {
         __declspec(dllexport) long long llParseText(const wchar_t* szTextName, const wchar_t* szMetadata, const wchar_t* szText);
     }
 
-    static IDictionary* g_pDictionary = nullptr;
-    static IParser* g_pParser = nullptr;
-    static ILexeme* g_pLexeme = nullptr;
-    static IAnalytics* g_pAnalytics = nullptr;
+    static shared_ptr<IDictionary> g_spDictionary = nullptr;
+    static shared_ptr<IParser> g_spParser = nullptr;
+    static shared_ptr<ILexeme> g_spLexeme = nullptr;
+    static shared_ptr<IAnalytics> g_spAnalytics = nullptr;
 
     static vector<IWordForm *> vecWordForms;
 
     bool Init(const wchar_t* szDbPath)
     {
-        ET_ReturnCode rc = GetDictionary(g_pDictionary);
+        ET_ReturnCode rc = GetDictionary(g_spDictionary);
 
-        if (nullptr == g_pDictionary)
+        if (nullptr == g_spDictionary)
         {
             cout << L"Unable to intialize the dictionary." << endl;
             exit(-1);
         }
 
-        rc = g_pDictionary->eSetDbPath(szDbPath);
+        rc = g_spDictionary->eSetDbPath(szDbPath);
 
         return true;
     }
@@ -161,21 +161,21 @@ namespace MainLibForPython {
 
     bool bParseWord(const wchar_t* szWord)
     {
-        if (nullptr == g_pDictionary)
+        if (nullptr == g_spDictionary)
         {
             ERROR_LOG(L"Dictionary is not available.");
             exit(-1);
         }
 
-        IParser* pParser = nullptr;
-        ET_ReturnCode eRet = g_pDictionary->eGetParser(pParser);
+        shared_ptr<IParser> spParser;
+        ET_ReturnCode eRet = g_spDictionary->eGetParser(spParser);
         if (eRet != H_NO_ERROR)
         {
             ERROR_LOG(L"Unable to get parser object, exiting.");
             exit(-1);
         }
 
-        eRet = pParser->eParseWord(szWord);
+        eRet = spParser->eParseWord(szWord);
         if (eRet != H_NO_ERROR && eRet != H_FALSE)
         {
             cout << "Unable to parse word " << szWord << endl;
@@ -189,7 +189,7 @@ namespace MainLibForPython {
         }
 
         IWordForm* pWf = nullptr;
-        eRet = pParser->eGetFirstWordForm(pWf);
+        eRet = spParser->eGetFirstWordForm(pWf);
         if (eRet != H_NO_ERROR || nullptr == pWf)
         {
             cout << "Word " << szWord << ": unable to get first word form data." << endl;
@@ -200,7 +200,7 @@ namespace MainLibForPython {
 
         while (H_NO_ERROR == eRet)
         {
-            eRet = pParser->eGetNextWordForm(pWf);
+            eRet = spParser->eGetNextWordForm(pWf);
             if (H_NO_ERROR == eRet)
             {
                 if (nullptr == pWf)
@@ -242,13 +242,13 @@ namespace MainLibForPython {
 
     bool GenerateAllForms()
     {
-        if (nullptr == g_pDictionary)
+        if (nullptr == g_spDictionary)
         {
             ERROR_LOG(L"Dictionary object not initialized.");
             return false;
         }
 
-        ET_ReturnCode eRet = g_pDictionary->eGenerateAllForms();
+        ET_ReturnCode eRet = g_spDictionary->eGenerateAllForms();
         if (eRet != H_NO_ERROR)
         {
             cout << "Failed to generate word forms." << endl;
@@ -280,14 +280,14 @@ namespace MainLibForPython {
 
     bool AddLexemeHashes()
     {
-        if (nullptr == g_pDictionary)
+        if (nullptr == g_spDictionary)
         {
             ERROR_LOG(L"Dictionary is not available.");
             exit(-1);
         }
 
         cout << endl << "****      ADDING LEXEME HASHES" << endl << endl;
-        ET_ReturnCode eRet = g_pDictionary->ePopulateHashToDescriptorTable(nullptr, &ReportProgress);
+        ET_ReturnCode eRet = g_spDictionary->ePopulateHashToDescriptorTable(nullptr, &ReportProgress);
 
         return true;
     }
@@ -301,15 +301,15 @@ namespace MainLibForPython {
     {
         ET_ReturnCode eRet = H_NO_ERROR;
 
-        if (nullptr == g_pDictionary)
+        if (nullptr == g_spDictionary)
         {
             ERROR_LOG(L"Dictionary is not available.");
             return - 1;
         }
 
-        if (nullptr == g_pAnalytics)
+        if (nullptr == g_spAnalytics)
         {
-            eRet = g_pDictionary->eGetAnalytics(g_pAnalytics);
+            eRet = g_spDictionary->eGetAnalytics(g_spAnalytics);
             if (eRet != H_NO_ERROR)
             {
                 ERROR_LOG(L"Unable to get analytics object, exiting.");
@@ -318,7 +318,7 @@ namespace MainLibForPython {
         }
 
         long long llParsedTextId = 0;
-        eRet = g_pAnalytics->eParseText(szTextName, szMetadata, szText, llParsedTextId);
+        eRet = g_spAnalytics->eParseText(szTextName, szMetadata, szText, llParsedTextId);
         if (H_NO_ERROR != eRet)
         {
             llParsedTextId = -1;
