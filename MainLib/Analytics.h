@@ -4,6 +4,7 @@
 #include <set>
 #include <vector>
 #include <map>
+#include <memory>
 
 #include "Enums.h"
 #include "EString.h"
@@ -98,7 +99,7 @@ namespace Hlib
 
     public:
         CAnalytics();
-        CAnalytics(shared_ptr<CSqlite>, shared_ptr<CParser>);
+        CAnalytics(CSqlite*, CParser*);
         ~CAnalytics();
 
         virtual ET_ReturnCode eParseText(const CEString& sTextName, const CEString& sMetadata, const CEString& sText, long long& llParsedTextId);
@@ -124,9 +125,9 @@ namespace Hlib
         bool bArePhoneticallyIdentical(CWordForm& wf1, CWordForm& wf2);
 
     private:
-        shared_ptr<CSqlite> m_spDb;
-        shared_ptr<CParser> m_spParser;
-        shared_ptr<CTranscriber> m_spTranscriber;
+        CSqlite* m_pDb;
+        CParser* m_pParser;
+        unique_ptr<CTranscriber> m_spTranscriber;
         CEString m_sTextName;
         CEString m_sTextTitle;
         CEString m_sTextMetaData;

@@ -2,7 +2,6 @@
 #define C_PARSER_H_INCLUDED
 
 #include <vector>
-#include <memory>
 
 #include "Enums.h"
 #include "EString.h"
@@ -20,7 +19,7 @@ class CParser : public IParser
 {
 
 public:
-    CParser(shared_ptr<CSqlite>);
+    CParser(CSqlite *);
     ~CParser();
 
 public:
@@ -33,13 +32,13 @@ public:
     ET_ReturnCode eGetFirstWordForm(CWordForm *& wordForm);
     ET_ReturnCode eGetNextWordForm(CWordForm *& wordForm);
 
-    void SetDb(shared_ptr<CSqlite> spDb);
+    void SetDb(CSqlite * pDb);
 
 private:
     CParser();  // no use
 
-    shared_ptr<CSqlite> m_spDb;
-    unique_ptr<CParsingTree> m_spEndingsTree;
+    CSqlite * m_pDb;
+    CParsingTree * m_pEndingsTree;
     vector<CWordForm *> m_vecWordForms;
     vector<CWordForm *>::iterator m_itCurrentWordForm;
 

@@ -20,7 +20,7 @@ class CLexemeEnumerator : public ILexemeEnumerator
 {
 public:
     CLexemeEnumerator() = delete;
-    CLexemeEnumerator(CDictionary * dict) : m_spDictionary(dict) {}
+    CLexemeEnumerator(CDictionary * dict) : m_pDictionary(dict) {}
 
     virtual ET_ReturnCode eReset();
 
@@ -31,8 +31,8 @@ public:
     virtual ET_ReturnCode eGetNextLexeme(CLexeme*& pLexeme);
 
 private:
-    vector<shared_ptr<CLexeme>>::iterator m_itCurrentLexeme;
-    shared_ptr<CDictionary> m_spDictionary;
+    vector<CLexeme*>::iterator m_itCurrentLexeme;
+    CDictionary * m_pDictionary;
 };
 
 class CDictionary : public IDictionary
@@ -69,9 +69,9 @@ public:
     virtual ET_ReturnCode eCreateLexemeEnumerator(ILexemeEnumerator*&);
     virtual void DeleteLexemeEnumerator(ILexemeEnumerator*);
 
-    virtual ET_ReturnCode eGetParser(shared_ptr<IParser>& ps);
-    virtual ET_ReturnCode eGetAnalytics(shared_ptr<IAnalytics>& ps);
-    virtual ET_ReturnCode eGetVerifier(shared_ptr<IVerifier>& sp);
+    virtual ET_ReturnCode eGetParser(IParser *& p);
+    virtual ET_ReturnCode eGetAnalytics(IAnalytics*& p);
+    virtual ET_ReturnCode eGetVerifier(IVerifier *& pVerifier);
 
     virtual ET_ReturnCode eExportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
     virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
@@ -89,17 +89,17 @@ public:
     virtual ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR, PROGRESS_CALLBACK_PYTHON=nullptr);
 
     // Not part ot interface:
-    shared_ptr<CSqlite> spGetDbHandle();
+    CSqlite * pGetDbHandle();
 
 private:
     CEString m_sDbPath;
-    shared_ptr<CSqlite> m_spDb;
-    shared_ptr<CParser> m_spParser;
-    shared_ptr<CAnalytics> m_spAnalytics;
-    shared_ptr<CVerifier> m_spVerifier;
-    vector<shared_ptr<CLexeme>> m_vecLexemes;
-    vector<shared_ptr<CLexeme>>::iterator m_itCurrentLexeme;
-    vector<shared_ptr<CWordForm>>::iterator m_itCurrentWordForm;
+    CSqlite * m_pDb;
+    CParser * m_pParser;
+    CAnalytics* m_pAnalytics;
+    CVerifier * m_pVerifier;
+    vector<CLexeme *> m_vecLexemes;
+    vector<CLexeme *>::iterator m_itCurrentLexeme;
+    vector<CWordForm *>::iterator m_itCurrentWordForm;
 
     // Populate DB tables
     ET_ReturnCode ePopulateStemsTable();

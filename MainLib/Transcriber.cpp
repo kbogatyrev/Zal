@@ -5,12 +5,29 @@
 
 using namespace Hlib;
 
-CTranscriber::CTranscriber(shared_ptr<CSqlite> spCSqlite) : m_spDb(spCSqlite)
-{}
+CTranscriber::CTranscriber(CSqlite* pCSqlite) : m_pDb(pCSqlite)
+{
+    if (!m_pDb)
+    {
+        ERROR_LOG(L"No database.");
+        return;
+    }
+
+    auto eRet = eLoadTranscriptionRules();
+    if (H_NO_ERROR != eRet)
+    {
+        ERROR_LOG(L"Unable to load transcription rules.");
+    }
+
+    if (m_mapRules.empty())
+    {
+        ERROR_LOG(L"No transcription rules.");
+    }
+}
 
 ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 {
-    if (nullptr == m_spDb)
+    if (nullptr == m_pDb)
     {
         ERROR_LOG(L"Database not available.");
         return H_ERROR_DB;
@@ -19,17 +36,17 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
     ET_ReturnCode eRet = H_NO_ERROR;
 
     static const CEString sQuery
-    (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.right_contexts, tr.morpheme_type,  \
+    (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.right_contexts, tr.morpheme_type,  tr.subparadigm, \
     tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
     AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
 
     try
     {
-        m_spDb->PrepareForSelect(sQuery);
-        while (m_spDb->bGetRow())
+        m_pDb->PrepareForSelect(sQuery);
+        while (m_pDb->bGetRow())
         {
             CEString sInputs;
-            m_spDb->GetData(0, sInputs);
+            m_pDb->GetData(0, sInputs);
 
             PairInput pairInputs;
             eRet = eFormatInputs(sInputs, pairInputs);
@@ -38,18 +55,21 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Stress (a string)
             CEString sStressType;
-            m_spDb->GetData(1, sStressType);
-            auto itStressType = m_mapStringToStressRelation.find(sStressType);
-            if (m_mapStringToStressRelation.end() == itStressType)
+            m_pDb->GetData(1, sStressType);
+            if (!sStressType.bIsEmpty())
             {
-                ERROR_LOG(L"Stress context not recognized.");
-                continue;
+                auto itStressType = m_mapStringToStressRelation.find(sStressType);
+                if (m_mapStringToStressRelation.end() == itStressType)
+                {
+                    ERROR_LOG(L"Stress context not recognized.");
+                    continue;
+                }
+                rule.m_vecStressContexts.push_back((*itStressType).second);
             }
-            rule.m_vecStressContexts.push_back((*itStressType).second);
 
             // Left contexts (an array of strings)
             CEString sLeftContexts;
-            m_spDb->GetData(2, sLeftContexts);
+            m_pDb->GetData(2, sLeftContexts);
             if (!sLeftContexts.bIsEmpty())
             {
                 vector<CEString> vecLeftContexts;
@@ -84,11 +104,11 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                         rule.m_vecLeftContexts.push_back((*itLeftContext).second);
                     }
                 }
-            }
+            }       //  if (!sLeftContexts.bIsEmpty())
 
             // Right contexts (an array of strings)
             CEString sRightContexts;
-            m_spDb->GetData(3, sRightContexts);
+            m_pDb->GetData(3, sRightContexts);
             if (!sRightContexts.bIsEmpty())
             {
                 vector<CEString> vecRightContexts;
@@ -112,7 +132,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Morphemic context: an array of strings
             CEString sMorphemeType;
-            m_spDb->GetData(4, sMorphemeType);
+            m_pDb->GetData(4, sMorphemeType);
             if (!sMorphemeType.bIsEmpty())
             {
                 vector<CEString> vecMorphemeTypes;
@@ -136,7 +156,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Subparadigm (a string)
             CEString sSubparadigm;
-            m_spDb->GetData(5, sSubparadigm);
+            m_pDb->GetData(5, sSubparadigm);
             if (!sSubparadigm.bIsEmpty())
             {
                 auto itSubparadigm = m_mapStringToSubparadigm.find(sSubparadigm);
@@ -150,7 +170,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Gender (a string)
             CEString sGender;
-            m_spDb->GetData(6, sGender);
+            m_pDb->GetData(6, sGender);
             if (!sGender.bIsEmpty())
             {
                 auto itGender = m_mapStringToGender.find(sGender);
@@ -164,7 +184,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Number (a string)
             CEString sNumber;
-            m_spDb->GetData(7, sNumber);
+            m_pDb->GetData(7, sNumber);
             if (!sNumber.bIsEmpty())
             {
                 auto itNumber = m_mapStringToNumber.find(sNumber);
@@ -178,7 +198,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Case (a string)
             CEString sCase;
-            m_spDb->GetData(8, sCase);
+            m_pDb->GetData(8, sCase);
             if (!sCase.bIsEmpty())
             {
                 auto itCase = m_mapStringToCase.find(sCase);
@@ -192,7 +212,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Strength (a string)
             CEString sStrength;
-            m_spDb->GetData(9, sStrength);
+            m_pDb->GetData(9, sStrength);
             if (!sStrength.bIsEmpty())
             {
                 auto itStrength = m_mapStringToRuleStrength.find(sStrength);
@@ -205,9 +225,10 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             }
 
             // IsVariant (boolean value)
-            m_spDb->GetData(10, rule.m_bIsVariant);
+            m_pDb->GetData(9, rule.m_bIsVariant);
 
             // push back to the vector of rules for this input
+            m_mapRules[pairInputs].push_back(rule);
         }
     }
     catch (CException & ex)

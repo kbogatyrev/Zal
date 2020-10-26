@@ -9,12 +9,12 @@
 
 using namespace Hlib;
 
-CAnalytics::CAnalytics() : m_spDb(nullptr), m_llTextDbId(-1) 
+CAnalytics::CAnalytics() : m_pDb(nullptr), m_llTextDbId(-1) 
 {
     eInit();
 };
 
-CAnalytics::CAnalytics(shared_ptr<CSqlite> spDb, shared_ptr<CParser> spParser) : m_spDb(spDb), m_spParser(spParser), m_llTextDbId(-1)
+CAnalytics::CAnalytics(CSqlite* pDb, CParser* pParser) : m_pDb(pDb), m_pParser(pParser), m_llTextDbId(-1)
 {
     eInit();
 }
@@ -24,7 +24,7 @@ CAnalytics::~CAnalytics()
 
 ET_ReturnCode CAnalytics::eInit()
 {
-    m_spTranscriber = make_shared<CTranscriber>(m_spDb);
+    m_spTranscriber = make_unique<CTranscriber>(m_pDb);
     ET_ReturnCode eRet = m_spTranscriber->eLoadTranscriptionRules();
     return eRet;
 }
@@ -59,19 +59,19 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
 
 */
 
-    if (nullptr == m_spDb)
+    if (NULL == m_pDb)
     {
         ERROR_LOG(L"No database access.");
         return H_ERROR_POINTER;
     }
 
-    if (NULL == m_spParser)
+    if (NULL == m_pParser)
     {
         ERROR_LOG(L"No parser object.");
         return H_ERROR_POINTER;
     }
 
-    m_spDb->BeginTransaction();
+    m_pDb->BeginTransaction();
 
     eRet = eRegisterText(sTextName, sMetadata, m_sText);
     if (eRet != H_NO_ERROR)
@@ -143,7 +143,7 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
 
     }       //  for (int iLine = 0; iLine < iNLines; ++iLine)
 
-    m_spDb->CommitTransaction();
+    m_pDb->CommitTransaction();
 
     llParsedTextId = m_llTextDbId;
 
@@ -209,11 +209,11 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
     vector<long long> vecTextIds;
     try
     {
-        m_spDb->PrepareForSelect(sQuery);
-        while (m_spDb->bGetRow())
+        m_pDb->PrepareForSelect(sQuery);
+        while (m_pDb->bGetRow())
         {
             long long llTextId = -1;
-            m_spDb->GetData(0, llTextId);
+            m_pDb->GetData(0, llTextId);
             if (llTextId < 0)
             {
                 ERROR_LOG(L"Illegal text id.");
@@ -221,7 +221,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
             }
             vecTextIds.push_back(llTextId);
         }
-        m_spDb->Finalize();
+        m_pDb->Finalize();
 
         if (vecTextIds.size() > 1)
         {
@@ -233,7 +233,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
             eRet = eClearTextData(llId);
             sQuery = L"DELETE FROM text WHERE id = ";
             sQuery += CEString::sToString(llId);
-            m_spDb->Delete(sQuery);
+            m_pDb->Delete(sQuery);
         }
     }
     catch (CException& exc)
@@ -242,7 +242,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
         CEString sError;
         try
         {
-            m_spDb->GetLastError(sError);
+            m_pDb->GetLastError(sError);
             sMsg += CEString(L", error: ");
             sMsg += sError;
         }
@@ -251,7 +251,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
             sMsg = L"Apparent DB error ";
         }
 
-        sMsg += CEString::sToString(m_spDb->iGetLastError());
+        sMsg += CEString::sToString(m_pDb->iGetLastError());
         ERROR_LOG(sMsg);
     }
 */
@@ -268,15 +268,15 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
     //
     try
     {
-        m_spDb->PrepareForInsert(L"text", 2);
+        m_pDb->PrepareForInsert(L"text", 2);
 
-        m_spDb->Bind(1, m_sTextName);
-        m_spDb->Bind(2, m_sText);
+        m_pDb->Bind(1, m_sTextName);
+        m_pDb->Bind(2, m_sText);
 
-        m_spDb->InsertRow();
-        m_spDb->Finalize();
+        m_pDb->InsertRow();
+        m_pDb->Finalize();
 
-        m_llTextDbId = m_spDb->llGetLastKey();
+        m_llTextDbId = m_pDb->llGetLastKey();
     }
     catch (CException& exc)
     {
@@ -286,7 +286,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
         CEString sError;
         try
         {
-            m_spDb->GetLastError(sError);
+            m_pDb->GetLastError(sError);
             sMsg += CEString(L", error: ");
             sMsg += sError;
         }
@@ -295,7 +295,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
             sMsg = L"Apparent DB error ";
         }
 
-        sMsg += CEString::sToString(m_spDb->iGetLastError());
+        sMsg += CEString::sToString(m_pDb->iGetLastError());
         ERROR_LOG(sMsg);
 
         return H_ERROR_DB;
@@ -310,14 +310,14 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
         //
         try
         {
-            m_spDb->PrepareForInsert(L"text_metadata", 3);
+            m_pDb->PrepareForInsert(L"text_metadata", 3);
 
-            m_spDb->Bind(1, m_llTextDbId);
-            m_spDb->Bind(2, keyValPair.first);
-            m_spDb->Bind(3, keyValPair.second);
+            m_pDb->Bind(1, m_llTextDbId);
+            m_pDb->Bind(2, keyValPair.first);
+            m_pDb->Bind(3, keyValPair.second);
 
-            m_spDb->InsertRow();
-            m_spDb->Finalize();
+            m_pDb->InsertRow();
+            m_pDb->Finalize();
 
 //            m_llTextDbId = m_pDb->llGetLastKey();
         }
@@ -327,7 +327,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
             CEString sError;
             try
             {
-                m_spDb->GetLastError(sError);
+                m_pDb->GetLastError(sError);
                 sMsg += CEString(L", error: ");
                 sMsg += sError;
             }
@@ -336,7 +336,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
                 sMsg = L"Apparent DB error ";
             }
 
-            sMsg += CEString::sToString(m_spDb->iGetLastError());
+            sMsg += CEString::sToString(m_pDb->iGetLastError());
             ERROR_LOG(sMsg);
 
             return H_ERROR_DB;
@@ -350,7 +350,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
 
 ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, const CEString& sLine, int iLine, int iNumInLine, int iWordsInLine, long long llLineDbKey)
 {
-    if (nullptr == m_spParser)
+    if (nullptr == m_pParser)
     {
         ERROR_LOG(L"Parser not available.");
         return H_ERROR_POINTER;
@@ -369,14 +369,14 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, const CEString& sLin
         return eRet;
     }
 
-    eRet = m_spParser->eParseWord(sWord);
+    eRet = m_pParser->eParseWord(sWord);
     if (eRet != H_NO_ERROR)
     {
         return eRet;
     }
 
     CWordForm* pWf;
-    eRet = m_spParser->eGetFirstWordForm(pWf);
+    eRet = m_pParser->eGetFirstWordForm(pWf);
     while (H_NO_ERROR == eRet)
     {
         long long llWordToWordFormId = -1;
@@ -414,11 +414,11 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, const CEString& sLin
         stParse.WordForm = *pWf;
         m_mmapWordParses.insert(make_pair(iNumInLine, stParse));
 
-        eRet = m_spParser->eGetNextWordForm(pWf);
+        eRet = m_pParser->eGetNextWordForm(pWf);
     
     }       //  while...
 
-    m_spParser->ClearResults();
+    m_pParser->ClearResults();
 
     return H_NO_ERROR;
 
@@ -703,25 +703,25 @@ ET_ReturnCode CAnalytics::eSaveLine(long long llTextId, int iLineNum, int iTextO
 {
     try
     {
-        if (NULL == m_spDb)
+        if (NULL == m_pDb)
         {
             ERROR_LOG(L"No database access.");
             return H_ERROR_POINTER;
         }
 
-        m_spDb->PrepareForInsert(L"lines_in_text", 6);
+        m_pDb->PrepareForInsert(L"lines_in_text", 6);
 
-        m_spDb->Bind(1, m_llTextDbId);
-        m_spDb->Bind(2, iLineNum);
-        m_spDb->Bind(3, iTextOffset);
-        m_spDb->Bind(4, iLength);
-        m_spDb->Bind(5, iNumOfWords);
-        m_spDb->Bind(6, sText);
+        m_pDb->Bind(1, m_llTextDbId);
+        m_pDb->Bind(2, iLineNum);
+        m_pDb->Bind(3, iTextOffset);
+        m_pDb->Bind(4, iLength);
+        m_pDb->Bind(5, iNumOfWords);
+        m_pDb->Bind(6, sText);
 
-        m_spDb->InsertRow();
-        m_spDb->Finalize();
+        m_pDb->InsertRow();
+        m_pDb->Finalize();
 
-        llDbKey = m_spDb->llGetLastKey();
+        llDbKey = m_pDb->llGetLastKey();
 
     }
     catch (CException& exc)
@@ -730,7 +730,7 @@ ET_ReturnCode CAnalytics::eSaveLine(long long llTextId, int iLineNum, int iTextO
         CEString sError;
         try
         {
-            m_spDb->GetLastError(sError);
+            m_pDb->GetLastError(sError);
             sMsg += CEString(L", error: ");
             sMsg += sError;
         }
@@ -739,7 +739,7 @@ ET_ReturnCode CAnalytics::eSaveLine(long long llTextId, int iLineNum, int iTextO
             sMsg = L"Apparent DB error ";
         }
 
-        sMsg += CEString::sToString(m_spDb->iGetLastError());
+        sMsg += CEString::sToString(m_pDb->iGetLastError());
         ERROR_LOG(sMsg);
 
         return H_ERROR_GENERAL;
@@ -754,7 +754,7 @@ ET_ReturnCode CAnalytics::eSaveWord(long long llLineDbId, int iLine, int iWord, 
 {
     try
     {
-        if (NULL == m_spDb)
+        if (NULL == m_pDb)
         {
             ERROR_LOG(L"No database access.");
             return H_ERROR_POINTER;
@@ -766,19 +766,19 @@ ET_ReturnCode CAnalytics::eSaveWord(long long llLineDbId, int iLine, int iWord, 
             return H_ERROR_UNEXPECTED;
         }
 
-        m_spDb->PrepareForInsert(L"words_in_line", 6);
+        m_pDb->PrepareForInsert(L"words_in_line", 6);
 
-        m_spDb->Bind(1, llLineDbId);
-        m_spDb->Bind(2, iWord);
-        m_spDb->Bind(3, iWordsInLine-iWord-1);
-        m_spDb->Bind(4, iLineOffset);
-        m_spDb->Bind(5, iSegmentLength);
-        m_spDb->Bind(6, sWord);
+        m_pDb->Bind(1, llLineDbId);
+        m_pDb->Bind(2, iWord);
+        m_pDb->Bind(3, iWordsInLine-iWord-1);
+        m_pDb->Bind(4, iLineOffset);
+        m_pDb->Bind(5, iSegmentLength);
+        m_pDb->Bind(6, sWord);
 
-        m_spDb->InsertRow();
-        m_spDb->Finalize();
+        m_pDb->InsertRow();
+        m_pDb->Finalize();
 
-        llWordDbKey = m_spDb->llGetLastKey();
+        llWordDbKey = m_pDb->llGetLastKey();
     }
     catch (CException& exc)
     {
@@ -786,7 +786,7 @@ ET_ReturnCode CAnalytics::eSaveWord(long long llLineDbId, int iLine, int iWord, 
         CEString sError;
         try
         {
-            m_spDb->GetLastError(sError);
+            m_pDb->GetLastError(sError);
             sMsg += CEString(L", error: ");
             sMsg += sError;
         }
@@ -795,7 +795,7 @@ ET_ReturnCode CAnalytics::eSaveWord(long long llLineDbId, int iLine, int iWord, 
             sMsg = L"Apparent DB error ";
         }
 
-        sMsg += CEString::sToString(m_spDb->iGetLastError());
+        sMsg += CEString::sToString(m_pDb->iGetLastError());
         ERROR_LOG(sMsg);
 
         return H_ERROR_GENERAL;
@@ -809,7 +809,7 @@ ET_ReturnCode CAnalytics::eSaveWord(long long llLineDbId, int iLine, int iWord, 
 //  FOREIGN KEY(word_in_line_id) REFERENCES words_in_line(id), FOREIGN KEY(wordform_id) REFERENCES wordforms(id));
 ET_ReturnCode CAnalytics::eSaveWordParse(long long llWordId, long long llWordFormId, long long& llWordToWordFormId)
 {
-    if (NULL == m_spDb)
+    if (NULL == m_pDb)
     {
         ERROR_LOG(L"No database access.");
         return H_ERROR_POINTER;
@@ -817,15 +817,15 @@ ET_ReturnCode CAnalytics::eSaveWordParse(long long llWordId, long long llWordFor
 
     try
     {
-        m_spDb->PrepareForInsert(L"word_to_wordform", 2);
+        m_pDb->PrepareForInsert(L"word_to_wordform", 2);
 
-        m_spDb->Bind(1, llWordId);
-        m_spDb->Bind(2, llWordFormId);
+        m_pDb->Bind(1, llWordId);
+        m_pDb->Bind(2, llWordFormId);
 
-        m_spDb->InsertRow();
-        m_spDb->Finalize();
+        m_pDb->InsertRow();
+        m_pDb->Finalize();
 
-        llWordToWordFormId = m_spDb->llGetLastKey();
+        llWordToWordFormId = m_pDb->llGetLastKey();
     }
     catch (CException& exc)
     {
@@ -833,7 +833,7 @@ ET_ReturnCode CAnalytics::eSaveWordParse(long long llWordId, long long llWordFor
         CEString sError;
         try
         {
-            m_spDb->GetLastError(sError);
+            m_pDb->GetLastError(sError);
             sMsg += CEString(L", error: ");
             sMsg += sError;
         }
@@ -842,7 +842,7 @@ ET_ReturnCode CAnalytics::eSaveWordParse(long long llWordId, long long llWordFor
             sMsg = L"Apparent DB error ";
         }
 
-        sMsg += CEString::sToString(m_spDb->iGetLastError());
+        sMsg += CEString::sToString(m_pDb->iGetLastError());
         ERROR_LOG(sMsg);
 
         return H_ERROR_GENERAL;
@@ -947,7 +947,7 @@ bool CAnalytics::bArePhoneticallyIdentical(CWordForm& wf1, CWordForm& wf2)
 //  REFERENCES lines_in_text(id));
 ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
 {
-    if (NULL == m_spDb)
+    if (NULL == m_pDb)
     {
         ERROR_LOG(L"No database access.");
         return H_ERROR_POINTER;
@@ -957,39 +957,39 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
     {
         try
         {
-            m_spDb->PrepareForInsert(L"tact_group", 11);
+            m_pDb->PrepareForInsert(L"tact_group", 11);
 
-            m_spDb->Bind(1, stTg.llLineId);
-            m_spDb->Bind(2, stTg.iFirstWordNum);
-            m_spDb->Bind(3, stTg.iMainWordPos);
-            m_spDb->Bind(4, stTg.iNumOfWords);
-            m_spDb->Bind(5, stTg.sSource);
-            m_spDb->Bind(6, wordParse.WordForm.sGramHash());
-            m_spDb->Bind(7, stTg.sTranscription);
-            m_spDb->Bind(8, stTg.iNumOfSyllables);
-            m_spDb->Bind(9, stTg.iStressedSyllable);
-            m_spDb->Bind(10, stTg.iReverseStressedSyllable);
-            m_spDb->Bind(11, stTg.iSecondaryStressedSyllable);
+            m_pDb->Bind(1, stTg.llLineId);
+            m_pDb->Bind(2, stTg.iFirstWordNum);
+            m_pDb->Bind(3, stTg.iMainWordPos);
+            m_pDb->Bind(4, stTg.iNumOfWords);
+            m_pDb->Bind(5, stTg.sSource);
+            m_pDb->Bind(6, wordParse.WordForm.sGramHash());
+            m_pDb->Bind(7, stTg.sTranscription);
+            m_pDb->Bind(8, stTg.iNumOfSyllables);
+            m_pDb->Bind(9, stTg.iStressedSyllable);
+            m_pDb->Bind(10, stTg.iReverseStressedSyllable);
+            m_pDb->Bind(11, stTg.iSecondaryStressedSyllable);
 
-            m_spDb->InsertRow();
-            m_spDb->Finalize();
+            m_pDb->InsertRow();
+            m_pDb->Finalize();
 
-            long long llTactGroupId = m_spDb->llGetLastKey();
+            long long llTactGroupId = m_pDb->llGetLastKey();
 
             // CREATE TABLE word_to_tact_group(id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, 
             // tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY(word_to_wordform_id) 
             // REFERENCES word_to_word_form(id));
 
             unsigned long long llInsertHandle = 0;
-            m_spDb->uiPrepareForInsert(L"word_to_tact_group", 3, (sqlite3_stmt*&)llInsertHandle);
+            m_pDb->uiPrepareForInsert(L"word_to_tact_group", 3, (sqlite3_stmt*&)llInsertHandle);
             for (StWordParse& stWordParse : stTg.vecWords)
             {
-                m_spDb->Bind(1, stWordParse.llWordToWordFormId, llInsertHandle);
-                m_spDb->Bind(2, llTactGroupId, llInsertHandle);
-                m_spDb->Bind(3, stWordParse.iPosInTactGroup, llInsertHandle);
-                m_spDb->InsertRow(llInsertHandle);
+                m_pDb->Bind(1, stWordParse.llWordToWordFormId, llInsertHandle);
+                m_pDb->Bind(2, llTactGroupId, llInsertHandle);
+                m_pDb->Bind(3, stWordParse.iPosInTactGroup, llInsertHandle);
+                m_pDb->InsertRow(llInsertHandle);
             }
-            m_spDb->Finalize(llInsertHandle);
+            m_pDb->Finalize(llInsertHandle);
         }
         catch (CException & exc)
         {
@@ -997,7 +997,7 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
             CEString sError;
             try
             {
-                m_spDb->GetLastError(sError);
+                m_pDb->GetLastError(sError);
                 sMsg += CEString(L", error: ");
                 sMsg += sError;
             }
@@ -1006,7 +1006,7 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
                 sMsg = L"Apparent DB error ";
             }
 
-            sMsg += CEString::sToString(m_spDb->iGetLastError());
+            sMsg += CEString::sToString(m_pDb->iGetLastError());
             ERROR_LOG(sMsg);
 
             return H_ERROR_DB;
@@ -1019,7 +1019,7 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
 
 ET_ReturnCode CAnalytics::eClearTextData(long long llTextId)
 {
-    if (!m_spDb)
+    if (!m_pDb)
     {
         return H_ERROR_DB;
     }
@@ -1035,28 +1035,28 @@ ET_ReturnCode CAnalytics::eClearTextData(long long llTextId)
 
     try
     {
-        m_spDb->PrepareForSelect(sQuery);
-        while (m_spDb->bGetRow())
+        m_pDb->PrepareForSelect(sQuery);
+        while (m_pDb->bGetRow())
         {
             long long llLineId = -1;
-            m_spDb->GetData(0, llLineId);
+            m_pDb->GetData(0, llLineId);
             vecLineIds.push_back(llLineId);
         }
-        m_spDb->Finalize();
+        m_pDb->Finalize();
 
         vector<long long> vecWordsInLineIds;
         for (auto llLineId : vecLineIds)
         {
             sQuery = L"SELECT id FROM words_in_line WHERE line_id = ";
             sQuery += CEString::sToString(llLineId);
-            m_spDb->PrepareForSelect(sQuery);
-            while (m_spDb->bGetRow())
+            m_pDb->PrepareForSelect(sQuery);
+            while (m_pDb->bGetRow())
             {
                 long long llWordInLineId = -1;
-                m_spDb->GetData(0, llWordInLineId);
+                m_pDb->GetData(0, llWordInLineId);
                 vecWordsInLineIds.push_back(llWordInLineId);
             }
-            m_spDb->Finalize();
+            m_pDb->Finalize();
         }
 
         vector<long long> vecWordToWordFormIds;
@@ -1064,14 +1064,14 @@ ET_ReturnCode CAnalytics::eClearTextData(long long llTextId)
         {
             sQuery = L"SELECT id FROM word_to_wordform WHERE word_in_line_id = ";
             sQuery += CEString::sToString(llWordInLineId);
-            m_spDb->PrepareForSelect(sQuery);
-            while (m_spDb->bGetRow())
+            m_pDb->PrepareForSelect(sQuery);
+            while (m_pDb->bGetRow())
             {
                 long long llWordToWordFormId = -1;
-                m_spDb->GetData(0, llWordToWordFormId);
+                m_pDb->GetData(0, llWordToWordFormId);
                 vecWordToWordFormIds.push_back(llWordToWordFormId);
             }
-            m_spDb->Finalize();
+            m_pDb->Finalize();
         }
 
         vector<long long> vecTactGroupIds;
@@ -1079,14 +1079,14 @@ ET_ReturnCode CAnalytics::eClearTextData(long long llTextId)
         {
             sQuery = L"SELECT id FROM tact_group WHERE line_id = ";
             sQuery += CEString::sToString(llLineId);
-            m_spDb->PrepareForSelect(sQuery);
-            while (m_spDb->bGetRow())
+            m_pDb->PrepareForSelect(sQuery);
+            while (m_pDb->bGetRow())
             {
                 long long llTactGroupId = -1;
-                m_spDb->GetData(0, llTactGroupId);
+                m_pDb->GetData(0, llTactGroupId);
                 vecTactGroupIds.push_back(llTactGroupId);
             }
-            m_spDb->Finalize();
+            m_pDb->Finalize();
         }
 
         vector<long long> vecWordToTactGroupIds;
@@ -1094,49 +1094,49 @@ ET_ReturnCode CAnalytics::eClearTextData(long long llTextId)
         {
             sQuery = L"SELECT id FROM word_to_tact_group WHERE tact_group_id = ";
             sQuery += CEString::sToString(llTactGroupId);
-            m_spDb->PrepareForSelect(sQuery);
-            while (m_spDb->bGetRow())
+            m_pDb->PrepareForSelect(sQuery);
+            while (m_pDb->bGetRow())
             {
                 long long llWordToTactGroupId = -1;
-                m_spDb->GetData(0, llWordToTactGroupId);
+                m_pDb->GetData(0, llWordToTactGroupId);
                 vecWordToTactGroupIds.push_back(llWordToTactGroupId);
             }
-            m_spDb->Finalize();
+            m_pDb->Finalize();
         }
 
         for (auto llWordToTactGroupId : vecWordToTactGroupIds)
         {
             sQuery = L"DELETE FROM word_to_tact_group WHERE id = ";
             sQuery += CEString::sToString(llWordToTactGroupId);
-            m_spDb->Delete(sQuery);
+            m_pDb->Delete(sQuery);
         }
 
         for (auto llTactGroupId : vecTactGroupIds)
         {
             sQuery = L"DELETE FROM tact_group WHERE id = ";
             sQuery += CEString::sToString(llTactGroupId);
-            m_spDb->Delete(sQuery);
+            m_pDb->Delete(sQuery);
         }
 
         for (auto llWordFormId : vecWordToWordFormIds)
         {
             sQuery = L"DELETE FROM word_to_wordform WHERE id = ";
             sQuery += CEString::sToString(llWordFormId);
-            m_spDb->Delete(sQuery);
+            m_pDb->Delete(sQuery);
         }
 
         for (auto llWordInLineId : vecWordsInLineIds)
         {
             sQuery = L"DELETE FROM words_in_line WHERE id = ";
             sQuery += CEString::sToString(llWordInLineId);
-            m_spDb->Delete(sQuery);
+            m_pDb->Delete(sQuery);
         }
 
         for (auto llLineId : vecLineIds)
         {
             sQuery = L"DELETE FROM lines_in_text WHERE id = ";
             sQuery += CEString::sToString(llLineId);
-            m_spDb->Delete(sQuery);
+            m_pDb->Delete(sQuery);
         }
     }
     catch (CException& ex)

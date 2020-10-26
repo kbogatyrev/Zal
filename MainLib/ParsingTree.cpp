@@ -8,14 +8,14 @@ using namespace Hlib;
 static CEString sSelectBase
 (L"SELECT DISTINCT d.id, e.ending_string, number, case_value, stress FROM endings AS e INNER JOIN ending_data AS d ON (e.id = d.ending_id)");
 
-CParsingTree::CParsingTree(shared_ptr<CSqlite> spDb)
+CParsingTree::CParsingTree(CSqlite * pDb)
 {
-    if (nullptr == spDb)
+    if (NULL == pDb)
     {
         throw CException(H_ERROR_POINTER, L"Database handle not initialized.");
     }
 
-    ET_ReturnCode rc = eLoad(spDb);
+    ET_ReturnCode rc = eLoad(pDb);
     if (rc != H_NO_ERROR)
     {
         throw CException(H_ERROR_GENERAL, L"Unable to initalize parsing tree.");
@@ -108,12 +108,12 @@ ET_ReturnCode CParsingTree::eIsEmptyEnding(__int64 llEndingId)
     }
 }
 
-ET_ReturnCode CParsingTree::eLoad(shared_ptr<CSqlite> spDb)
+ET_ReturnCode CParsingTree::eLoad(CSqlite * pDb)
 {
     // ся/сь!!!!!!
     // common dev????
 
-    if (nullptr == spDb)
+    if (NULL == pDb)
     {
         return H_ERROR_POINTER;
     }
@@ -124,17 +124,17 @@ ET_ReturnCode CParsingTree::eLoad(shared_ptr<CSqlite> spDb)
 
     try
     {
-        spDb->PrepareForSelect(sSelectBase);
-        while (spDb->bGetRow())
+        pDb->PrepareForSelect(sSelectBase);
+        while (pDb->bGetRow())
         {
             CEString sEnding;
             __int64 llDbKey = 0;
-            spDb->GetData(0, (__int64)llDbKey);
-            spDb->GetData(1, sEnding);
+            pDb->GetData(0, (__int64)llDbKey);
+            pDb->GetData(1, sEnding);
             m_mapSortedEndingsList[sEnding].push_back(llDbKey);
             m_setEndingStrings.insert(sEnding);
         }
-        spDb->Finalize();
+        pDb->Finalize();
     }
     catch (...)
     {
@@ -142,18 +142,18 @@ ET_ReturnCode CParsingTree::eLoad(shared_ptr<CSqlite> spDb)
         try
         {
             CEString sError;
-            spDb->GetLastError(sError);
+            pDb->GetLastError(sError);
             sMsg = L"DB error: ";
             sMsg += sError;
             sMsg += L"; code = ";
-            sMsg += CEString::sToString(spDb->iGetLastError());
+            sMsg += CEString::sToString(pDb->iGetLastError());
         }
         catch (...)
         {
             sMsg = L"Apparent DB error ";
         }
 
-        sMsg += CEString::sToString(spDb->iGetLastError());
+        sMsg += CEString::sToString(pDb->iGetLastError());
         ERROR_LOG(sMsg);
         return H_ERROR_DB;
     }
