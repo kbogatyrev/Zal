@@ -5,6 +5,7 @@ DELETE FROM irregular_stress;
 DELETE FROM irregular_forms;
 DELETE FROM second_locative;
 DELETE FROM second_genitive;
+DELETE FROM spryazh_sm_headwords;
 DELETE FROM descriptor;
 DELETE FROM homonyms;
 DELETE FROM stress;

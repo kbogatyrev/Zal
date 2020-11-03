@@ -1,4 +1,4 @@
-CREATE TABLE headword (id INTEGER PRIMARY KEY ASC, source TEXT, plural_of TEXT, comment TEXT, usage TEXT, variant TEXT, variant_comment TEXT, see_ref INTEGER, back_ref INTEGER, source_entry_id INTEGER, is_edited BOOLEAN DEFAULT (0));
+CREATE TABLE headword (id INTEGER PRIMARY KEY ASC, source TEXT, plural_of TEXT, comment TEXT, usage TEXT, variant TEXT, variant_comment TEXT, see_ref INTEGER, back_ref INTEGER, source_entry_id INTEGER, spryazh_sm BOOLEAN, is_edited BOOLEAN DEFAULT (0));
 
 CREATE TABLE homonyms (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, homonym_number INTEGER, is_variant BOOLEAN,  is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (headword_id) REFERENCES headword (id));
 
@@ -20,6 +20,7 @@ CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER,
 
 CREATE TABLE irregular_stress (id INTEGER PRIMARY KEY ASC, form_id INTEGER, position INTEGER, is_primary BOOLEAN, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (form_id) REFERENCES irregular_forms (id));
 
+CREATE TABLE spryazh_sm_headwords (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, ref_descriptor_id INTEGER, FOREIGN KEY (headword_id) REFERENCES headword(id), FOREIGN KEY (ref_descriptor_id) REFERENCES descriptor(id));
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending_string TEXT);
 
 CREATE TABLE ending_data (id INTEGER PRIMARY KEY ASC, ending_id INTEGER, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, tense INTEGER, is_reflexive BOOLEAN DEFAULT(0), stem_auslaut INTEGER, adjective_pronominal_decl_subtype INTEGER, FOREIGN KEY (ending_id) REFERENCES endings (id));
@@ -138,6 +139,8 @@ CREATE INDEX idx_irregular_forms_descriptor_id ON irregular_forms (descriptor_id
 CREATE INDEX idx_irregular_forms_gram_hash ON irregular_forms (gram_hash);
 CREATE INDEX idx_irregular_forms_wordform ON irregular_forms (wordform);
 CREATE INDEX idx_irregular_forms_is_alternative ON irregular_forms (is_alternative);
+CREATE INDEX idx_spryazh_sm_headwords_hw_id ON spryazh_sm_headwords (headword_id);
+CREATE INDEX idx_spryazh_sm_headwords_descr_id ON spryazh_sm_headwords (ref_descriptor_id);
 
 CREATE INDEX idx_wordforms_stem_data_id ON wordforms (stem_data_id);
 CREATE INDEX idx_wordforms_ending_data_id ON wordforms (ending_data_id);
