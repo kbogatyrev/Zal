@@ -17,6 +17,7 @@ namespace Hlib
             llDescriptorId(-1),
             llHeadwordId(-1),
             bIsUnstressed(false),
+            bSpryazhSm(false),
             bIsVariant(false),
             bIsPluralOf(false),
             llSourceEntryId(-1),
@@ -52,7 +53,8 @@ namespace Hlib
             bFleetingVowel(false),
             iStemAugment(-1),
             iInflectedParts(-1),
-            bIsSecondPart(false)
+            bIsSecondPart(false),
+            iSpryazhSmRefPrefixLength(-1)
         {
                 sSourceForm.SetVowels(g_szRusVowels);
                 sGraphicStem.SetVowels(g_szRusVowels);
@@ -73,6 +75,7 @@ namespace Hlib
         CEString sUsage;
         CEString sSeeRef;
         CEString sBackRef;
+        bool bSpryazhSm;
         long long llSourceEntryId;
         CEString sGraphicStem;
         CEString sGraphicStem2;
@@ -146,6 +149,10 @@ namespace Hlib
         CEString sInfinitive;
 
         map<int, bool> mapCommonDeviations;
+
+        // Spryazh sm. 
+        CEString sSpryazhSmPrefix;
+        int iSpryazhSmRefPrefixLength;
     };
 
 }       //  namespace Hlib
