@@ -56,6 +56,7 @@ namespace Hlib
         virtual ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR, PROGRESS_CALLBACK_PYTHON=nullptr) = 0;
 
         virtual ET_ReturnCode eSaveHeadword(ILexeme * pLexeme) = 0;
+        virtual ET_ReturnCode eDeleteLexeme(ILexeme* pLexeme) = 0;
         virtual ET_ReturnCode eSaveAspectPairInfo(ILexeme * pLexeme) = 0;
         virtual ET_ReturnCode eSaveP2Info(ILexeme * pLexeme) = 0;
         virtual ET_ReturnCode eSaveDescriptorInfo(ILexeme * pLexeme) = 0;

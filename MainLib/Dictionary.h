@@ -77,7 +77,7 @@ public:
     virtual ET_ReturnCode eImportTestData(const CEString& sPath, PROGRESS_CALLBACK_CLR);
 
     virtual ET_ReturnCode eSaveHeadword(ILexeme * pLexeme);
-//    virtual ET_ReturnCode eDeleteLexeme(ILexeme * pLexeme);
+    virtual ET_ReturnCode eDeleteLexeme(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveAspectPairInfo(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveP2Info(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveDescriptorInfo(ILexeme * pLexeme);
