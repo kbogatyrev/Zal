@@ -55,7 +55,7 @@ namespace Hlib
 
         virtual ET_ReturnCode ePopulateHashToDescriptorTable(PROGRESS_CALLBACK_CLR, PROGRESS_CALLBACK_PYTHON=nullptr) = 0;
 
-        virtual ET_ReturnCode eSaveHeadword(ILexeme* pLexeme) = 0;
+        virtual ET_ReturnCode eSaveNewHeadword(ILexeme* pLexeme) = 0;
         virtual ET_ReturnCode eUpdateHeadword(ILexeme* pLexeme) = 0;
         virtual ET_ReturnCode eSaveHeadwordStress(ILexeme* pLexeme) = 0;
         virtual ET_ReturnCode eSaveHomonyms(ILexeme* pLexeme) = 0;

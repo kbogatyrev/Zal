@@ -78,7 +78,7 @@ public:
 
     virtual ET_ReturnCode eDeleteLexeme(ILexeme * pLexeme);
     virtual ET_ReturnCode eUpdateHeadword(ILexeme* pLexeme);
-    virtual ET_ReturnCode eSaveHeadword(ILexeme* pLexeme);
+    virtual ET_ReturnCode eSaveNewHeadword(ILexeme* pLexeme);
     virtual ET_ReturnCode eSaveHeadwordStress(ILexeme* pLexeme);
     virtual ET_ReturnCode eSaveHomonyms(ILexeme* pLexeme);
     virtual ET_ReturnCode eSaveAspectPairInfo(ILexeme * pLexeme);
