@@ -128,8 +128,8 @@ namespace Hlib
         virtual bool bHasMissingForms() = 0;
         virtual void SetHasMissingForms(bool) = 0;
         virtual void AddMissingForm(const CEString& sGramHash) = 0;
-        virtual CEString sRestrictedForms() = 0;
-        virtual void SetRestrictedForms(const CEString&) = 0;
+        virtual CEString sRestrictedContexts() = 0;
+        virtual void SetRestrictedContexts(const CEString&) = 0;
         virtual CEString sContexts() = 0;
         virtual void SetContexts(const CEString&) = 0;
         virtual CEString sTrailingComment() = 0;

@@ -116,7 +116,7 @@ namespace Hlib
         bool bHasIrregularForms;
         CEString sIrregularFormsLeadComment;
         bool bHasIrregularVariants;    // true if any of irreg. forms alternates with regular
-        CEString sRestrictedForms;
+        CEString sRestrictedContexts;
         CEString sContexts;
         CEString sCognate;
         CEString sTrailingComment;
