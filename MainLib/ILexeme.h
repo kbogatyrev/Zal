@@ -173,6 +173,8 @@ namespace Hlib
         virtual bool bHasPresPassParticiple() = 0;
         virtual void SetHasPresPassParticiple(bool) = 0;
         virtual bool bSpryazhSm() = 0;
+        virtual ET_Subparadigm eSubparadigm() = 0;
+        virtual void SetSubparadigm(ET_Subparadigm) = 0;    // currently only used with numerals
 
         virtual ET_ReturnCode eAddCommonDeviation(int iValue, bool bIsOptional) = 0;
         virtual bool bFindCommonDeviation(int iNum, bool& bIsOptional) = 0;
