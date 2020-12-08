@@ -120,7 +120,7 @@ namespace Hlib
         CEString sContexts;
         CEString sCognate;
         CEString sTrailingComment;
-
+        ET_Subparadigm eSubparadigm;    // currently only used with numerals
         bool bHasPresPassParticiple;
 
         // From inflection table:
