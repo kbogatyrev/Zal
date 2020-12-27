@@ -134,7 +134,7 @@ namespace Hlib
         virtual void SetContexts(const CEString&) = 0;
         virtual CEString sTrailingComment() = 0;
         virtual void SetTrailingComment(const CEString&) = 0;
-        virtual int iInflectionId() = 0;
+        virtual long long llInflectionId() = 0;
         virtual void SetInflectionId(int) = 0;
         virtual bool bPrimaryInflectionGroup() = 0;
         virtual void SetPrimaryInflectionGroup(bool) = 0;

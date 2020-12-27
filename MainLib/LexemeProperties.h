@@ -124,7 +124,7 @@ namespace Hlib
         bool bHasPresPassParticiple;
 
         // From inflection table:
-        int iInflectionId;
+        long long llInflectionId;
         bool bPrimaryInflectionGroup;
         int iType;
         ET_AccentType eAccentType1;

@@ -84,6 +84,7 @@ public:
     virtual ET_ReturnCode eSaveAspectPairInfo(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveP2Info(ILexeme * pLexeme);
     virtual ET_ReturnCode eUpdateDescriptorInfo(ILexeme * pLexeme);
+    virtual ET_ReturnCode eSaveDescriptorInfo(ILexeme* pLexeme);
     virtual ET_ReturnCode eSaveCommonDeviation(ILexeme * pLexeme);
     virtual ET_ReturnCode eSaveInflectionInfo(ILexeme * pLexeme);
 //    virtual ET_ReturnCode eSaveMissingFormHashes(ILexeme * pLexeme);
