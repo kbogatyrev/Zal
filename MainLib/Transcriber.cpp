@@ -1,4 +1,6 @@
-﻿#include <memory>
+﻿#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+
+#include <memory>
 
 #include "Transcriber.h"
 #include "SqliteWrapper.h"

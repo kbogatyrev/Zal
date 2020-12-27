@@ -1,4 +1,6 @@
-﻿#include <vector>
+﻿#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+
+#include <vector>
 #include "EString.h"
 #include "SqliteWrapper.h"
 #include "ParsingTree.h"
