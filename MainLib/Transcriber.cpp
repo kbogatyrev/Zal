@@ -35,7 +35,7 @@ ET_ReturnCode CTranscriber::eFormatInputs(CEString& sSource, PairInput& pairPars
     //
 
 
-    if (sSource.bRegexMatch(L"^[абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+\\s*\\+\\s*[абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+\\s*"))
+    if (sSource.bRegexMatch(L"^([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*\\+\\s*([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*"))
     {
         if (sSource.uiGetNumOfRegexMatches() != 2)
         {
@@ -208,22 +208,35 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             m_pDb->GetData(4, sMorphemeType);
             if (!sMorphemeType.bIsEmpty())
             {
-                vector<CEString> vecMorphemeTypes;
-                eRet = eSplitSource(sMorphemeType, vecMorphemeTypes);
+                vector<CEString> vecMorphemeTypeStrings;
+                eRet = eSplitSource(sMorphemeType, vecMorphemeTypeStrings);
                 if (eRet != H_NO_ERROR)
                 {
                     ERROR_LOG(L"unable to split morphemic contexts string.");
                     continue;
                 }
-                for (auto sMorphemeType : vecMorphemeTypes)
+
+                MorphemicContextAtom context;
+                for (auto sMorphemeType : vecMorphemeTypeStrings)
                 {
                     auto itMorphemeType = m_mapStringToMorphemicContext.find(sMorphemeType);
-                    if (m_mapStringToMorphemicContext.end() == itMorphemeType)
+                    if (itMorphemeType != m_mapStringToMorphemicContext.end())
                     {
-                        ERROR_LOG(L"Morpheme not recognized.");
-                        continue;
+                        context = itMorphemeType->second;
                     }
-                    rule.m_setMorphemicContexts.insert((*itMorphemeType).second);
+                    else
+                    {
+                        if (CEString::bStringOverAlphabet(sMorphemeType, m_LowerCaseCyrillic))
+                        {
+                            context = sMorphemeType;
+                        }
+                        else
+                        {
+                            ERROR_LOG(L"Phonemic context characters not recognized.");
+                            continue;
+                        }
+                    }
+                    rule.m_setMorphemicContexts.insert(context);
                 }
             }
 
