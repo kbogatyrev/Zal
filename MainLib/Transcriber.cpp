@@ -34,7 +34,6 @@ ET_ReturnCode CTranscriber::eFormatInputs(CEString& sSource, PairInput& pairPars
     //  E.g., "a+b" --> "ab" = 'these two characters together, "ab" --> vector of chars = 'any of the chars in the vector
     //
 
-
     if (sSource.bRegexMatch(L"^([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*\\+\\s*([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*"))
     {
         if (sSource.uiGetNumOfRegexMatches() != 2)
@@ -45,7 +44,6 @@ ET_ReturnCode CTranscriber::eFormatInputs(CEString& sSource, PairInput& pairPars
 
         pairParsedInputs.first = sSource.sGetRegexMatch(0);
         pairParsedInputs.second = sSource.sGetRegexMatch(1);
-
     }
     else
     {
@@ -316,7 +314,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             m_mapRules[pairInputs].push_back(rule);
         }
     }
-    catch (CException & ex)
+    catch (CException& ex)
     {
         ERROR_LOG(ex.szGetDescription());
         return H_EXCEPTION;
@@ -325,3 +323,103 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
     return H_NO_ERROR;
 
 }       //  eLoadTranscriptionRules()
+
+ET_ReturnCode CTranscriber::eTranscribe()
+{
+    if (!m_pDb)
+    {
+        ERROR_LOG(L"No database.");
+        return H_ERROR_DB;
+    }
+
+    vector<pair<long long, long long>> vecIds;
+
+    CEString sQuery(L"SELECT id, line_id FROM tact_group");
+    m_pDb->PrepareForSelect(sQuery);
+    while (m_pDb->bGetRow())
+    {
+        long long llId = -1;
+        long long llLineId = -1;
+        m_pDb->GetData(0, llId);
+        m_pDb->GetData(1, llLineId);
+        if (llId < 0)
+        {
+            ERROR_LOG(L"Illegal tact group ID.");
+            continue;
+        }
+
+        if (llLineId < 0)
+        {
+            ERROR_LOG(L"Illegal line ID.");
+            continue;
+        }
+
+        vecIds.push_back(make_pair(llId, llLineId));
+    }
+
+    m_pDb->Finalize();
+
+    if (vecIds.size() < 1)
+    {
+        ERROR_LOG(L"No tact groups.");
+        return H_FALSE;
+    }
+
+    CEString sQueryBase = L"SELECT first_word_position, main_word, num_of_words, source, gram_hash, num_of_syllables, \
+                            stressed_syllable, reverse_stressed_syllable, secondary_stressed_syllable  \
+                            FROM tact_group ";
+
+    clock_t dbProcTime = clock();
+
+    for (auto pairIds : vecIds)
+    {
+        vector<StWord> vecTactGroup;
+
+        CEString sQuery = sQueryBase + L"WHERE id = " + CEString::sToString(pairIds.first) +    \
+                          L" AND line_id = " + CEString::sToString(pairIds.second) + L";";
+        m_pDb->PrepareForSelect(sQuery);
+        while (m_pDb->bGetRow())
+        {
+            StWord stWord;
+            stWord.llTactGroupId = pairIds.first;
+            stWord.llLineId = pairIds.second;
+            m_pDb->GetData(0, stWord.iPosition);
+            m_pDb->GetData(1, stWord.iMainWord);
+            m_pDb->GetData(2, stWord.iNumOfWords);
+            m_pDb->GetData(3, stWord.sSource);
+            m_pDb->GetData(4, stWord.sGramHash);
+            m_pDb->GetData(5, stWord.iNumOfSyllables);
+            m_pDb->GetData(6, stWord.iStressedSyllable);
+            m_pDb->GetData(7, stWord.iReverseStressedSyllable);
+            m_pDb->GetData(8, stWord.iSecondaryStressSyllable);
+
+            vecTactGroup.push_back(stWord);
+        }
+        m_pDb->Finalize();
+
+    }
+
+    auto dDuration = (clock() - dbProcTime)/(double)CLOCKS_PER_SEC;
+    CEString msg(L"Time: ");
+    msg += CEString::sToString(dDuration);
+    ::MessageBoxW(NULL, msg, L"Transcription", MB_ICONINFORMATION);
+
+    return H_NO_ERROR;
+
+}       //  Transcribe()
+
+ET_ReturnCode eTranscribeTactGroup(vector<StWord>& vecTactGroup)
+{
+    for (auto& stWord : vecTactGroup)
+    {
+        for (int iAt = 0; iAt < (int)stWord.sSource.uiLength(); ++iAt)
+        {
+            auto chr = stWord.sSource.chrGetAt(iAt);
+//  1. check for this and next char
+//  2. check for this char only
+//  3. error if neither
+        }
+    }
+
+    return H_NO_ERROR;
+}
