@@ -3,6 +3,7 @@
 
 #include <set>
 #include <map>
+#include <memory>
 
 #include "Enums.h"
 #include "EString.h"
@@ -89,7 +90,7 @@ namespace Hlib
     class CParsingTree
     {
     public:
-        CParsingTree(CSqlite * pDb);
+        CParsingTree(shared_ptr<CSqlite> pDb);
         ~CParsingTree();
 
     public:
@@ -110,7 +111,7 @@ namespace Hlib
 
     protected:
         CParsingTree() {};
-        ET_ReturnCode eLoad(CSqlite * pDb);
+        ET_ReturnCode eLoad(shared_ptr<CSqlite> pDb);
         void CParsingTree::AddLevel(unsigned int uiOffset, StNode * pParent, vector<CEString> vecEndings);
         void Traverse(StNode * pRoot, const CEString& sWord);
         ET_ReturnCode eTraverseAndDelete(StNode * pRoot);

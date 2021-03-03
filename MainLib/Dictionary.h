@@ -1,6 +1,10 @@
 #ifndef C_DICTIONARY_H_INCLUDED
 #define C_DICTIONARY_H_INCLUDED
 
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+
+#include <memory>
+
 #include "Enums.h"
 #include "EString.h"
 #include "IDictionary.h"
@@ -97,8 +101,8 @@ public:
 
 private:
     CEString m_sDbPath;
-    CSqlite * m_pDb;
-    CParser * m_pParser;
+    shared_ptr<CSqlite> m_pDb;
+    shared_ptr<CParser> m_pParser;
     CAnalytics* m_pAnalytics;
     CVerifier * m_pVerifier;
     vector<CLexeme *> m_vecLexemes;

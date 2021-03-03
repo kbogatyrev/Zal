@@ -1,6 +1,7 @@
 #ifndef C_PARSER_H_INCLUDED
 #define C_PARSER_H_INCLUDED
 
+#include <memory>
 #include <vector>
 
 #include "Enums.h"
@@ -19,7 +20,7 @@ class CParser : public IParser
 {
 
 public:
-    CParser(CSqlite *);
+    CParser(shared_ptr<CSqlite>);
     ~CParser();
 
 public:
@@ -32,12 +33,12 @@ public:
     ET_ReturnCode eGetFirstWordForm(CWordForm *& wordForm);
     ET_ReturnCode eGetNextWordForm(CWordForm *& wordForm);
 
-    void SetDb(CSqlite * pDb);
+    void SetDb(shared_ptr<CSqlite> pDb);
 
 private:
     CParser();  // no use
 
-    CSqlite * m_pDb;
+    shared_ptr<CSqlite> m_pDb;
     CParsingTree * m_pEndingsTree;
     vector<CWordForm *> m_vecWordForms;
     vector<CWordForm *>::iterator m_itCurrentWordForm;

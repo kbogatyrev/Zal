@@ -10,7 +10,7 @@ using namespace Hlib;
 static CEString sSelectBase
 (L"SELECT DISTINCT d.id, e.ending_string, number, case_value, stress FROM endings AS e INNER JOIN ending_data AS d ON (e.id = d.ending_id)");
 
-CParsingTree::CParsingTree(CSqlite * pDb)
+CParsingTree::CParsingTree(shared_ptr<CSqlite> pDb)
 {
     if (NULL == pDb)
     {
@@ -110,7 +110,7 @@ ET_ReturnCode CParsingTree::eIsEmptyEnding(__int64 llEndingId)
     }
 }
 
-ET_ReturnCode CParsingTree::eLoad(CSqlite * pDb)
+ET_ReturnCode CParsingTree::eLoad(shared_ptr<CSqlite> pDb)
 {
     // ся/сь!!!!!!
     // common dev????

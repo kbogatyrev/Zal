@@ -16,7 +16,7 @@ CAnalytics::CAnalytics() : m_pDb(nullptr), m_llTextDbId(-1)
     eInit();
 };
 
-CAnalytics::CAnalytics(CSqlite* pDb, CParser* pParser) : m_pDb(pDb), m_pParser(pParser), m_llTextDbId(-1)
+CAnalytics::CAnalytics(shared_ptr<CSqlite> pDb, shared_ptr<CParser> pParser) : m_pDb(pDb), m_pParser(pParser), m_llTextDbId(-1)
 {
     eInit();
 }
