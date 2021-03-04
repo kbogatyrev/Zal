@@ -35,7 +35,7 @@ public:
     virtual ET_ReturnCode eGetNextLexeme(CLexeme*& pLexeme);
 
 private:
-    vector<CLexeme*>::iterator m_itCurrentLexeme;
+    vector<shared_ptr<CLexeme>>::iterator m_itCurrentLexeme;
     CDictionary * m_pDictionary;
 };
 
@@ -105,9 +105,9 @@ private:
     shared_ptr<CParser> m_pParser;
     shared_ptr<CAnalytics> m_pAnalytics;
     shared_ptr<CVerifier> m_pVerifier;
-    vector<CLexeme *> m_vecLexemes;
-    vector<CLexeme *>::iterator m_itCurrentLexeme;
-    vector<CWordForm *>::iterator m_itCurrentWordForm;
+    vector<shared_ptr<CLexeme>> m_vecLexemes;
+    vector<shared_ptr<CLexeme>>::iterator m_itCurrentLexeme;
+    vector<shared_ptr<CWordForm>>::iterator m_itCurrentWordForm;
 
     // Populate DB tables
     ET_ReturnCode ePopulateStemsTable();
