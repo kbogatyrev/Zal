@@ -184,9 +184,9 @@ ET_ReturnCode CAnalytics::eParseMetadata(const CEString& sConstMetadata)
         }
 
         auto sKey = sKeyValPair.sGetField(0);
-        sKey.Trim();
+        sKey.Trim(L" ");
         auto sValue = sKeyValPair.sGetField(1);
-        sKey.Trim();
+        sValue.Trim(L" ");
 
         m_vecMetadataKeyValPairs.push_back(make_pair(sKey, sValue));
     }
