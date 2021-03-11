@@ -652,16 +652,27 @@ ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
             if (bIsProclitic(wordForm))
             {
                 // insert before 1st autonomously stressed word, adjust iFirstWordNum
+                stTg.sSource = wordForm.m_sWordForm;
                 ++stTg.iMainWordPos;
                 ++stTg.iNumOfWords;
 
             }
-            else if (bIsEnclitic(wordForm))
+            else if (bIsEnclitic(wordForm)) // TODO: do we really need to distinguish btw enclitic and main word?
             {
+                if (stTg.sSource.uiLength() > 0)
+                {
+                    stTg.sSource += L" ";
+                }
+                stTg.sSource += wordForm.m_sWordForm;
                 ++stTg.iNumOfWords;
             }
             else
             {
+                if (stTg.sSource.uiLength() > 0)
+                {
+                    stTg.sSource += L" ";
+                }
+                stTg.sSource += wordForm.m_sWordForm;
                 ++stTg.iNumOfWords;
             }
 
