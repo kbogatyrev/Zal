@@ -116,7 +116,7 @@ private:
 
     // Execute DB query and retrieve results
     ET_ReturnCode eQueryDb(const CEString& sSelect, uint64_t& uiQuertHandle);
-    ET_ReturnCode eGetSingleRow(StLexemeProperties&, uint64_t uiQuertHandle);
+    ET_ReturnCode eGetSingleRow(StLexemeProperties&, uint64_t uiQuertHandle, bool bIsSpryazhSm = false);
 
     ET_ReturnCode eReadFromDb(__int64 llLexemeId);
     ET_ReturnCode eReadFromDb(const CEString& sStem);

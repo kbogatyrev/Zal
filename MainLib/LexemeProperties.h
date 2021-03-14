@@ -54,7 +54,8 @@ namespace Hlib
             iStemAugment(-1),
             iInflectedParts(-1),
             bIsSecondPart(false),
-            iSpryazhSmRefPrefixLength(-1)
+            iSpryazhSmRefPrefixLength(-1),
+            bSpryazhSmNoAspectPair(false)
         {
                 sSourceForm.SetVowels(g_szRusVowels);
                 sGraphicStem.SetVowels(g_szRusVowels);
@@ -138,6 +139,7 @@ namespace Hlib
         int iStemAugment;
         int iInflectedParts;
         bool bIsSecondPart;
+        bool bSpryazhSmNoAspectPair;
 
         //
         // Verb stems & infinitive:
