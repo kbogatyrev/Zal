@@ -445,7 +445,7 @@
                 {
                 "COMMENT": "$66: бёдра, топь",
                 "RIGHT_CONTEXTS": [ "ь + BOUNDARY_WORD", "яёюи" ],
-                "TARGET": "B_SOFT"
+                "TARGET": "SOFTEN"
                 }
             ],
             "бвгджз": [
@@ -488,11 +488,24 @@
                 }
             ],
             "дт": [
-                {
-                    "COMMENT": "$92: Оттиск, оттёр, отдЕл, поддЕл",
-                    "RIGHT_CONTEXTS": [ "D_SOFT", "T_SOFT" ],
-                    "TARGET": "SOFTEN + GEMINATE" 
-                }
+              {
+                "COMMENT": "$92: Оттиск, оттёр, отдЕл, поддЕл",
+                "RIGHT_CONTEXTS": [ "D_SOFT", "T_SOFT", "S_SOFT", "Z_SOFT" ],
+                "TARGET": "SOFTEN + GEMINATE"
+              },
+              {
+                "COMMENT": "$94: ПЕтли, мЕдлить",
+                "RIGHT_CONTEXTS": [ "L_SOFT" ],
+                "TARGET": "SOFTEN"
+              }
+            ],
+            "д": [
+              {
+                "COMMENT": "$93: БрАтний, зАдний, вОдник; блуднИца, спУтник, голубЯтни, наслЕдник, лЕдник, карЕтник",
+                "COMMENT_KB": "usually on root/suffix boundary; variant: may not soften on prefix/root boundary: поднёс; usually no softening after hard р, л: курОртник, усЕрднее",
+                "RIGHT_CONTEXTS": [ "N_SOFT" ],
+                "TARGET": "SOFTEN"
+              } 
             ],
             "жцш": [
                 {
@@ -504,7 +517,7 @@
                 {
                     "COMMENT": "$90: вознИк, воссЕл, раздЕл, разнёс, растЯнут, истёк, издЕржат, из селА, из дЕрева, бессИльный, бездЕльник, без нИх, через сИто",
                     "RIGHT_CONTEXTS": [ "D_SOFT", "N_SOFT", "S_SOFT", "T_SOFT" ],
-                    "MORPHEMES": [ "воз-", "раз-", "роз-", "из-", "без-", "через-", "чрез-" ],
+                    "MORPHEMES": [ "воз", "раз", "роз", "из", "без", "через", "чрез" ],
                     "TARGET": "SOFTEN",
                     "STRENGTH": "RECOMMENDED"
                 }
@@ -541,19 +554,21 @@
                     "TARGET": "SOFTEN"
                 }
             ],
-            "VOICED": [
+            "бвгджз": [
                 {
                     "COMMENT": "$82: пруд тот, пруд Этот, пруд такОй; озЯб он, продрОг он, морОз удАрил, кровь идёт, снег идёт, слов Этих; гОрод Ростов, плодОв рАзных, моркОвь растёт; здорОв ли ты, рожь ли Это, в глубь лЕса, нарЕжь лимОн, не загрЫз ли волк",
                     "RIGHT_CONTEXTS": [ "VOICELESS", "VOWEL + NOT BOUNDARY_SYNTAGM", "вйлмнр + NOT BOUNDARY_SYNTAGM" ],
                     "TARGET": "DEVOICE"
                 }
             ],
-            "VOICELESS": [
-                {
-                    "COMMENT": "$86: прОсьба, косьбА, сбыть, сбыт, сгорЕл, с горЫ, сзАди, молотьбА, отгадАть, Отбыл, отдалА, тОт же, к женЕ, тАкже, вокзАл, анекдОт, экзАмен, к горЕ",
-                    "RIGHT_CONTEXTS": [ "бгджз" ],
-                    "TARGET": "VOICE"
-                }
-            ]
+          "пфктшс": [
+            {
+              "COMMENT": "$86: прОсьба, косьбА, сбыть, сбыт, сгорЕл, с горЫ, сзАди, молотьбА, отгадАть, Отбыл, отдалА, тОт же, к женЕ, тАкже, вокзАл, анекдОт, экзАмен, к горЕ",
+              "COMMENT_KB": "only с, т, к annested in the dictionary",
+              "RIGHT_CONTEXTS": [ "бгджз" ],
+              "TARGET": "VOICE"
+            }
+          ]
         }
 }
+ 
