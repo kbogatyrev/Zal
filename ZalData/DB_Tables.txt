@@ -20,7 +20,9 @@ CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER,
 
 CREATE TABLE irregular_stress (id INTEGER PRIMARY KEY ASC, form_id INTEGER, position INTEGER, is_primary BOOLEAN, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (form_id) REFERENCES irregular_forms (id));
 
-CREATE TABLE spryazh_sm_headwords (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, ref_descriptor_id INTEGER, FOREIGN KEY (headword_id) REFERENCES headword(id), FOREIGN KEY (ref_descriptor_id) REFERENCES descriptor(id));
+--CREATE TABLE spryazh_sm_headwords (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, ref_descriptor_id INTEGER, FOREIGN KEY (headword_id) REFERENCES headword(id), FOREIGN KEY (ref_descriptor_id) REFERENCES descriptor(id));
+CREATE TABLE spryazh_sm_headwords (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, ref_descriptor_id INTEGER, no_aspect_pair BOOLEAN, FOREIGN KEY (headword_id) REFERENCES headword(id), FOREIGN KEY (ref_descriptor_id) REFERENCES descriptor(id))
+
 CREATE TABLE endings (id INTEGER PRIMARY KEY ASC, ending_string TEXT);
 
 CREATE TABLE ending_data (id INTEGER PRIMARY KEY ASC, ending_id INTEGER, inflection_class INTEGER, inflection_type INTEGER, case_value INTEGER, person INTEGER, gender INTEGER, animacy INTEGER, stress INTEGER, number INTEGER, stem_augment BOOLEAN DEFAULT (0), common_deviation INTEGER, conjugation INTEGER, tense INTEGER, is_reflexive BOOLEAN DEFAULT(0), stem_auslaut INTEGER, adjective_pronominal_decl_subtype INTEGER, FOREIGN KEY (ending_id) REFERENCES endings (id));
@@ -79,7 +81,7 @@ CREATE TABLE words_in_line (id INTEGER PRIMARY KEY ASC, line_id INTEGER, word_po
 CREATE TABLE word_to_wordform (id INTEGER PRIMARY KEY ASC, word_in_line_id INTEGER, wordform_id INTEGER, FOREIGN KEY (word_in_line_id) REFERENCES words_in_line(id), FOREIGN KEY (wordform_id) REFERENCES wordforms(id));
 
 -- this table is added to simplify retrieval of transcription and stress positions
-CREATE TABLE tact_group (id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, main_word INTEGER, num_of_words INTEGER, source TEXT, gram_hash TEXT, transcription TEXT, num_of_syllables INTEGER, stressed_syllable INTEGER, reverse_stressed_syllable INTEGER, secondary_stressed_syllable INTEGER, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
+CREATE TABLE tact_group (id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, main_word INTEGER, num_of_words INTEGER, source TEXT, transcription TEXT, num_of_syllables INTEGER, stressed_syllable INTEGER, reverse_stressed_syllable INTEGER, secondary_stressed_syllable INTEGER, FOREIGN KEY (line_id) REFERENCES lines_in_text(id));
 
 CREATE TABLE word_to_tact_group (id INTEGER PRIMARY KEY ASC, word_to_wordform_id INTEGER, tact_group_id INTEGER, position_in_tact_group INTEGER, FOREIGN KEY (word_to_wordform_id) REFERENCES word_to_wordform(id));
 
