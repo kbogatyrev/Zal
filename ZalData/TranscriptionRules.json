@@ -18,7 +18,7 @@
                     "COMMENT": "$38: часы, часОк, чадИть, частИт, щадИть, щавЕль",
                     "STRESS": "FIRST_PRETONIC",
                     "LEFT_CONTEXTS": [ "чщ" ],
-                    "TARGET": "PRETONIC_IE"
+                    "TARGET": "PRETONIC_SOFT_IE"
                 },
                 {
                     "COMMENT": "$42: машинИст, паровОз, маловАт, разновЕсы, накурИть, залучИть, самовАр, шаловлИв, жалюзИ, царедвОрцы",
@@ -86,16 +86,16 @@
                     "TARGET": "PRETONIC_HARD_IE"
                 },
                 {
-                    "COMMENT": "$37: несИ, несТи, леснИк, несёт, ведёт, плетЕнь, бежАть, чесАть, чеснОк, щенОк",
+                    "COMMENT": "$37: несИ, нестИ, леснИк, несёт, ведёт, плетЕнь, бежАть, чесАть, чеснОк, щенОк",
                     "STRESS": "FIRST_PRETONIC",
                     "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
-                    "TARGET": "PRETONIC_HARD_IE"
+                    "TARGET": "PRETONIC_SOFT_IE"
                 },
                 {
                     "COMMENT": "$39: ездА, едИм, ежОм, ершОм, енОт; поедИм",
                     "STRESS": "FIRST_PRETONIC",
                     "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
-                    "TARGET": "J + PRETONIC_IE"
+                    "TARGET": "J + PRETONIC_SOFT_IE"
                 },
                 {
                     "COMMENT": "$46: переведенА, перенесУ, веселИть, деревЕнь, беговОй, лесникА, седовАт, человЕк, четырёх, счетовОд, щекотАть",
@@ -398,13 +398,13 @@
                     "COMMENT": "$37: мяснИк, взялИсь, рябИну, тянИ, вязАть, пятёрка, лягУшки",
                     "STRESS": "FIRST_PRETONIC",
                     "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
-                    "TARGET": "PRETONIC_IE"
+                    "TARGET": "PRETONIC_SOFT_IE"
                 },
                 {
                     "COMMENT": "$39: язЫк, яйцО, ярлЫк, яснА, янвАрь, уяснИть",
                     "STRESS": "FIRST_PRETONIC",
                     "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
-                    "TARGET": "J + PRETONIC_IE"
+                    "TARGET": "J + PRETONIC_SOFT_IE"
                 },
                 {
                     "COMMENT": "$46: мясникА, пятачОк, рябовАт, тяжеловАт",

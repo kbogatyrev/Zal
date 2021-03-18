@@ -8,7 +8,7 @@
 
 using namespace Hlib;
 
-CTranscriber::CTranscriber(CSqlite* pCSqlite) : m_pDb(pCSqlite)
+CTranscriber::CTranscriber(shared_ptr<CSqlite> pCSqlite) : m_pDb(pCSqlite)
 {
     if (!m_pDb)
     {
@@ -28,6 +28,7 @@ CTranscriber::CTranscriber(CSqlite* pCSqlite) : m_pDb(pCSqlite)
     }
 }
 
+/*
 ET_ReturnCode CTranscriber::eFormatInputs(CEString& sSource, PairInput& pairParsedInputs)
 {
     //
@@ -52,6 +53,7 @@ ET_ReturnCode CTranscriber::eFormatInputs(CEString& sSource, PairInput& pairPars
 
     return H_NO_ERROR;
 }
+*/
 
 ET_ReturnCode CTranscriber::eSplitSource(CEString& sSource, vector<CEString>& vecTarget)
 {
@@ -154,22 +156,50 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
     ET_ReturnCode eRet = H_NO_ERROR;
 
     static const CEString sQuery
-    (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.right_contexts, tr.morpheme_type,  tr.subparadigm, \
-    tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
-    AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
+        (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.right_contexts, tr.morpheme_type,  tr.subparadigm, \
+        tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
+        AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
 
     try
     {
         m_pDb->PrepareForSelect(sQuery);
         while (m_pDb->bGetRow())
         {
-            CEString sInputs;
+            StRule stRule;
+
+            CEString sInputs, sKeys;
             m_pDb->GetData(0, sInputs);
 
-            PairInput pairInputs;
-            eRet = eFormatInputs(sInputs, pairInputs);
+            //
+            //  E.g., "a+b" --> "ab" = 'these two characters together, "ab" --> vector of chars = 'any of the chars in the vector
+            //
+            if (sInputs.bRegexMatch(L"^([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*\\+\\s*([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*"))
+            {
+                if (sInputs.uiGetNumOfRegexMatches() != 2)
+                {
+                    ERROR_LOG(L"Unexpected number of \"+\"-separated strings");
+                    return H_ERROR_UNEXPECTED;
+                }
 
-            StRule rule;
+                sKeys = sInputs.sGetRegexMatch(0);
+                stRule.sFollowedBy = sInputs.sGetRegexMatch(1);
+            }
+            else
+            {
+                if (sInputs.bRegexMatch(L"^([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*"))
+                {
+                    sKeys = sInputs.sGetRegexMatch(0);
+                }
+//                else if (sInputs.bRegexMatch(L"^([A-Z]+)"))
+//                {
+//                    sKeys = sInputs.sGetRegexMatch(0);
+//                }
+                else
+                {
+                    ERROR_LOG(L"Unable to parse transcription rule inputs.");
+                    continue;
+                }
+            }
 
             // Stress (a string)
             CEString sStressType;
@@ -182,7 +212,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Stress context not recognized.");
                     continue;
                 }
-                rule.m_setStressContexts.insert((*itStressType).second);
+                stRule.m_setStressContexts.insert((*itStressType).second);
             }
 
             // Left contexts
@@ -190,7 +220,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             m_pDb->GetData(2, sLeftContexts);
             if (!sLeftContexts.bIsEmpty())
             {
-                eRet = eParseContexts(sLeftContexts, rule.m_setLeftContexts);
+                eRet = eParseContexts(sLeftContexts, stRule.m_setLeftContexts);
             }
 
             // Right contexts
@@ -198,7 +228,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             m_pDb->GetData(3, sRightContexts);
             if (!sRightContexts.bIsEmpty())
             {
-                eRet = eParseContexts(sRightContexts, rule.m_setRightContexts);
+                eRet = eParseContexts(sRightContexts, stRule.m_setRightContexts);
             }
 
             // Morphemic context
@@ -234,7 +264,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                             continue;
                         }
                     }
-                    rule.m_setMorphemicContexts.insert(context);
+                    stRule.m_setMorphemicContexts.insert(context);
                 }
             }
 
@@ -249,7 +279,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Subparadigm not recognized.");
                     continue;
                 }
-                rule.m_setSubparadigms.insert((*itSubparadigm).second);
+                stRule.m_setSubparadigms.insert((*itSubparadigm).second);
             }
 
             // Gender
@@ -263,7 +293,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Gender not recognized.");
                     continue;
                 }
-                rule.m_setGenders.insert((*itGender).second);
+                stRule.m_setGenders.insert((*itGender).second);
             }
 
             // Number 
@@ -277,7 +307,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Number not recognized.");
                     continue;
                 }
-                rule.m_setNumbers.insert((*itNumber).second);
+                stRule.m_setNumbers.insert((*itNumber).second);
             }
 
             // Case 
@@ -291,7 +321,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Case not recognized.");
                     continue;
                 }
-                rule.m_setCases.insert((*itCase).second);
+                stRule.m_setCases.insert((*itCase).second);
             }
 
             // Strength
@@ -305,13 +335,16 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Strength not recognized.");
                     continue;
                 }
-                rule.m_eStrength = (*itStrength).second;
+                stRule.m_eStrength = (*itStrength).second;
             }
 
             // IsVariant
-            m_pDb->GetData(9, rule.m_bIsVariant);
+            m_pDb->GetData(9, stRule.m_bIsVariant);
 
-            m_mapRules[pairInputs].push_back(rule);
+            for (int iAt = 0; iAt < (int)sKeys.uiLength(); ++iAt)
+            {
+                m_mapRules[sKeys[iAt]].push_back(stRule);
+            }
         }
     }
     catch (CException& ex)
@@ -332,94 +365,197 @@ ET_ReturnCode CTranscriber::eTranscribe()
         return H_ERROR_DB;
     }
 
-    vector<pair<long long, long long>> vecIds;
-
-    CEString sQuery(L"SELECT id, line_id FROM tact_group");
-    m_pDb->PrepareForSelect(sQuery);
-    while (m_pDb->bGetRow())
-    {
-        long long llId = -1;
-        long long llLineId = -1;
-        m_pDb->GetData(0, llId);
-        m_pDb->GetData(1, llLineId);
-        if (llId < 0)
-        {
-            ERROR_LOG(L"Illegal tact group ID.");
-            continue;
-        }
-
-        if (llLineId < 0)
-        {
-            ERROR_LOG(L"Illegal line ID.");
-            continue;
-        }
-
-        vecIds.push_back(make_pair(llId, llLineId));
-    }
-
-    m_pDb->Finalize();
-
-    if (vecIds.size() < 1)
-    {
-        ERROR_LOG(L"No tact groups.");
-        return H_FALSE;
-    }
-
-    CEString sQueryBase = L"SELECT first_word_position, main_word, num_of_words, source, gram_hash, num_of_syllables, \
-                            stressed_syllable, reverse_stressed_syllable, secondary_stressed_syllable  \
-                            FROM tact_group ";
+    CEString sQuery = L"SELECT id, line_id, first_word_position, main_word, num_of_words, source, num_of_syllables, \
+                        stressed_syllable, reverse_stressed_syllable, secondary_stressed_syllable FROM tact_group \
+                        ORDER BY id, line_id, first_word_position";
 
     clock_t dbProcTime = clock();
 
-    for (auto pairIds : vecIds)
+    long long llCount = 0;
+
+    m_pDb->PrepareForSelect(sQuery);
+    while (m_pDb->bGetRow())
     {
-        vector<StWord> vecTactGroup;
+        StTactGroup stTg;
+        m_pDb->GetData(0, stTg.llTactGroupId);
+        m_pDb->GetData(1, stTg.llLineId);
+        m_pDb->GetData(2, stTg.iFirstWordPos);
+        m_pDb->GetData(3, stTg.iMainWordPos);
+        m_pDb->GetData(4, stTg.iNumOfWords);
+        m_pDb->GetData(5, stTg.sSource);
+        m_pDb->GetData(6, stTg.iNumOfSyllables);
+        m_pDb->GetData(7, stTg.iStressedSyllable);
+        m_pDb->GetData(8, stTg.iReverseStressedSyllable);
+        m_pDb->GetData(9, stTg.iSecondaryStressedSyllable);
 
-        CEString sQuery = sQueryBase + L"WHERE id = " + CEString::sToString(pairIds.first) +    \
-                          L" AND line_id = " + CEString::sToString(pairIds.second) + L";";
-        m_pDb->PrepareForSelect(sQuery);
-        while (m_pDb->bGetRow())
-        {
-            StWord stWord;
-            stWord.llTactGroupId = pairIds.first;
-            stWord.llLineId = pairIds.second;
-            m_pDb->GetData(0, stWord.iPosition);
-            m_pDb->GetData(1, stWord.iMainWord);
-            m_pDb->GetData(2, stWord.iNumOfWords);
-            m_pDb->GetData(3, stWord.sSource);
-            m_pDb->GetData(4, stWord.sGramHash);
-            m_pDb->GetData(5, stWord.iNumOfSyllables);
-            m_pDb->GetData(6, stWord.iStressedSyllable);
-            m_pDb->GetData(7, stWord.iReverseStressedSyllable);
-            m_pDb->GetData(8, stWord.iSecondaryStressSyllable);
+        eTranscribeTactGroup(stTg);
 
-            vecTactGroup.push_back(stWord);
-        }
-        m_pDb->Finalize();
-
+        if (++llCount % 1000 == 0)
+            cout << ".";
     }
+    m_pDb->Finalize();
 
     auto dDuration = (clock() - dbProcTime)/(double)CLOCKS_PER_SEC;
     CEString msg(L"Time: ");
     msg += CEString::sToString(dDuration);
-    ::MessageBoxW(NULL, msg, L"Transcription", MB_ICONINFORMATION);
+    cout << endl << endl << llCount << " tact groups" << endl << "Time: " << dDuration<< " seconds" << endl;
+//    ::MessageBoxW(NULL, msg, L"Transcription", MB_ICONINFORMATION);
+    ERROR_LOG(msg);
 
     return H_NO_ERROR;
 
 }       //  Transcribe()
 
-ET_ReturnCode eTranscribeTactGroup(vector<StWord>& vecTactGroup)
+ET_ReturnCode CTranscriber::eTranscribeTactGroup(StTactGroup& stTactGroup)
 {
-    for (auto& stWord : vecTactGroup)
+
+    stTactGroup.sSource.SetVowels(g_szRusVowels);
+
+    int iAt = 0;
+    while (iAt < (int)stTactGroup.sSource.uiLength())
     {
-        for (int iAt = 0; iAt < (int)stWord.sSource.uiLength(); ++iAt)
+        if (CEString::bIsVowel(stTactGroup.sSource[iAt]))
         {
-            auto chr = stWord.sSource.chrGetAt(iAt);
+            auto eRet = eHandleVowel(stTactGroup, iAt);
+        }
+/*
+        vector<StRule>* pvecRules = nullptr;
+        auto chr = stTactGroup.sSource.chrGetAt(iAt);
+        auto secondChr = ((int)stTactGroup.sSource.uiLength() > iAt + 1) ? stTactGroup.sSource.chrGetAt(iAt + 1) : L'\0';
+        pair<CEString, CEString> pairInput = make_pair(chr, secondChr);
+        pairInput.second = secondChr;
+        auto itTwoCharHit = m_mapRules.find(make_pair(chr, secondChr));
+        if (m_mapRules.end() != itTwoCharHit)
+        {
+            pvecRules = &itTwoCharHit->second;
+        }
+        else
+        {
+            auto itSingleCharHit = m_mapRules.find(make_pair(chr, L""));
+            if (m_mapRules.end() != itSingleCharHit)
+            {
+                pvecRules = &itSingleCharHit->second;
+            }
+            else
+            {
+                // ERROR
+                int i = 0;
+            }
+        }
+        int ii = 0;
+        iAt++;
+    }
+
+    for (int iAt = 0; iAt < (int)stWord.sSource.uiLength(); ++iAt)
+    {
+        auto chr = stWord.sSource.chrGetAt(iAt);
+        auto secondChr = ((int)stWord.sSource.uiLength() > iAt + 1) ? stWord.sSource.chrGetAt(iAt + 1) : L'\0';
+        auto itRule = m_mapRules.find(make_pair)
 //  1. check for this and next char
 //  2. check for this char only
 //  3. error if neither
-        }
+    }
+*/
+        ++iAt;
     }
 
     return H_NO_ERROR;
 }
+
+ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
+{
+    if (iPos < 0 || iPos >= (int)stTg.sSource.uiLength())
+    {
+        CEString sMsg(L"Illegal character position: ");
+        sMsg += CEString::sToString(iPos);
+        ERROR_LOG(sMsg);
+        return H_ERROR_INVALID_ARG;
+    }
+
+    wchar_t chrVowel = stTg.sSource.chrGetAt(iPos);
+    if (!CEString::bIsVowel(chrVowel))
+    { 
+        CEString sMsg(L"Character at position ");
+        sMsg += CEString::sToString(iPos);
+        sMsg += L" is not a vowel";
+        ERROR_LOG(sMsg);
+        return H_ERROR_INVALID_ARG;
+    }
+
+    auto itRules = m_mapRules.find(chrVowel);
+    if (m_mapRules.end() == itRules)
+    {
+        CEString sMsg(L"No rules for vowel ");
+        sMsg += chrVowel;
+        return H_ERROR_UNEXPECTED;
+    }
+
+    auto eStressStatus = ET_VowelStressRelation::VOWEL_STRESS_RELATION_UNDEFINED;
+    auto eRet = eGetStressStatus(stTg, iPos, eStressStatus);
+    for (auto& stRule : itRules->second)
+    { 
+        int kiki = 0;
+    }
+
+    return H_NO_ERROR;
+}
+
+ET_ReturnCode CTranscriber::eGetStressStatus(StTactGroup& stTg, int iPos, ET_VowelStressRelation& eStressStatus)
+{
+    eStressStatus = ET_VowelStressRelation::VOWEL_STRESS_RELATION_UNDEFINED;
+
+    if (iPos < 0 || iPos >= (int)stTg.sSource.uiLength())
+    {
+        CEString sMsg(L"Invalid character at position: ");
+        sMsg += CEString::sToString(iPos);
+        sMsg += L".";
+        ERROR_LOG(sMsg);
+        return H_ERROR_INVALID_ARG;
+    }
+
+    wchar_t chrVowel = stTg.sSource.chrGetAt(iPos);
+    if (!CEString::bIsVowel(chrVowel))
+    {
+        CEString sMsg(L"Character at position ");
+        sMsg += CEString::sToString(iPos);
+        sMsg += L" is not a vowel";
+        ERROR_LOG(sMsg);
+        return H_ERROR_INVALID_ARG;
+    }
+
+    int iSyllPos = -1;
+    try
+    {
+        iSyllPos = static_cast<int>(stTg.sSource.uiGetSyllableFromVowelPos(iPos));
+    }
+    catch (CException& ex)
+    {
+        ERROR_LOG(ex.szGetDescription());
+        return H_EXCEPTION;
+    }
+
+    if (iSyllPos == stTg.iStressedSyllable)
+    {
+        eStressStatus = ET_VowelStressRelation::STRESSED;
+        return H_NO_ERROR;
+    }
+
+    if (stTg.iStressedSyllable - iSyllPos == 1)
+    {
+        eStressStatus = ET_VowelStressRelation::FIRST_PRETONIC;
+        return H_NO_ERROR;
+    }
+
+    if (stTg.iStressedSyllable - iSyllPos > 1)
+    {
+        eStressStatus = ET_VowelStressRelation::OTHER_PRETONIC;
+        return H_NO_ERROR;
+    }
+
+    if (stTg.iStressedSyllable - iSyllPos < 1)
+    {
+        eStressStatus = ET_VowelStressRelation::POSTTONIC;
+        return H_NO_ERROR;
+    }
+}
+
