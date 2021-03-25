@@ -26,7 +26,7 @@ CAnalytics::~CAnalytics()
 
 ET_ReturnCode CAnalytics::eInit()
 {
-//    m_spTranscriber = make_unique<CTranscriber>(m_pDb);
+    m_spTranscriber = make_unique<CTranscriber>(m_pDb);
 //    ET_ReturnCode eRet = m_spTranscriber->eTranscribe();
 //    return eRet;
 
@@ -624,7 +624,15 @@ ET_ReturnCode CAnalytics::eGetStress(StTactGroup& stTg)
 
 ET_ReturnCode CAnalytics::eTranscribe(StTactGroup& stTg)
 {
-    return H_NO_ERROR;
+    if (nullptr == m_spTranscriber)
+    {
+        ERROR_LOG(L"m_spTranscriber is null.");
+        return H_ERROR_POINTER;
+    }
+
+    auto eRet = m_spTranscriber->eTranscribeTactGroup(stTg);
+
+    return eRet;
 }
 
 ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
@@ -644,7 +652,7 @@ ET_ReturnCode CAnalytics::eAssembleTactGroups(CEString& sLine)
             stTg.iFirstWordNum = iField;
             stTg.iNumOfWords = 0;
             stTg.iMainWordPos = 0;
-            stTg.sSource = const_cast<CWordForm&>(wordForm).sWordForm();
+//            stTg.sSource = const_cast<CWordForm&>(wordForm).sWordForm();
             stTg.llLineId = stRandomVariant.llLineDbId;
             stTg.vecWords = vecVariants;
 
@@ -972,19 +980,19 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
     {
         try
         {
-            m_pDb->PrepareForInsert(L"tact_group", 11);
+            m_pDb->PrepareForInsert(L"tact_group", 10);
 
             m_pDb->Bind(1, stTg.llLineId);
             m_pDb->Bind(2, stTg.iFirstWordNum);
             m_pDb->Bind(3, stTg.iMainWordPos);
             m_pDb->Bind(4, stTg.iNumOfWords);
             m_pDb->Bind(5, stTg.sSource);
-            m_pDb->Bind(6, wordParse.WordForm.sGramHash());
-            m_pDb->Bind(7, stTg.sTranscription);
-            m_pDb->Bind(8, stTg.iNumOfSyllables);
-            m_pDb->Bind(9, stTg.iStressedSyllable);
-            m_pDb->Bind(10, stTg.iReverseStressedSyllable);
-            m_pDb->Bind(11, stTg.iSecondaryStressedSyllable);
+//            m_pDb->Bind(6, wordParse.WordForm.sGramHash());
+            m_pDb->Bind(6, stTg.sTranscription);
+            m_pDb->Bind(7, stTg.iNumOfSyllables);
+            m_pDb->Bind(8, stTg.iStressedSyllable);
+            m_pDb->Bind(9, stTg.iReverseStressedSyllable);
+            m_pDb->Bind(10, stTg.iSecondaryStressedSyllable);
 
             m_pDb->InsertRow();
             m_pDb->Finalize();

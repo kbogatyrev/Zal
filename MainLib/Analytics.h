@@ -19,84 +19,83 @@ namespace Hlib
 //    struct CWordForm;
     class CEString;
 
+    struct StWordParse
+    {
+        int iNumber;
+        int iLineOffset;
+        int iLength;
+        int iPosInTactGroup;
+        ET_WordStressType eStressType;
+        long long llLineDbId;
+        long long llWordInLIneDbId;
+        long long llWordToWordFormId;
+        CWordForm WordForm;
+
+        StWordParse()
+        {
+            Reset();
+        }
+
+        void Reset()
+        {
+            int iNumber = -1;
+            int iLineOffset = -1;
+            int iLength = -1;
+            int iPosInTactGroup = -1;
+            long long llLineDbId = -1;
+            eStressType = WORD_STRESS_TYPE_UNDEFINED;
+            long long llWordInLIneDbId = -1;
+            long long llWordToWordFormId = -1;
+            CWordForm WordForm;
+        }
+
+        // Needed to be used with STL set
+        bool operator < (const StWordParse& stRhs) const
+        {
+            return iNumber < stRhs.iNumber;
+        }
+
+    };      // StWordParse
+
+    //  CREATE TABLE tact_group(id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, num_of_words INTEGER, 
+    //  source TEXT, transcription TEXT, stressed_syllable INTEGER, reverse_stressed_syllable INTEGER, FOREIGN KEY(line_id) REFERENCES lines_in_text(id));
+    struct StTactGroup
+    {
+        long long llLineId;
+        int iFirstWordNum;
+        int iMainWordPos;
+        int iNumOfWords;
+        int iNumOfSyllables;
+        int iStressedSyllable;             // TODO: multiple stresses, dash-separated compounds etc
+        int iReverseStressedSyllable;
+        int iSecondaryStressedSyllable;
+        CEString sSource;
+        CEString sTranscription;
+        vector<StWordParse> vecWords;
+
+        StTactGroup()
+        {
+            Reset();
+        }
+
+        void Reset()
+        {
+            llLineId = -1;
+            iFirstWordNum = -1;
+            iMainWordPos = -1;
+            iNumOfWords = 0;
+            iNumOfSyllables = -1;
+            iStressedSyllable = -1;
+            iReverseStressedSyllable = -1;
+            iSecondaryStressedSyllable = -1;
+            sSource.Erase();
+            sTranscription.Erase();
+            vecWords.clear();
+        }
+    };      //  StTactGroup
+
     class CAnalytics : public IAnalytics
     {
-    public:
-        struct StWordParse
-        {
-            int iNumber;
-            int iLineOffset;
-            int iLength;
-            int iPosInTactGroup;
-            ET_WordStressType eStressType;
-            long long llLineDbId;
-            long long llWordInLIneDbId;
-            long long llWordToWordFormId;
-            CWordForm WordForm;
-
-            StWordParse()
-            {
-                Reset();
-            }
-
-            void Reset()
-            {
-                int iNumber = -1;
-                int iLineOffset = -1;
-                int iLength = -1;
-                int iPosInTactGroup = -1;
-                long long llLineDbId = -1;
-                eStressType = WORD_STRESS_TYPE_UNDEFINED;
-                long long llWordInLIneDbId = -1;
-                long long llWordToWordFormId = -1;
-                CWordForm WordForm;
-            }
-
-            // Needed to be used with STL set
-            bool operator < (const StWordParse& stRhs) const
-            {
-                return iNumber < stRhs.iNumber;
-            }
-
-        };      // StWordParse
-
-        //  CREATE TABLE tact_group(id INTEGER PRIMARY KEY ASC, line_id INTEGER, first_word_position INTEGER, num_of_words INTEGER, 
-        //  source TEXT, transcription TEXT, stressed_syllable INTEGER, reverse_stressed_syllable INTEGER, FOREIGN KEY(line_id) REFERENCES lines_in_text(id));
-        struct StTactGroup
-        {
-            long long llLineId;
-            int iFirstWordNum;
-            int iMainWordPos;
-            int iNumOfWords;
-            int iNumOfSyllables;
-            int iStressedSyllable;             // TODO: multiple stresses, dash-separated compounds etc
-            int iReverseStressedSyllable;
-            int iSecondaryStressedSyllable;
-            CEString sSource;
-            CEString sTranscription;
-            vector<StWordParse> vecWords;
-
-            StTactGroup()
-            {
-                Reset();
-            }
-
-            void Reset()
-            {
-                llLineId = -1;
-                iFirstWordNum = -1;
-                iMainWordPos = -1;
-                iNumOfWords = 0;
-                iNumOfSyllables = -1;   
-                iStressedSyllable = -1;
-                iReverseStressedSyllable = -1;
-                iSecondaryStressedSyllable = -1;
-                sSource.Erase();
-                sTranscription.Erase();
-                vecWords.clear();
-            }
-        };      //  StTactGroup
-
     public:
         CAnalytics();
         CAnalytics(shared_ptr<CSqlite>, shared_ptr<CParser>);
