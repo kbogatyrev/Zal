@@ -3,6 +3,7 @@
 #include <memory>
 #include <cassert>
 
+#include "Analytics.h"
 #include "Transcriber.h"
 #include "SqliteWrapper.h"
 
@@ -27,33 +28,6 @@ CTranscriber::CTranscriber(shared_ptr<CSqlite> pCSqlite) : m_pDb(pCSqlite)
         ERROR_LOG(L"No transcription rules.");
     }
 }
-
-/*
-ET_ReturnCode CTranscriber::eFormatInputs(CEString& sSource, PairInput& pairParsedInputs)
-{
-    //
-    //  E.g., "a+b" --> "ab" = 'these two characters together, "ab" --> vector of chars = 'any of the chars in the vector
-    //
-
-    if (sSource.bRegexMatch(L"^([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*\\+\\s*([абвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)\\s*"))
-    {
-        if (sSource.uiGetNumOfRegexMatches() != 2)
-        {
-            ERROR_LOG(L"Unexpected number of \"+\"-separated strings");
-            return H_ERROR_UNEXPECTED;
-        }
-
-        pairParsedInputs.first = sSource.sGetRegexMatch(0);
-        pairParsedInputs.second = sSource.sGetRegexMatch(1);
-    }
-    else
-    {
-        pairParsedInputs.first = sSource;
-    }
-
-    return H_NO_ERROR;
-}
-*/
 
 ET_ReturnCode CTranscriber::eSplitSource(CEString& sSource, vector<CEString>& vecTarget)
 {
@@ -126,24 +100,6 @@ ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, set<vector<Phonemi
 
     return H_NO_ERROR;
 }
-
-/*
-ET_ReturnCode CTranscriber::eFormatContexts(const CEString& sContext, EC_CONTEXT_TYPE eLeftOrRight)
-{
-
-    return H_NO_ERROR;
-}
-*/
-
-/*
-ET_ReturnCode eSearchInSortedStrings(vector<CEString&> vecSortedStrings, const CEString& sFindMe)
-{
-    // No need to optimize: vector will be tiny
-
-
-    return H_TRUE;
-}
-*/
 
 ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 {
@@ -357,58 +313,8 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
 }       //  eLoadTranscriptionRules()
 
-ET_ReturnCode CTranscriber::eTranscribe()
-{
-    if (!m_pDb)
-    {
-        ERROR_LOG(L"No database.");
-        return H_ERROR_DB;
-    }
-
-    CEString sQuery = L"SELECT id, line_id, first_word_position, main_word, num_of_words, source, num_of_syllables, \
-                        stressed_syllable, reverse_stressed_syllable, secondary_stressed_syllable FROM tact_group \
-                        ORDER BY id, line_id, first_word_position";
-
-    clock_t dbProcTime = clock();
-
-    long long llCount = 0;
-
-    m_pDb->PrepareForSelect(sQuery);
-    while (m_pDb->bGetRow())
-    {
-        StTactGroup stTg;
-        m_pDb->GetData(0, stTg.llTactGroupId);
-        m_pDb->GetData(1, stTg.llLineId);
-        m_pDb->GetData(2, stTg.iFirstWordPos);
-        m_pDb->GetData(3, stTg.iMainWordPos);
-        m_pDb->GetData(4, stTg.iNumOfWords);
-        m_pDb->GetData(5, stTg.sSource);
-        m_pDb->GetData(6, stTg.iNumOfSyllables);
-        m_pDb->GetData(7, stTg.iStressedSyllable);
-        m_pDb->GetData(8, stTg.iReverseStressedSyllable);
-        m_pDb->GetData(9, stTg.iSecondaryStressedSyllable);
-
-        eTranscribeTactGroup(stTg);
-
-        if (++llCount % 1000 == 0)
-            cout << ".";
-    }
-    m_pDb->Finalize();
-
-    auto dDuration = (clock() - dbProcTime)/(double)CLOCKS_PER_SEC;
-    CEString msg(L"Time: ");
-    msg += CEString::sToString(dDuration);
-    cout << endl << endl << llCount << " tact groups" << endl << "Time: " << dDuration<< " seconds" << endl;
-//    ::MessageBoxW(NULL, msg, L"Transcription", MB_ICONINFORMATION);
-    ERROR_LOG(msg);
-
-    return H_NO_ERROR;
-
-}       //  Transcribe()
-
 ET_ReturnCode CTranscriber::eTranscribeTactGroup(StTactGroup& stTactGroup)
 {
-
     stTactGroup.sSource.SetVowels(g_szRusVowels);
 
     int iAt = 0;
@@ -492,9 +398,25 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
 
     auto eStressStatus = ET_VowelStressRelation::VOWEL_STRESS_RELATION_UNDEFINED;
     auto eRet = eGetStressStatus(stTg, iPos, eStressStatus);
+    vector<StRule> vecAvailableRules;
     for (auto& stRule : itRules->second)
     { 
-        int kiki = 0;
+        if (stRule.m_setStressContexts.empty())
+        {
+            vecAvailableRules.emplace_back(stRule);
+        }
+        else if (stRule.m_setStressContexts.find(eStressStatus) != stRule.m_setStressContexts.end())
+        {
+            vecAvailableRules.emplace_back(stRule);
+        }
+    }
+
+    for (auto& stRule : vecAvailableRules)
+    {
+        for (auto varLeftContext : stRule.m_setLeftContexts)
+        {
+            auto eRet = eLeftContextMatch(stTg, varLeftContext, iPos);
+        }
     }
 
     return H_NO_ERROR;
@@ -557,5 +479,93 @@ ET_ReturnCode CTranscriber::eGetStressStatus(StTactGroup& stTg, int iPos, ET_Vow
         eStressStatus = ET_VowelStressRelation::POSTTONIC;
         return H_NO_ERROR;
     }
-}
 
+    CEString sMsg(L"Unable to determine stress status.");
+    ERROR_LOG(sMsg);
+ 
+    return H_ERROR_UNEXPECTED;
+
+}       //  eGetStressStatus()
+
+ET_ReturnCode CTranscriber::eLeftContextMatch(StTactGroup& stTg, const vector<PhonemicContextAtom>& vecContext, int iPos)
+{
+    struct StMatchTypes
+    {
+        StTactGroup* m_pStTg;
+        int m_iPos;
+
+        StMatchTypes(StTactGroup* pStTg, int iPos) : m_pStTg(pStTg), m_iPos(iPos) {};
+
+        bool operator()(ET_PhonemicContext& eContext) 
+        {
+            if (m_iPos < 1)
+            {
+                CEString sMsg(L"No left context. ");
+                ERROR_LOG(sMsg);
+                return false;
+            }
+
+            wchar_t chrPreceding = m_pStTg->sSource[m_iPos-1];
+            auto bMatch = false;
+
+            switch (eContext)
+            {
+            case ET_PhonemicContext::VOWEL:
+                if (CEString::bIn(chrPreceding, m_Vowels))
+                {
+                    bMatch = true;
+                }
+                break;
+            case ET_PhonemicContext::CONSONANT:
+                if (CEString::bIn(chrPreceding, m_Consonants))
+                {
+                    bMatch = true;
+                }
+                break;
+            case ET_PhonemicContext::HARD_CONSONANT:
+                if (CEString::bIn(chrPreceding, m_HardConsonants))
+                {
+                    bMatch = true;
+                }
+                break;
+            case ET_PhonemicContext::HARD_PAIRED_CONSONANT:
+                break;
+            case ET_PhonemicContext::SOFT_CONSONANT:
+                break;
+            case ET_PhonemicContext::SOFT_CONSONANT_NO_CH_SHCH:
+                break;
+            case ET_PhonemicContext::VOICELESS:
+                break;
+            case ET_PhonemicContext::BOUNDARY_WORD:
+                break;
+            case ET_PhonemicContext::BOUNDARY_NOT_PROCLITIC:
+                break;
+            case ET_PhonemicContext::BOUNDARY_SYNTAGM:
+                break;
+            default:
+                CEString sMsg(L"Left context not recognized: ");
+                sMsg += to_wstring(eContext).c_str();
+                ERROR_LOG(sMsg);
+            }
+
+            return bMatch; 
+        }
+        
+        bool operator()(CEString& sContext) 
+        { 
+            if (m_iPos > 0 && CEString::bIn(m_pStTg->sSource[m_iPos - 1], sContext))
+            {
+                return true;
+            }
+            return false;
+        }
+    };
+
+    for (PhonemicContextAtom atom : vecContext)
+    {
+        auto match = visit(StMatchTypes(&stTg, iPos), atom);
+        int i = 0;
+    }
+
+    return H_TRUE;
+}
