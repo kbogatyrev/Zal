@@ -23,7 +23,7 @@ CTranscriber::CTranscriber(shared_ptr<CSqlite> pCSqlite) : m_pDb(pCSqlite)
         ERROR_LOG(L"Unable to load transcription rules.");
     }
 
-    if (m_mapRules.empty())
+    if (m_mapCharToRules.empty())
     {
         ERROR_LOG(L"No transcription rules.");
     }
@@ -299,7 +299,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             for (int iAt = 0; iAt < (int)sKeys.uiLength(); ++iAt)
             {
-                m_mapRules[sKeys[iAt]].push_back(stRule);
+                m_mapCharToRules[sKeys[iAt]].push_back(stRule);
             }
         }
     }
@@ -388,8 +388,8 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
         return H_ERROR_INVALID_ARG;
     }
 
-    auto itRules = m_mapRules.find(chrVowel);
-    if (m_mapRules.end() == itRules)
+    auto itRules = m_mapCharToRules.find(chrVowel);
+    if (m_mapCharToRules.end() == itRules)
     {
         CEString sMsg(L"No rules for vowel ");
         sMsg += chrVowel;
