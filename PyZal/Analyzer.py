@@ -9,8 +9,9 @@ import time
 if __name__== "__main__":
 
     lib_path = '../x64/Release/MainLibCTypes.dll'
-    db_path = '../ZalData/ZalData_04_18_2020.db3'
-    text_path = "../ZalData/Pasternak_complete_04-12-2020.txt"
+    db_path = '../ZalData/ZalData_05_14_2020_Pasternak.db3'
+#    text_path = "../ZalData/Pasternak_05_2020.txt"
+    text_path = "../ZalData/Termidor.txt"
 
     zal_lib = cdll.LoadLibrary(lib_path)
     if zal_lib is None:
@@ -34,7 +35,7 @@ if __name__== "__main__":
     last_line = ''
 
     try:
-        with open (text_path, encoding='utf-8', mode='r') as reader:
+        with open (text_path, encoding='utf-16', mode='r') as reader:
             for line_num, line in enumerate(reader):
                 line = line.rstrip()
                 if not line:

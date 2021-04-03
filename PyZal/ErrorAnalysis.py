@@ -18,10 +18,11 @@ if __name__== "__main__":
             continue
         sort_prefix = str(segments[-3]) + '_' + str(segments[-4])
         lstTuples.append((sort_prefix, line))
-        lstTuples.sort(key=lambda entry: entry[0])
+
+    lstTuples.sort(key=lambda entry: entry[0])
 
     with open(cmd_line_args.out_path, 'w', encoding='utf-16-le') as out_file:
         for t in lstTuples:
-            out_file.write(str(t[1]) + '\n')
+            out_file.write(str(t[1]))
 
     print ("Done.")

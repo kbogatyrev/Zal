@@ -160,8 +160,8 @@ out_data.reverse_stressed_syllable, out_data.is_last_word, out_data.text_name, o
             print('Exception: {}'.format(e))
 
 if __name__== "__main__":
-    db_path = '../ZalData/ZalData_06_07_2020_Pasternak.db3'
-    output_path = '../ZalData/Dasha_06_09_2020.csv'
+    db_path = '../ZalData/ZalData_analytics_test.db3'
+    output_path = '../ZalData/Dasha_test.csv'
     h = Handler(db_path)
 #    h.get_words_by_stress_pos()
 #    h.get_words_by_num_of_syllables(3)

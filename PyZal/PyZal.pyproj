@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7ae4d97c-4e14-4279-ab68-3f0d6d37f690</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Analyzer.py</StartupFile>
+    <StartupFile>LoadTranscriptionRules.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -13,6 +13,7 @@
     <RootNamespace>PyZal</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <EnableNativeCodeDebugging>True</EnableNativeCodeDebugging>
+    <CommandLineArguments>--debug db_path='C:\git-repos\Zal-Windows\ZalData\ZalData_WF.db3'</CommandLineArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,9 +29,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Database.py" />
+    <Compile Include="ErrorAnalysis.py" />
+    <Compile Include="LoadTranscriptionRules.py" />
+    <Compile Include="FindBadDescriptors.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Parser.py" />
     <Compile Include="PyZal.py" />
-    <Compile Include="Transcriber.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -1,3 +1,4 @@
+import argparse
 from ctypes import *
 
 #
@@ -24,8 +25,9 @@ class Database:
         self.zal_lib.GenerateAllForms()
 
 if __name__ == '__main__':
+
     lib_path = '../x64/Release/MainLibCTypes.dll'
-    db_path = '../ZalData/ZalData_04_18_2020.db3'
+    db_path = 'C:\git-repos\Zal-Windows\ZalData\ZalData_TEST.db3'
     db = Database(lib_path, db_path)
-#    db.add_lexeme_hashes()
-db.generate_all_forms()
+    db.add_lexeme_hashes()
+    db.generate_all_forms()

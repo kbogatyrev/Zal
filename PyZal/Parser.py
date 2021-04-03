@@ -29,6 +29,7 @@ class StWordForm(Structure):
         wchar_t szGrammHash[MAX_SIZE];
     };
     """
+
     _fields_ = [("llLexemeId", c_longlong), \
                 ("szWordForm", type(create_unicode_buffer(1000))), \
                 ("szStem", type(create_unicode_buffer(1000))), \
@@ -47,9 +48,8 @@ class StWordForm(Structure):
                 ("szTrailingComment", type(create_unicode_buffer(1000))), \
                 ("bIsEdited", c_bool), \
                 ("bIsVariant", c_bool), \
-                ("arrStress", type(create_string_buffer(1000))), \
+                ("szStress", type(create_unicode_buffer(1000))), \
                 ("szGrammHash", type(create_unicode_buffer(1000)))]
-
 
 #
 #  Parser
@@ -83,24 +83,25 @@ class Parser:
         if not ret:
             return False
 
-        for iIdx in range(self.zal_lib.iNumOfParses()):
+        for iIdx in range(self.zal_lib.iNumOfParses()-1):
             parse = StWordForm()
 
-            #            p_parse = pointer(parse)
-
-            #           bool GetParsedWordForm(int iNum, StWordForm* pstParsedForm);
-            self.zal_lib.GetParsedWordForm.argtypes = [c_int, POINTER(StWordForm)]
-            ret = self.zal_lib.GetParsedWordForm(0, byref(parse))
+            ret = self.zal_lib.GetParsedWordForm(iIdx, byref(parse))
 
             print('wordform = {}'.format(parse.szWordForm))
+            print(parse.szStress)
+            print('descriptor = {}'.format(parse.szGrammHash))
+            print('\r\n')
+
+            test = 0
 
     #  parse_word_form
 
 if __name__== "__main__":
 
-    lib_path = '../x64/Release/MainLibCTypes.dll'
+    lib_path = '../x64/Debug/MainLibCTypes.dll'
     db_path = '../ZalData/ZalData_test.db3'
 
     parser = Parser(lib_path, db_path)
-    parser.parse_word_form('собака')
+    parser.parse_word_form('шедшего')
 

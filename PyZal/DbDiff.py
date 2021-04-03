@@ -253,10 +253,10 @@ if __name__=="__main__":
         'LEFT OUTER JOIN inflection ON descriptor.id = inflection.descriptor_id  ' +
         'INNER JOIN conversion_source_text as cst ON cst.id = source_entry_id ORDER BY cst.guid;')
 
-    db_connection_L = sqlite3.connect('../ZalData/ZalData_07_23_2020_TEST.db3')
+    db_connection_L = sqlite3.connect('../ZalData/ZalData_07_25_2020.db3')
     db_cursor_L = db_connection_L.cursor()
 
-    db_connection_R = sqlite3.connect ('../ZalData/ZalData_07_20_2020_BAD.db3')
+    db_connection_R = sqlite3.connect ('../ZalData/ZalData_07_11_2020_Complete_Merge.db3')
     db_cursor_R = db_connection_R.cursor()
 
     db_cursor_L.execute(query)
