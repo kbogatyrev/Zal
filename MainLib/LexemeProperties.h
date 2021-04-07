@@ -16,6 +16,7 @@ namespace Hlib
         StLexemeProperties() :
             llDescriptorId(-1),
             llHeadwordId(-1),
+            llSecondPartId(-1),
             bIsUnstressed(false),
             bSpryazhSm(false),
             bIsVariant(false),
@@ -52,18 +53,18 @@ namespace Hlib
             bNoPassivePastParticiple(false),
             bFleetingVowel(false),
             iStemAugment(-1),
-            iInflectedParts(-1),
-            bIsSecondPart(false),
+//            iInflectedParts(-1),
             iSpryazhSmRefPrefixLength(-1),
             bSpryazhSmNoAspectPair(false)
         {
                 sSourceForm.SetVowels(g_szRusVowels);
                 sGraphicStem.SetVowels(g_szRusVowels);
-                sGraphicStem2.SetVowels(g_szRusVowels);
+//                sGraphicStem2.SetVowels(g_szRusVowels);
         }
 
         long long llDescriptorId;
         long long llHeadwordId;
+        long long llSecondPartId;
         CEString sSourceForm;
         CEString sHeadwordComment;
         CEString sHeadwordVariant;
@@ -79,7 +80,7 @@ namespace Hlib
         bool bSpryazhSm;
         long long llSourceEntryId;
         CEString sGraphicStem;
-        CEString sGraphicStem2;
+//        CEString sGraphicStem2;
         bool bIsVariant;
         CEString sMainSymbol;
         bool bIsPluralOf;
@@ -137,8 +138,7 @@ namespace Hlib
         bool bNoPassivePastParticiple;
         bool bFleetingVowel;
         int iStemAugment;
-        int iInflectedParts;
-        bool bIsSecondPart;
+//        int iInflectedParts;
         bool bSpryazhSmNoAspectPair;
 
         //

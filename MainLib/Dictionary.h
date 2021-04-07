@@ -99,6 +99,9 @@ public:
     // Not part ot interface:
     CSqlite * pGetDbHandle();
 
+    ET_ReturnCode eGetSecondPart(long long Id, CLexeme* pLexeme);       // non-virtual version used to get second part of a xurda-murda compound
+
+
 private:
     CEString m_sDbPath;
     shared_ptr<CSqlite> m_pDb;
