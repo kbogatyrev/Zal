@@ -3,6 +3,8 @@
         Exports some interfaces to be consumed by Python 3
 */
 
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+#define _SILENCE_CXX17_STRSTREAM_DEPRECATION_WARNING
 
 #include <memory>
 #include <cstring>
