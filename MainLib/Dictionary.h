@@ -99,7 +99,8 @@ public:
     // Not part ot interface:
     CSqlite * pGetDbHandle();
 
-    ET_ReturnCode eGetSecondPart(long long Id, CLexeme* pLexeme);       // non-virtual version used to get second part of a xurda-murda compound
+//    ET_ReturnCode eGetSecondPart(long long Id, CLexeme* pLexeme);       // non-virtual version used to get second part of a xurda-murda compound
+    ET_ReturnCode eGetSecondPart(long long llId, shared_ptr<CLexeme>& pLexeme);
 
 
 private:
@@ -129,7 +130,7 @@ private:
 
     ET_ReturnCode eMarkLexemeAsEdited(ILexeme * pLexeme);
 
-    ET_ReturnCode eDifficultFormLabelToGramHash(const CEString sLabel);
+//    ET_ReturnCode eDifficultFormLabelToGramHash(const CEString sLabel);
 
     void HandleDbException(CException&);
 };
