@@ -16,7 +16,6 @@ namespace Hlib
         StLexemeProperties() :
             llDescriptorId(-1),
             llHeadwordId(-1),
-            llSecondPartId(-1),
             bIsUnstressed(false),
             bSpryazhSm(false),
             bIsVariant(false),
@@ -53,7 +52,8 @@ namespace Hlib
             bNoPassivePastParticiple(false),
             bFleetingVowel(false),
             iStemAugment(-1),
-//            iInflectedParts(-1),
+            iInflectedParts(-1),
+            bIsSecondPart(false),
             iSpryazhSmRefPrefixLength(-1),
             bSpryazhSmNoAspectPair(false)
         {
@@ -138,7 +138,8 @@ namespace Hlib
         bool bNoPassivePastParticiple;
         bool bFleetingVowel;
         int iStemAugment;
-//        int iInflectedParts;
+        int iInflectedParts;
+        bool bIsSecondPart;
         bool bSpryazhSmNoAspectPair;
 
         //
