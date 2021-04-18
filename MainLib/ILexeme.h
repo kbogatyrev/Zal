@@ -175,6 +175,7 @@ namespace Hlib
         virtual void SetSubparadigm(ET_Subparadigm) = 0;    // currently only used with numerals
 
         virtual ET_ReturnCode eAddCommonDeviation(int iValue, bool bIsOptional) = 0;
+        virtual void ClearCommonDeviations() = 0;
         virtual bool bFindCommonDeviation(int iNum, bool& bIsOptional) = 0;
         virtual bool bFindStandardAlternation(const CEString& sKey, CEString& sValue) = 0;
         virtual ET_ReturnCode eGetStemStressPositions(const CEString& sLemma, vector<int>& vecPosition) = 0;
