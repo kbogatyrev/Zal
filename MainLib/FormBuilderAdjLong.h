@@ -37,10 +37,10 @@ protected:
     CEString sGramHash (ET_PartOfSpeech ePos, ET_Subparadigm eSubparadigm, ET_Case eCase, 
                         ET_Number eNum, ET_Gender eGender, ET_Animacy eAnimacy, 
                         ET_Reflexivity eRefl);
-
     CEString sGramHashNSgMLong();
     ET_ReturnCode eGetStressPositions (const CEString&, ET_StressLocation, vector<int>& vecStressPos);
-    ET_ReturnCode eCreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, const CEString& sEnding, __int64 llEndingKey, CWordForm *&); 
+    ET_ReturnCode eCreateFormTemplate (ET_Gender, ET_Number, ET_Case, ET_Animacy, const CEString& sEnding, __int64 llEndingKey, CWordForm *&);
+    ET_ReturnCode eCheckIrregularForms(const CEString& sHash, bool& bHandled);
     ET_ReturnCode eHandleCommonDeviations (CWordForm *);
 
 public:
