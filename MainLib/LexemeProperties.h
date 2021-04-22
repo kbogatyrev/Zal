@@ -16,6 +16,7 @@ namespace Hlib
         StLexemeProperties() :
             llDescriptorId(-1),
             llHeadwordId(-1),
+            llSecondPartId(0),
             bIsUnstressed(false),
             bSpryazhSm(false),
             bIsVariant(false),
