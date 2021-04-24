@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "Dictionary.h"
 #include "Enums.h"
 #include "EString.h"
 
@@ -15,12 +16,13 @@ namespace Hlib
 class CSqlite;
 class CParsingTree;
 struct CWordForm;
+class CLexeme;
 
 class CParser : public IParser
 {
 
 public:
-    CParser(shared_ptr<CSqlite>);
+    CParser(CDictionary *);
     ~CParser();
 
 public:
@@ -38,6 +40,7 @@ public:
 private:
     CParser();  // no use
 
+    CDictionary * m_pDictionary;
     shared_ptr<CSqlite> m_pDb;
     CParsingTree * m_pEndingsTree;
     vector<CWordForm *> m_vecWordForms;
@@ -46,6 +49,7 @@ private:
     ET_ReturnCode eIrregularFormLookup(const CEString&);
     ET_ReturnCode eWholeWordLookup(const CEString&);
     ET_ReturnCode eFormLookup(const CEString&);
+    ET_ReturnCode eLexemeLookup(const CLexeme&);
     ET_ReturnCode eRemoveFalsePositives();
     ET_ReturnCode eQueryDb(const CEString& sSelect, uint64_t& uiQueryHandle);
 

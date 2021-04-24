@@ -50,9 +50,11 @@ public:
 public:
     virtual ET_ReturnCode eSetDbPath(const CEString& sDbPath);
     virtual CEString sGetDbPath();
+    shared_ptr<CSqlite> pGetDb();               //  non-virtual
     virtual ET_ReturnCode eCreateLexemeForEdit(ILexeme *&);
     virtual ET_ReturnCode eCopyLexemeForEdit(const ILexeme * pSource, ILexeme *& pCopy);
     virtual ET_ReturnCode eGetLexemeById(long long Id, ILexeme *& pLexeme);
+    ET_ReturnCode eGetLexemeById(long long Id, shared_ptr<CLexeme>& spLexeme);       // non-virtual overload
     virtual ET_ReturnCode eGetLexemesByHash(const CEString& sMd5);
     virtual ET_ReturnCode eGetLexemesByGraphicStem(const CEString&);
     virtual ET_ReturnCode eGetLexemesByInitialForm(const CEString&);
