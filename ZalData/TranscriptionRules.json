@@ -39,13 +39,30 @@
                     "TARGET": "SCHWA"
                 },
                 {
-                    "COMMENT": "$53: плАча (G. Pl. gerund), рОщам, рОщами, рОщах",
+                    "COMMENT": "$53: плАча (G. Pl., gerund), рОщам, рОщами, рОщах",
                     "STRESS": "POSTTONIC",
                     "LEFT_CONTEXTS": [ "чщ" ],
                     "MORPHEMES": [ "ENDING" ],
                     "TARGET": "SCHWA"
-                }
-            ],
+                },
+                {
+                  "COMMENT": "$54: examples?",
+                  "STRESS": "POSTTONIC",
+                  "LEFT_CONTEXTS": [ "чщ" ],
+                  "MORPHEMES": [ "NOT_ENDING" ],
+                  "SYLLABIC_CONTEXTS": [ "ULTIMA" ],
+                  "RIGHT_CONTEXTS": [ "HARD_CONSONANT" ],
+                  "TARGET": "SCHWA"
+				},
+                {
+                    "COMMENT": "$54: examples?",
+                    "STRESS": "POSTTONIC",
+                    "LEFT_CONTEXTS": [ "чщ" ],
+                    "MORPHEMES": [ "NOT_ENDING" ],
+                    "SYLLABIC_CONTEXTS": [ "ULTIMA" ],
+                    "RIGHT_CONTEXTS": [ "SOFT_CONSONANT" ],
+                    "TARGET": "UNSTRESSED_FRONT_VOWEL"
+                }],
             "а+а": [{
                 "COMMENT": "$57: за аптЕку, на аршИн, за амбАр, за акварЕль",
                 "STRESS": "PRETONIC",
@@ -458,7 +475,13 @@
                     "COMMENT": "$85: трУбки, скобки, рОбко, дубкИ, хлЕбца, озЯбший; трАвка, лАвка, канАвка, лОвко, ловкА, зАвтра, всё, всхОды, вход, вторОй, вскипИт, в шкОлу; острИгшись, продрОгший; лОдка, рЕдко, склАдки, слАдко, грЯдки, пОдпись; кнИжки, лОжки, бумАжки, рОжки да нОжки, сторОжка, подрУжка; нИзко, Узко, рЕзко, скОльзко, лезть",
                     "RIGHT_CONTEXTS": [ "VOICELESS" ],
                     "TARGET": "DEVOICE"
+                },
+                {
+                    "COMMENT": "$82: пруд тот, пруд Этот, пруд такОй; озЯб он, продрОг он, морОз удАрил, кровь идёт, снег идёт, слов Этих; гОрод Ростов, плодОв рАзных, моркОвь растёт; здорОв ли ты, рожь ли Это, в глубь лЕса, нарЕжь лимОн, не загрЫз ли волк",
+                    "RIGHT_CONTEXTS": [ "VOICELESS", "VOWEL + NOT BOUNDARY_SYNTAGM", "вйлмнр + NOT BOUNDARY_SYNTAGM" ],
+                    "TARGET": "DEVOICE"
                 }
+				
             ],
             "бвг": [
                 {
@@ -554,13 +577,6 @@
                     "TARGET": "SOFTEN"
                 }
             ],
-            "бвгджз": [
-                {
-                    "COMMENT": "$82: пруд тот, пруд Этот, пруд такОй; озЯб он, продрОг он, морОз удАрил, кровь идёт, снег идёт, слов Этих; гОрод Ростов, плодОв рАзных, моркОвь растёт; здорОв ли ты, рожь ли Это, в глубь лЕса, нарЕжь лимОн, не загрЫз ли волк",
-                    "RIGHT_CONTEXTS": [ "VOICELESS", "VOWEL + NOT BOUNDARY_SYNTAGM", "вйлмнр + NOT BOUNDARY_SYNTAGM" ],
-                    "TARGET": "DEVOICE"
-                }
-            ],
           "пфктшс": [
             {
               "COMMENT": "$86: прОсьба, косьбА, сбыть, сбыт, сгорЕл, с горЫ, сзАди, молотьбА, отгадАть, Отбыл, отдалА, тОт же, к женЕ, тАкже, вокзАл, анекдОт, экзАмен, к горЕ",
@@ -569,6 +585,6 @@
               "TARGET": "VOICE"
             }
           ]
-        }
+        
 }
- 
+}
