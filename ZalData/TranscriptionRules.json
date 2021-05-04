@@ -10,7 +10,7 @@
       {
         "COMMENT": "$15: акт, Арка, Алый; заАхать, поАхать; там, дам, сам, гам, вам, мак, бак, брак, шаг, жАба, шАлость, жаль; час, кочАн, качАть, пощАда",
         "STRESS": "STRESSED",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "A"
       },
       {
@@ -22,7 +22,7 @@
       {
         "COMMENT": "$32: садЫ, дарЫ, малА, пашУ, старИк, травА, шалУн, шалАш, жарА, жаркОе, царИзм, царАпать; аптЕка, армЯк, аршИн, аккОрд, амбАр",
         "STRESS": "FIRST_PRETONIC",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "PRETONIC_A"
       },
       {
@@ -40,7 +40,7 @@
       {
         "COMMENT": "$44: агронОм, агрономИческий, алюмИний, алебАстр, акварЕль, анатОмия, анатомИческий, амбразУра, антрацИт",
         "STRESS": "OTHER_PRETONIC",
-        "LEFT_BOUNDARY": [ "BOUNDARY_NOT_PROCLITIC" ],
+        "LEFT_BOUNDARY": "BOUNDARY_NOT_PROCLITIC",
         "TARGET": "PRETONIC_A"
       },
       {
@@ -119,7 +119,7 @@
       {
         "COMMENT": "$29: ел, ем, ель, Еду, Ездил, заЕду, поЕли, пьЕса, пьЕксы, валансьЕн, досьЕ, о муравьЕ, о соловьЕ, съел; exception: проЕкт",
         "STRESS": "STRESSED",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "J + E"
       },
       {
@@ -143,7 +143,7 @@
       {
         "COMMENT": "$39: ездА, едИм, ежОм, ершОм, енОт; поедИм",
         "STRESS": "FIRST_PRETONIC",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "J + PRETONIC_SOFT_IE"
       },
       {
@@ -161,7 +161,7 @@
       {
         "COMMENT": "$47: ездовОй, егозА, ЕлизавЕта, европЕйских, единИцу, ежевИку",
         "STRESS": "OTHER_PRETONIC",
-        "LEFT_BOUNDARY": [ "BOUNDARY_NOT_PROCLITIC" ],
+        "LEFT_BOUNDARY": "BOUNDARY_NOT_PROCLITIC",
         "TARGET": "J + UNSTRESSED_FRONT_VOWEL"
       },
       {
@@ -301,7 +301,7 @@
       {
         "COMMENT": "$23: ёлки, ёж, даём, заём; льёт, пьёшь, вьём, муравьём, съёмки",
         "STRESS": "STRESSED",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "J + O"
       }
     ],
@@ -313,7 +313,7 @@
       },
       {
         "COMMENT": "$5: Ива, Искра, избА, игрАть, издавАть; кроИть, стоИт, стОит, поигрАть; сИла, тИна, вить, чИстый, щи, стирАть, пилА, щипАть, вЫбить",
-        "LEFT_BOUNDARY": [ "BOUNDARY_NOT_PROCLITIC" ],
+        "LEFT_BOUNDARY": "BOUNDARY_NOT_PROCLITIC",
         "TARGET": "I"
       },
       {
@@ -338,7 +338,7 @@
       {
         "COMMENT": "$20: он, ось, Острый, охать; заОхать, заОчник, поОтдаль, проОбраз; дом, сом, пол, бок, вот, гром, лом, ток, ком, гость, ход, цОкать",
         "STRESS": "STRESSED",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "O"
       },
       {
@@ -356,7 +356,7 @@
       {
         "COMMENT": "$32: водА, ногА, грозА, полЯ, морЯ, столЫ, плодЫ, прошУ, пошёл, шофёр, жонглёр; окнО, одИн, огУрчик, осИны, одЕть",
         "STRESS": "FIRST_PRETONIC",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "PRETONIC_A"
       },
       {
@@ -368,7 +368,7 @@
       {
         "COMMENT": "$44: оборОт, обижАть, областнОй, огласИть, огонёк, огранИчить, ограничИтель, окончАтельно, оперИровать, операциОнный, органИзм, оружЕйный, оскорбИть, остановИть, осторОжный",
         "STRESS": "OTHER_PRETONIC",
-        "LEFT_BOUNDARY": [ "BOUNDARY_NOT_PROCLITIC" ],
+        "LEFT_BOUNDARY": "BOUNDARY_NOT_PROCLITIC",
         "TARGET": "PRETONIC_A"
       },
       {
@@ -440,7 +440,7 @@
       },
       {
         "COMMENT": "$10: ум, Улица, удАр, убирАть; наУка, паУк, заучИть, вЫучить, сОус, клОун; сук, пух, куст, шум, пучОк, букАшка, кулАк, шумЕть, цукАты, пулемёт, жуликовАтый, вЫкуп, вЫступ; чУтко, чуб, щУка, чудАк, чугУн, чудакИ, на Ощупь, плАчут",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "U"
       }
     ],
@@ -476,7 +476,7 @@
       {
         "COMMENT": "$26: Эхо, Эпос, Экстра, Этот, Этакий, Экий, э!, эх!, эвОна!; поЭт, поЭзия, силуЭт, менуЭт; мэр, пэр, сэр",
         "STRESS": "STRESSED",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "E"
       }
     ],
@@ -493,7 +493,7 @@
       },
       {
         "COMMENT": "$12, $69: юг, юлА, знАю, мОю, умЕю; вью, пью, шью, чью, вЫлью, съюлИть",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "J + U"
       }
 
@@ -514,7 +514,7 @@
       {
         "COMMENT": "$17: яд, струЯ, краЯ; пьян, дьяк, друзьЯ, кальЯн, мужьЯ, чья, объЯт",
         "STRESS": "STRESSED",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "J + A"
       },
       {
@@ -526,13 +526,13 @@
       {
         "COMMENT": "$39: язЫк, яйцО, ярлЫк, яснА, янвАрь, уяснИть",
         "STRESS": "FIRST_PRETONIC",
-        "LEFT_CONTEXTS": [ "BOUNDARY_WORD", "VOWEL", "ьъ" ],
+        "LEFT_CONTEXTS": [ "VOWEL", "ьъ" ],
         "TARGET": "J + PRETONIC_SOFT_IE"
       },
       {
         "COMMENT": "$39: язЫк, яйцО, ярлЫк, яснА, янвАрь, уяснИть",
         "STRESS": "FIRST_PRETONIC",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "J + PRETONIC_SOFT_IE"
       },
       {
@@ -544,7 +544,7 @@
       {
         "COMMENT": "$47: ястребОк, ятагАн, языкА, ярлыкА, яровОй",
         "STRESS": "OTHER_PRETONIC",
-        "LEFT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "LEFT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "J + UNSTRESSED_FRONT_VOWEL"
       },
       {
@@ -573,7 +573,7 @@
       {
         "COMMENT": "$66: бёдра, топь",
         "RIGHT_CONTEXTS": [ "ь" ],
-        "RIGHT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "RIGHT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "SOFTEN"
       },
       {
@@ -585,7 +585,7 @@
     "бвгджз": [
       {
         "COMMENT": "$80: хлеб, дуб, гроб, клуб, груб, гОлубь, вглубь, дробь; нрав, залИв, улОв, прав, слов, корОв, узнАв, столОв, плодОв, кровь, любОвь, бровь, остАвь, приготОвь; снег, пирОг, сапОг, вдруг, круг, плуг, шаг, помОг, продрОг, лёг, слог; ног, дуг, нарОд, сад, склад, ход, суд, бред, лёд; борОд, вод, бед; медь, лЕбедь, лОшадь, сядь, нож, муж, чиж, стриж, гарАж; луж, стуж; рожь, ложь, дрожь, нарЕжь, намАжь, груз, навОз, морОз, глаз, влез, вниз; коз, роз, лоз; лезь, грязь, врозь",
-        "RIGHT_BOUNDARY": [ "BOUNDARY_WORD" ],
+        "RIGHT_BOUNDARY": "BOUNDARY_WORD",
         "TARGET": "DEVOICE"
       },
       {
@@ -597,7 +597,7 @@
     "бвг": [
       {
         "COMMENT": "$84: Глеб ИвАнович, ЛюбОвь АндрЕевна, Пров ИвАнович, Олег АлексАндрович, Лев МихАйлович, ОлЕг РомАнович, ЛюбОвь Яковлевна, ОлЕг ЛьвОвич",
-        "RIGHT_CONTEXTS": [ "BOUNDARY_WORD" ],
+        "RIGHT_CONTEXTS": "BOUNDARY_WORD",
         "TARGET": "DEVOICE"
       }
     ],
@@ -605,7 +605,7 @@
       {
         "COMMENT": "$83: бл'из Оки, скв'озь Окна, пр'отив Окон, напрОтив Улицы, вокр'уг Озера, ведь онИ ушлИ, уж он-то знал, бл'из рЕчки, напрОтив рАмпы, бл'из лЕса, скв'озь лес, пр'отив лАвки, вокр'уг лАмпы, ведь мАй уж'е, пр'отив мышЕй, вокр'Уг машИн, напрОтив нАс, вокр'уг нИх, ведь нАс нЕ было, вокрУг ёлки, уж Я знал, ведь Я это, напрОтив Ямы, пр'Отив вАс",
         "INDIVIDUAL_FORMS": [ "близ, сквозь, против, напротив, вокруг, ведь, уж" ],
-        "RIGHT_CONTEXTS": [ "BOUNDARY_WORD" ],
+        "RIGHT_CONTEXTS": "BOUNDARY_WORD",
         "TARGET": "DEVOICE"
       }
     ],
@@ -659,7 +659,7 @@
     "зж + бвгд": [
       {
         "COMMENT": "$81: визг, лязг, мозг, дрязг; борОзд, гнёзд, звёзд, пОезд, горАзд, гроздь, груздь, гвоздь; изб; надЕжд, невЕжд; язв, трезв, резв",
-        "RIGHT_CONTEXTS": [ "BOUNDARY_WORD" ],
+        "RIGHT_CONTEXTS": "BOUNDARY_WORD",
         "COMMENT_KB": "other consonants?",
         "TARGET": "DEVOICE + DEVOICE"
       }
