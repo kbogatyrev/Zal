@@ -28,9 +28,8 @@ class TranscriptionRules:
             print(e)
 
 #  CREATE TABLE transcription_inputs (id INTEGER PRIMARY KEY, input_chars TEXT)
-#  CREATE TABLE transcription_rules (id INTEGER PRIMARY KEY, input_id INTEGER, stress TEXT, left_contexts TEXT, \
-#   right_contexts TEXT, target TEXT, morpheme_type TEXT, subparadigm TEXT, gramm_number TEXT, gramm_case TEXT, \
-#   gramm_gender TEXT, strength TEXT, comment TEXT);
+#  CREATE TABLE transcription_rules (id INTEGER PRIMARY KEY, input_id INTEGER, stress TEXT, left_contexts TEXT, left_boundary TEXT, right_contexts TEXT, right_boundary TEXT, 
+#               morpheme_type TEXT, subparadigm TEXT, gramm_gender TEXT, gramm_number TEXT, gramm_case TEXT, strength TEXT, is_variant BOOLEAN, target TEXT, comment TEXT)
 
     def load_rules(self):
 
@@ -68,6 +67,8 @@ class TranscriptionRules:
                     lst_r_contexts = ''
                     if r_contexts:
                         lst_r_contexts = ','.join(r_contexts)
+                    l_boundary = rule.get('LEFT_BOUNDARY')
+                    r_boundary = rule.get('RIGHT_BOUNDARY')
                     lst_morphemes = ''
                     morphemes = rule.get('MORPHEMES')
                     if morphemes:
@@ -80,11 +81,11 @@ class TranscriptionRules:
                     is_variant = rule.get('IS_VARIANT')
                     target = rule.get('TARGET')
 
-                    insert_query_rules = 'INSERT INTO transcription_rules (input_id, stress, left_contexts, right_contexts, \
-                    morpheme_type, subparadigm, gramm_gender, gramm_number, gramm_case, strength, target, comment) \
-                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'
-    #                       0 1 2 3 4 5 6 7 8 9 0 1 
-                    tuple_columns_rules = (inputs_id, stress, lst_l_contexts, lst_r_contexts, lst_morphemes, subparadigm, gender, number, case, strength, target, comment)
+                    insert_query_rules = 'INSERT INTO transcription_rules (input_id, stress, left_contexts, left_boundary, right_contexts, \
+                    right_boundary, morpheme_type, subparadigm, gramm_gender, gramm_number, gramm_case, strength, target, comment) \
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    #                       0 1 2 3 4 5 6 7 8 9 0 1 2 3
+                    tuple_columns_rules = (inputs_id, stress, lst_l_contexts, l_boundary, lst_r_contexts, r_boundary, lst_morphemes, subparadigm, gender, number, case, strength, target, comment)
 
                     db_cursor.execute(insert_query_rules, tuple_columns_rules)
 
@@ -93,7 +94,7 @@ class TranscriptionRules:
 if __name__== "__main__":
 
     lib_path = '../x64/Release/MainLibCTypes.dll'
-    db_path = '../ZalData/ZalData.db3'
+    db_path = '../ZalData/ZalData_TEST.db3'
 
     t = TranscriptionRules(lib_path, db_path, 'C:/git-repos/Zal-Windows/ZalData/TranscriptionRules.json')
     t.load_rules()
