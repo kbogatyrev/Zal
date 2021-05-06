@@ -48,7 +48,7 @@ ET_ReturnCode CTranscriber::eSplitSource(CEString& sSource, vector<CEString>& ve
     return H_NO_ERROR;
 }
 
-ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, set<vector<PhonemicContextAtom>>& setTarget)
+ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, set<PhonemicContextAtom>& setTarget)
 {
     assert(!sSource.bIsEmpty());
 
@@ -61,12 +61,8 @@ ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, set<vector<Phonemi
     }
 
     vector<PhonemicContextAtom> vecContexts;
-
-//    for (auto sContext : vecContextStrings)
-    for (unsigned int uiAt = 0; uiAt < vecContextStrings.size(); ++uiAt)
+    for (auto sContext : vecContextStrings)
     {
-        auto sContext = vecContextStrings[uiAt];
-
         auto itContext = m_mapStringToContext.find(sContext);
         PhonemicContextAtom context = ET_PhonemicContext::PHONEMIC_CONTEXT_UNDEFINED;
         if (m_mapStringToContext.end() != itContext)
@@ -88,13 +84,7 @@ ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, set<vector<Phonemi
 
         if (context != PhonemicContextAtom(ET_PhonemicContext::PHONEMIC_CONTEXT_UNDEFINED))
         {
-            vecContexts.push_back(context);
-        }
-
-        if (!(uiAt < vecContextStrings.size()-1 && L"+" == vecContextStrings[uiAt + 1]))
-        {
-            setTarget.insert(vecContexts);
-            vecContexts.clear();
+            setTarget.insert(context);
         }
     }
 
@@ -401,11 +391,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
     vector<StRule> vecAvailableRules;
     for (auto& stRule : itRules->second)
     { 
-        if (stRule.m_setStressContexts.empty())
-        {
-            vecAvailableRules.emplace_back(stRule);
-        }
-        else if (stRule.m_setStressContexts.find(eStressStatus) != stRule.m_setStressContexts.end())
+        if (stRule.m_setStressContexts.empty() || stRule.m_setStressContexts.find(eStressStatus) != stRule.m_setStressContexts.end())
         {
             vecAvailableRules.emplace_back(stRule);
         }
@@ -487,25 +473,27 @@ ET_ReturnCode CTranscriber::eGetStressStatus(StTactGroup& stTg, int iPos, ET_Vow
 
 }       //  eGetStressStatus()
 
-ET_ReturnCode CTranscriber::eLeftContextMatch(StTactGroup& stTg, const vector<PhonemicContextAtom>& vecContext, int iPos)
+ET_ReturnCode CTranscriber::eLeftContextMatch(StTactGroup& stTg, PhonemicContextAtom context, int iPos)
 {
+    auto eRet = H_NO_ERROR;
+
     struct StMatchTypes
     {
+        ET_ReturnCode m_eRet;
         StTactGroup* m_pStTg;
         int m_iPos;
 
-        StMatchTypes(StTactGroup* pStTg, int iPos) : m_pStTg(pStTg), m_iPos(iPos) {};
+        StMatchTypes(StTactGroup* pStTg, int iPos, ET_ReturnCode eRet) : m_pStTg(pStTg), m_iPos(iPos), m_eRet(eRet) {};
 
-        bool operator()(ET_PhonemicContext& eContext) 
+        // Enum match
+        bool operator()(ET_PhonemicContext& eContext)
         {
-            if (m_iPos < 1)
+            wchar_t chrPreceding = L'\0';
+            if (m_iPos > 0)
             {
-                CEString sMsg(L"No left context. ");
-                ERROR_LOG(sMsg);
-                return false;
+                chrPreceding = m_pStTg->sSource[m_iPos - 1];
             }
 
-            wchar_t chrPreceding = m_pStTg->sSource[m_iPos-1];
             auto bMatch = false;
 
             switch (eContext)
@@ -529,31 +517,64 @@ ET_ReturnCode CTranscriber::eLeftContextMatch(StTactGroup& stTg, const vector<Ph
                 }
                 break;
             case ET_PhonemicContext::HARD_PAIRED_CONSONANT:
+                if (CEString::bIn(chrPreceding, m_PairedHardSoftConsonants))
+                {
+                    bMatch = true;
+                }
                 break;
             case ET_PhonemicContext::SOFT_CONSONANT:
+                if (CEString::bIn(chrPreceding, m_SoftConsonants))
+                {
+                    bMatch = true;
+                }
                 break;
             case ET_PhonemicContext::SOFT_CONSONANT_NO_CH_SHCH:
+                if (CEString::bIn(chrPreceding, m_PairedHardSoftConsonants))
+                {
+                    bMatch = true;
+                }
                 break;
             case ET_PhonemicContext::VOICELESS:
+                if (CEString::bIn(chrPreceding, m_VoicelessConsonants))
+                {
+                    bMatch = true;
+                }
                 break;
+/*
             case ET_PhonemicContext::BOUNDARY_WORD:
+                if (L' ' == chrPreceding || L'\0' == chrPreceding)
+                {
+                    bMatch = true;
+                }
                 break;
             case ET_PhonemicContext::BOUNDARY_NOT_PROCLITIC:
+                if (L'\0' == chrPreceding)
+                {
+                    bMatch = true;
+                }
                 break;
             case ET_PhonemicContext::BOUNDARY_SYNTAGM:
+                if (L'\0' == chrPreceding)              // ?????
+                {
+                    bMatch = true;
+                }
                 break;
+*/
             default:
+                m_eRet = H_ERROR_UNEXPECTED;
                 CEString sMsg(L"Left context not recognized: ");
                 sMsg += to_wstring(eContext).c_str();
                 ERROR_LOG(sMsg);
-            }
+
+            }       //  switch
 
             return bMatch; 
         }
         
+        // string match
         bool operator()(CEString& sContext) 
         { 
-            if (m_iPos > 0 && CEString::bIn(m_pStTg->sSource[m_iPos - 1], sContext))
+            if (m_iPos > 0 && CEString::bIn(m_pStTg->sSource[m_iPos-1], sContext))
             {
                 return true;
             }
@@ -561,11 +582,12 @@ ET_ReturnCode CTranscriber::eLeftContextMatch(StTactGroup& stTg, const vector<Ph
         }
     };
 
-    for (PhonemicContextAtom atom : vecContext)
+    auto match = visit(StMatchTypes(&stTg, iPos, eRet), context);
+
+    if (eRet != H_NO_ERROR)
     {
-        auto match = visit(StMatchTypes(&stTg, iPos), atom);
-        int i = 0;
+        return eRet;
     }
 
-    return H_TRUE;
+    return match ? H_TRUE : H_FALSE;
 }
