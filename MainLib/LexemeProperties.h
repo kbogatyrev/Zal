@@ -155,6 +155,7 @@ namespace Hlib
         map<int, bool> mapCommonDeviations;
 
         // Spryazh sm. 
+        CEString sSpryazhSmRefSource;
         CEString sSpryazhSmPrefix;
         int iSpryazhSmRefPrefixLength;
     };

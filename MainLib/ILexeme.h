@@ -171,6 +171,7 @@ namespace Hlib
         virtual bool bHasPresPassParticiple() = 0;
         virtual void SetHasPresPassParticiple(bool) = 0;
         virtual bool bSpryazhSm() = 0;
+        virtual CEString sSpryazhSmRefSource() = 0;
         virtual ET_Subparadigm eSubparadigm() = 0;
         virtual void SetSubparadigm(ET_Subparadigm) = 0;    // currently only used with numerals
 
