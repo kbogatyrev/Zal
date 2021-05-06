@@ -22,6 +22,7 @@ class CParser : public IParser
 {
 
 public:
+    CParser() = delete;
     CParser(CDictionary *);
     ~CParser();
 
@@ -38,8 +39,6 @@ public:
     void SetDb(shared_ptr<CSqlite> pDb);
 
 private:
-    CParser();  // no use
-
     CDictionary * m_pDictionary;
     shared_ptr<CSqlite> m_pDb;
     CParsingTree * m_pEndingsTree;
