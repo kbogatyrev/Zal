@@ -27,8 +27,10 @@ CAnalytics::~CAnalytics()
 ET_ReturnCode CAnalytics::eInit()
 {
     m_spTranscriber = make_unique<CTranscriber>(m_pDb);
-//    ET_ReturnCode eRet = m_spTranscriber->eTranscribe();
-//    return eRet;
+    if (nullptr == m_spTranscriber)
+    {
+        return H_ERROR_POINTER;
+    }
 
     return H_NO_ERROR;
 }
@@ -140,6 +142,7 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
 
         for (auto itTg = m_mapTactGroups.begin(); itTg != m_mapTactGroups.end(); ++itTg)
         {
+            eRet = m_spTranscriber->eTranscribeTactGroup((*itTg).second);
             eRet = eSaveTactGroup((*itTg).second);
         }
 
