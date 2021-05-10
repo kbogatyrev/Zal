@@ -415,7 +415,7 @@ ET_ReturnCode CAnalytics::eParseWord(const CEString& sWord, const CEString& sLin
         }
 
         stParse.llLineDbId = llLineDbKey;
-        stParse.llWordInLIneDbId = llWordInLineDbKey;
+        stParse.llWordInLineDbId = llWordInLineDbKey;
         stParse.llWordToWordFormId = llWordToWordFormId;
         stParse.iPosInTactGroup = 0;
         stParse.WordForm = *pWf;

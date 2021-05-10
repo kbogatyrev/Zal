@@ -27,7 +27,7 @@ namespace Hlib
         int iPosInTactGroup;
         ET_WordStressType eStressType;
         long long llLineDbId;
-        long long llWordInLIneDbId;
+        long long llWordInLineDbId;
         long long llWordToWordFormId;
         CWordForm WordForm;
 
@@ -44,9 +44,9 @@ namespace Hlib
             int iPosInTactGroup = -1;
             long long llLineDbId = -1;
             eStressType = WORD_STRESS_TYPE_UNDEFINED;
-            long long llWordInLIneDbId = -1;
+            long long llWordInLineDbId = -1;
             long long llWordToWordFormId = -1;
-            CWordForm WordForm;
+//            CWordForm WordForm;
         }
 
         // Needed to be used with STL set

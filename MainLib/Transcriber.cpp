@@ -6,6 +6,7 @@
 #include "Analytics.h"
 #include "Transcriber.h"
 #include "SqliteWrapper.h"
+#include "WordForm.h"
 
 using namespace Hlib;
 
@@ -48,7 +49,7 @@ ET_ReturnCode CTranscriber::eSplitSource(CEString& sSource, vector<CEString>& ve
     return H_NO_ERROR;
 }
 
-ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, set<PhonemicContextAtom>& setTarget)
+ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, vector<PhonemicContextAtom>& vecTarget)
 {
     assert(!sSource.bIsEmpty());
 
@@ -84,11 +85,57 @@ ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, set<PhonemicContex
 
         if (context != PhonemicContextAtom(ET_PhonemicContext::PHONEMIC_CONTEXT_UNDEFINED))
         {
-            setTarget.insert(context);
+            vecTarget.emplace_back(context);
         }
     }
 
     return H_NO_ERROR;
+}
+
+ET_ReturnCode CTranscriber::eParseBoundaries(CEString& sSource, vector<ET_Boundary>& vecTarget)
+{
+    assert(!sSource.bIsEmpty());
+
+    vector<CEString> vecBoundaryStrings;
+    ET_ReturnCode eRet = eSplitSource(sSource, vecBoundaryStrings);
+    if (eRet != H_NO_ERROR)
+    {
+        ERROR_LOG(L"unable to split boundary string.");
+        return H_ERROR_INVALID_ARG;
+    }
+
+    vector<ET_Boundary> vecBoundaries;
+    for (auto sBoundary : vecBoundaryStrings)
+    {
+        auto itBoundary = m_mapStringToBoundary.find(sBoundary);
+        auto eBoundary = ET_Boundary::BOUNDARY_UNDEFINED;
+        if (m_mapStringToBoundary.end() != itBoundary)
+        {
+            eBoundary = itBoundary->second;
+        }
+        else
+        {
+            ERROR_LOG(L"Boundary not recognized.");
+            continue;
+        }
+
+        if (eBoundary != ET_PhonemicContext::PHONEMIC_CONTEXT_UNDEFINED)
+        {
+            vecTarget.emplace_back(eBoundary);
+        }
+    }
+
+    return H_NO_ERROR;
+}
+
+bool CTranscriber::bIsProclitic(CWordForm& wf)
+{
+    return true;        // stub
+}
+
+bool CTranscriber::bIsEnclitic(CWordForm& wf)
+{
+    return true;        // stub
 }
 
 ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
@@ -102,8 +149,8 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
     ET_ReturnCode eRet = H_NO_ERROR;
 
     static const CEString sQuery
-        (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.right_contexts, tr.morpheme_type,  tr.subparadigm, \
-        tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
+        (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.left_boundary, tr.right_contexts, right_boundary, tr.morpheme_type, \
+        tr.subparadigm, \tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
         AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
 
     try
@@ -158,28 +205,45 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Stress context not recognized.");
                     continue;
                 }
-                stRule.m_setStressContexts.insert((*itStressType).second);
+                stRule.m_vecStressContexts.emplace_back((*itStressType).second);
             }
+            sort(stRule.m_vecStressContexts.begin(), stRule.m_vecStressContexts.end());
 
             // Left contexts
             CEString sLeftContexts;
             m_pDb->GetData(2, sLeftContexts);
             if (!sLeftContexts.bIsEmpty())
             {
-                eRet = eParseContexts(sLeftContexts, stRule.m_setLeftContexts);
+                eRet = eParseContexts(sLeftContexts, stRule.m_vecLeftContexts);
+            }
+
+            // Left boundaries
+            CEString sLeftBoundaries;
+            m_pDb->GetData(3, sLeftBoundaries);
+            if (!sLeftBoundaries.bIsEmpty())
+            {
+                eRet = eParseBoundaries(sLeftBoundaries, stRule.m_vecLeftBoundaries);
             }
 
             // Right contexts
             CEString sRightContexts;
-            m_pDb->GetData(3, sRightContexts);
+            m_pDb->GetData(45, sRightContexts);
             if (!sRightContexts.bIsEmpty())
             {
-                eRet = eParseContexts(sRightContexts, stRule.m_setRightContexts);
+                eRet = eParseContexts(sRightContexts, stRule.m_vecRightContexts);
+            }
+
+            // Right boundaries
+            CEString sRightBoundaries;
+            m_pDb->GetData(5, sRightBoundaries);
+            if (!sRightBoundaries.bIsEmpty())
+            {
+                eRet = eParseBoundaries(sRightBoundaries, stRule.m_vecRightBoundaries);
             }
 
             // Morphemic context
             CEString sMorphemeType;
-            m_pDb->GetData(4, sMorphemeType);
+            m_pDb->GetData(6, sMorphemeType);
             if (!sMorphemeType.bIsEmpty())
             {
                 vector<CEString> vecMorphemeTypeStrings;
@@ -210,13 +274,13 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                             continue;
                         }
                     }
-                    stRule.m_setMorphemicContexts.insert(context);
+                    stRule.m_vecMorphemicContexts.emplace_back(context);
                 }
             }
 
             // Subparadigm (a string)
             CEString sSubparadigm;
-            m_pDb->GetData(5, sSubparadigm);
+            m_pDb->GetData(7, sSubparadigm);
             if (!sSubparadigm.bIsEmpty())
             {
                 auto itSubparadigm = m_mapStringToSubparadigm.find(sSubparadigm);
@@ -225,12 +289,12 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Subparadigm not recognized.");
                     continue;
                 }
-                stRule.m_setSubparadigms.insert((*itSubparadigm).second);
+                stRule.m_vecSubparadigms.emplace_back((*itSubparadigm).second);
             }
 
             // Gender
             CEString sGender;
-            m_pDb->GetData(6, sGender);
+            m_pDb->GetData(8, sGender);
             if (!sGender.bIsEmpty())
             {
                 auto itGender = m_mapStringToGender.find(sGender);
@@ -239,12 +303,12 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Gender not recognized.");
                     continue;
                 }
-                stRule.m_setGenders.insert((*itGender).second);
+                stRule.m_vecGenders.emplace_back((*itGender).second);
             }
 
             // Number 
             CEString sNumber;
-            m_pDb->GetData(7, sNumber);
+            m_pDb->GetData(9, sNumber);
             if (!sNumber.bIsEmpty())
             {
                 auto itNumber = m_mapStringToNumber.find(sNumber);
@@ -253,12 +317,12 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Number not recognized.");
                     continue;
                 }
-                stRule.m_setNumbers.insert((*itNumber).second);
+                stRule.m_vecNumbers.emplace_back((*itNumber).second);
             }
 
             // Case 
             CEString sCase;
-            m_pDb->GetData(8, sCase);
+            m_pDb->GetData(10, sCase);
             if (!sCase.bIsEmpty())
             {
                 auto itCase = m_mapStringToCase.find(sCase);
@@ -267,12 +331,12 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                     ERROR_LOG(L"Case not recognized.");
                     continue;
                 }
-                stRule.m_setCases.insert((*itCase).second);
+                stRule.m_vecCases.emplace_back((*itCase).second);
             }
 
             // Strength
             CEString sStrength;
-            m_pDb->GetData(9, sStrength);
+            m_pDb->GetData(11, sStrength);
             if (!sStrength.bIsEmpty())
             {
                 auto itStrength = m_mapStringToRuleStrength.find(sStrength);
@@ -285,7 +349,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             }
 
             // IsVariant
-            m_pDb->GetData(9, stRule.m_bIsVariant);
+            m_pDb->GetData(12, stRule.m_bIsVariant);
 
             for (int iAt = 0; iAt < (int)sKeys.uiLength(); ++iAt)
             {
@@ -386,27 +450,83 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
         return H_ERROR_UNEXPECTED;
     }
 
+//    using ItContext = vector<ET_PhonemicContext>::iterator;
+    vector<vector<StRule>::iterator> vecAvailableRules;
+
     auto eStressStatus = ET_VowelStressRelation::VOWEL_STRESS_RELATION_UNDEFINED;
     auto eRet = eGetStressStatus(stTg, iPos, eStressStatus);
-    vector<StRule> vecAvailableRules;
-    for (auto& stRule : itRules->second)
+    for (auto&& stRule : itRules->second)
     { 
-        if (stRule.m_setStressContexts.empty() || stRule.m_setStressContexts.find(eStressStatus) != stRule.m_setStressContexts.end())
+        if (!stRule.m_vecStressContexts.empty() && stRule.m_vecStressContexts.end() ==
+            find(stRule.m_vecStressContexts.begin(), stRule.m_vecStressContexts.end(), eStressStatus))
         {
-            vecAvailableRules.emplace_back(stRule);
+            continue;
         }
-    }
 
-    for (auto& stRule : vecAvailableRules)
-    {
-        for (auto varLeftContext : stRule.m_setLeftContexts)
+        auto bFound = false;
+        for (auto&& leftContext : stRule.m_vecLeftContexts)
         {
-            auto eRet = eLeftContextMatch(stTg, varLeftContext, iPos);
+            auto eRet = eContextMatch(stTg, leftContext, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
         }
-    }
+
+        if (!bFound)
+        {
+            break;
+        }
+
+        bFound = false;
+        for (auto&& leftBoundary : stRule.m_vecLeftBoundaries)
+        {
+            auto eRet = eBoundaryMatch(stTg, leftBoundary, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+        }
+
+        if (!bFound)
+        {
+            break;
+        }
+
+        bFound = false;
+        for (auto&& rightContext : stRule.m_vecRightContexts)
+        {
+            auto eRet = eContextMatch(stTg, rightContext, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+        }
+
+        bFound = false;
+        for (auto&& rightBoundary : stRule.m_vecRightBoundaries)
+        {
+            auto eRet = eBoundaryMatch(stTg, rightBoundary, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+        }
+
+        if (!bFound)
+        {
+            break;
+        }
+
+    }       //  for (auto&& stRule : itRules->second)
 
     return H_NO_ERROR;
-}
+
+}       //  eHandleVowel()
 
 ET_ReturnCode CTranscriber::eGetStressStatus(StTactGroup& stTg, int iPos, ET_VowelStressRelation& eStressStatus)
 {
@@ -473,7 +593,7 @@ ET_ReturnCode CTranscriber::eGetStressStatus(StTactGroup& stTg, int iPos, ET_Vow
 
 }       //  eGetStressStatus()
 
-ET_ReturnCode CTranscriber::eLeftContextMatch(StTactGroup& stTg, PhonemicContextAtom context, int iPos)
+ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom context, int iPos)
 {
     auto eRet = H_NO_ERROR;
 
@@ -540,26 +660,6 @@ ET_ReturnCode CTranscriber::eLeftContextMatch(StTactGroup& stTg, PhonemicContext
                     bMatch = true;
                 }
                 break;
-/*
-            case ET_PhonemicContext::BOUNDARY_WORD:
-                if (L' ' == chrPreceding || L'\0' == chrPreceding)
-                {
-                    bMatch = true;
-                }
-                break;
-            case ET_PhonemicContext::BOUNDARY_NOT_PROCLITIC:
-                if (L'\0' == chrPreceding)
-                {
-                    bMatch = true;
-                }
-                break;
-            case ET_PhonemicContext::BOUNDARY_SYNTAGM:
-                if (L'\0' == chrPreceding)              // ?????
-                {
-                    bMatch = true;
-                }
-                break;
-*/
             default:
                 m_eRet = H_ERROR_UNEXPECTED;
                 CEString sMsg(L"Left context not recognized: ");
@@ -590,4 +690,156 @@ ET_ReturnCode CTranscriber::eLeftContextMatch(StTactGroup& stTg, PhonemicContext
     }
 
     return match ? H_TRUE : H_FALSE;
-}
+
+}       //  eContextMatch()
+
+
+ET_ReturnCode CTranscriber::eMorphemeMatch(StTactGroup& stTg, MorphemicContextAtom context, int iPos)
+{
+    auto eRet = H_NO_ERROR;
+
+    struct StMatchTypes
+    {
+        ET_ReturnCode m_eRet;
+        StTactGroup* m_pStTg = nullptr;
+        int m_iPos = -1;
+
+        StMatchTypes(StTactGroup* pStTg, int iPos, ET_ReturnCode eRet) : m_pStTg(pStTg), m_iPos(iPos), m_eRet(eRet) {};
+
+        // Enum match
+        bool operator()(ET_MorphemicContext& eContext)
+        {
+            auto bMatch = false;
+            switch (eContext)
+            {
+            case ET_MorphemicContext::ENDING:
+                for (auto&& stWordParse : m_pStTg->vecWords)
+                {
+                    CWordForm& wf = stWordParse.WordForm;
+                    auto iStemLength = (int)(wf.sWordForm().uiLength() - wf.sEnding().uiLength());
+                    if (m_iPos >= iStemLength)
+                    {
+                        return true;      // TODO: check each wf
+                    }
+                    return false;
+                }
+                break;
+            case ET_MorphemicContext::NOT_ENDING:         
+                for (auto&& stWordParse : m_pStTg->vecWords)
+                {
+                    CWordForm& wf = stWordParse.WordForm;
+                    auto iStemLength = (int)(wf.sWordForm().uiLength() - wf.sEnding().uiLength());
+                    if (m_iPos >= iStemLength)
+                    {
+                        return true;      // TODO: check each wf
+                    }
+                    return false;
+                }
+                break;
+            case ET_MorphemicContext::ROOT:     // we'll use stem as "root"
+                for (auto&& stWordParse : m_pStTg->vecWords)
+                {
+                    CWordForm& wf = stWordParse.WordForm;
+                    auto iStemLength = (int)(wf.sWordForm().uiLength() - wf.sEnding().uiLength());
+                    if (m_iPos < iStemLength)
+                    {
+                        return true;      // TODO: check each wf
+                    }
+                    return false;
+                }
+                break;
+            case ET_MorphemicContext::ROOT_AUSLAUT:     //  // we'll use stem as "root"
+                for (auto&& stWordParse : m_pStTg->vecWords)
+                {
+                    CWordForm& wf = stWordParse.WordForm;
+                    auto iStemLength = wf.sWordForm().uiLength() - wf.sEnding().uiLength();
+                    if (m_iPos == iStemLength-1)
+                    {
+                        return true;      // TODO: check each wf
+                    }
+                    return false;
+                }
+                break;
+
+            default:
+                m_eRet = H_ERROR_UNEXPECTED;
+                CEString sMsg(L"Morphemic context not recognized: ");
+                sMsg += to_wstring(eContext).c_str();
+                ERROR_LOG(sMsg);
+
+            }       //  switch
+
+            return bMatch;
+        }
+
+        // string match
+        bool operator()(CEString& sContext)
+        {
+            if (CEString::bIn(m_pStTg->sSource[m_iPos], sContext))
+            {
+                return true;
+            }
+            return false;
+        }
+    };
+
+    auto match = visit(StMatchTypes(&stTg, iPos, eRet), context);
+
+    if (eRet != H_NO_ERROR)
+    {
+        return eRet;
+    }
+
+    return match ? H_TRUE : H_FALSE;
+
+}       //  eMorphemeMatch()
+
+ET_ReturnCode CTranscriber::eBoundaryMatch(StTactGroup& stTg, ET_Boundary eBoundary, int iPos)
+{
+    auto eRet = H_NO_ERROR;
+    switch (eBoundary)
+    {
+    case ET_Boundary::BOUNDARY_WORD:
+        {
+            if (0 == iPos)
+            {
+                return H_TRUE;
+            }
+        }
+        break;
+    case ET_Boundary::BOUNDARY_NOT_PROCLITIC:
+        {
+            if (stTg.iNumOfWords < 2)
+            {
+                return H_TRUE;
+            }
+
+            auto itParse = ++stTg.vecWords.begin();
+            if (itParse == stTg.vecWords.end())
+            {
+                CEString sMsg(L"Expect two or more words in the tact group. ");
+                ERROR_LOG(sMsg);
+                return H_ERROR_UNEXPECTED;
+            }
+        }
+        break;
+     case ET_Boundary::BOUNDARY_SYNTAGM:
+        {
+            if (0 == iPos)      // How to distinguish from word boundary?
+            {
+                return H_TRUE;
+            }
+            break;
+        }
+    default:
+        {
+            CEString sMsg(L"Left boundary not recognized: ");
+            sMsg += to_wstring(eBoundary).c_str();
+            ERROR_LOG(sMsg);
+            return H_ERROR_UNEXPECTED;
+        }
+    }
+
+    return H_FALSE;
+
+}       //  eBoundaryMatch()
