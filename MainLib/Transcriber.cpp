@@ -150,7 +150,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
     static const CEString sQuery
         (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.left_boundary, tr.right_contexts, right_boundary, tr.morpheme_type, \
-        tr.subparadigm, \tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
+        tr.subparadigm, tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
         AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
 
     try
@@ -450,7 +450,6 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
         return H_ERROR_UNEXPECTED;
     }
 
-//    using ItContext = vector<ET_PhonemicContext>::iterator;
     vector<vector<StRule>::iterator> vecAvailableRules;
 
     auto eStressStatus = ET_VowelStressRelation::VOWEL_STRESS_RELATION_UNDEFINED;
@@ -476,7 +475,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
 
         if (!bFound)
         {
-            break;
+            continue;
         }
 
         bFound = false;
@@ -492,7 +491,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
 
         if (!bFound)
         {
-            break;
+            continue;
         }
 
         bFound = false;
@@ -517,11 +516,10 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
             }
         }
 
-        if (!bFound)
-        {
-            break;
-        }
-
+//        if (bFound)
+//        {
+//            vecAvailableRules.push_back();
+//        }
     }       //  for (auto&& stRule : itRules->second)
 
     return H_NO_ERROR;
