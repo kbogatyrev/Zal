@@ -45,7 +45,7 @@ private:
     vector<CWordForm *> m_vecWordForms;
     vector<CWordForm *>::iterator m_itCurrentWordForm;
 
-    ET_ReturnCode eIrregularFormLookup(const CEString&);
+    ET_ReturnCode eIrregularFormLookup(const CEString&, bool bIsSpryazgSm = false);
     ET_ReturnCode eWholeWordLookup(const CEString&);
     ET_ReturnCode eFormLookup(const CEString&);
     ET_ReturnCode eLexemeLookup(const CLexeme&);
