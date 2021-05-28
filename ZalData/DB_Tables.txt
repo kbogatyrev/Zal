@@ -20,6 +20,12 @@ CREATE TABLE irregular_forms (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER,
 
 CREATE TABLE irregular_stress (id INTEGER PRIMARY KEY ASC, form_id INTEGER, position INTEGER, is_primary BOOLEAN, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (form_id) REFERENCES irregular_forms (id));
 
+-- Only used in parsing
+CREATE TABLE irregular_forms_spryazh_sm (id INTEGER PRIMARY KEY ASC, descriptor_id INTEGER, gram_hash TEXT, wordform TEXT, is_alternative BOOLEAN DEFAULT (0), lead_comment TEXT, trailing_comment TEXT, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (descriptor_id) REFERENCES descriptor (id));
+
+CREATE TABLE irregular_stress_spryazh_sm (id INTEGER PRIMARY KEY ASC, form_id INTEGER, position INTEGER, is_primary BOOLEAN, is_edited BOOLEAN DEFAULT(0), FOREIGN KEY (form_id) REFERENCES irregular_forms_spryazh_sm (id));
+--
+
 --CREATE TABLE spryazh_sm_headwords (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, ref_descriptor_id INTEGER, FOREIGN KEY (headword_id) REFERENCES headword(id), FOREIGN KEY (ref_descriptor_id) REFERENCES descriptor(id));
 CREATE TABLE spryazh_sm_headwords (id INTEGER PRIMARY KEY ASC, headword_id INTEGER, ref_descriptor_id INTEGER, no_aspect_pair BOOLEAN, FOREIGN KEY (headword_id) REFERENCES headword(id), FOREIGN KEY (ref_descriptor_id) REFERENCES descriptor(id));
 
