@@ -440,9 +440,11 @@ ET_ReturnCode CAnalytics::eFindEquivalencies(CEString& sLine)
         auto it = m_mmapWordParses.find(iField);
         if (m_mmapWordParses.end() == it)
         {
-            CEString sMsg(L"Cant's find parse for the word number '");
+            CEString sMsg(L"Cant's find parse for the word number ");
             sMsg += CEString::sToString(iField);
-            ERROR_LOG(L"Cant's find parse for a word '");
+            sMsg += L" in '" + sLine;
+            sMsg += L"'";
+            ERROR_LOG(sMsg);
             continue;
         }
 
@@ -1013,6 +1015,17 @@ ET_ReturnCode CAnalytics::eSaveTactGroup(StTactGroup& stTg)
                 m_pDb->Bind(1, stWordParse.llWordToWordFormId, llInsertHandle);
                 m_pDb->Bind(2, llTactGroupId, llInsertHandle);
                 m_pDb->Bind(3, stWordParse.iPosInTactGroup, llInsertHandle);
+                m_pDb->InsertRow(llInsertHandle);
+            }
+            m_pDb->Finalize(llInsertHandle);
+
+            // CREATE TABLE tact_group_to_gram_hash(id INTEGER PRIMARY KEY ASC, tact_group_id INTEGER, gram_hash TEXT)
+            llInsertHandle = 0;
+            m_pDb->uiPrepareForInsert(L"tact_group_to_gram_hash", 2, (sqlite3_stmt*&)llInsertHandle);
+            for (StWordParse& stWordParse : stTg.vecWords)
+            {
+                m_pDb->Bind(1, llTactGroupId, llInsertHandle);
+                m_pDb->Bind(2, stWordParse.WordForm.sGramHash(), llInsertHandle);
                 m_pDb->InsertRow(llInsertHandle);
             }
             m_pDb->Finalize(llInsertHandle);
