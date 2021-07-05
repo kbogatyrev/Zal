@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <cstring>
+#include <iomanip>
 
 #include "Logging.h"
 #include "IDictionary.h"
@@ -273,7 +274,7 @@ namespace MainLibForPython {
 
     void ReportProgress(int iPercentDone, bool bOperationComplete, int iRecord, double dDuration)
     {
-        cout << "Record " << iRecord << ", " << dDuration << " seconds, " << iPercentDone << "%" << endl;
+        cout << "Record " << right << setw(7) << iRecord << ", " << fixed << setprecision(3) << dDuration << " seconds, " << setw(4) << iPercentDone << "%" << endl;
         if (bOperationComplete)
         {
             cout << endl << "****    Done!" << endl << endl;
