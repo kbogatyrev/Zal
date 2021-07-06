@@ -183,10 +183,10 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
                 {
                     sKeys = sInputs.sGetRegexMatch(0);
                 }
-//                else if (sInputs.bRegexMatch(L"^([A-Z]+)"))
-//                {
-//                    sKeys = sInputs.sGetRegexMatch(0);
-//                }
+                //                else if (sInputs.bRegexMatch(L"^([A-Z]+)"))
+                //                {
+                //                    sKeys = sInputs.sGetRegexMatch(0);
+                //                }
                 else
                 {
                     ERROR_LOG(L"Unable to parse transcription rule inputs.");
@@ -227,7 +227,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
             // Right contexts
             CEString sRightContexts;
-            m_pDb->GetData(45, sRightContexts);
+            m_pDb->GetData(4, sRightContexts);
             if (!sRightContexts.bIsEmpty())
             {
                 eRet = eParseContexts(sRightContexts, stRule.m_vecRightContexts);
@@ -349,7 +349,43 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             }
 
             // IsVariant
-            m_pDb->GetData(12, stRule.m_bIsVariant);
+//            m_pDb->GetData(12, stRule.m_bIsVariant);
+
+            // Target
+            CEString sTarget;
+            m_pDb->GetData(12, sTarget);
+
+            unsigned int uiStart{ 0 };
+            auto uiLength = sTarget.uiFind(L" + ", uiStart);
+            bool bError = false;
+            while (uiLength != ERelation::ecNotFound)
+            {
+                uiLength -= uiStart;
+                auto itTarget = m_mapStringToTranscriptionSymbol.find(sTarget.sSubstr(uiStart, uiLength));
+                if (m_mapStringToTranscriptionSymbol.end() == itTarget)
+                {
+                    ERROR_LOG(L"Target not recognized.");
+                    bError = true;
+                    break;
+                }
+                stRule.m_vecTargets.push_back((*itTarget).second);
+                uiStart += uiLength + 3;
+                uiLength = sTarget.uiFind(L" + ", uiStart);
+            }
+
+            if (bError) 
+            {
+                continue;
+            }
+            auto itTarget = m_mapStringToTranscriptionSymbol.find(sTarget.sSubstr(uiStart));
+            if (m_mapStringToTranscriptionSymbol.end() == itTarget)
+            {
+                ERROR_LOG(L"Target not recognized.");
+            }
+            else
+            {
+                stRule.m_vecTargets.push_back((*itTarget).second);
+            }
 
             for (int iAt = 0; iAt < (int)sKeys.uiLength(); ++iAt)
             {
@@ -451,10 +487,11 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
     }
 
     vector<vector<StRule>::iterator> vecAvailableRules;
+    auto bFound = false;
 
     auto eStressStatus = ET_VowelStressRelation::VOWEL_STRESS_RELATION_UNDEFINED;
     auto eRet = eGetStressStatus(stTg, iPos, eStressStatus);
-    for (auto&& stRule : itRules->second)
+    for (auto& stRule : itRules->second)
     { 
         if (!stRule.m_vecStressContexts.empty() && stRule.m_vecStressContexts.end() ==
             find(stRule.m_vecStressContexts.begin(), stRule.m_vecStressContexts.end(), eStressStatus))
@@ -462,8 +499,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
             continue;
         }
 
-        auto bFound = false;
-        for (auto&& leftContext : stRule.m_vecLeftContexts)
+        for (auto& leftContext : stRule.m_vecLeftContexts)
         {
             auto eRet = eContextMatch(stTg, leftContext, iPos);
             if (H_TRUE == eRet)
@@ -471,6 +507,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
                 bFound = true;
                 break;
             }
+            bFound = false;
         }
 
         if (!bFound)
@@ -478,8 +515,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
             continue;
         }
 
-        bFound = false;
-        for (auto&& leftBoundary : stRule.m_vecLeftBoundaries)
+        for (auto& leftBoundary : stRule.m_vecLeftBoundaries)
         {
             auto eRet = eBoundaryMatch(stTg, leftBoundary, iPos);
             if (H_TRUE == eRet)
@@ -487,6 +523,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
                 bFound = true;
                 break;
             }
+            bFound = false;
         }
 
         if (!bFound)
@@ -494,8 +531,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
             continue;
         }
 
-        bFound = false;
-        for (auto&& rightContext : stRule.m_vecRightContexts)
+        for (auto& rightContext : stRule.m_vecRightContexts)
         {
             auto eRet = eContextMatch(stTg, rightContext, iPos);
             if (H_TRUE == eRet)
@@ -503,10 +539,10 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
                 bFound = true;
                 break;
             }
+            bFound = false;
         }
 
-        bFound = false;
-        for (auto&& rightBoundary : stRule.m_vecRightBoundaries)
+        for (auto& rightBoundary : stRule.m_vecRightBoundaries)
         {
             auto eRet = eBoundaryMatch(stTg, rightBoundary, iPos);
             if (H_TRUE == eRet)
@@ -514,9 +550,26 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
                 bFound = true;
                 break;
             }
+            bFound = false;
+        }
+        
+        for (auto& mContext : stRule.m_vecMorphemicContexts)
+        {
+            auto eRet = eMorphemeMatch(stTg, mContext, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+            bFound = false;
         }
 
-//        if (bFound)
+        if (!stRule.m_vecSubparadigms.empty())
+        {
+            auto eRet = eSubparadigmMatch(stTg, stRule.m_vecSubparadigms);
+        }
+
+                //        if (bFound)
 //        {
 //            vecAvailableRules.push_back();
 //        }
@@ -711,49 +764,49 @@ ET_ReturnCode CTranscriber::eMorphemeMatch(StTactGroup& stTg, MorphemicContextAt
             switch (eContext)
             {
             case ET_MorphemicContext::ENDING:
-                for (auto&& stWordParse : m_pStTg->vecWords)
+                for (auto& stWordParse : m_pStTg->vecWords)         // TODO Need to store results for each word parse separately
                 {
                     CWordForm& wf = stWordParse.WordForm;
                     auto iStemLength = (int)(wf.sWordForm().uiLength() - wf.sEnding().uiLength());
                     if (m_iPos >= iStemLength)
                     {
-                        return true;      // TODO: check each wf
+                        return true;    // ending: return true
                     }
                     return false;
                 }
                 break;
             case ET_MorphemicContext::NOT_ENDING:         
-                for (auto&& stWordParse : m_pStTg->vecWords)
+                for (auto& stWordParse : m_pStTg->vecWords)
                 {
                     CWordForm& wf = stWordParse.WordForm;
                     auto iStemLength = (int)(wf.sWordForm().uiLength() - wf.sEnding().uiLength());
                     if (m_iPos >= iStemLength)
                     {
-                        return true;      // TODO: check each wf
+                        return false;    // ending: return false
                     }
-                    return false;
+                    return true;
                 }
                 break;
             case ET_MorphemicContext::ROOT:     // we'll use stem as "root"
-                for (auto&& stWordParse : m_pStTg->vecWords)
+                for (auto& stWordParse : m_pStTg->vecWords)
                 {
                     CWordForm& wf = stWordParse.WordForm;
                     auto iStemLength = (int)(wf.sWordForm().uiLength() - wf.sEnding().uiLength());
                     if (m_iPos < iStemLength)
                     {
-                        return true;      // TODO: check each wf
+                        return true;
                     }
                     return false;
                 }
                 break;
             case ET_MorphemicContext::ROOT_AUSLAUT:     //  // we'll use stem as "root"
-                for (auto&& stWordParse : m_pStTg->vecWords)
+                for (auto& stWordParse : m_pStTg->vecWords)
                 {
                     CWordForm& wf = stWordParse.WordForm;
                     auto iStemLength = wf.sWordForm().uiLength() - wf.sEnding().uiLength();
                     if (m_iPos == iStemLength-1)
                     {
-                        return true;      // TODO: check each wf
+                        return true;
                     }
                     return false;
                 }
@@ -841,3 +894,59 @@ ET_ReturnCode CTranscriber::eBoundaryMatch(StTactGroup& stTg, ET_Boundary eBound
     return H_FALSE;
 
 }       //  eBoundaryMatch()
+
+ET_ReturnCode CTranscriber::eSubparadigmMatch(StTactGroup& stTg, const vector<ET_Subparadigm>& vecSp)
+{
+    auto eRet = H_NO_ERROR;
+
+    for (auto& stWordParse : stTg.vecWords)
+    {
+        auto itRet = find(vecSp.begin(), vecSp.end(), stWordParse.WordForm.eSubparadigm());
+        return itRet != vecSp.end() ? H_TRUE : H_FALSE;                         // TODO need to return array of values one for each parse
+    }
+
+    return H_FALSE;
+
+}       //  eMorphemeMatch()
+
+ET_ReturnCode CTranscriber::eGenderMatch(StTactGroup& stTg, const vector<ET_Gender>& vecGenders)
+{
+    auto eRet = H_NO_ERROR;
+
+    for (auto& stWordParse : stTg.vecWords)
+    {
+        auto itRet = find(vecGenders.begin(), vecGenders.end(), stWordParse.WordForm.eGender());
+        return itRet != vecGenders.end() ? H_TRUE : H_FALSE;                         // TODO need to return array of values one for each parse
+    }
+
+    return H_FALSE;
+
+}       //  eMorphemeMatch()
+
+ET_ReturnCode CTranscriber::eNumberMatch(StTactGroup& stTg, const vector<ET_Number>& vecNumbers)
+{
+    auto eRet = H_NO_ERROR;
+
+    for (auto& stWordParse : stTg.vecWords)
+    {
+        auto itRet = find(vecNumbers.begin(), vecNumbers.end(), stWordParse.WordForm.eNumber());
+        return itRet != vecNumbers.end() ? H_TRUE : H_FALSE;                         // TODO need to return array of values one for each parse
+    }
+
+    return H_FALSE;
+
+}       //  eMorphemeMatch()
+
+ET_ReturnCode CTranscriber::eCaseMatch(StTactGroup& stTg, const vector<ET_Case>& vecCases)
+{
+    auto eRet = H_NO_ERROR;
+
+    for (auto& stWordParse : stTg.vecWords)
+    {
+        auto itRet = find(vecCases.begin(), vecCases.end(), stWordParse.WordForm.eCase());
+        return itRet != vecCases.end() ? H_TRUE : H_FALSE;                         // TODO need to return array of values one for each parse
+    }
+
+    return H_FALSE;
+
+}       //  eMorphemeMatch()
