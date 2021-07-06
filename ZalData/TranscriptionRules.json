@@ -5,13 +5,13 @@
         "COMMENT": "$15: акт, Арка, Алый; заАхать, поАхать; там, дам, сам, гам, вам, мак, бак, брак, шаг, жАба, шАлость, жаль; час, кочАн, качАть, пощАда",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "VOWEL", "HARD_CONSONANT", "чщ" ],
-        "TARGET": "A"
+        "TARGET": "STRESSED_A"
       },
       {
         "COMMENT": "$15: акт, Арка, Алый; заАхать, поАхать; там, дам, сам, гам, вам, мак, бак, брак, шаг, жАба, шАлость, жаль; час, кочАн, качАть, пощАда",
         "STRESS": "STRESSED",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "A"
+        "TARGET": "STRESSED_A"
       },
       {
         "COMMENT": "$32: садЫ, дарЫ, малА, пашУ, старИк, травА, шалУн, шалАш, жарА, жаркОе, царИзм, царАпать; аптЕка, армЯк, аршИн, аккОрд, амбАр",
@@ -79,7 +79,7 @@
       {
         "COMMENT": "$57: за аптЕку, на аршИн, за амбАр, за акварЕль",
         "STRESS": "PRETONIC",
-        "TARGET": "LONG_A"
+        "TARGET": "PRETONIC_LONG_A"
       }
     ],
     "а+и": [
@@ -93,7 +93,7 @@
       {
         "COMMENT": "$57: на окнЕ, на однОй, заострИть, наобУм; на огонёк, за областнОй, наоборОт",
         "STRESS": "PRETONIC",
-        "TARGET": "LONG_A"
+        "TARGET": "PRETONIC_LONG_A"
       }
     ],
     "а+у": [
@@ -108,19 +108,19 @@
         "COMMENT": "$27: пел, бЕлый, вЕра, мел, сЕрый, зЕркало, дЕло, тЕсно, кедр, гЕтры, нерв, тЕрмин, музЕй, инспЕктор, мЕдик; шест, жест, цЕнный",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "CONSONANT" ],
-        "TARGET": "E"
+        "TARGET": "STRESSED_E"
       },
       {
         "COMMENT": "$29: ел, ем, ель, Еду, Ездил, заЕду, поЕли, пьЕса, пьЕксы, валансьЕн, досьЕ, о муравьЕ, о соловьЕ, съел; exception: проЕкт",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "VOWEL", "ьъ" ],
-        "TARGET": "J + E"
+        "TARGET": "JOD + STRESSED_E"
       },
       {
         "COMMENT": "$29: ел, ем, ель, Еду, Ездил, заЕду, поЕли, пьЕса, пьЕксы, валансьЕн, досьЕ, о муравьЕ, о соловьЕ, съел; exception: проЕкт",
         "STRESS": "STRESSED",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "J + E"
+        "TARGET": "JOD + STRESSED_E"
       },
       {
         "COMMENT": "$33: женА, желтЕть, жестОк; шестОй, шептАть, шелкА; ценА, цедИть, лицевОй",
@@ -138,13 +138,13 @@
         "COMMENT": "$39: ездА, едИм, ежОм, ершОм, енОт; поедИм",
         "STRESS": "FIRST_PRETONIC",
         "LEFT_CONTEXTS": [ "VOWEL", "ьъ" ],
-        "TARGET": "J + PRETONIC_SOFT_IE"
+        "TARGET": "JOD + PRETONIC_SOFT_IE"
       },
       {
         "COMMENT": "$39: ездА, едИм, ежОм, ершОм, енОт; поедИм",
         "STRESS": "FIRST_PRETONIC",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "J + PRETONIC_SOFT_IE"
+        "TARGET": "JOD + PRETONIC_SOFT_IE"
       },
       {
         "COMMENT": "$46: переведенА, перенесУ, веселИть, деревЕнь, беговОй, лесникА, седовАт, человЕк, четырёх, счетовОд, щекотАть",
@@ -162,7 +162,7 @@
         "COMMENT": "$47: ездовОй, егозА, ЕлизавЕта, европЕйских, единИцу, ежевИку",
         "STRESS": "OTHER_PRETONIC",
         "LEFT_BOUNDARY": "BOUNDARY_NOT_PROCLITIC",
-        "TARGET": "J + UNSTRESSED_FRONT_VOWEL"
+        "TARGET": "JOD + UNSTRESSED_FRONT_VOWEL"
       },
       {
         "COMMENT": "$49 [note exceptions]: вЫшел, скОшено, вОжено, вЫжег, прохОжего, хорОшему, в рЫжем, с мУжем, сИтцем, птИцей, кУцему, глЯнцевых",
@@ -178,7 +178,7 @@
         "SUBPARADIGM": "SUBPARADIGM_NOUN",
         "NUMBER": "NUM_SG",
         "CASE": "CASE_PREP",
-        "TARGET": "UNSTRESSED_YE"
+        "TARGET": "UNSTRESSED_E"
       },
       {
         "COMMENT": "$49: Улице, сУше, кОже",
@@ -189,7 +189,7 @@
         "NUMBER": "NUM_SG",
         "CASE": "CASE_DAT",
         "GENDER": "GENDER_F",
-        "TARGET": "UNSTRESSED_YE"
+        "TARGET": "UNSTRESSED_E"
       },
       {
         "COMMENT": "$49: тИше, тОньше, мЕньше, сУше, вЫше, блИже",
@@ -197,7 +197,7 @@
         "LEFT_CONTEXTS": [ "шжц" ],
         "MORPHEMES": [ "ENDING" ],
         "SUBPARADIGM": "SUBPARADIGM_COMPARATIVE",
-        "TARGET": "UNSTRESSED_YE"
+        "TARGET": "UNSTRESSED_E"
       },
       {
         "COMMENT": "$55: вЫберу, вЫлезу, вЫчет, пАлец; олЕней, сосЕдей; кАплей, бАней, тУчей, рОщей; армЯне, горожАне; в дОме, в пОле, на сЕне; к рабОте, в бАне, в рОще; красИвее, угрЮмее; дешЕвле, богАче; стАнешь, бУдешь, плАчешь; стАнет, бУдет, плАчет; стАнем, бУдем, плАчем; стАнете, бУдете, плАчете; стАньте, бУдьте, плАчьте, купИте, кладИте",
@@ -255,28 +255,28 @@
       {
         "COMMENT": "$58: неаккурАтен, неартистИчный, неаппетИтно",
         "STRESS": "PRETONIC",
-        "TARGET": "UNSTRESSED_FRONT_VOWEL + A"
+        "TARGET": "UNSTRESSED_FRONT_VOWEL + PRETONIC_A"
       }
     ],
     "е+е": [
       {
         "COMMENT": "$60: неединодУшно, неестЕственно",
         "STRESS": "PRETONIC",
-        "TARGET": "UNSTRESSED_FRONT_VOWEL + J + UNSTRESSED_FRONT_VOWEL"
+        "TARGET": "UNSTRESSED_FRONT_VOWEL + JOD + UNSTRESSED_FRONT_VOWEL"
       }
     ],
     "е+и": [
       {
         "COMMENT": "$59: неисправность, неизгладИмый, неисполнИм",
         "STRESS": "PRETONIC",
-        "TARGET": "UNSTRESSED_FRONT_VOWEL + I"
+        "TARGET": "UNSTRESSED_FRONT_VOWEL + UNSTRESSED_I"
       }
     ],
     "е+о": [
       {
         "COMMENT": "$58: необходИмо, необязАтельно, неописУемый, неописУемо",
         "STRESS": "PRETONIC",
-        "TARGET": "UNSTRESSED_FRONT_VOWEL + A"
+        "TARGET": "UNSTRESSED_FRONT_VOWEL + PRETONIC_A"
       }
     ],
     "ё": [
@@ -284,25 +284,25 @@
         "COMMENT": "$21: лён, вёл, идём, пёк, пасём, рёв, мёд, дёрну, чёлн, щёлкнуть",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "SOFT_CONSONANT" ],
-        "TARGET": "O"
+        "TARGET": "STRESSED_O"
       },
       {
         "COMMENT": "$22: жёлоб, жёлтый, шёлк, шёл, поджёг, чёрный, зачёт, щётка, щёлкать; see also sub о",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "жшчщ" ],
-        "TARGET": "O"
+        "TARGET": "STRESSED_O"
       },
       {
         "COMMENT": "$23: ёлки, ёж, даём, заём; льёт, пьёшь, вьём, муравьём, съёмки",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "VOWEL", "ьъ" ],
-        "TARGET": "J + O"
+        "TARGET": "JOD + STRESSED_O"
       },
       {
         "COMMENT": "$23: ёлки, ёж, даём, заём; льёт, пьёшь, вьём, муравьём, съёмки",
         "STRESS": "STRESSED",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "J + O"
+        "TARGET": "JOD + STRESSED_O"
       }
     ],
     "и": [
@@ -333,19 +333,19 @@
         "COMMENT": "$20: он, ось, Острый, охать; заОхать, заОчник, поОтдаль, проОбраз; дом, сом, пол, бок, вот, гром, лом, ток, ком, гость, ход, цОкать",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "VOWEL", "HARD_CONSONANT" ],
-        "TARGET": "O"
+        "TARGET": "STRESSED_O"
       },
       {
         "COMMENT": "$20: он, ось, Острый, охать; заОхать, заОчник, поОтдаль, проОбраз; дом, сом, пол, бок, вот, гром, лом, ток, ком, гость, ход, цОкать",
         "STRESS": "STRESSED",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "O"
+        "TARGET": "STRESSED_O"
       },
       {
         "COMMENT": "$22: обжОра, жох, шов, шОрох, поджОг, чОкаться, чОпорный, холщОвый, плющом; see also sub ё",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "жшчщ" ],
-        "TARGET": "O"
+        "TARGET": "STRESSED_O"
       },
       {
         "COMMENT": "$32: водА, ногА, грозА, полЯ, морЯ, столЫ, плодЫ, прошУ, пошёл, шофёр, жонглёр; окнО, одИн, огУрчик, осИны, одЕть",
@@ -401,28 +401,28 @@
         "COMMENT": "$56: NB -- TODO select words -- какАо, рАдио, хАос, адАжио",
         "STRESS": "POSTTONIC",
         "LEFT_CONTEXTS": [ "VOWEL" ],
-        "TARGET": "О"
+        "TARGET": "UNSTRESSED_О"
       }
     ],
     "о+а": [
       {
         "COMMENT": "$57: по акварЕли, про антрацИт, до амбразУры",
         "STRESS": "PRETONIC",
-        "TARGET": "LONG_A"
+        "TARGET": "PRETONIC_LONG_A"
       }
     ],
     "о+и": [
       {
         "COMMENT": "$63: по-инОму, поискАть, поигрАть, наизУсть",
         "STRESS": "PRETONIC",
-        "TARGET": "SCHWA + I"
+        "TARGET": "SCHWA + UNSTRESSED_I"
       }
     ],
     "о+о": [
       {
         "COMMENT": "$57: по окнУ, про однУ, зоолОгия, вообщЕ; по одномУ, по островкУ, поодинОчке, кооперАция",
         "STRESS": "PRETONIC",
-        "TARGET": "LONG_A"
+        "TARGET": "PRETONIC_LONG_A"
       }
     ],
     "о+у": [
@@ -489,12 +489,12 @@
       {
         "COMMENT": "$12, $69: юг, юлА, знАю, мОю, умЕю; вью, пью, шью, чью, вЫлью, съюлИть",
         "LEFT_CONTEXTS": [ "VOWEL", "ьъ" ],
-        "TARGET": "J + U"
+        "TARGET": "JOD + U"
       },
       {
         "COMMENT": "$12, $69: юг, юлА, знАю, мОю, умЕю; вью, пью, шью, чью, вЫлью, съюлИть",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "J + U"
+        "TARGET": "JOD + U"
       }
 
     ],
@@ -509,13 +509,13 @@
         "COMMENT": "$17: яд, струЯ, краЯ; пьян, дьяк, друзьЯ, кальЯн, мужьЯ, чья, объЯт",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "VOWEL", "ьъ" ],
-        "TARGET": "J + A"
+        "TARGET": "JOD + A"
       },
       {
         "COMMENT": "$17: яд, струЯ, краЯ; пьян, дьяк, друзьЯ, кальЯн, мужьЯ, чья, объЯт",
         "STRESS": "STRESSED",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "J + A"
+        "TARGET": "JOD + A"
       },
       {
         "COMMENT": "$37: мяснИк, взялИсь, рябИну, тянИ, вязАть, пятёрка, лягУшки",
@@ -527,13 +527,13 @@
         "COMMENT": "$39: язЫк, яйцО, ярлЫк, яснА, янвАрь, уяснИть",
         "STRESS": "FIRST_PRETONIC",
         "LEFT_CONTEXTS": [ "VOWEL", "ьъ" ],
-        "TARGET": "J + PRETONIC_SOFT_IE"
+        "TARGET": "JOD + PRETONIC_SOFT_IE"
       },
       {
         "COMMENT": "$39: язЫк, яйцО, ярлЫк, яснА, янвАрь, уяснИть",
         "STRESS": "FIRST_PRETONIC",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "J + PRETONIC_SOFT_IE"
+        "TARGET": "JOD + PRETONIC_SOFT_IE"
       },
       {
         "COMMENT": "$46: мясникА, пятачОк, рябовАт, тяжеловАт",
@@ -545,7 +545,7 @@
         "COMMENT": "$47: ястребОк, ятагАн, языкА, ярлыкА, яровОй",
         "STRESS": "OTHER_PRETONIC",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "J + UNSTRESSED_FRONT_VOWEL"
+        "TARGET": "JOD + UNSTRESSED_FRONT_VOWEL"
       },
       {
         "STRESS": "UNSTRESSED",
