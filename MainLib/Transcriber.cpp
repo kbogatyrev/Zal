@@ -486,7 +486,6 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
         return H_ERROR_UNEXPECTED;
     }
 
-    vector<vector<StRule>::iterator> vecAvailableRules;
     auto bFound = false;
 
     auto eStressStatus = ET_VowelStressRelation::VOWEL_STRESS_RELATION_UNDEFINED;
@@ -569,10 +568,10 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
             auto eRet = eSubparadigmMatch(stTg, stRule.m_vecSubparadigms);
         }
 
-                //        if (bFound)
-//        {
-//            vecAvailableRules.push_back();
-//        }
+        if (bFound)
+        {
+            m_vecTranscription.push_back(stRule.m_vecTargets);
+        }
     }       //  for (auto&& stRule : itRules->second)
 
     return H_NO_ERROR;
