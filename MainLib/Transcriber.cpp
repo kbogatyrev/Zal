@@ -128,6 +128,87 @@ ET_ReturnCode CTranscriber::eParseBoundaries(CEString& sSource, vector<ET_Bounda
     return H_NO_ERROR;
 }
 
+ET_ReturnCode CTranscriber::eParseTargets(CEString& sSource, vector<ET_Sound>& vecTargets)
+{
+    assert(!sSource.bIsEmpty());
+
+    unsigned int uiStart{ 0 };
+    auto uiLength = sSource.uiFind(L" + ", uiStart);
+    bool bError = false;
+    while (uiLength != ERelation::ecNotFound)
+    {
+        uiLength -= uiStart;
+        auto itTarget = m_mapStringToTranscriptionSymbol.find(sSource.sSubstr(uiStart, uiLength));
+        if (m_mapStringToTranscriptionSymbol.end() == itTarget)
+        {
+            ERROR_LOG(L"Target not recognized.");
+            bError = true;
+            break;
+        }
+        vecTargets.push_back((*itTarget).second);
+        uiStart += uiLength + 3;
+        uiLength = sSource.uiFind(L" + ", uiStart);
+    }
+
+    if (bError)
+    {
+        return H_ERROR_INVALID_ARG;
+    }
+
+    auto itTarget = m_mapStringToTranscriptionSymbol.find(sSource.sSubstr(uiStart));
+    if (m_mapStringToTranscriptionSymbol.end() == itTarget)
+    {
+        ERROR_LOG(L"Target not recognized.");
+        return H_ERROR_INVALID_ARG;
+    }
+    else
+    {
+        vecTargets.push_back((*itTarget).second);
+    }
+
+    return H_NO_ERROR;
+}
+
+ET_ReturnCode CTranscriber::eParseTransforms(CEString& sSource, vector<ET_Transform>& vecTransforms)
+{
+    assert(!sSource.bIsEmpty());
+
+    unsigned int uiStart{ 0 };
+    auto uiLength = sSource.uiFind(L" + ", uiStart);
+    bool bError = false;
+    while (uiLength != ERelation::ecNotFound)
+    {
+        uiLength -= uiStart;
+        auto itTransform = m_mapStringToTransform.find(sSource.sSubstr(uiStart, uiLength));
+        if (m_mapStringToTransform.end() == itTransform)
+        {
+            ERROR_LOG(L"Transform not recognized.");
+            bError = true;
+            break;
+        }
+        vecTransforms.push_back((*itTransform).second);
+        uiStart += uiLength + 3;
+        uiLength = sSource.uiFind(L" + ", uiStart);
+    }
+
+    if (bError)
+    {
+        return H_ERROR_INVALID_ARG;
+    }
+    auto itTransform = m_mapStringToTransform.find(sSource.sSubstr(uiStart));
+    if (m_mapStringToTransform.end() == itTransform)
+    {
+        ERROR_LOG(L"Transform not recognized.");
+        return H_ERROR_INVALID_ARG;
+    }
+    else
+    {
+        vecTransforms.push_back((*itTransform).second);
+    }
+
+    return H_NO_ERROR;
+}
+
 bool CTranscriber::bIsProclitic(CWordForm& wf)
 {
     return true;        // stub
@@ -150,8 +231,8 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
     static const CEString sQuery
         (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.left_boundary, tr.right_contexts, right_boundary, tr.morpheme_type, \
-        tr.subparadigm, tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target FROM transcription_inputs \
-        AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
+        tr.subparadigm, tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target, tr.transform \
+        FROM transcription_inputs AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
 
     try
     {
@@ -351,40 +432,20 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
             // IsVariant
 //            m_pDb->GetData(12, stRule.m_bIsVariant);
 
-            // Target
-            CEString sTarget;
-            m_pDb->GetData(12, sTarget);
-
-            unsigned int uiStart{ 0 };
-            auto uiLength = sTarget.uiFind(L" + ", uiStart);
-            bool bError = false;
-            while (uiLength != ERelation::ecNotFound)
+            // Targets
+            CEString sTargets;
+            m_pDb->GetData(12, sTargets);
+            if (!sTargets.bIsEmpty())
             {
-                uiLength -= uiStart;
-                auto itTarget = m_mapStringToTranscriptionSymbol.find(sTarget.sSubstr(uiStart, uiLength));
-                if (m_mapStringToTranscriptionSymbol.end() == itTarget)
-                {
-                    ERROR_LOG(L"Target not recognized.");
-                    bError = true;
-                    break;
-                }
-                stRule.m_vecTargets.push_back((*itTarget).second);
-                uiStart += uiLength + 3;
-                uiLength = sTarget.uiFind(L" + ", uiStart);
+                eRet = eParseTargets(sTargets, stRule.m_vecTargets);
             }
 
-            if (bError) 
+            // Transforms
+            CEString sTransforms;
+            m_pDb->GetData(13, sTransforms);
+            if (!sTransforms.bIsEmpty())
             {
-                continue;
-            }
-            auto itTarget = m_mapStringToTranscriptionSymbol.find(sTarget.sSubstr(uiStart));
-            if (m_mapStringToTranscriptionSymbol.end() == itTarget)
-            {
-                ERROR_LOG(L"Target not recognized.");
-            }
-            else
-            {
-                stRule.m_vecTargets.push_back((*itTarget).second);
+                eRet = eParseTransforms(sTransforms, stRule.m_vecTransforms);
             }
 
             for (int iAt = 0; iAt < (int)sKeys.uiLength(); ++iAt)
@@ -414,6 +475,12 @@ ET_ReturnCode CTranscriber::eTranscribeTactGroup(StTactGroup& stTactGroup)
         {
             auto eRet = eHandleVowel(stTactGroup, iAt);
         }
+
+        if (CEString::bIsConsonant(stTactGroup.sSource[iAt]))
+        {
+            auto eRet = eHandleConsonant(stTactGroup, iAt);
+        }
+
 /*
         vector<StRule>* pvecRules = nullptr;
         auto chr = stTactGroup.sSource.chrGetAt(iAt);
@@ -458,7 +525,7 @@ ET_ReturnCode CTranscriber::eTranscribeTactGroup(StTactGroup& stTactGroup)
     return H_NO_ERROR;
 }
 
-ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
+ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int& iPos)
 {
     if (iPos < 0 || iPos >= (int)stTg.sSource.uiLength())
     {
@@ -469,6 +536,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
     }
 
     wchar_t chrVowel = stTg.sSource.chrGetAt(iPos);
+    wchar_t chrNext = stTg.sSource.chrGetAt(iPos+1);
     if (!CEString::bIsVowel(chrVowel))
     { 
         CEString sMsg(L"Character at position ");
@@ -492,6 +560,14 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
     auto eRet = eGetStressStatus(stTg, iPos, eStressStatus);
     for (auto& stRule : itRules->second)
     { 
+        if (!stRule.sFollowedBy.bIsEmpty())
+        {
+            if (chrNext != stRule.sFollowedBy)
+            {
+                continue;
+            }
+        }
+
         if (!stRule.m_vecStressContexts.empty() && stRule.m_vecStressContexts.end() ==
             find(stRule.m_vecStressContexts.begin(), stRule.m_vecStressContexts.end(), eStressStatus))
         {
@@ -500,7 +576,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
 
         for (auto& leftContext : stRule.m_vecLeftContexts)
         {
-            auto eRet = eContextMatch(stTg, leftContext, iPos);
+            auto eRet = eContextMatch(stTg, leftContext, ET_PhonemicContextType::LEFT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -509,7 +585,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
             bFound = false;
         }
 
-        if (!bFound)
+        if (stRule.m_vecLeftContexts.size() > 0 && !bFound)
         {
             continue;
         }
@@ -525,20 +601,25 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
             bFound = false;
         }
 
-        if (!bFound)
+        if (stRule.m_vecLeftBoundaries.size() > 0 && !bFound)
         {
             continue;
         }
 
         for (auto& rightContext : stRule.m_vecRightContexts)
         {
-            auto eRet = eContextMatch(stTg, rightContext, iPos);
+            auto eRet = eContextMatch(stTg, rightContext, ET_PhonemicContextType::RIGHT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
                 break;
             }
             bFound = false;
+        }
+
+        if (stRule.m_vecRightContexts.size() > 0 && !bFound)
+        {
+            continue;
         }
 
         for (auto& rightBoundary : stRule.m_vecRightBoundaries)
@@ -550,6 +631,11 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
                 break;
             }
             bFound = false;
+        }
+
+        if (stRule.m_vecRightBoundaries.size() > 0 && !bFound)
+        {
+            continue;
         }
         
         for (auto& mContext : stRule.m_vecMorphemicContexts)
@@ -563,20 +649,182 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int iPos)
             bFound = false;
         }
 
+        if (stRule.m_vecMorphemicContexts.size() > 0 && !bFound)
+        {
+            continue;
+        }
+
         if (!stRule.m_vecSubparadigms.empty())
         {
             auto eRet = eSubparadigmMatch(stTg, stRule.m_vecSubparadigms);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+            bFound = false;
+        }
+        if (stRule.m_vecSubparadigms.size() > 0 && !bFound)
+        {
+            continue;
         }
 
-        if (bFound)
+        m_vecTranscription.push_back(stRule.m_vecTargets);
+        if (!stRule.sFollowedBy.bIsEmpty())
         {
-            m_vecTranscription.push_back(stRule.m_vecTargets);
+            ++iPos;
         }
     }       //  for (auto&& stRule : itRules->second)
 
     return H_NO_ERROR;
 
 }       //  eHandleVowel()
+
+ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
+{
+    if (iPos < 0 || iPos >= (int)stTg.sSource.uiLength())
+    {
+        CEString sMsg(L"Illegal character position: ");
+        sMsg += CEString::sToString(iPos);
+        ERROR_LOG(sMsg);
+        return H_ERROR_INVALID_ARG;
+    }
+
+    wchar_t chr = stTg.sSource.chrGetAt(iPos);
+    if (!CEString::bIsConsonant(chr))
+    {
+        CEString sMsg(L"Character at position ");
+        sMsg += CEString::sToString(iPos);
+        sMsg += L" is not a consonant";
+        ERROR_LOG(sMsg);
+        return H_ERROR_INVALID_ARG;
+    }
+
+    auto itRules = m_mapCharToRules.find(chr);
+    if (m_mapCharToRules.end() == itRules)
+    {
+        CEString sMsg(L"No rules for consonant ");
+        sMsg += chr;
+        return H_ERROR_UNEXPECTED;
+    }
+
+    auto bFound = false;
+
+    for (auto& stRule : itRules->second)
+    {
+        for (auto& leftContext : stRule.m_vecLeftContexts)
+        {
+            auto eRet = eContextMatch(stTg, leftContext, ET_PhonemicContextType::LEFT_CONTEXT, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+            bFound = false;
+        }
+
+        if (stRule.m_vecLeftContexts.size() > 0 && !bFound)
+        {
+            continue;
+        }
+
+        for (auto& leftBoundary : stRule.m_vecLeftBoundaries)
+        {
+            auto eRet = eBoundaryMatch(stTg, leftBoundary, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+            bFound = false;
+        }
+
+        if (stRule.m_vecLeftBoundaries.size() > 0 && !bFound)
+        {
+            continue;
+        }
+
+        for (auto& rightContext : stRule.m_vecRightContexts)
+        {
+            auto eRet = eContextMatch(stTg, rightContext, ET_PhonemicContextType::RIGHT_CONTEXT, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+            bFound = false;
+        }
+
+        if (stRule.m_vecRightContexts.size() > 0 && !bFound)
+        {
+            continue;
+        }
+
+        for (auto& rightBoundary : stRule.m_vecRightBoundaries)
+        {
+            auto eRet = eBoundaryMatch(stTg, rightBoundary, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+            bFound = false;
+        }
+
+        if (stRule.m_vecRightBoundaries.size() > 0 && !bFound)
+        {
+            continue;
+        }
+
+        for (auto& mContext : stRule.m_vecMorphemicContexts)
+        {
+            auto eRet = eMorphemeMatch(stTg, mContext, iPos);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+            bFound = false;
+        }
+
+        if (stRule.m_vecMorphemicContexts.size() > 0 && !bFound)
+        {
+            continue;
+        }
+
+        if (!stRule.m_vecSubparadigms.empty())
+        {
+            auto eRet = eSubparadigmMatch(stTg, stRule.m_vecSubparadigms);
+            if (H_TRUE == eRet)
+            {
+                bFound = true;
+                break;
+            }
+        }
+
+        if (stRule.m_vecSubparadigms.size() > 0 && !bFound)
+        {
+            continue;
+        }
+
+        if (bFound)
+        {
+            auto stConsonant = m_mapCharToConsonant[chr];
+            for (auto eTransform : stRule.m_vecTransforms)
+            {
+                auto eRet = eApplyTransform(stConsonant, eTransform);
+            }
+
+            if (!stRule.sFollowedBy.bIsEmpty())
+            {
+                ++iPos;
+            }
+        }
+    }       //  for (auto&& stRule : itRules->second)
+
+    return H_NO_ERROR;
+
+}       //  eHandleConsonant()
 
 ET_ReturnCode CTranscriber::eGetStressStatus(StTactGroup& stTg, int iPos, ET_VowelStressRelation& eStressStatus)
 {
@@ -643,7 +891,7 @@ ET_ReturnCode CTranscriber::eGetStressStatus(StTactGroup& stTg, int iPos, ET_Vow
 
 }       //  eGetStressStatus()
 
-ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom context, int iPos)
+ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom context, ET_PhonemicContextType eType, int iPos)
 {
     auto eRet = H_NO_ERROR;
 
@@ -651,17 +899,23 @@ ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom
     {
         ET_ReturnCode m_eRet;
         StTactGroup* m_pStTg;
+        ET_PhonemicContextType m_eType;
         int m_iPos;
 
-        StMatchTypes(StTactGroup* pStTg, int iPos, ET_ReturnCode eRet) : m_pStTg(pStTg), m_iPos(iPos), m_eRet(eRet) {};
+        StMatchTypes(StTactGroup* pStTg, ET_PhonemicContextType eType, int iPos, ET_ReturnCode eRet) 
+            : m_pStTg(pStTg), m_eType(eType), m_iPos(iPos), m_eRet(eRet) {};
 
         // Enum match
         bool operator()(ET_PhonemicContext& eContext)
         {
-            wchar_t chrPreceding = L'\0';
-            if (m_iPos > 0)
+            wchar_t chrAdjacent = L'\0';
+            if (ET_PhonemicContextType::LEFT_CONTEXT == m_eType && m_iPos > 0)
             {
-                chrPreceding = m_pStTg->sSource[m_iPos - 1];
+                chrAdjacent = m_pStTg->sSource[m_iPos-1];
+            }
+            else if (ET_PhonemicContextType::LEFT_CONTEXT == m_eType && m_iPos < (int)m_pStTg->sSource.uiLength()-1)
+            {
+                chrAdjacent = m_pStTg->sSource[m_iPos+1];
             }
 
             auto bMatch = false;
@@ -669,43 +923,43 @@ ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom
             switch (eContext)
             {
             case ET_PhonemicContext::VOWEL:
-                if (CEString::bIn(chrPreceding, m_Vowels))
+                if (CEString::bIn(chrAdjacent, m_Vowels))
                 {
                     bMatch = true;
                 }
                 break;
             case ET_PhonemicContext::CONSONANT:
-                if (CEString::bIn(chrPreceding, m_Consonants))
+                if (CEString::bIn(chrAdjacent, m_Consonants))
                 {
                     bMatch = true;
                 }
                 break;
             case ET_PhonemicContext::HARD_CONSONANT:
-                if (CEString::bIn(chrPreceding, m_HardConsonants))
+                if (CEString::bIn(chrAdjacent, m_HardConsonants))
                 {
                     bMatch = true;
                 }
                 break;
             case ET_PhonemicContext::HARD_PAIRED_CONSONANT:
-                if (CEString::bIn(chrPreceding, m_PairedHardSoftConsonants))
+                if (CEString::bIn(chrAdjacent, m_PairedHardSoftConsonants))
                 {
                     bMatch = true;
                 }
                 break;
             case ET_PhonemicContext::SOFT_CONSONANT:
-                if (CEString::bIn(chrPreceding, m_SoftConsonants))
+                if (CEString::bIn(chrAdjacent, m_SoftConsonants))
                 {
                     bMatch = true;
                 }
                 break;
             case ET_PhonemicContext::SOFT_CONSONANT_NO_CH_SHCH:
-                if (CEString::bIn(chrPreceding, m_PairedHardSoftConsonants))
+                if (CEString::bIn(chrAdjacent, m_PairedHardSoftConsonants))
                 {
                     bMatch = true;
                 }
                 break;
             case ET_PhonemicContext::VOICELESS:
-                if (CEString::bIn(chrPreceding, m_VoicelessConsonants))
+                if (CEString::bIn(chrAdjacent, m_VoicelessConsonants))
                 {
                     bMatch = true;
                 }
@@ -723,16 +977,27 @@ ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom
         
         // string match
         bool operator()(CEString& sContext) 
-        { 
-            if (m_iPos > 0 && CEString::bIn(m_pStTg->sSource[m_iPos-1], sContext))
+        {            
+            wchar_t chrAdjacent = L'\0';
+            if (ET_PhonemicContextType::LEFT_CONTEXT == m_eType)
             {
-                return true;
+                if (m_iPos > 0 && CEString::bIn(m_pStTg->sSource[m_iPos-1], sContext))
+                {
+                    return true;
+                }
+            }
+            else if (ET_PhonemicContextType::RIGHT_CONTEXT == m_eType)
+            {
+                if (m_iPos < (int)m_pStTg->sSource.uiLength()-1 && CEString::bIn(m_pStTg->sSource[m_iPos+1], sContext))
+                {
+                    return true;
+                }
             }
             return false;
         }
     };
 
-    auto match = visit(StMatchTypes(&stTg, iPos, eRet), context);
+    auto match = visit(StMatchTypes(&stTg, eType, iPos, eRet), context);
 
     if (eRet != H_NO_ERROR)
     {
@@ -905,8 +1170,7 @@ ET_ReturnCode CTranscriber::eSubparadigmMatch(StTactGroup& stTg, const vector<ET
     }
 
     return H_FALSE;
-
-}       //  eMorphemeMatch()
+}
 
 ET_ReturnCode CTranscriber::eGenderMatch(StTactGroup& stTg, const vector<ET_Gender>& vecGenders)
 {
@@ -919,8 +1183,7 @@ ET_ReturnCode CTranscriber::eGenderMatch(StTactGroup& stTg, const vector<ET_Gend
     }
 
     return H_FALSE;
-
-}       //  eMorphemeMatch()
+}
 
 ET_ReturnCode CTranscriber::eNumberMatch(StTactGroup& stTg, const vector<ET_Number>& vecNumbers)
 {
@@ -933,8 +1196,7 @@ ET_ReturnCode CTranscriber::eNumberMatch(StTactGroup& stTg, const vector<ET_Numb
     }
 
     return H_FALSE;
-
-}       //  eMorphemeMatch()
+}
 
 ET_ReturnCode CTranscriber::eCaseMatch(StTactGroup& stTg, const vector<ET_Case>& vecCases)
 {
@@ -947,5 +1209,30 @@ ET_ReturnCode CTranscriber::eCaseMatch(StTactGroup& stTg, const vector<ET_Case>&
     }
 
     return H_FALSE;
+}
 
-}       //  eMorphemeMatch()
+ET_ReturnCode CTranscriber::eApplyTransform(StConsonant& stConsonant, ET_Transform eTransform)
+{
+    switch (eTransform)
+    {
+    case ET_Transform::SOFTEN:
+        stConsonant.m_ePalatalization = PALATALIZATION_SOFT;
+        break;
+    case ET_Transform::VOICE:
+        stConsonant.m_eVoicedness = VOICEDNESS_VOICED;
+        break;
+    case ET_Transform::DEVOICE:
+        stConsonant.m_eVoicedness = VOICEDNESS_VOICELESS;
+        break;
+    case ET_Transform::SELF:
+        break;
+    default:
+        {
+            CEString sMsg(L"Invalid transform value: ");
+            sMsg += CEString::sToString(eTransform);
+            ERROR_LOG(sMsg);
+        }
+    }
+
+    return H_NO_ERROR;
+}
