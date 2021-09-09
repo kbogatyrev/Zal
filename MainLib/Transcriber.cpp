@@ -138,8 +138,8 @@ ET_ReturnCode CTranscriber::eParseTargets(CEString& sSource, vector<ET_Sound>& v
     while (uiLength != ERelation::ecNotFound)
     {
         uiLength -= uiStart;
-        auto itTarget = m_mapStringToTranscriptionSymbol.find(sSource.sSubstr(uiStart, uiLength));
-        if (m_mapStringToTranscriptionSymbol.end() == itTarget)
+        auto itTarget = m_mapStringToSound.find(sSource.sSubstr(uiStart, uiLength));
+        if (m_mapStringToSound.end() == itTarget)
         {
             ERROR_LOG(L"Target not recognized.");
             bError = true;
@@ -155,8 +155,8 @@ ET_ReturnCode CTranscriber::eParseTargets(CEString& sSource, vector<ET_Sound>& v
         return H_ERROR_INVALID_ARG;
     }
 
-    auto itTarget = m_mapStringToTranscriptionSymbol.find(sSource.sSubstr(uiStart));
-    if (m_mapStringToTranscriptionSymbol.end() == itTarget)
+    auto itTarget = m_mapStringToSound.find(sSource.sSubstr(uiStart));
+    if (m_mapStringToSound.end() == itTarget)
     {
         ERROR_LOG(L"Target not recognized.");
         return H_ERROR_INVALID_ARG;
@@ -211,12 +211,24 @@ ET_ReturnCode CTranscriber::eParseTransforms(CEString& sSource, vector<ET_Transf
 
 bool CTranscriber::bIsProclitic(CWordForm& wf)
 {
-    return true;        // stub
+    if (POS_PREPOSITION == wf.ePos())
+    {
+        return true;
+    }
+    return false;
 }
 
 bool CTranscriber::bIsEnclitic(CWordForm& wf)
 {
-    return true;        // stub
+    if (POS_PARTICLE == wf.ePos())
+    {
+        if (wf.sWordForm() == L"ка" || wf.sWordForm() == L"ли" || wf.sWordForm() == L"то"
+            || wf.sWordForm() == L"же")
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
@@ -576,7 +588,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int& iPos)
 
         for (auto& leftContext : stRule.m_vecLeftContexts)
         {
-            auto eRet = eContextMatch(stTg, leftContext, ET_PhonemicContextType::LEFT_CONTEXT, iPos);
+            auto eRet = eContextMatch(stTg, leftContext, ET_ContextDirection::LEFT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -592,7 +604,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int& iPos)
 
         for (auto& leftBoundary : stRule.m_vecLeftBoundaries)
         {
-            auto eRet = eBoundaryMatch(stTg, leftBoundary, iPos);
+            auto eRet = eBoundaryMatch(stTg, leftBoundary, ET_ContextDirection::LEFT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -608,7 +620,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int& iPos)
 
         for (auto& rightContext : stRule.m_vecRightContexts)
         {
-            auto eRet = eContextMatch(stTg, rightContext, ET_PhonemicContextType::RIGHT_CONTEXT, iPos);
+            auto eRet = eContextMatch(stTg, rightContext, ET_ContextDirection::RIGHT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -624,7 +636,7 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int& iPos)
 
         for (auto& rightBoundary : stRule.m_vecRightBoundaries)
         {
-            auto eRet = eBoundaryMatch(stTg, rightBoundary, iPos);
+            auto eRet = eBoundaryMatch(stTg, rightBoundary, ET_ContextDirection::RIGHT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -669,7 +681,11 @@ ET_ReturnCode CTranscriber::eHandleVowel(StTactGroup& stTg, int& iPos)
             continue;
         }
 
-        m_vecTranscription.push_back(stRule.m_vecTargets);
+        for (auto eSound : stRule.m_vecTargets)
+        {
+            m_vecTranscription.push_back(eSound);
+        }
+
         if (!stRule.sFollowedBy.bIsEmpty())
         {
             ++iPos;
@@ -690,8 +706,8 @@ ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
         return H_ERROR_INVALID_ARG;
     }
 
-    wchar_t chr = stTg.sSource.chrGetAt(iPos);
-    if (!CEString::bIsConsonant(chr))
+    wchar_t chrConsonant = stTg.sSource.chrGetAt(iPos);
+    if (!CEString::bIsConsonant(chrConsonant))
     {
         CEString sMsg(L"Character at position ");
         sMsg += CEString::sToString(iPos);
@@ -700,21 +716,23 @@ ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
         return H_ERROR_INVALID_ARG;
     }
 
-    auto itRules = m_mapCharToRules.find(chr);
+    auto itRules = m_mapCharToRules.find(chrConsonant);
     if (m_mapCharToRules.end() == itRules)
     {
         CEString sMsg(L"No rules for consonant ");
-        sMsg += chr;
+        sMsg += chrConsonant;
         return H_ERROR_UNEXPECTED;
     }
 
-    auto bFound = false;
+    auto bFound = false;        // we won't break out of loop event if a
+    auto bTranscribed = false;  // matching rule was found; subsequent matches    
+                                // will be repored as errors
 
     for (auto& stRule : itRules->second)
     {
         for (auto& leftContext : stRule.m_vecLeftContexts)
         {
-            auto eRet = eContextMatch(stTg, leftContext, ET_PhonemicContextType::LEFT_CONTEXT, iPos);
+            auto eRet = eContextMatch(stTg, leftContext, ET_ContextDirection::LEFT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -730,7 +748,7 @@ ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
 
         for (auto& leftBoundary : stRule.m_vecLeftBoundaries)
         {
-            auto eRet = eBoundaryMatch(stTg, leftBoundary, iPos);
+            auto eRet = eBoundaryMatch(stTg, leftBoundary, ET_ContextDirection::LEFT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -746,7 +764,7 @@ ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
 
         for (auto& rightContext : stRule.m_vecRightContexts)
         {
-            auto eRet = eContextMatch(stTg, rightContext, ET_PhonemicContextType::RIGHT_CONTEXT, iPos);
+            auto eRet = eContextMatch(stTg, rightContext, ET_ContextDirection::RIGHT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -762,7 +780,7 @@ ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
 
         for (auto& rightBoundary : stRule.m_vecRightBoundaries)
         {
-            auto eRet = eBoundaryMatch(stTg, rightBoundary, iPos);
+            auto eRet = eBoundaryMatch(stTg, rightBoundary, ET_ContextDirection::RIGHT_CONTEXT, iPos);
             if (H_TRUE == eRet)
             {
                 bFound = true;
@@ -807,21 +825,37 @@ ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
             continue;
         }
 
+        auto stConsonant = m_mapCharToConsonant[chrConsonant];
         if (bFound)
         {
-            auto stConsonant = m_mapCharToConsonant[chr];
-            for (auto eTransform : stRule.m_vecTransforms)
+            if (bTranscribed)
             {
-                auto eRet = eApplyTransform(stConsonant, eTransform);
+                CEString sMsg(L"Redundant rule match: rule ");
+                sMsg += stRule.m_sComment;
+                ERROR_LOG(sMsg);
             }
-
-            if (!stRule.sFollowedBy.bIsEmpty())
+            else
             {
-                ++iPos;
+                for (auto eTransform : stRule.m_vecTransforms)
+                {
+                    auto eRet = eApplyTransform(stConsonant, eTransform);
+                    m_vecTranscription.push_back(m_mapConsonantToSound[stConsonant]);
+                    bTranscribed = true;
+                }
+
+                if (!stRule.sFollowedBy.bIsEmpty())
+                {
+                    ++iPos;
+                }
             }
         }
     }       //  for (auto&& stRule : itRules->second)
 
+    if (!bTranscribed)
+    {
+        m_vecTranscription.push_back(m_mapConsonantToSound[m_mapCharToConsonant[chrConsonant]]);
+    }
+    
     return H_NO_ERROR;
 
 }       //  eHandleConsonant()
@@ -891,7 +925,7 @@ ET_ReturnCode CTranscriber::eGetStressStatus(StTactGroup& stTg, int iPos, ET_Vow
 
 }       //  eGetStressStatus()
 
-ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom context, ET_PhonemicContextType eType, int iPos)
+ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom context, ET_ContextDirection eType, int iPos)
 {
     auto eRet = H_NO_ERROR;
 
@@ -899,21 +933,21 @@ ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom
     {
         ET_ReturnCode m_eRet;
         StTactGroup* m_pStTg;
-        ET_PhonemicContextType m_eType;
+        ET_ContextDirection m_eType;
         int m_iPos;
 
-        StMatchTypes(StTactGroup* pStTg, ET_PhonemicContextType eType, int iPos, ET_ReturnCode eRet) 
+        StMatchTypes(StTactGroup* pStTg, ET_ContextDirection eType, int iPos, ET_ReturnCode eRet) 
             : m_pStTg(pStTg), m_eType(eType), m_iPos(iPos), m_eRet(eRet) {};
 
         // Enum match
         bool operator()(ET_PhonemicContext& eContext)
         {
             wchar_t chrAdjacent = L'\0';
-            if (ET_PhonemicContextType::LEFT_CONTEXT == m_eType && m_iPos > 0)
+            if (ET_ContextDirection::LEFT_CONTEXT == m_eType && m_iPos > 0)
             {
                 chrAdjacent = m_pStTg->sSource[m_iPos-1];
             }
-            else if (ET_PhonemicContextType::LEFT_CONTEXT == m_eType && m_iPos < (int)m_pStTg->sSource.uiLength()-1)
+            else if (ET_ContextDirection::RIGHT_CONTEXT == m_eType && m_iPos < (int)m_pStTg->sSource.uiLength()-1)
             {
                 chrAdjacent = m_pStTg->sSource[m_iPos+1];
             }
@@ -979,14 +1013,14 @@ ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom
         bool operator()(CEString& sContext) 
         {            
             wchar_t chrAdjacent = L'\0';
-            if (ET_PhonemicContextType::LEFT_CONTEXT == m_eType)
+            if (ET_ContextDirection::LEFT_CONTEXT == m_eType)
             {
                 if (m_iPos > 0 && CEString::bIn(m_pStTg->sSource[m_iPos-1], sContext))
                 {
                     return true;
                 }
             }
-            else if (ET_PhonemicContextType::RIGHT_CONTEXT == m_eType)
+            else if (ET_ContextDirection::RIGHT_CONTEXT == m_eType)
             {
                 if (m_iPos < (int)m_pStTg->sSource.uiLength()-1 && CEString::bIn(m_pStTg->sSource[m_iPos+1], sContext))
                 {
@@ -1109,51 +1143,106 @@ ET_ReturnCode CTranscriber::eMorphemeMatch(StTactGroup& stTg, MorphemicContextAt
 
 }       //  eMorphemeMatch()
 
-ET_ReturnCode CTranscriber::eBoundaryMatch(StTactGroup& stTg, ET_Boundary eBoundary, int iPos)
+ET_ReturnCode CTranscriber::eBoundaryMatch(StTactGroup& stTg, ET_Boundary eBoundary, ET_ContextDirection eDirection, int iPos)
 {
     auto eRet = H_NO_ERROR;
     switch (eBoundary)
     {
-    case ET_Boundary::BOUNDARY_WORD:
-        {
-            if (0 == iPos)
+        case ET_Boundary::BOUNDARY_WORD:
+            if (ET_ContextDirection::LEFT_CONTEXT == eDirection)
             {
-                return H_TRUE;
+                if (0 == iPos)
+                {
+                    return H_TRUE;
+                }
+                else
+                {
+                    return H_FALSE;
+                }
             }
-        }
+
+            if (ET_ContextDirection::RIGHT_CONTEXT == eDirection)
+            {
+                auto uiLength = stTg.sSource.uiLength();
+                if (stTg.sSource.uiLength()-2 == iPos && L'ь' == stTg.sSource[uiLength-1])
+                {
+                    if (CEString::bIsConsonant(stTg.sSource[uiLength-2]))
+                    {
+                        return H_TRUE;
+                    }
+                }
+
+                if (iPos == stTg.sSource.uiLength()-1)
+                {
+                    return H_TRUE;
+                }
+                else
+                {
+                    return H_FALSE;
+                }
+            }
         break;
-    case ET_Boundary::BOUNDARY_NOT_PROCLITIC:
-        {
+        
+        case ET_Boundary::BOUNDARY_NOT_PROCLITIC:
             if (stTg.iNumOfWords < 2)
             {
                 return H_TRUE;
             }
 
-            auto itParse = ++stTg.vecWords.begin();
-            if (itParse == stTg.vecWords.end())
+            if (LEFT_CONTEXT == eDirection)
             {
-                CEString sMsg(L"Expect two or more words in the tact group. ");
-                ERROR_LOG(sMsg);
-                return H_ERROR_UNEXPECTED;
+                try
+                {
+                    auto iWordNum = stTg.iWordNumFromTextPos(iPos);
+                    if (iWordNum > 0)
+                    {
+                        auto& wf = stTg.vecWords.at(iWordNum - 1).WordForm;
+                        if (wf.ePos() == POS_PREPOSITION)
+                        {
+                            return H_FALSE;
+                        }
+                        else
+                        {
+                            return H_TRUE;
+                        }
+                    }
+                    else
+                    {
+                        return H_FALSE;
+                    }
+                } 
+                catch (std::exception& ex)
+                {
+                    CEString sMsg(L"Exception: ");
+                    sMsg += CEString::sToString(ex.what());
+                    ERROR_LOG(sMsg);
+                }
             }
-        }
+            else if (RIGHT_CONTEXT == eDirection)
+            {
+                ERROR_LOG(L"Opearion not allowed for right context.");
+            }
+            else
+            {
+                ERROR_LOG(L"Illegal context.");
+            }
+
         break;
-     case ET_Boundary::BOUNDARY_SYNTAGM:
-        {
+
+        case ET_Boundary::BOUNDARY_SYNTAGM:
             if (0 == iPos)      // How to distinguish from word boundary?
             {
                 return H_TRUE;
             }
             break;
-        }
-    default:
-        {
+
+        default:
             CEString sMsg(L"Left boundary not recognized: ");
             sMsg += to_wstring(eBoundary).c_str();
             ERROR_LOG(sMsg);
             return H_ERROR_UNEXPECTED;
-        }
-    }
+    
+    }       //  switch (eBoundary)
 
     return H_FALSE;
 

@@ -92,6 +92,11 @@ namespace Hlib
             sTranscription.Erase();
             vecWords.clear();
         }
+
+        int iWordNumFromTextPos(int iTextPos)
+        {
+            return sSource.uiGetTokenNum(sSource.stGetTokenFromOffset(iTextPos));
+        }
     };      //  StTactGroup
 
     class CAnalytics : public IAnalytics
