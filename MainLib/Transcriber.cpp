@@ -492,45 +492,6 @@ ET_ReturnCode CTranscriber::eTranscribeTactGroup(StTactGroup& stTactGroup)
         {
             auto eRet = eHandleConsonant(stTactGroup, iAt);
         }
-
-/*
-        vector<StRule>* pvecRules = nullptr;
-        auto chr = stTactGroup.sSource.chrGetAt(iAt);
-        auto secondChr = ((int)stTactGroup.sSource.uiLength() > iAt + 1) ? stTactGroup.sSource.chrGetAt(iAt + 1) : L'\0';
-        pair<CEString, CEString> pairInput = make_pair(chr, secondChr);
-        pairInput.second = secondChr;
-        auto itTwoCharHit = m_mapRules.find(make_pair(chr, secondChr));
-        if (m_mapRules.end() != itTwoCharHit)
-        {
-            pvecRules = &itTwoCharHit->second;
-        }
-        else
-        {
-            auto itSingleCharHit = m_mapRules.find(make_pair(chr, L""));
-            if (m_mapRules.end() != itSingleCharHit)
-            {
-                pvecRules = &itSingleCharHit->second;
-            }
-            else
-            {
-                // ERROR
-                int i = 0;
-            }
-        }
-        int ii = 0;
-        iAt++;
-    }
-
-    for (int iAt = 0; iAt < (int)stWord.sSource.uiLength(); ++iAt)
-    {
-        auto chr = stWord.sSource.chrGetAt(iAt);
-        auto secondChr = ((int)stWord.sSource.uiLength() > iAt + 1) ? stWord.sSource.chrGetAt(iAt + 1) : L'\0';
-        auto itRule = m_mapRules.find(make_pair)
-//  1. check for this and next char
-//  2. check for this char only
-//  3. error if neither
-    }
-*/
         ++iAt;
     }
 
