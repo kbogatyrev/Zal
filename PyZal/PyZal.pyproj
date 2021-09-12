@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7ae4d97c-4e14-4279-ab68-3f0d6d37f690</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>LoadTranscriptionRules.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,10 +31,10 @@
     </Compile>
     <Compile Include="Database.py" />
     <Compile Include="ErrorAnalysis.py" />
-    <Compile Include="LoadTranscriptionRules.py" />
     <Compile Include="FindBadDescriptors.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="LoadTranscriptionRules.py" />
     <Compile Include="Parser.py" />
     <Compile Include="PyZal.py" />
   </ItemGroup>
