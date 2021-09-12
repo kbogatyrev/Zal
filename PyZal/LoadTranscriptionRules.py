@@ -57,6 +57,9 @@ class TranscriptionRules:
 
                 for rule in rules:
                     print (rule)
+                    disabled = rule.get('DISABLED')
+                    if disabled:
+                        continue
                     comment = rule.get('COMMENT')
                     stress = rule.get('STRESS')
                     l_contexts = rule.get('LEFT_CONTEXTS')
@@ -80,12 +83,13 @@ class TranscriptionRules:
                     case = rule.get('CASE')
                     is_variant = rule.get('IS_VARIANT')
                     target = rule.get('TARGET')
+                    transform = rule.get('TRANSFORM')
 
                     insert_query_rules = 'INSERT INTO transcription_rules (input_id, stress, left_contexts, left_boundary, right_contexts, \
-                    right_boundary, morpheme_type, subparadigm, gramm_gender, gramm_number, gramm_case, strength, target, comment) \
-                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-    #                       0 1 2 3 4 5 6 7 8 9 0 1 2 3
-                    tuple_columns_rules = (inputs_id, stress, lst_l_contexts, l_boundary, lst_r_contexts, r_boundary, lst_morphemes, subparadigm, gender, number, case, strength, target, comment)
+                    right_boundary, morpheme_type, subparadigm, gramm_gender, gramm_number, gramm_case, strength, target, transform, comment) \
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    #                       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+                    tuple_columns_rules = (inputs_id, stress, lst_l_contexts, l_boundary, lst_r_contexts, r_boundary, lst_morphemes, subparadigm, gender, number, case, strength, target, transform, comment)
 
                     db_cursor.execute(insert_query_rules, tuple_columns_rules)
 
@@ -94,7 +98,7 @@ class TranscriptionRules:
 if __name__== "__main__":
 
     lib_path = '../x64/Release/MainLibCTypes.dll'
-    db_path = '../ZalData/ZalData_TEST.db3'
+    db_path = '../ZalData/ZalData_Master_TRANS_.db3'
 
     t = TranscriptionRules(lib_path, db_path, 'C:/git-repos/Zal-Windows/ZalData/TranscriptionRules.json')
     t.load_rules()
