@@ -269,7 +269,7 @@
       {
         "COMMENT": "$59: неисправность, неизгладИмый, неисполнИм",
         "STRESS": "PRETONIC",
-        "TARGET": "UNSTRESSED_FRONT_VOWEL + UNSTRESSED_I"
+        "TARGET": "UNSTRESSED_FRONT_VOWEL + I"
       }
     ],
     "е+о": [
@@ -378,6 +378,7 @@
         "TARGET": "SCHWA"
       },
       {
+		"DISABLED": "Currently unused",
         "COMMENT": "$50: Ивовых, слИвовым, нОвого, лЕвого, дубОвого",
         "STRESS": "POSTTONIC",
         "LEFT_CONTEXTS": [ "в" ],
@@ -385,6 +386,7 @@
         "TARGET": "SYLLABIC_V"
       },
       {
+		"DISABLED": "Currently unused",
         "COMMENT": "$50: цАрствовать, хозЯйствовать, шЕствовать, злОбствовать, бЕдствовать",
         "STRESS": "POSTTONIC",
         "LEFT_CONTEXTS": [ "ств" ],
@@ -392,6 +394,7 @@
         "TARGET": "SYLLABIC_V"
       },
       {
+		"DISABLED": "Currently unused",
         "COMMENT": "$50: NB -- TODO alternative -- цАрствовать, хозЯйствовать, шЕствовать, злОбствовать, бЕдствовать",
         "STRESS": "POSTTONIC",
         "LEFT_CONTEXTS": [ "ств" ],
@@ -401,7 +404,7 @@
         "COMMENT": "$56: NB -- TODO select words -- какАо, рАдио, хАос, адАжио",
         "STRESS": "POSTTONIC",
         "LEFT_CONTEXTS": [ "VOWEL" ],
-        "TARGET": "UNSTRESSED_О"
+        "TARGET": "UNSTRESSED_O"
       }
     ],
     "о+а": [
@@ -415,7 +418,7 @@
       {
         "COMMENT": "$63: по-инОму, поискАть, поигрАть, наизУсть",
         "STRESS": "PRETONIC",
-        "TARGET": "SCHWA + UNSTRESSED_I"
+        "TARGET": "SCHWA + I"
       }
     ],
     "о+о": [
@@ -446,16 +449,16 @@
     ],
     "у+а": [
       {
-        "COMMENT": "$62: у агронОма, у амбразУры, у адвокАта",
+        "COMMENT": "$62: у агронОма, у амбразУры, у адвокАта; KB TODO: pretonic?",
         "STRESS": "PRETONIC",
-        "TARGET": "U + A"
+        "TARGET": "U + PRETONIC_A"
       }
     ],
     "у+о": [
       {
-        "COMMENT": "$62: у одногО, у островОв, у огонькА",
+        "COMMENT": "$62: у одногО, у островОв, у огонькА; KB TODO: is it pretonic?",
         "STRESS": "PRETONIC",
-        "TARGET": "U + A"
+        "TARGET": "U + PRETONIC_A"
       }
     ],
     "ы": [
@@ -470,14 +473,14 @@
         "COMMENT": "$26: Эхо, Эпос, Экстра, Этот, Этакий, Экий, э!, эх!, эвОна!; поЭт, поЭзия, силуЭт, менуЭт; мэр, пэр, сэр",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "VOWEL", "HARD_PAIRED_CONSONANT" ],
-        "TARGET": "E"
+        "TARGET": "STRESSED_E"
       },
 
       {
         "COMMENT": "$26: Эхо, Эпос, Экстра, Этот, Этакий, Экий, э!, эх!, эвОна!; поЭт, поЭзия, силуЭт, менуЭт; мэр, пэр, сэр",
         "STRESS": "STRESSED",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "E"
+        "TARGET": "STRESSED_E"
       }
     ],
     "ю": [
@@ -503,19 +506,19 @@
         "COMMENT": "$16: мять, пЯтый, сЯду, тЯнут, тебЯ",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "SOFT_CONSONANT_NO_CH_SHCH" ],
-        "TARGET": "A"
+        "TARGET": "STRESSED_A"
       },
       {
         "COMMENT": "$17: яд, струЯ, краЯ; пьян, дьяк, друзьЯ, кальЯн, мужьЯ, чья, объЯт",
         "STRESS": "STRESSED",
         "LEFT_CONTEXTS": [ "VOWEL", "ьъ" ],
-        "TARGET": "JOD + A"
+        "TARGET": "JOD + STRESSED_A"
       },
       {
         "COMMENT": "$17: яд, струЯ, краЯ; пьян, дьяк, друзьЯ, кальЯн, мужьЯ, чья, объЯт",
         "STRESS": "STRESSED",
         "LEFT_BOUNDARY": "BOUNDARY_WORD",
-        "TARGET": "JOD + A"
+        "TARGET": "JOD + STRESSED_A"
       },
       {
         "COMMENT": "$37: мяснИк, взялИсь, рябИну, тянИ, вязАть, пятёрка, лягУшки",
