@@ -25,7 +25,6 @@ def syll_pos_to_text_pos(text, syll_pos):
     return current_text_pos
 
 if __name__== "__main__":
-
     db_path = 'C:\git-repos\Zal-Windows\ZalData\ZalData_Master.db3'
     db_connect = sqlite3.connect(db_path)
 
@@ -43,7 +42,6 @@ if __name__== "__main__":
     db_wf_cursor = db_connect.cursor()
 
     for hw_row in hw_rows:
-
         spryazh_sm_headword = hw_row[0]
         descriptor_id = hw_row[1]
 
@@ -98,6 +96,7 @@ if __name__== "__main__":
 
             values = (descriptor_id, gram_hash, new_wordform, is_alternative, lead_comment, trailing_comment, is_edited)
             db_write_cursor.execute(wf_insert_query, values)
+            new_form_id = db_write_cursor.lastrowid
 
             stress_query = f'SELECT * FROM irregular_stress WHERE form_id = {form_id}'
             db_wf_cursor.execute(stress_query)
@@ -111,7 +110,7 @@ if __name__== "__main__":
                 is_primary = stress_row[3]
                 is_edited = stress_row[4]
 
-                values = (form_id, new_stress_pos, is_primary, True)
+                values = (new_form_id, new_stress_pos, is_primary, True)
                 db_write_cursor.execute(stress_insert_query, values)
 
                 print ('****   ' + str(stress_pos), str(new_stress_pos))
