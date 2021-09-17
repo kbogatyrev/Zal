@@ -28,8 +28,12 @@ if __name__== "__main__":
 
     db_path = 'C:\git-repos\Zal-Windows\ZalData\ZalData_Master.db3'
     db_connect = sqlite3.connect(db_path)
-    db_hw_cursor = db_connect.cursor()
 
+    db_cursor = db_connect.cursor()
+    db_cursor.execute('DELETE FROM irregular_stress_spryazh_sm')
+    db_cursor.execute('DELETE FROM irregular_forms_spryazh_sm')
+
+    db_hw_cursor = db_connect.cursor()
     hw_query = '''SELECT hw.source, d.id FROM headword AS hw INNER JOIN spryazh_sm_headwords AS sshw ON hw.id = sshw.headword_id INNER JOIN descriptor AS d ON 
                   sshw.ref_descriptor_id = d.id;'''
     db_hw_cursor.execute(hw_query)
@@ -70,20 +74,30 @@ if __name__== "__main__":
 
         db_write_cursor = db_connect.cursor()
 
-        wf_query = f'SELECT id, wordform, is_alternative, lead_comment, trailing_comment FROM irregular_forms WHERE descriptor_id = {descriptor_id}'
+        wf_query = f'SELECT id, gram_hash, wordform, is_alternative, lead_comment, trailing_comment FROM irregular_forms WHERE descriptor_id = {descriptor_id}'
         db_wf_cursor.execute(wf_query)
         wf_rows = db_wf_cursor.fetchall()
 
+        wf_insert_query = 'INSERT INTO irregular_forms_spryazh_sm \
+                           (descriptor_id, gram_hash, wordform, is_alternative, lead_comment, trailing_comment, is_edited) \
+                           VALUES (?,?,?,?,?,?,?)'
+
+        stress_insert_query = 'INSERT INTO irregular_stress_spryazh_sm \
+                               (form_id, position, is_primary, is_edited) VALUES (?,?,?,?)'
+
         for wf_row in wf_rows:
             form_id = wf_row[0]
-            wordform = wf_row[1]
+            gram_hash = wf_row[1]
+            wordform = wf_row[2]
             new_wordform = spryazh_sm_prefix + wordform[len(ref_prefix):]
             print(wordform, '-->', new_wordform)
-            is_alternative = wf_row[2]
-            lead_comment = wf_row[3]
-            trailing_comment = wf_row[4]
+            is_alternative = wf_row[3]
+            lead_comment = wf_row[4]
+            trailing_comment = wf_row[5]
+            is_edited = False
 
-            db_write_cursor.execute('INSERT INTO irregular_forms_spryazh_sm (descriptor_id, gram_hash, wordform, is_alternative, lead_comment, trailing_comment, is_edited) VALUES (?,?,?,?,?,?,?)')
+            values = (descriptor_id, gram_hash, new_wordform, is_alternative, lead_comment, trailing_comment, is_edited)
+            db_write_cursor.execute(wf_insert_query, values)
 
             stress_query = f'SELECT * FROM irregular_stress WHERE form_id = {form_id}'
             db_wf_cursor.execute(stress_query)
@@ -97,7 +111,12 @@ if __name__== "__main__":
                 is_primary = stress_row[3]
                 is_edited = stress_row[4]
 
+                values = (form_id, new_stress_pos, is_primary, True)
+                db_write_cursor.execute(stress_insert_query, values)
+
                 print ('****   ' + str(stress_pos), str(new_stress_pos))
+
+        db_connect.commit()
 #            print(at)
 
     print ('Done.')
