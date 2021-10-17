@@ -479,6 +479,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 ET_ReturnCode CTranscriber::eTranscribeTactGroup(StTactGroup& stTactGroup)
 {
     stTactGroup.sSource.SetVowels(g_szRusVowels);
+    m_vecTranscription.clear();
 
     int iAt = 0;
     while (iAt < (int)stTactGroup.sSource.uiLength())
@@ -494,6 +495,22 @@ ET_ReturnCode CTranscriber::eTranscribeTactGroup(StTactGroup& stTactGroup)
         }
         ++iAt;
     }
+
+//    stTactGroup.sTranscription.Erase();
+    for (auto& eSound : m_vecTranscription)
+    {
+        auto it = m_mapSoundToTranscription.find(eSound);
+        if (it != m_mapSoundToTranscription.end())
+        {
+            stTactGroup.sTranscription += it->second;
+        }
+        else
+        {
+            stTactGroup.sTranscription += L'?';
+        }
+    }
+
+    auto eRet = eAddStressMark(stTactGroup);
 
     return H_NO_ERROR;
 }
@@ -685,7 +702,7 @@ ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
         return H_ERROR_UNEXPECTED;
     }
 
-    auto bFound = false;        // we won't break out of loop event if a
+    auto bFound = true;        // we won't break out of loop event if a
     auto bTranscribed = false;  // matching rule was found; subsequent matches    
                                 // will be repored as errors
 
@@ -1145,9 +1162,14 @@ ET_ReturnCode CTranscriber::eBoundaryMatch(StTactGroup& stTg, ET_Boundary eBound
         break;
         
         case ET_Boundary::BOUNDARY_NOT_PROCLITIC:
-            if (stTg.iNumOfWords < 2)
+//            if (stTg.iNumOfWords < 2)
+//            {
+//                return H_TRUE;
+//            }
+
+            if (iPos > 0)
             {
-                return H_TRUE;
+                return H_FALSE;
             }
 
             if (LEFT_CONTEXT == eDirection)
@@ -1283,6 +1305,41 @@ ET_ReturnCode CTranscriber::eApplyTransform(StConsonant& stConsonant, ET_Transfo
             ERROR_LOG(sMsg);
         }
     }
+
+    return H_NO_ERROR;
+}
+
+ET_ReturnCode CTranscriber::eAddStressMark(StTactGroup& stTactGroup)
+{
+    if (stTactGroup.sTranscription.uiLength() <= 0)
+    {
+        ERROR_LOG(L"No transcription.");
+        return H_ERROR_INVALID_ARG;
+    }
+
+    int iSyll = 0;
+    int iStressPos = 0;
+    for (auto& chr : stTactGroup.sTranscription)
+    {
+        if (CEString::bIn(chr, L"аоеиыуʌεъь"))
+        {
+            if (iSyll == stTactGroup.iStressedSyllable)
+            {
+
+                break;
+            }
+            ++iSyll;
+        }
+        ++iStressPos;
+    }
+
+    if (iSyll >= stTactGroup.iNumOfSyllables)
+    {
+        ERROR_LOG(L"Unable to find stressed vowel.");
+        return H_ERROR_UNEXPECTED;
+    }
+
+    stTactGroup.sTranscription.sInsert(iStressPos, L'′');
 
     return H_NO_ERROR;
 }
