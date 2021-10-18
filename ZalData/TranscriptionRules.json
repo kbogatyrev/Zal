@@ -617,11 +617,6 @@
         "COMMENT": "$67: гид, кит, рукИ, похИтить",
         "RIGHT_CONTEXTS": [ "ие" ],
         "TRANSFORM": "SOFTEN"
-      },
-      {
-        "COMMENT": "$67: год, гад; кум, кот; ход, хАта, пахУчий",
-        "RIGHT_CONTEXTS": [ "NOT ие" ],
-        "TRANSFORM": "SELF"
       }
     ],
     "дт": [
@@ -642,18 +637,6 @@
         "COMMENT_KB": "usually on root/suffix boundary; variant: may not soften on prefix/root boundary: поднёс; usually no softening after hard р, л: курОртник, усЕрднее",
         "RIGHT_CONTEXTS": [ "N_SOFT" ],
         "TRANSFORM": "SOFTEN"
-      }
-    ],
-    "жцш": [
-      {
-        "COMMENT": "$68: жил, жар, жук; цинк, цАпля; шил, шёлк, шум",
-        "TRANSFORM": "SELF"
-      }
-    ],
-    "чщ": [
-      {
-        "COMMENT": "$69: чин, чан, чуб, чёлн, чернь, щит, щУка, шёлка, щука, пищАть",
-        "TRANSFORM": "SELF"
       }
     ],
     "з": [
@@ -704,7 +687,12 @@
         "RIGHT_CONTEXTS": [ "бгджз" ],
         "TRANSFORM": "VOICE"
       }
+    ],
+    "йчщ": [
+      {
+        "COMMENT": "$69",
+        "TRANSFORM": "SELF"
+      }
     ]
-
   }
 }
