@@ -76,6 +76,10 @@ ET_ReturnCode CTranscriber::eParseContexts(CEString& sSource, vector<PhonemicCon
             {
                 context = sContext;
             }
+            else if (m_mapStringToSound.find(sContext) != m_mapStringToSound.end())
+            {
+                context = m_mapStringToSound[sContext];
+            }
             else
             {
                 ERROR_LOG(L"Phonemic context characters not recognized.");
@@ -243,7 +247,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
 
     static const CEString sQuery
         (L"SELECT ti.input_chars, tr.stress, tr.left_contexts, tr.left_boundary, tr.right_contexts, right_boundary, tr.morpheme_type, \
-        tr.subparadigm, tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target, tr.transform \
+        tr.subparadigm, tr.gramm_gender, tr.gramm_number, tr.gramm_case, tr.strength, tr.target, tr.transform, tr.comment \
         FROM transcription_inputs AS ti INNER JOIN transcription_rules as tr ON ti.id = tr.input_id");
 
     try
@@ -252,6 +256,7 @@ ET_ReturnCode CTranscriber::eLoadTranscriptionRules()
         while (m_pDb->bGetRow())
         {
             StRule stRule;
+            m_pDb->GetData(14, stRule.m_sComment);
 
             CEString sInputs, sKeys;
             m_pDb->GetData(0, sInputs);
@@ -699,6 +704,7 @@ ET_ReturnCode CTranscriber::eHandleConsonant(StTactGroup& stTg, int& iPos)
     {
         CEString sMsg(L"No rules for consonant ");
         sMsg += chrConsonant;
+        ERROR_LOG(sMsg);
         return H_ERROR_UNEXPECTED;
     }
 
@@ -917,7 +923,7 @@ ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom
         StMatchTypes(StTactGroup* pStTg, ET_ContextDirection eType, int iPos, ET_ReturnCode eRet) 
             : m_pStTg(pStTg), m_eType(eType), m_iPos(iPos), m_eRet(eRet) {};
 
-        // Enum match
+        // ET_PhonemicContext match
         bool operator()(ET_PhonemicContext& eContext)
         {
             wchar_t chrAdjacent = L'\0';
@@ -987,6 +993,25 @@ ET_ReturnCode CTranscriber::eContextMatch(StTactGroup& stTg, PhonemicContextAtom
             return bMatch; 
         }
         
+        bool operator()(ET_Sound& eContext)
+        {
+            wchar_t chrAdjacent = L'\0';
+            if (ET_ContextDirection::LEFT_CONTEXT == m_eType && m_iPos > 0)
+            {
+                chrAdjacent = m_pStTg->sSource[m_iPos - 1];
+            }
+            else if (ET_ContextDirection::RIGHT_CONTEXT == m_eType && m_iPos < (int)m_pStTg->sSource.uiLength() - 1)
+            {
+                chrAdjacent = m_pStTg->sSource[m_iPos + 1];
+            }
+
+            auto bMatch = false;
+
+            // Currently not supported
+
+            return bMatch;
+        }
+
         // string match
         bool operator()(CEString& sContext) 
         {            
@@ -1339,7 +1364,7 @@ ET_ReturnCode CTranscriber::eAddStressMark(StTactGroup& stTactGroup)
         return H_ERROR_UNEXPECTED;
     }
 
-    stTactGroup.sTranscription.sInsert(iStressPos, L'′');
+    stTactGroup.sTranscription.sInsert(iStressPos+1, g_chrCombiningAcuteAccent);
 
     return H_NO_ERROR;
 }

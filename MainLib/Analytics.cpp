@@ -142,7 +142,6 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
 
         for (auto itTg = m_mapTactGroups.begin(); itTg != m_mapTactGroups.end(); ++itTg)
         {
-            eRet = m_spTranscriber->eTranscribeTactGroup((*itTg).second);
             eRet = eSaveTactGroup((*itTg).second);
         }
 
@@ -157,9 +156,6 @@ ET_ReturnCode CAnalytics::eParseText(const CEString& sTextName, const CEString& 
     return H_NO_ERROR;
 
 }       // eParseText()
-
-void CAnalytics::ClearResults()
-{}
 
 ET_ReturnCode CAnalytics::eParseMetadata(const CEString& sConstMetadata)
 {
@@ -207,8 +203,7 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
         ERROR_LOG(L"No text or text descriptor.");
         return H_ERROR_UNEXPECTED;
     }
-    
-/*
+
     CEString sQuery = L"SELECT id FROM text WHERE name = '#NAME#' AND metadata = '#METADATA#';";
     sQuery = sQuery.sReplace(L"#NAME#", m_sTextName);
     sQuery = sQuery.sReplace(L"#METADATA#", m_sTextMetaData);
@@ -261,7 +256,6 @@ ET_ReturnCode CAnalytics::eRegisterText(const CEString& sTextName, const CEStrin
         sMsg += CEString::sToString(m_pDb->iGetLastError());
         ERROR_LOG(sMsg);
     }
-*/
 
     eRet = eParseMetadata(sTextMetadata);
     if (eRet != H_NO_ERROR)

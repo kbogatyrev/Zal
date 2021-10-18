@@ -107,7 +107,7 @@ namespace Hlib
         ~CAnalytics();
 
         virtual ET_ReturnCode eParseText(const CEString& sTextName, const CEString& sMetadata, const CEString& sText, long long& llParsedTextId);
-        virtual void ClearResults();
+//        virtual void ClearResults();
 
     private:
         ET_ReturnCode eInit();
