@@ -215,7 +215,7 @@ ET_ReturnCode CTranscriber::eParseTransforms(CEString& sSource, vector<ET_Transf
 
 bool CTranscriber::bIsProclitic(CWordForm& wf)
 {
-    if (POS_PREPOSITION == wf.ePos())
+    if (POS_PREPOSITION == wf.ePos() || POS_CONJUNCTION == wf.ePos())
     {
         return true;
     }
@@ -1204,8 +1204,8 @@ ET_ReturnCode CTranscriber::eBoundaryMatch(StTactGroup& stTg, ET_Boundary eBound
                     auto iWordNum = stTg.iWordNumFromTextPos(iPos);
                     if (iWordNum > 0)
                     {
-                        auto& wf = stTg.vecWords.at(iWordNum - 1).WordForm;
-                        if (wf.ePos() == POS_PREPOSITION)
+                        auto& wf = stTg.vecWords.at(iWordNum-1).WordForm;
+                        if (bIsProclitic(wf))
                         {
                             return H_FALSE;
                         }
@@ -1216,7 +1216,7 @@ ET_ReturnCode CTranscriber::eBoundaryMatch(StTactGroup& stTg, ET_Boundary eBound
                     }
                     else
                     {
-                        return H_FALSE;
+                        return H_TRUE;
                     }
                 } 
                 catch (std::exception& ex)
