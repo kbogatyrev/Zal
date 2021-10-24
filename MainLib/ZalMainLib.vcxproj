@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ThirdPartyLibs-Windows\Sqlite\sqlite3.h" />
-    <ClInclude Include="..\..\ThirdPartyLibs-Windows\Sqlite\sqlite3ext.h" />
+    <ClInclude Include="..\..\ThirdParty\Sqlite\sqlite3.h" />
+    <ClInclude Include="..\..\ThirdParty\Sqlite\sqlite3ext.h" />
     <ClInclude Include="Analytics.h" />
     <ClInclude Include="FormBuilderAspectPair.h" />
     <ClInclude Include="Dictionary.h" />
@@ -53,7 +53,7 @@
     <ClInclude Include="WordForm.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ThirdPartyLibs-Windows\Sqlite\sqlite3.c" />
+    <ClCompile Include="..\..\ThirdParty\Sqlite\sqlite3.c" />
     <ClCompile Include="Analytics.cpp" />
     <ClCompile Include="FormBuilderAspectPair.cpp" />
     <ClCompile Include="Dictionary.cpp" />
@@ -135,7 +135,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\HLib;..\..\ThirdPartyLibs-Windows\Sqlite;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>..\..\HLib;..\..\ThirdParty\Sqlite;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)lib\$(Platform)\$(Configuration)\</OutDir>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -144,7 +144,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\HLib-Windows;..\..\ThirdPartyLibs-Windows\Sqlite;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>..\..\HLib;..\..\ThirdParty\Sqlite;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)lib\$(Platform)\$(Configuration)\</OutDir>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
